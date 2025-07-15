@@ -167,8 +167,8 @@ function initializeWidgetBot() {
     crateScript.onload = () => {
         console.log("WidgetBot Crate loaded, initializing...");
         new Crate({
-            server: '1227468427132928110', // Your Discord Server ID
-            channel: '1231573078845292644' // Your Discord Channel ID
+            server: '763817913768738856', // Your Discord Server ID
+            channel: '1345917751960666193' // Your Discord Channel ID
         });
     };
     
