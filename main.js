@@ -73,7 +73,7 @@ document.querySelectorAll('.command-card').forEach(card => {
 // Invite bot
 function inviteBot() {
     // Replace with your actual Discord bot invite link
-    const inviteUrl = 'https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_ID&permissions=8&scope=bot%20applications.commands';
+    const inviteUrl = 'https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064';
     window.open(inviteUrl, '_blank');
 }
 
