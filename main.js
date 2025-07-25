@@ -73,7 +73,7 @@ document.querySelectorAll('.command-card').forEach(card => {
 // Invite bot
 function inviteBot() {
     // Replace with your actual Discord bot invite link
-    const inviteUrl = 'https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_ID&permissions=8&scope=bot%20applications.commands';
+    const inviteUrl = 'https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064';
     window.open(inviteUrl, '_blank');
 }
 
@@ -167,8 +167,8 @@ function initializeWidgetBot() {
     crateScript.onload = () => {
         console.log("WidgetBot Crate loaded, initializing...");
         new Crate({
-            server: '1227468427132928110', // Your Discord Server ID
-            channel: '1231573078845292644' // Your Discord Channel ID
+            server: '763817913768738856', // Your Discord Server ID
+            channel: '1345917751960666193' // Your Discord Channel ID
         });
     };
     
