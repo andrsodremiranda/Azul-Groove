@@ -684,3 +684,143 @@ footer {
 .footer-credit a:hover {
     text-decoration: underline; /* Garis bawah saat kursor di atasnya */
 }
+/* --- WIDGET DO CHAT FLUTUANTE (SUPORTE AZUL GROOVE) --- */
+#custom-chat-widget {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 99999 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+#chat-toggle-btn {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    background: #5865F2 !important;
+    color: white !important;
+    border: none !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.3s ease !important;
+}
+
+#chat-toggle-btn:hover {
+    transform: scale(1.1) !important;
+}
+
+#chat-box {
+    position: absolute !important;
+    bottom: 75px !important;
+    right: 0 !important;
+    width: 320px !important;
+    height: 400px !important;
+    background: #2f3136 !important;
+    border: 1px solid #202225 !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+    overflow: hidden !important;
+    z-index: 99999 !important;
+}
+
+/* Oculta a caixa de conversas por padrão até que o usuário clique no botão */
+#chat-box.chat-hidden {
+    display: none !important;
+}
+
+.chat-header {
+    background: #202225 !important;
+    padding: 12px 15px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    color: #fff !important;
+}
+
+.chat-header h3 {
+    font-size: 1rem !important;
+    margin: 0 !important;
+    color: #5865F2 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+#chat-close-btn {
+    background: none !important;
+    border: none !important;
+    color: #dcddde !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+}
+
+#chat-messages {
+    flex: 1 !important;
+    padding: 15px !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+.message {
+    padding: 10px 14px !important;
+    border-radius: 8px !important;
+    max-width: 80% !important;
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+}
+
+.message.bot-msg {
+    background: #36393f !important;
+    color: #dcddde !important;
+    align-self: flex-start !important;
+    border-left: 3px solid #5865F2 !important;
+}
+
+.message.user-msg {
+    background: #5865F2 !important;
+    color: #ffffff !important;
+    align-self: flex-end !important;
+}
+
+.chat-input-area {
+    padding: 10px !important;
+    background: #202225 !important;
+    display: flex !important;
+    gap: 8px !important;
+}
+
+#chat-user-input {
+    flex: 1 !important;
+    background: #36393f !important;
+    border: 1px solid #2f3136 !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    color: #fff !important;
+    outline: none !important;
+}
+
+#chat-user-input:focus {
+    border-color: #5865F2 !important;
+}
+
+#chat-send-btn {
+    background: #5865F2 !important;
+    border: none !important;
+    color: white !important;
+    padding: 0 15px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+}
+
+#chat-send-btn:hover {
+    background: #4752C4 !important;
+}

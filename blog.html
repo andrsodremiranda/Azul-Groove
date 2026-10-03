@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog & Novidades - ASTM Software</title>
+    <link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background: radial-gradient(circle at top right, #34373c 0%, #202225 100%);
+            color: #dcddde;
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .blog-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: #5865F2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: #4752C4;
+        }
+
+        .lang-btn {
+            background: rgba(88, 101, 242, 0.2);
+            border: 1px solid #5865F2;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .lang-btn:hover {
+            background: #5865F2;
+            transform: translateY(-2px);
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .blog-header h1 {
+            color: #ffffff;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .blog-header p {
+            color: #b9bbbe;
+            font-size: 1.1rem;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .post-card {
+            background: rgba(47, 49, 54, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            border-color: #5865F2;
+        }
+
+        .post-date {
+            font-size: 0.8rem;
+            color: #5865F2;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .post-title {
+            color: #ffffff;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .post-snippet {
+            color: #dcddde;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .post-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            background: #5865F2;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+            width: fit-content;
+        }
+
+        .post-link:hover {
+            background: #4752C4;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 50px;
+            color: #5865F2;
+            font-size: 1.5rem;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+    <nav style="background: rgba(32, 34, 37, 0.98);">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fab fa-discord"></i> Azul Groove
+            </div>
+            <a href="index.html" class="cta-button glow-on-hover" style="background: transparent; border: 1px solid #5865F2;">
+                Voltar / Back
+            </a>
+        </div>
+    </nav>
+
+    <div class="blog-container fade-in-up">
+        
+        <div class="header-actions">
+            <a href="index.html" class="back-button" id="backBtn">
+                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Voltar para o Início
+            </a>
+            
+            <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">
+                🇺🇸 English
+            </button>
+        </div>
+
+        <div class="blog-header">
+            <h1 data-pt="Notícias e Atualizações" data-en="News & Updates">Notícias e Atualizações</h1>
+            <p data-pt="Acompanhe as últimas postagens oficiais da ASTM Software" data-en="Follow official posts from ASTM Software">
+                Acompanhe as últimas postagens oficiais da ASTM Software
+            </p>
+        </div>
+
+        <div class="posts-grid" id="blog-posts">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i> <span data-pt="Carregando postagens..." data-en="Loading posts...">Carregando postagens...</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const savedLang = localStorage.getItem('site_lang');
+        const browserLang = navigator.language || navigator.userLanguage;
+        let isEnglish = savedLang === 'en' || (!savedLang && browserLang.startsWith('en'));
+
+        function applyPageLang() {
+            const btn = document.getElementById('langToggleBtn');
+            const backBtn = document.getElementById('backBtn');
+
+            if (btn) btn.innerHTML = isEnglish ? '🇧🇷 Português' : '🇺🇸 English';
+            if (backBtn) {
+                backBtn.innerHTML = isEnglish 
+                    ? '<i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Back to Home' 
+                    : '<i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Voltar para o Início';
+            }
+
+            document.querySelectorAll('[data-pt]').forEach(el => {
+                el.innerText = isEnglish ? el.getAttribute('data-en') : el.getAttribute('data-pt');
+            });
+        }
+
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            localStorage.setItem('site_lang', isEnglish ? 'en' : 'pt');
+            applyPageLang();
+        }
+
+        // Função que busca as postagens diretamente do seu Blogger via Feed JSON
+        function loadBloggerPosts() {
+            const blogUrl = 'https://astmsoft.blogspot.com/feeds/posts/default?alt=json-in-script&callback=renderPosts';
+            const script = document.createElement('script');
+            script.src = blogUrl;
+            document.body.appendChild(script);
+        }
+
+        function renderPosts(data) {
+            const container = document.getElementById('blog-posts');
+            container.innerHTML = '';
+
+            if (!data.feed.entry || data.feed.entry.length === 0) {
+                container.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Nenhuma postagem encontrada.</p>';
+                return;
+            }
+
+            data.feed.entry.forEach(entry => {
+                const title = entry.title.$t;
+                const published = new Date(entry.published.$t).toLocaleDateString(isEnglish ? 'en-US' : 'pt-BR', {
+                    year: 'numeric', month: 'short', day: 'numeric'
+                });
+
+                // Extrai o link original do post
+                const postLink = entry.link.find(l => l.rel === 'alternate').href;
+
+                // Limpa as tags HTML do conteúdo para gerar um resumo
+                let contentSnippet = entry.summary ? entry.summary.$t : (entry.content ? entry.content.$t : '');
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = contentSnippet;
+                contentSnippet = tempDiv.textContent || tempDiv.innerText || '';
+                if (contentSnippet.length > 150) {
+                    contentSnippet = contentSnippet.substring(0, 150) + '...';
+                }
+
+                const card = document.createElement('div');
+                card.className = 'post-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="post-date">${published}</div>
+                        <div class="post-title">${title}</div>
+                        <div class="post-snippet">${contentSnippet}</div>
+                    </div>
+                    <a href="${postLink}" target="_blank" rel="noopener noreferrer" class="post-link">
+                        ${isEnglish ? 'Read Full Post' : 'Ler Post Completo'} <i class="fas fa-external-link-alt"></i>
+                    </a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyPageLang();
+            loadBloggerPosts();
+        });
+    </script>
+</body>
+</html>

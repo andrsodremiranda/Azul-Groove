@@ -173,12 +173,11 @@
             transform: translateY(-3px) scale(1.02) !important;
         }
 
-        /* Padronização rigorosa dos ícones sociais do rodapé em círculos perfeitos de 40x40px */
+        /* Padronização RIGOROSA dos ícones sociais do rodapé em círculos perfeitos de 40x40px */
         .social-links {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-top: 15px;
         }
 
         .social-links a {
@@ -453,14 +452,6 @@
                 >
                     <i class="fas fa-newspaper"></i> <span data-pt="Notícias e Atualizações" data-en="News & Updates">Notícias e Atualizações</span>
                 </a>
-                <!-- Botão com texto e ícone totalmente brancos -->
-                <a
-                    href="assistente.html"
-                    class="btn-secondary glow-on-hover"
-                    style="border-color: #5865F2; color: #ffffff;"
-                >
-                    <i class="fas fa-robot" style="color: #ffffff;"></i> <span data-pt="Assistente Virtual" data-en="Virtual Assistant">Assistente Virtual</span>
-                </a>
             </div>
         </div>
     </section>
@@ -496,6 +487,29 @@
             <p>&copy; 2026 ASTM Software. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- WIDGET DE CHATBOT PERSONALIZADO INTEGRADO -->
+    <div id="custom-chat-widget">
+        <button id="chat-toggle-btn" aria-label="Abrir Ajuda">
+            <i class="fas fa-comments"></i>
+        </button>
+        
+        <div id="chat-box" class="chat-hidden">
+            <div class="chat-header">
+                <h3><i class="fab fa-discord"></i> Suporte Azul Groove</h3>
+                <button id="chat-close-btn">&times;</button>
+            </div>
+            <div id="chat-messages">
+                <div class="message bot-msg">
+                    Olá! Sou o assistente virtual do Azul Groove. Como posso ajudar com os comandos ou com o site hoje?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-user-input" placeholder="Digite sua dúvida (ex: play, comandos)..." />
+                <button id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const savedLang = localStorage.getItem('site_lang');
