@@ -86,6 +86,15 @@ h2{color:#fff;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:300;margin:0 0 12px
 .demo .a{align-self:flex-start;background:#262a33;border-bottom-left-radius:4px}
 .demo .a.typing::after{background:#aab4ff}
 
+/* comparativo */
+.cmp{width:100%;border-collapse:collapse;font-size:.95rem;min-width:560px}
+.cmp th,.cmp td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.cmp th{color:#fff;font-weight:600}
+.cmp th:last-child,.cmp td:last-child{background:rgba(88,101,242,.12);color:#fff}
+.cmp td:first-child{color:#fff;font-weight:600}
+.cmp td{color:#b5bac1}
+.cmp tbody tr:last-child td{border-bottom:0}
+
 /* etapas */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;counter-reset:s}
 .steps .card{counter-increment:s;position:relative;padding-top:34px}
@@ -136,7 +145,7 @@ footer a{color:#aab4ff;margin:0 9px}
 
 <section class="s" id="o-que-e"><div class="wrap">
   <h2 class="rv">O que é a Azul Groove IA</h2>
-  <p class="lead rv" style="--dl:.1s">É um chat que conecta você a serviços de inteligência artificial. Você escreve a mensagem e recebe a resposta aqui mesmo, no site.</p>
+  <p class="lead rv" style="--dl:.1s">É um chat que conecta você a serviços de inteligência artificial, parecido com interfaces como o Open WebUI. Você escreve a mensagem e recebe a resposta aqui mesmo, no site.</p>
   <div class="note rv" style="--dl:.2s"><b>Nossa IA não é igual às outras.</b> Nós não criamos nem treinamos um modelo próprio. Somos um provedor: levamos a sua mensagem até o servidor de um serviço de terceiros e mostramos a resposta que ele devolve. A qualidade e o conteúdo das respostas vêm desse serviço.</div>
 </div></section>
 
@@ -170,12 +179,30 @@ footer a{color:#aab4ff;margin:0 9px}
   </div>
 </div></section>
 
+<section class="s" id="comparativo"><div class="wrap">
+  <h2 class="rv">Azul Groove IA vs. outras IAs</h2>
+  <p class="lead rv" style="--dl:.1s">Uma comparação direta com os apps de IA mais comuns.</p>
+  <div class="card rv" style="--dl:.2s;padding:0;overflow-x:auto">
+    <table class="cmp">
+      <thead><tr><th></th><th>Apps de IA tradicionais</th><th>Azul Groove IA</th></tr></thead>
+      <tbody>
+        <tr><td>Onde ficam as conversas</td><td>Geralmente nos servidores da empresa</td><td>Só no seu navegador</td></tr>
+        <tr><td>Escolha do modelo</td><td>O que a empresa oferece</td><td>Você escolhe o serviço e o modelo (OpenRouter, OpenAI, Groq, Gemini, Together)</td></tr>
+        <tr><td>Rodar no seu computador</td><td>Em geral não</td><td>Sim, com Ollama ou LM Studio</td></tr>
+        <tr><td>Passa pelos servidores da ASTM</td><td>—</td><td>Não: o pedido sai do seu navegador direto para o serviço escolhido</td></tr>
+        <tr><td>Chave de API</td><td>Fica com a empresa</td><td>Fica só com você, neste navegador</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note rv" style="--dl:.3s;margin-top:22px"><b>Como ter uma IA 100% local e privada.</b> Escolha Ollama ou LM Studio nas configurações e desligue a pesquisa na internet. Assim a conversa fica entre você e o modelo, dentro do seu computador, e nada sai dele. Com um serviço na nuvem, a mensagem é enviada ao serviço que você escolheu e segue as regras de privacidade dele.</div>
+</div></section>
+
 <section class="s"><div class="wrap">
   <h2 class="rv">Para começar</h2>
   <p class="lead rv" style="--dl:.1s">São só três passos.</p>
   <div class="steps">
     <div class="card rv" style="--dl:.1s"><h3>Aceite os termos</h3><p>Leia os <a href="licenca.html" style="color:#aab4ff">Termos de Uso</a> e a <a href="privacidade.html" style="color:#aab4ff">Política de Privacidade</a> e marque que concorda.</p></div>
-    <div class="card rv" style="--dl:.2s"><h3>Entre com o Discord</h3><p>O login serve para guardar as suas conversas, para você voltar a elas depois.</p></div>
+    <div class="card rv" style="--dl:.2s"><h3>Entre com Discord, Google ou GitHub</h3><p>O login serve para guardar as suas conversas neste navegador, para você voltar a elas depois.</p></div>
     <div class="card rv" style="--dl:.3s"><h3>Converse</h3><p>Escreva a primeira mensagem. Se quiser, troque o serviço de IA nas configurações do chat.</p></div>
   </div>
 </div></section>

@@ -226,6 +226,7 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
   <div class="brand" onclick="goHome()" title="Voltar ao início" style="cursor:pointer"><img class="logo" src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove</div>
   <button class="new" onclick="newConv()"><i class="fas fa-plus"></i> Nova conversa</button>
   <div class="list" id="list"></div>
+  <button class="new" style="background:rgba(88,101,242,.16);border:1px solid rgba(88,101,242,.5)" onclick="apoio()" title="Apoiar o projeto pela LivePix">💙 Apoiar o projeto</button>
   <div class="me">
     <img id="av" src="" alt="">
     <div id="nm"></div>
@@ -338,7 +339,8 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
     <div class="pane" id="p_co" hidden>
       <div class="acct"><img id="coAv" alt=""><div><b id="coNm"></b><br><small id="coPr"></small></div></div>
       <div id="coLogins" class="pane"></div>
-      <div class="row" style="justify-content:flex-start"><button class="btn2 dng" onclick="logout()"><i class="fas fa-right-from-bracket"></i> Sair da conta</button></div>
+      <small>🔒 O login com Google e GitHub é processado pelo Firebase. A ASTM Software não salva suas conversas nem seus dados: ficam só no seu navegador. (O Firebase pode manter o registro da conta, como nome e e-mail, para o login funcionar.)</small>
+      <div class="row" style="justify-content:flex-start"><button class="btn2 ok" onclick="switchAccount()"><i class="fas fa-user-group"></i> Entrar com outra conta</button><button class="btn2 dng" onclick="logout()"><i class="fas fa-right-from-bracket"></i> Sair da conta</button></div>
       <h4 style="color:var(--tx)">Estatísticas</h4>
       <div class="st" id="stGrid"></div>
       <div class="bars" id="stBars"></div>
@@ -354,6 +356,10 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="modal" id="welcome" style="z-index:25" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)this.style.display='none';this.dn=false">
+  <div class="card sm"><h3 id="wlT" style="color:var(--tx)"></h3><p id="wlP"></p>
+    <div class="row"><button class="btn2" onclick="apoio()">💙 Apoiar</button><button class="btn2 ok" onclick="$('welcome').style.display='none'">Começar</button></div></div>
+</div>
 <div class="modal" id="cmp" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeCmp();this.dn=false">
   <div class="card wide"><div class="ch"><h3>⚖️ Comparar respostas</h3><button class="ib" onclick="closeCmp()" title="Fechar"><i class="fas fa-xmark"></i></button></div><div id="cmpBody"></div><small>Ao escolher, a IA anota qual você preferiu e aprende com isso (dá para desligar em ⚙️ &gt; Estilo).</small></div>
 </div>
@@ -569,7 +575,10 @@ const NEWS_AI = [
   '**16 buscadores:** Wikipedia (PT, EN, ES), Wikcionário, Wikinotícias, Wikiviagem, DuckDuckGo, MusicBrainz, iTunes, Open Library, Internet Archive, Stack Overflow, Hacker News, Crossref, OpenStreetMap e Wikidata.',
   '**Memória e treino:** peça para a IA lembrar de coisas, defina seu jeito de falar e use 👍 e Comparar para ela aprender seu estilo.',
   '**Mais curiosidades:** aviação (mundo e Brasil) e música, com filtro por tema.',
-  '**Aparência:** novo botão para restaurar o padrão.'
+  '**Aparência:** novo botão para restaurar o padrão.',
+  '**Login com Google e GitHub:** além do Discord, via Firebase. Em ⚙️ > Conta há "Entrar com outra conta".',
+  '**Boas-vindas e apoio:** mensagem ao entrar e botão 💙 para apoiar o projeto pela LivePix.',
+  '**Azul Groove IA vs. outras IAs:** a página da IA agora tem um comparativo e explica como usar um modelo local (Ollama ou LM Studio).'
 ];
 const newsVer = hit => String([...(NEWS_AI.join('|') + (hit ? hit.e.resposta : ''))].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7));
 async function checkNews() { const hit = (await searchKB('novidades'))[0]; let seen = ''; try { seen = localStorage.getItem('azul_news_seen') || ''; } catch (e) {} if (seen !== newsVer(hit)) $('newsBtn').classList.add('dot'); }
@@ -911,6 +920,22 @@ function logout() {
   location.href = 'assistente.html';
 }
 
+function switchAccount() { // troca de conta sem perder o aceite dos termos
+  ['azul_session_type', 'azul_user_id', 'azul_user_name', 'azul_user_avatar', 'azul_visitor_count'].forEach(n => document.cookie = n + '=; Max-Age=0; path=/');
+  localStorage.removeItem('azul_profile');
+  location.href = 'assistente.html';
+}
+const SUPPORT_URL = 'https://livepix.gg/astmsoftware';
+function apoio() { window.open(SUPPORT_URL, '_blank', 'noopener,noreferrer'); }
+function showWelcome() {
+  let go = false;
+  try { go = sessionStorage.getItem('azul_welcome') === '1'; sessionStorage.removeItem('azul_welcome'); } catch (e) {}
+  if (!go) return;
+  const prov = { discord: 'o Discord', google: 'o Google', github: 'o GitHub' }[ck('azul_session_type')] || 'sua conta';
+  $('wlT').textContent = 'Bem-vindo(a)' + (name ? ', ' + name : '') + '! 👋';
+  $('wlP').textContent = 'Você entrou com ' + prov + '. Aqui você conversa com IAs, pesquisa na internet e guarda tudo só neste navegador. Se curtir o projeto, dá para apoiar a ASTM Software pelo botão 💙 na barra lateral.';
+  $('welcome').style.display = 'flex';
+}
 function acceptLic() {
   document.cookie = 'azul_terms_accepted=true; max-age=' + 7 * 86400 + '; path=/; SameSite=Lax';
   $('gateLic').style.display = 'none';
@@ -920,6 +945,7 @@ function boot() {
   if (ck('azul_terms_accepted') !== 'true') { $('gateLic').style.display = 'flex'; return; }
   if (!['discord', 'google', 'github'].includes(ck('azul_session_type')) || !uid) { $('gateLogin').style.display = 'flex'; return; }
   init();
+  showWelcome();
 }
 $('licBtn').disabled = !$('lic').checked;
 $('lic').addEventListener('change', e => { $('licBtn').disabled = !e.target.checked; });
