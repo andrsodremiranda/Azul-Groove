@@ -218,7 +218,7 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 </div>
 <div class="gate" id="gateLogin">
   <img class="logo" src="aumentar-o-tamanho-d.png" alt="Azul Groove" onerror="this.style.display='none'">
-  <h2>Entre com o Discord para usar o chat</h2>
+  <h2>Entre com o Discord, Google ou GitHub para usar o chat</h2>
   <p>Suas conversas ficam salvas na sua conta.</p>
   <a class="btn" href="assistente.html">Fazer login</a>
 </div>
@@ -458,7 +458,7 @@ function fit() { const t = $('inp'); t.style.height = 'auto'; t.style.height = M
 
 function init() {
   $('av').src = ck('azul_user_avatar') || 'https://cdn.discordapp.com/embed/avatars/0.png';
-  $('nm').textContent = name || 'Discord';
+  $('nm').textContent = name || 'Conta';
   try { convs = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
   if (!convs.length) { // importa o histórico antigo do assistente
     let old = [];
@@ -561,7 +561,7 @@ const NEWS_AI = [
   '**Barras de rolagem novas:** mais finas e discretas, no tom do tema.',
   '**Licença de Uso da IA:** nova licença explicando que o Azul Groove não coleta seus dados, que tudo fica salvo só no seu navegador e que as respostas vêm de serviços de terceiros. Ela aparece junto com os termos.',
   '**Site da Azul Groove IA:** nova página que apresenta a IA e como ela funciona. Procure a seção \"Azul Groove IA\" no site.',
-  '**Modo Visitante:** quem não entra com o Discord pode mandar 5 mensagens por minuto.',
+  '**Modo Visitante:** quem não entra com uma conta (Discord, Google ou GitHub) pode mandar 5 mensagens por minuto.',
   '**Digitação na tela inicial:** o texto de boas-vindas agora aparece letra por letra, com cursor.',
   '**Modos de resposta:** Sério, Descontraído, Humor e Didático, na tela inicial ou em ⚙️ > Estilo.',
   '**Dados do Azul Groove opcionais:** dá para desligar a base do bot quando ela atrapalhar as respostas.',
@@ -918,7 +918,7 @@ function acceptLic() {
 }
 function boot() {
   if (ck('azul_terms_accepted') !== 'true') { $('gateLic').style.display = 'flex'; return; }
-  if (ck('azul_session_type') !== 'discord' || !uid) { $('gateLogin').style.display = 'flex'; return; }
+  if (!['discord', 'google', 'github'].includes(ck('azul_session_type')) || !uid) { $('gateLogin').style.display = 'flex'; return; }
   init();
 }
 $('licBtn').disabled = !$('lic').checked;
@@ -958,11 +958,11 @@ function paintStats() {
 }
 
 // ----- conta -----
-const AUTH = { google: { clientId: '' }, github: { clientId: '' } }; // coloque aqui os Client IDs quando tiver
+const AUTH = { google: { clientId: '258165635393-ia1i154bmess2mlc4grdiptnjvd0583i.apps.googleusercontent.com' }, github: { clientId: 'Iv23li7oI6VqB0V9r3gN' } }; // Client IDs são públicos; secrets ficam só no servidor
 function paintAcct() {
-  $('coAv').src = $('av').src; $('coNm').textContent = name || 'Visitante'; $('coPr').textContent = 'Conectado com o Discord';
+  $('coAv').src = $('av').src; $('coNm').textContent = name || 'Visitante'; const prov = ck('azul_session_type') || 'discord'; $('coPr').textContent = 'Conectado com ' + ({ discord: 'o Discord', google: 'o Google', github: 'o GitHub' }[prov] || 'o Discord');
   const row = (n, ic, ok, msg) => `<div class="acct"><span><i class="${ic}"></i> ${n}</span><small>${ok ? '✅ ' : ''}${msg}</small></div>`;
-  $('coLogins').innerHTML = row('Discord', 'fab fa-discord', true, 'ativo') + row('Google', 'fab fa-google', !!AUTH.google.clientId, AUTH.google.clientId ? 'Client ID definido' : 'falta o Client ID') + row('GitHub', 'fab fa-github', !!AUTH.github.clientId, AUTH.github.clientId ? 'Client ID definido' : 'falta o Client ID');
+  $('coLogins').innerHTML = row('Discord', 'fab fa-discord', prov === 'discord', prov === 'discord' ? 'ativo' : 'disponível') + row('Google', 'fab fa-google', prov === 'google', prov === 'google' ? 'ativo' : 'disponível') + row('GitHub', 'fab fa-github', prov === 'github', prov === 'github' ? 'ativo' : 'disponível');
   paintStats();
 }
 
