@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Azul Groove IA - ASTM Software</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<style>
+:root{--bg:#0f1117;--card:#1c1f26;--line:rgba(255,255,255,.08);--p:#5865F2;--p2:#4752C4;--t:#dbdee1;--m:#949ba4;--hi:#e8eaed}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--t);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--p);outline-offset:3px}
+
+/* ---------- fundo animado (igual ao do chat) ---------- */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(ellipse 70% 55% at 50% 40%,rgba(36,62,170,.45) 0%,rgba(15,17,23,0) 70%),var(--bg)}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.5;animation:drift 16s ease-in-out infinite alternate}
+.o1{width:460px;height:460px;background:#2438aa;left:8%;top:10%}
+.o2{width:360px;height:360px;background:#5865F2;right:6%;top:32%;animation-duration:20s;animation-delay:-6s}
+.o3{width:280px;height:280px;background:#1fb6ff;left:40%;bottom:4%;opacity:.28;animation-duration:24s;animation-delay:-3s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(70px,-50px) scale(1.2)}}
+.eq{position:absolute;left:0;right:0;bottom:0;height:45%;display:flex;align-items:flex-end;justify-content:center;gap:clamp(4px,.9vw,10px);padding:0 4%;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 95%);mask-image:linear-gradient(to top,#000 0%,transparent 95%)}
+.eq i{flex:1;max-width:18px;min-width:3px;height:100%;border-radius:999px 999px 0 0;background:linear-gradient(to top,rgba(88,101,242,.7),rgba(31,182,255,.1));transform-origin:bottom;transform:scaleY(.08);animation:bar var(--d) ease-in-out var(--l) infinite alternate,barIn 1.2s cubic-bezier(.2,.7,.2,1) var(--e) backwards}
+@keyframes bar{from{transform:scaleY(.08)}to{transform:scaleY(var(--h))}}
+@keyframes barIn{from{opacity:0;transform:scaleY(0)}}
+.dots{position:absolute;inset:0}
+.dots b{position:absolute;width:3px;height:3px;border-radius:50%;background:#9db0ff;opacity:0;animation:twinkle var(--d) ease-in-out var(--l) infinite}
+@keyframes twinkle{50%{opacity:.7;transform:translateY(-14px)}}
+
+/* ---------- topo ---------- */
+header{position:sticky;top:0;z-index:5;background:rgba(15,17,23,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;gap:10px;align-items:center;font-weight:700;color:#fff}
+.logo{width:30px;height:30px;border-radius:9px;object-fit:cover}
+.btn{display:inline-flex;gap:9px;align-items:center;background:var(--p);color:#fff;border:1px solid var(--p);border-radius:12px;padding:13px 24px;font-weight:600;transition:background .25s,box-shadow .25s,transform .25s}
+.btn:hover{background:var(--p2);box-shadow:0 8px 28px rgba(88,101,242,.55);transform:translateY(-2px)}
+.btn.ghost{background:rgba(88,101,242,.12)}
+.btn.ghost:hover{background:rgba(88,101,242,.3);box-shadow:none}
+.btn.sm{padding:8px 16px;font-size:.9rem;border-radius:10px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* ---------- hero ---------- */
+.hero{min-height:calc(100vh - 56px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 0 90px}
+.hero .logo{width:76px;height:76px;border-radius:22px;box-shadow:0 0 50px rgba(88,101,242,.6);animation:pop .9s cubic-bezier(.2,1.2,.3,1) .2s both,float 5s ease-in-out 1.2s infinite alternate}
+.hero h1{font-size:clamp(2.4rem,8vw,4.6rem);font-weight:700;color:#fff;margin:26px 0 12px;line-height:1.1;min-height:1.15em;letter-spacing:-.01em}
+.hero p{max-width:34em;margin:0 auto 34px;font-size:clamp(1.02rem,2.4vw,1.25rem);color:#b5bac1;font-weight:300;min-height:5.2em}
+.typing::after{content:"";display:inline-block;width:3px;height:.95em;margin-left:4px;vertical-align:-.1em;background:var(--p);animation:blink 1s steps(1) infinite}
+.done::after{display:none}
+@keyframes blink{50%{opacity:0}}
+.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.hero .btns.show{opacity:1;transform:none}
+.scroll{position:absolute;bottom:26px;left:50%;color:var(--m);animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(7px)}}
+@keyframes pop{from{opacity:0;transform:scale(.4) rotate(-12deg)}to{opacity:1;transform:none}}
+@keyframes float{to{transform:translateY(-9px)}}
+
+/* ---------- seções ---------- */
+section.s{padding:64px 0}
+h2{color:#fff;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:300;margin:0 0 12px}
+.lead{max-width:60ch;color:#b5bac1;margin:0 0 30px}
+.card{background:rgba(28,31,38,.78);border:1px solid var(--line);border-radius:16px;padding:26px;backdrop-filter:blur(8px);transition:transform .3s,border-color .3s,box-shadow .3s}
+.card:hover{transform:translateY(-5px);border-color:rgba(88,101,242,.7);box-shadow:0 12px 34px rgba(88,101,242,.22)}
+.card h3{margin:0 0 8px;color:#fff;font-size:1.1rem}
+.card p{margin:0;color:#b5bac1;font-size:.96rem}
+.card>i{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:rgba(88,101,242,.18);color:#aab4ff;font-size:1.2rem;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.note{border-left:3px solid var(--p);background:rgba(88,101,242,.12);padding:18px 22px;border-radius:0 14px 14px 0;max-width:68ch}
+.note b{color:#fff}
+
+/* fluxo com pulso viajando */
+.flow{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch}
+.flow>div{flex:1;min-width:150px;text-align:center;padding:22px 14px;background:rgba(28,31,38,.78);border:1px solid var(--line);border-radius:16px;font-size:.9rem;color:var(--m);animation:glow 6s ease-in-out infinite;animation-delay:calc(var(--i)*1.5s)}
+.flow>div i{display:block;font-size:1.6rem;color:#aab4ff;margin-bottom:10px}
+.flow>div b{display:block;color:#fff;font-size:1rem}
+.flow>span{align-self:center;color:var(--p);animation:nudge 1.4s ease-in-out infinite}
+@keyframes glow{0%,20%,100%{border-color:var(--line);box-shadow:none}8%{border-color:var(--p);box-shadow:0 0 28px rgba(88,101,242,.5)}}
+@keyframes nudge{50%{transform:translateX(5px)}}
+
+/* demonstração */
+.demo{max-width:620px;margin:0 auto;padding:22px;display:flex;flex-direction:column;gap:12px;min-height:250px}
+.demo .m{max-width:86%;padding:11px 16px;border-radius:16px;font-size:.95rem;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.demo .m.show{opacity:1;transform:none}
+.demo .u{align-self:flex-end;background:var(--p);color:#fff;border-bottom-right-radius:4px}
+.demo .a{align-self:flex-start;background:#262a33;border-bottom-left-radius:4px}
+.demo .a.typing::after{background:#aab4ff}
+
+/* etapas */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;counter-reset:s}
+.steps .card{counter-increment:s;position:relative;padding-top:34px}
+.steps .card::before{content:counter(s);position:absolute;top:-16px;left:22px;width:34px;height:34px;border-radius:50%;background:var(--p);color:#fff;display:grid;place-items:center;font-weight:700;box-shadow:0 0 20px rgba(88,101,242,.6)}
+
+.cta{text-align:center;padding:90px 0 80px}
+.cta p{color:#b5bac1;margin:0 0 26px}
+.cta .btn{animation:pulse 2.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(88,101,242,.55)}70%{box-shadow:0 0 0 18px rgba(88,101,242,0)}100%{box-shadow:0 0 0 0 rgba(88,101,242,0)}}
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center;color:var(--m);font-size:.88rem;background:rgba(15,17,23,.7)}
+footer a{color:#aab4ff;margin:0 9px}
+
+/* entrada ao rolar */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--dl,0s)}
+.rv.in{opacity:1;transform:none}
+@media(max-width:700px){.flow>span{display:none}.bar .hide{display:none}.hero p{min-height:7.5em}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.rv,.hero .btns,.demo .m{opacity:1!important;transform:none!important}.eq i{transform:scaleY(var(--h))}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="dots" id="dots"></div>
+  <div class="eq" id="eq"></div>
+</div>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="index.html"><img class="logo" src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove IA</a>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a class="btn ghost sm hide" href="index.html"><i class="fas fa-arrow-left"></i> Início</a>
+      <a class="btn sm" href="chat.html"><i class="fas fa-flask"></i> Testar a IA</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <img class="logo" src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'">
+  <h1 id="tTitle" aria-label="Azul Groove IA"></h1>
+  <p id="tSub" aria-label="Converse com inteligências artificiais direto pelo site da ASTM Software, sem criar conta e sem instalar nada."></p>
+  <div class="btns" id="heroBtns">
+    <a class="btn" href="chat.html"><i class="fas fa-flask"></i> Testar a IA</a>
+    <a class="btn ghost" href="#o-que-e"><i class="fas fa-circle-info"></i> Saiba mais</a>
+  </div>
+  <i class="fas fa-chevron-down scroll" aria-hidden="true"></i>
+</div>
+
+<section class="s" id="o-que-e"><div class="wrap">
+  <h2 class="rv">O que é a Azul Groove IA</h2>
+  <p class="lead rv" style="--dl:.1s">É um chat que conecta você a serviços de inteligência artificial. Você escreve a mensagem e recebe a resposta aqui mesmo, no site.</p>
+  <div class="note rv" style="--dl:.2s"><b>Nossa IA não é igual às outras.</b> Nós não criamos nem treinamos um modelo próprio. Somos um provedor: levamos a sua mensagem até o servidor de um serviço de terceiros e mostramos a resposta que ele devolve. A qualidade e o conteúdo das respostas vêm desse serviço.</div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <h2 class="rv">Como funciona</h2>
+  <p class="lead rv" style="--dl:.1s">O caminho da sua mensagem é curto e direto.</p>
+  <div class="flow rv" style="--dl:.2s">
+    <div style="--i:0"><i class="fas fa-user"></i><b>Você</b>escreve a mensagem</div>
+    <span><i class="fas fa-arrow-right"></i></span>
+    <div style="--i:1"><i class="fas fa-robot"></i><b>Azul Groove IA</b>envia o pedido</div>
+    <span><i class="fas fa-arrow-right"></i></span>
+    <div style="--i:2"><i class="fas fa-server"></i><b>Servidor de terceiros</b>gera a resposta</div>
+    <span><i class="fas fa-arrow-right"></i></span>
+    <div style="--i:3"><i class="fas fa-comment-dots"></i><b>Chat</b>mostra para você</div>
+  </div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <h2 class="rv">Veja como é</h2>
+  <p class="lead rv" style="--dl:.1s">Uma conversa de exemplo, só para dar uma ideia.</p>
+  <div class="card demo rv" id="demo" style="--dl:.2s"></div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <h2 class="rv">O que você pode fazer</h2>
+  <p class="lead rv" style="--dl:.1s">Tudo isso já está no chat.</p>
+  <div class="grid">
+    <div class="card rv" style="--dl:.1s"><i class="fas fa-comments"></i><h3>Conversar</h3><p>Tire dúvidas, peça textos, ideias e explicações, e continue a conversa de onde parou.</p></div>
+    <div class="card rv" style="--dl:.2s"><i class="fas fa-globe"></i><h3>Pesquisar na internet</h3><p>Ative a pesquisa para a IA buscar informações atuais antes de responder.</p></div>
+    <div class="card rv" style="--dl:.3s"><i class="fas fa-shuffle"></i><h3>Escolher o serviço</h3><p>Use OpenRouter, OpenAI, Groq, Gemini, Together ou até um modelo rodando no seu computador.</p></div>
+  </div>
+</div></section>
+
+<section class="s"><div class="wrap">
+  <h2 class="rv">Para começar</h2>
+  <p class="lead rv" style="--dl:.1s">São só três passos.</p>
+  <div class="steps">
+    <div class="card rv" style="--dl:.1s"><h3>Aceite os termos</h3><p>Leia os <a href="licenca.html" style="color:#aab4ff">Termos de Uso</a> e a <a href="privacidade.html" style="color:#aab4ff">Política de Privacidade</a> e marque que concorda.</p></div>
+    <div class="card rv" style="--dl:.2s"><h3>Entre com o Discord</h3><p>O login serve para guardar as suas conversas, para você voltar a elas depois.</p></div>
+    <div class="card rv" style="--dl:.3s"><h3>Converse</h3><p>Escreva a primeira mensagem. Se quiser, troque o serviço de IA nas configurações do chat.</p></div>
+  </div>
+</div></section>
+
+<section class="cta"><div class="wrap rv">
+  <h2>Quer ver funcionando?</h2>
+  <p>Leva menos de um minuto.</p>
+  <a class="btn" href="chat.html"><i class="fas fa-flask"></i> Testar a IA</a>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <a href="index.html">Início</a><a href="privacidade.html">Política de Privacidade</a><a href="licenca.html">Termos de Uso</a><a href="licenca-ia.html">Licença de Uso da IA</a>
+  <p>&copy; 2026 ASTM Software. Todos os direitos reservados.</p>
+</div></footer>
+
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* fundo: barras do equalizador e pontinhos */
+(()=>{const eq=document.getElementById('eq'),n=56;
+ for(let i=0;i<n;i++){const b=document.createElement('i'),w=Math.sin(i/n*Math.PI);
+  b.style.cssText=`--h:${(.25+Math.random()*.75*(.4+w*.6)).toFixed(2)};--d:${(.7+Math.random()*1.1).toFixed(2)}s;--l:${(-Math.random()*2).toFixed(2)}s;--e:${(.3+i*.015).toFixed(2)}s`;eq.appendChild(b)}
+ const d=document.getElementById('dots');
+ for(let i=0;i<40;i++){const b=document.createElement('b');
+  b.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(3+Math.random()*4).toFixed(1)}s;--l:${(-Math.random()*6).toFixed(1)}s`;d.appendChild(b)}})();
+
+/* digitação */
+async function typeInto(el,text,speed=45){
+ el.classList.add('typing');
+ if(reduce){el.textContent=text}
+ else for(let i=1;i<=text.length;i++){el.textContent=text.slice(0,i);
+  const c=text[i-1];await sleep(speed+(',.'.includes(c)?220:0)+Math.random()*25)}
+ el.classList.remove('typing')}
+(async()=>{
+ const t=document.getElementById('tTitle'),s=document.getElementById('tSub');
+ if(!reduce)await sleep(700);
+ await typeInto(t,t.getAttribute('aria-label'),70);
+ if(!reduce)await sleep(250);
+ await typeInto(s,s.getAttribute('aria-label'),22);
+ document.getElementById('heroBtns').classList.add('show')})();
+
+/* aparecer ao rolar */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+
+/* conversa de exemplo, em loop, quando aparece na tela */
+const SCRIPT=[
+ ['u','Me explica o que é uma API em uma frase?'],
+ ['a','Uma API é como um garçom: você faz o pedido, ele leva até a cozinha (outro sistema) e traz o resultado de volta.'],
+ ['u','Legal! E dá para usar com música?'],
+ ['a','Dá sim! O Azul Groove, por exemplo, usa serviços assim para buscar e tocar músicas no seu servidor do Discord.']
+];
+let demoOn=false;
+async function playDemo(){
+ const box=document.getElementById('demo');
+ for(;;){
+  box.innerHTML='';
+  for(const [who,txt] of SCRIPT){
+   const m=document.createElement('div');m.className='m '+who;box.appendChild(m);
+   await sleep(60);m.classList.add('show');
+   if(who==='u'){m.textContent=txt;await sleep(reduce?0:900)}
+   else await typeInto(m,txt,16);
+   if(!reduce)await sleep(500)}
+  if(reduce)return;
+  await sleep(4500)}}
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting&&!demoOn){demoOn=true;playDemo();o.disconnect()}},{threshold:.3}).observe(document.getElementById('demo'));
+</script>
+</body>
+</html>

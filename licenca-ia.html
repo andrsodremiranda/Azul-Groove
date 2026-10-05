@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Licença de Uso da IA - ASTM Software</title>
+    <link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body { background: radial-gradient(circle at top right, #34373c 0%, #202225 100%); color: #dcddde; padding-top: 80px; min-height: 100vh; }
+        .page { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .back-button { display: inline-flex; align-items: center; color: #5865F2; text-decoration: none; font-weight: bold; transition: color .3s ease; }
+        .back-button:hover { color: #4752C4; }
+        .lang-btn { background: rgba(88,101,242,.2); border: 1px solid #5865F2; color: #fff; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: .95rem; transition: all .3s ease; display: flex; align-items: center; gap: 8px; font-weight: 600; }
+        .lang-btn:hover { background: #5865F2; transform: translateY(-2px); }
+        .card { background: rgba(47,49,54,.85); border: 1px solid rgba(255,255,255,.05); border-radius: 12px; padding: 50px; box-shadow: 0 10px 30px rgba(0,0,0,.4); backdrop-filter: blur(10px); }
+        .card h1 { color: #fff; margin-bottom: 20px; font-size: 2rem; border-bottom: 2px solid #5865F2; padding-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+        .card h3 { color: #5865F2; margin-top: 30px; margin-bottom: 12px; font-size: 1.25rem; }
+        .card p, .card li { line-height: 1.7; margin-bottom: 12px; font-size: 1.02rem; }
+        .card ul { padding-left: 20px; margin-bottom: 20px; }
+        .card a { color: #5865F2; text-decoration: none; }
+        .card a:hover { text-decoration: underline; }
+        .summary { background: rgba(88,101,242,.12); border-left: 3px solid #5865F2; border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 10px; }
+        .summary p { margin: 0 0 8px; }
+        .summary p:last-child { margin-bottom: 0; }
+        .foot { margin-top: 40px; font-size: .9rem; color: #a3a6aa; border-top: 1px solid rgba(255,255,255,.1); padding-top: 20px; }
+        #en-content { display: none; }
+        @media (max-width: 768px) { .card { padding: 30px 20px; } }
+    </style>
+</head>
+<body>
+    <nav style="background: rgba(32, 34, 37, 0.98);">
+        <div class="nav-container">
+            <div class="logo"><i class="fab fa-discord"></i> Azul Groove</div>
+            <a href="ia.html" class="cta-button glow-on-hover" style="background: transparent; border: 1px solid #5865F2;">Voltar / Back</a>
+        </div>
+    </nav>
+
+    <div class="page fade-in-up">
+        <div class="header-actions">
+            <a href="ia.html" class="back-button" id="backBtn"><i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Voltar para a IA</a>
+            <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">🇺🇸 English</button>
+        </div>
+
+        <div class="card">
+            <!-- PORTUGUÊS -->
+            <div id="pt-content">
+                <h1><i class="fas fa-file-contract"></i> LICENÇA DE USO DA IA – ASTM Software</h1>
+
+                <div class="summary">
+                    <p><strong>Em resumo:</strong></p>
+                    <p>• A Azul Groove IA não coleta seus dados. Não temos servidor que receba suas mensagens, conversas ou chaves.</p>
+                    <p>• Tudo o que fica salvo (conversas, configurações, tema) fica no seu navegador, no seu aparelho.</p>
+                    <p>• Para responder, a IA usa o serviço de um terceiro, e é ele quem recebe o que você escreve.</p>
+                </div>
+
+                <h3>1. O que é a Azul Groove IA</h3>
+                <p>A Azul Groove IA é uma interface de chat da ASTM Software. Ela <strong>não é um modelo de inteligência artificial próprio</strong>: ela envia a sua mensagem para o servidor de um serviço de terceiros e mostra a resposta que ele devolve.</p>
+
+                <h3>2. Licença concedida</h3>
+                <p>A ASTM Software concede a você uma licença gratuita, pessoal, não exclusiva, intransferível e revogável para usar a Azul Groove IA pelo site, de acordo com estes termos. Ao marcar que concorda e usar o chat, você aceita esta licença.</p>
+
+                <h3>3. Não coletamos dados</h3>
+                <p>A ASTM Software não coleta, não recebe e não armazena em servidores próprios:</p>
+                <ul>
+                    <li>as mensagens que você escreve para a IA;</li>
+                    <li>as respostas geradas;</li>
+                    <li>as suas conversas e o seu histórico;</li>
+                    <li>as suas chaves de API.</li>
+                </ul>
+                <p>Também não vendemos, alugamos ou compartilhamos dados seus, porque não temos esses dados.</p>
+
+                <h3>4. O que fica salvo no seu navegador</h3>
+                <p>Para o chat funcionar, o seu navegador guarda localmente (armazenamento local e cookies):</p>
+                <ul>
+                    <li>suas conversas e lembranças, se você as usar;</li>
+                    <li>as configurações do chat, como serviço de IA, modelo, tema e fundo;</li>
+                    <li>a sua chave de API, somente se você marcar a opção de lembrar;</li>
+                    <li>os dados básicos do login com o Discord (identificador, nome e avatar) e o aceite dos termos;</li>
+                    <li>o contador do limite do Modo Visitante.</li>
+                </ul>
+                <p>Esses dados ficam no seu aparelho e podem ser apagados a qualquer momento, saindo da conta ou limpando os dados do site no navegador. Se você limpar, as conversas salvas serão perdidas.</p>
+
+                <h3>5. Serviços de terceiros</h3>
+                <p>Para gerar respostas, a Azul Groove IA depende de serviços que não são da ASTM Software:</p>
+                <ul>
+                    <li><strong>Serviço de IA escolhido por você</strong> (por exemplo OpenRouter, OpenAI, Groq, Google Gemini ou Together AI): ele recebe o texto que você envia e a sua chave, e trata esses dados conforme as próprias regras. Se você usar um modelo no seu computador (como Ollama ou LM Studio), a mensagem não sai do seu aparelho.</li>
+                    <li><strong>Pesquisa na internet</strong>, se você ativar: o assunto da sua pergunta pode ser enviado a fontes de consulta públicas para buscar informações atuais.</li>
+                    <li><strong>Discord</strong>, para o login.</li>
+                    <li><strong>Sincronização entre aparelhos</strong>, se você usar: as conversas vão direto de um aparelho para o outro (conexão WebRTC). Um serviço público de conexão (PeerJS) e servidores STUN do Google ajudam os dois aparelhos a se encontrarem e podem ver o endereço de IP, mas as conversas não passam por servidor da ASTM Software.</li>
+                </ul>
+                <p>Não controlamos esses serviços. Recomendamos ler os termos e as políticas de privacidade de cada um e <strong>não enviar senhas, documentos ou outras informações sensíveis</strong> no chat.</p>
+
+                <h3>6. Sua chave de API</h3>
+                <p>A chave de API é sua. Você é responsável por guardá-la, por não compartilhá-la e por qualquer custo ou limite cobrado pelo serviço de IA que escolher. Não use o chat em computadores compartilhados com a chave salva.</p>
+
+                <h3>7. Modo Visitante</h3>
+                <p>Quem não entra com o Discord pode usar uma versão de teste, limitada a <strong>5 mensagens por minuto</strong>. Tentar burlar esse limite não é permitido.</p>
+
+                <h3>8. Uso aceitável</h3>
+                <p>Você concorda em não usar a Azul Groove IA para:</p>
+                <ul>
+                    <li>atividades ilegais ou que violem direitos de outras pessoas;</li>
+                    <li>gerar ou espalhar conteúdo de ódio, assédio, golpes ou desinformação;</li>
+                    <li>criar malware ou tentar invadir sistemas;</li>
+                    <li>sobrecarregar, copiar ou tentar explorar falhas do site;</li>
+                    <li>qualquer uso que viole as regras do serviço de IA escolhido.</li>
+                </ul>
+
+                <h3>9. Sobre as respostas da IA</h3>
+                <p>As respostas vêm de um serviço de terceiros e podem conter erros, estar desatualizadas ou ser imprecisas. Elas não substituem orientação profissional (médica, jurídica, financeira ou outra). Confira as informações importantes antes de agir com base nelas.</p>
+
+                <h3>10. Isenção de garantia e responsabilidade</h3>
+                <p>A Azul Groove IA é oferecida "como está", sem garantia de disponibilidade, exatidão ou adequação a um fim específico. Na extensão permitida por lei, a ASTM Software não se responsabiliza por danos decorrentes do uso da IA, das respostas recebidas, da indisponibilidade de serviços de terceiros ou da perda de dados salvos no seu navegador.</p>
+
+                <h3>11. Propriedade intelectual</h3>
+                <p>O site, a marca Azul Groove e a interface pertencem à ASTM Software. O conteúdo gerado pela IA segue os termos do serviço de terceiros utilizado. Você é responsável pelo uso que fizer do que receber.</p>
+
+                <h3>12. Alterações e contato</h3>
+                <p>Esta Licença pode ser atualizada. Mudanças relevantes serão publicadas nos canais oficiais da ASTM Software. Dúvidas ou pedidos podem ser enviados para:<br>
+                📧 <a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+                <p>Veja também a <a href="privacidade.html">Política de Privacidade</a> e os <a href="licenca.html">Termos de Uso</a> do Azul Groove.</p>
+
+                <p class="foot">&copy; 2026 ASTM Software. Todos os direitos reservados.</p>
+            </div>
+
+            <!-- INGLÊS -->
+            <div id="en-content">
+                <h1><i class="fas fa-file-contract"></i> AI USE LICENSE – ASTM Software</h1>
+
+                <div class="summary">
+                    <p><strong>In short:</strong></p>
+                    <p>• Azul Groove AI does not collect your data. We have no server that receives your messages, chats or keys.</p>
+                    <p>• Everything that is saved (chats, settings, theme) stays in your browser, on your device.</p>
+                    <p>• To answer, the AI uses a third-party service, and that service receives what you write.</p>
+                </div>
+
+                <h3>1. What Azul Groove AI is</h3>
+                <p>Azul Groove AI is a chat interface by ASTM Software. It is <strong>not an artificial intelligence model of our own</strong>: it sends your message to a third-party service's server and shows the reply that server returns.</p>
+
+                <h3>2. License granted</h3>
+                <p>ASTM Software grants you a free, personal, non-exclusive, non-transferable and revocable license to use Azul Groove AI through the website, under these terms. By ticking that you agree and using the chat, you accept this license.</p>
+
+                <h3>3. We do not collect data</h3>
+                <p>ASTM Software does not collect, receive or store on its own servers:</p>
+                <ul>
+                    <li>the messages you write to the AI;</li>
+                    <li>the replies generated;</li>
+                    <li>your chats and history;</li>
+                    <li>your API keys.</li>
+                </ul>
+                <p>We also do not sell, rent or share your data, because we do not have it.</p>
+
+                <h3>4. What is saved in your browser</h3>
+                <p>For the chat to work, your browser stores locally (local storage and cookies):</p>
+                <ul>
+                    <li>your chats and memories, if you use them;</li>
+                    <li>chat settings, such as AI service, model, theme and wallpaper;</li>
+                    <li>your API key, only if you tick the remember option;</li>
+                    <li>basic Discord login data (ID, name and avatar) and your acceptance of the terms;</li>
+                    <li>the Visitor Mode limit counter.</li>
+                </ul>
+                <p>This data stays on your device and can be deleted at any time by signing out or clearing the site's data in your browser. If you clear it, saved chats will be lost.</p>
+
+                <h3>5. Third-party services</h3>
+                <p>To generate replies, Azul Groove AI depends on services that do not belong to ASTM Software:</p>
+                <ul>
+                    <li><strong>The AI service you choose</strong> (for example OpenRouter, OpenAI, Groq, Google Gemini or Together AI): it receives the text you send and your key, and handles them under its own rules. If you use a model on your own computer (such as Ollama or LM Studio), the message does not leave your device.</li>
+                    <li><strong>Web search</strong>, if you turn it on: the topic of your question may be sent to public lookup sources to fetch current information.</li>
+                    <li><strong>Discord</strong>, for login.</li>
+                    <li><strong>Device sync</strong>, if you use it: chats go straight from one device to the other (WebRTC connection). A public connection service (PeerJS) and Google STUN servers help the two devices find each other and may see the IP address, but chats do not pass through an ASTM Software server.</li>
+                </ul>
+                <p>We do not control these services. We recommend reading each one's terms and privacy policy and <strong>not sending passwords, documents or other sensitive information</strong> in the chat.</p>
+
+                <h3>6. Your API key</h3>
+                <p>The API key is yours. You are responsible for keeping it safe, not sharing it, and for any cost or limit charged by the AI service you choose. Do not use the chat on shared computers with the key saved.</p>
+
+                <h3>7. Visitor Mode</h3>
+                <p>People who do not sign in with Discord can use a trial version, limited to <strong>5 messages per minute</strong>. Trying to bypass this limit is not allowed.</p>
+
+                <h3>8. Acceptable use</h3>
+                <p>You agree not to use Azul Groove AI to:</p>
+                <ul>
+                    <li>carry out illegal activities or violate the rights of others;</li>
+                    <li>generate or spread hate speech, harassment, scams or disinformation;</li>
+                    <li>create malware or try to break into systems;</li>
+                    <li>overload, copy or try to exploit flaws in the site;</li>
+                    <li>make any use that violates the rules of the AI service you chose.</li>
+                </ul>
+
+                <h3>9. About AI replies</h3>
+                <p>Replies come from a third-party service and may contain errors, be outdated or inaccurate. They do not replace professional advice (medical, legal, financial or other). Check important information before acting on it.</p>
+
+                <h3>10. Disclaimer and liability</h3>
+                <p>Azul Groove AI is provided "as is", with no guarantee of availability, accuracy or fitness for a particular purpose. To the extent permitted by law, ASTM Software is not liable for damages arising from the use of the AI, the replies received, the unavailability of third-party services or the loss of data saved in your browser.</p>
+
+                <h3>11. Intellectual property</h3>
+                <p>The website, the Azul Groove brand and the interface belong to ASTM Software. Content generated by the AI follows the terms of the third-party service used. You are responsible for how you use what you receive.</p>
+
+                <h3>12. Changes and contact</h3>
+                <p>This License may be updated. Significant changes will be posted on ASTM Software's official channels. Questions or requests can be sent to:<br>
+                📧 <a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+                <p>See also the Azul Groove <a href="privacidade.html">Privacy Policy</a> and <a href="licenca.html">Terms of Use</a>.</p>
+
+                <p class="foot">&copy; 2026 ASTM Software. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const savedLang = localStorage.getItem('site_lang');
+        const browserLang = navigator.language || navigator.userLanguage;
+        let isEnglish = savedLang === 'en' || (!savedLang && browserLang.startsWith('en'));
+
+        function applyPageLang() {
+            const pt = document.getElementById('pt-content'), en = document.getElementById('en-content');
+            const btn = document.getElementById('langToggleBtn'), back = document.getElementById('backBtn');
+            pt.style.display = isEnglish ? 'none' : 'block';
+            en.style.display = isEnglish ? 'block' : 'none';
+            btn.innerHTML = isEnglish ? '🇧🇷 Português' : '🇺🇸 English';
+            back.innerHTML = '<i class="fas fa-arrow-left" style="margin-right: 8px;"></i> ' + (isEnglish ? 'Back to the AI' : 'Voltar para a IA');
+        }
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            localStorage.setItem('site_lang', isEnglish ? 'en' : 'pt');
+            applyPageLang();
+        }
+        document.addEventListener('DOMContentLoaded', applyPageLang);
+    </script>
+</body>
+</html>

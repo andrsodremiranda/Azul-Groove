@@ -1,0 +1,58 @@
+[
+  {
+    "id": "update",
+    "titulo": "Novidades do site",
+    "tags": [
+      "update",
+      "atualizacao",
+      "novidades",
+      "versao",
+      "os",
+      "astm os"
+    ],
+    "resposta": "✨ **Novidades do Azul Groove:**\n• Chat com IA: use OpenRouter, OpenAI, Groq, Gemini, Ollama, LM Studio ou qualquer serviço compatível com OpenAI.\n• Pesquisa na internet, com as fontes nas respostas.\n• Modo claro e escuro, com troca animada.\n• Fundo do chat personalizável: cores, sua própria imagem e efeitos que podem ser desligados.\n• Barra lateral que pode ser recolhida. Clique em Azul Groove para voltar ao início.\n• Horários melhores: as conversas mostram Hoje, Ontem e a data de cada mensagem.\n• Menu da conversa: renomear, salvar (.txt ou .json), copiar e apagar.\n• Sua chave fica só no seu navegador.\n• 🚀 **ASTM OS 15.0** já está disponível."
+  },
+  {
+    "id": "erros",
+    "titulo": "Erros comuns",
+    "tags": [
+      "erros",
+      "erro",
+      "problema",
+      "bug",
+      "ajuda",
+      "offline",
+      "som",
+      "sem som"
+    ],
+    "resposta": "⚠️ **Erros comuns:**\n1. **Bot offline:** verifique as permissões do bot no servidor do Discord.\n2. **Sem som:** confirme se o bot tem permissão para falar no canal de voz."
+  },
+  {
+    "id": "comandos",
+    "titulo": "Comandos e RPC",
+    "tags": [
+      "comandos",
+      "comando",
+      "rpc",
+      "play",
+      "skip",
+      "stop",
+      "musica",
+      "tocar"
+    ],
+    "resposta": "🤖 **Comandos principais:**\n• /play [música] - toca uma música ou playlist.\n• /stop - para a reprodução e limpa a fila.\n• /skip - pula para a próxima faixa."
+  },
+  {
+    "id": "sobre",
+    "titulo": "Sobre o Azul Groove",
+    "tags": [
+      "sobre",
+      "bot",
+      "azul groove",
+      "astm",
+      "quem",
+      "criador"
+    ],
+    "resposta": "ℹ️ **Sobre o Azul Groove:** bot de música e moderação desenvolvido pela ASTM Software."
+  }
+]
