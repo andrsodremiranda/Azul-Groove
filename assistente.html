@@ -9,7 +9,6 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="style.css" />
 
     <style>
         .nav-lang-btn {
@@ -554,13 +553,123 @@
         #cfg .mlist button.on { background: #5865F2; color: #fff; border-color: #5865F2; }
         .cfg-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #202225; color: #fff; border: 1px solid rgba(255,255,255,.12); padding: 10px 16px; border-radius: 12px; z-index: 10000; opacity: 0; transition: .25s; pointer-events: none; }
         .cfg-toast.on { opacity: 1; }
+
+        /* ================= Visual igual ao do chat.html ================= */
+        :root { color-scheme: dark; --bg: #0f1117; --card: #1c1f26; --inp: #1e1f22; --line: rgba(255,255,255,.08); --p: #5865F2; --p2: #4752C4; --t: #dbdee1; --m: #949ba4; --hi: #e8eaed; --soft: rgba(255,255,255,.06); }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--t); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.5; min-height: 100dvh; overflow-x: hidden; }
+        button { font-family: inherit; }
+        a { color: inherit; }
+
+        /* fundo animado */
+        .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: radial-gradient(ellipse 70% 55% at 50% 40%, rgba(36,62,170,.45) 0%, rgba(15,17,23,0) 70%), var(--bg); }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .5; animation: drift 16s ease-in-out infinite alternate; }
+        .o1 { width: 460px; height: 460px; background: #2438aa; left: 8%; top: 10%; }
+        .o2 { width: 360px; height: 360px; background: #5865F2; right: 6%; top: 32%; animation-duration: 20s; animation-delay: -6s; }
+        .o3 { width: 280px; height: 280px; background: #1fb6ff; left: 40%; bottom: 4%; opacity: .28; animation-duration: 24s; animation-delay: -3s; }
+        @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(70px,-50px) scale(1.2); } }
+        .eq { position: absolute; left: 0; right: 0; bottom: 0; height: 45%; display: flex; align-items: flex-end; justify-content: center; gap: clamp(4px,.9vw,10px); padding: 0 4%; -webkit-mask-image: linear-gradient(to top,#000 0%,transparent 95%); mask-image: linear-gradient(to top,#000 0%,transparent 95%); }
+        .eq i { flex: 1; max-width: 18px; min-width: 3px; height: 100%; border-radius: 999px 999px 0 0; background: linear-gradient(to top, rgba(88,101,242,.7), rgba(31,182,255,.1)); transform-origin: bottom; transform: scaleY(.08); animation: bar var(--d) ease-in-out var(--l) infinite alternate, barIn 1.2s cubic-bezier(.2,.7,.2,1) var(--e, .3s) backwards; }
+        @keyframes bar { from { transform: scaleY(.08); } to { transform: scaleY(var(--h)); } }
+        @keyframes barIn { from { opacity: 0; transform: scaleY(0); } }
+        .bgdots { position: absolute; inset: 0; }
+        .bgdots b { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #9db0ff; opacity: 0; animation: twinkle var(--d) ease-in-out var(--l) infinite; }
+        @keyframes twinkle { 50% { opacity: .7; transform: translateY(-14px); } }
+
+        /* barra do topo */
+        nav { position: sticky; top: 0; z-index: 50; background: rgba(15,17,23,.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        nav .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: #fff; }
+        nav .logo img, .auth-portal-card h2 img { width: 30px; height: 30px; border-radius: 9px; object-fit: cover; }
+        .nav-links { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
+        .nav-links a { display: block; color: var(--m); padding: 8px 12px; border-radius: 10px; font-size: .9rem; text-decoration: none; transition: background .2s, color .2s; }
+        .nav-links a:hover { background: rgba(88,101,242,.15); color: #fff; }
+        .cta-button { background: var(--p); color: #fff !important; padding: 9px 18px; border-radius: 12px; font-weight: 600; font-size: .88rem; text-decoration: none; white-space: nowrap; transition: background .25s, box-shadow .25s, transform .25s; }
+        .cta-button:hover { background: var(--p2); box-shadow: 0 8px 24px rgba(88,101,242,.5); transform: translateY(-1px); }
+        .nav-lang-btn { padding: 7px 14px !important; border-radius: 12px !important; background: var(--soft) !important; border: 1px solid var(--line) !important; font-size: .85rem !important; }
+        .nav-lang-btn:hover { background: var(--p) !important; border-color: var(--p) !important; box-shadow: none !important; }
+        @media (max-width: 980px) { .nav-links { display: none; } }
+        @media (max-width: 560px) { .cta-button { display: none; } nav .logo { font-size: .95rem; } }
+
+        /* área do chat (tela cheia, como no chat.html) */
+        .assistant-section { height: calc(100dvh - 58px); min-height: 520px; padding: 0; display: block; }
+        .assistant-container { width: 100%; max-width: none; height: 100%; min-height: 0; background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; overflow: hidden; display: flex; flex-direction: column; }
+        .assistant-header { padding: 12px 20px; background: transparent; border-bottom: 1px solid var(--line); }
+        .assistant-avatar { width: 36px; height: 36px; border-radius: 11px; font-size: 1.05rem; box-shadow: none; }
+        .status-indicator { border-color: var(--bg); width: 10px; height: 10px; }
+        .assistant-info h2 { font-size: 1rem; margin: 0; }
+        .assistant-info p { font-size: .78rem; }
+        .cfg-btn { background: var(--soft); border: 1px solid var(--line); border-radius: 12px; color: var(--t); }
+        .cfg-btn:hover { background: var(--p); color: #fff; }
+        .ai-news-btn { background: var(--soft); border: 1px solid var(--line); color: var(--t); box-shadow: none; border-radius: 18px; padding: 8px 14px; }
+        .ai-news-btn:hover { background: var(--p); color: #fff; transform: none; box-shadow: none; }
+
+        /* tela inicial: logo + título, igual ao chat */
+        .hero { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 0 20px 8px; margin-top: auto; }
+        .hero img { width: 56px; height: 56px; border-radius: 16px; object-fit: cover; box-shadow: 0 0 40px rgba(88,101,242,.5); }
+        .hero h2 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 300; color: var(--hi); }
+        .assistant-container.chatting .hero { display: none; }
+
+        .assistant-chat-body { flex: 1 1 auto; width: 100%; max-width: 780px; margin: 0 auto; padding: 24px 20px; gap: 14px; }
+        .assistant-container:not(.chatting) .assistant-chat-body { flex: 0 1 auto; max-height: 38%; }
+        .chat-message { max-width: min(760px, 90%); }
+        .message-bubble { padding: 12px 16px; border-radius: 18px; font-size: .95rem; }
+        .bot .message-bubble { background: var(--card); border: 1px solid var(--line); border-top-left-radius: 4px; }
+        .user .message-bubble { background: var(--p); box-shadow: none; border-top-right-radius: 4px; }
+        .message-time { font-size: .68rem; opacity: .5; color: inherit; margin-top: 4px; }
+        .typing-box { background: var(--card); border: 1px solid var(--line); }
+
+        /* campo de mensagem arredondado */
+        .assistant-input-area { width: 100%; max-width: 780px; margin: 0 auto; padding: 10px 20px 14px; background: none; border-top: 0; display: block; }
+        .assistant-input-wrapper { width: 100%; background: var(--inp); border: 1px solid var(--line); border-radius: 28px; padding: 6px 6px 6px 20px; align-items: flex-end; gap: 8px; }
+        .assistant-container:not(.chatting) .assistant-input-wrapper { padding: 10px 10px 10px 24px; box-shadow: 0 8px 30px rgba(0,0,0,.35); }
+        .assistant-input-wrapper:focus-within { border-color: var(--p); box-shadow: none; }
+        .assistant-input-area textarea { padding: 10px 0; min-height: 40px; font-size: .97rem; }
+        .assistant-send-btn { width: 40px; height: 40px; border-radius: 50%; box-shadow: none; }
+        .assistant-send-btn:hover { background: var(--p2); transform: none; }
+
+        /* atalhos (somem quando a conversa começa, como no chat) */
+        .quick-options { display: flex; flex-wrap: wrap; justify-content: center; overflow: visible; gap: 8px; width: 100%; max-width: 780px; margin: 0 auto; padding: 0 20px 20px; }
+        .assistant-container:not(.chatting) .quick-options { margin-bottom: auto; }
+        .assistant-container.chatting .quick-options { display: none; }
+        .quick-option-btn { background: var(--soft); border: 1px solid var(--line); color: var(--t); padding: 9px 16px; border-radius: 18px; font-size: .84rem; }
+        .quick-option-btn:hover { background: var(--p); border-color: var(--p); color: #fff; transform: none; }
+
+        /* janelas */
+        .auth-portal-overlay { background: rgba(11,13,17,.82); }
+        .auth-portal-card, .modal-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+        .auth-portal-card h2 { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; }
+        .auth-portal-card h2 img { width: 38px; height: 38px; border-radius: 11px; }
+        .news-item h4 { color: #aab4ff; }
+        .modal-close-btn, .btn-custom-action { border-radius: 12px; }
+
+        /* rodapé */
+        footer { background: rgba(15,17,23,.7); border-top: 1px solid var(--line); padding: 34px 20px 26px; color: var(--m); font-size: .9rem; }
+        footer h3 { color: #fff; margin: 0 0 8px; font-size: 1rem; }
+        footer p { margin: 0 0 6px; }
+        footer a { color: #aab4ff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .footer-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+
+        @media (max-width: 600px) {
+            .assistant-section { padding: 0; }
+            .assistant-header { padding: 10px 14px; }
+            .assistant-info p { display: none; }
+            .assistant-chat-body { padding: 16px 14px; }
+            .assistant-input-area { padding: 8px 12px 12px; }
+            .quick-options { padding: 0 12px 16px; }
+            .chat-message { max-width: 94%; }
+        }
+        @media (prefers-reduced-motion: reduce) { .orb, .eq i, .bgdots b { animation: none !important; } .eq i { transform: scaleY(var(--h)); } }
     </style>
 </head>
 <body>
+    <div class="bg" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="bgdots" id="bgDots"></div><div class="eq" id="bgEq"></div></div>
     <!-- Portal de Autenticação Inicial -->
     <div class="auth-portal-overlay" id="authPortalModal">
         <div class="auth-portal-card">
-            <h2><i class="fab fa-discord" style="color: #5865F2;"></i> Azul Groove</h2>
+            <h2><img src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove</h2>
             <p data-pt="Para acessar o assistente virtual e os serviços, concorde com os termos e escolha uma opção:" data-en="To access the virtual assistant and services, accept the terms and choose an option:">Para acessar o assistente virtual e os serviços, concorde com os termos e escolha uma opção:</p>
             <p id="authError" role="alert" style="display:none;color:#ed4245;margin-bottom:14px"></p>
             
@@ -631,6 +740,10 @@
                 <p data-pt="Além do Discord, agora dá para entrar com Google ou GitHub (via Firebase). Em ⚙️ Configurações > Conta há a opção de entrar com outra conta." data-en="Besides Discord, you can now sign in with Google or GitHub (via Firebase). In ⚙️ Settings > Account you can switch accounts.">Além do Discord, agora dá para entrar com Google ou GitHub (via Firebase). Em ⚙️ Configurações > Conta há a opção de entrar com outra conta.</p>
             </div>
             <div class="news-item">
+                <h4 data-pt="🔧 Login corrigido" data-en="🔧 Sign-in fixed">🔧 Login corrigido</h4>
+                <p data-pt="Entrar pelo assistente agora leva direto ao chat, e entrar pelo chat não volta mais ao início. O login do Discord retorna para o chat." data-en="Signing in from the assistant now takes you straight to the chat, and signing in from the chat no longer sends you back to the start. Discord sign-in returns to the chat.">Entrar pelo assistente agora leva direto ao chat, e entrar pelo chat não volta mais ao início. O login do Discord retorna para o chat.</p>
+            </div>
+            <div class="news-item">
                 <h4 data-pt="👋 Boas-vindas e botão de apoio" data-en="👋 Welcome message and support button">👋 Boas-vindas e botão de apoio</h4>
                 <p data-pt="Ao entrar você recebe uma mensagem de boas-vindas. No chat há um botão para apoiar o projeto pela LivePix." data-en="After signing in you get a welcome message. The chat has a button to support the project on LivePix.">Ao entrar você recebe uma mensagem de boas-vindas. No chat há um botão para apoiar o projeto pela LivePix.</p>
             </div>
@@ -660,8 +773,8 @@
     <!-- NAVEGAÇÃO DE CIMA MANTIDA -->
     <nav>
         <div class="nav-container">
-            <div class="logo" style="color: #ffffff; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
-                <i class="fab fa-discord" style="color: #5865F2;"></i> Azul Groove
+            <div class="logo">
+                <img src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove
             </div>
             <ul class="nav-links">
                 <li><a href="index.html#home" data-pt="Início" data-en="Home">Início</a></li>
@@ -719,6 +832,12 @@
                 </div>
             </div>
 
+            <!-- Tela inicial (some quando a conversa começa) -->
+            <div class="hero">
+                <img src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'">
+                <h2 data-pt="Como posso ajudar?" data-en="How can I help?">Como posso ajudar?</h2>
+            </div>
+
             <!-- Corpo de Mensagens -->
             <div class="assistant-chat-body" id="chatBody">
                 <div class="chat-message bot">
@@ -731,6 +850,16 @@
                 </div>
             </div>
 
+            <!-- Input e Botão de Envio -->
+            <div class="assistant-input-area">
+                <div class="assistant-input-wrapper">
+                    <textarea id="userInput" placeholder="Digite sua dúvida..." data-pt-placeholder="Digite sua dúvida..." data-en-placeholder="Type your question..." rows="1"></textarea>
+                    <button class="assistant-send-btn" onclick="sendMessage()" aria-label="Enviar">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
             <!-- Atalhos Rápidos -->
             <div class="quick-options" id="quickOptionsContainer">
                 <button class="quick-option-btn" onclick="openAiNewsModal()" data-pt="✨ Novidades da IA" data-en="✨ AI News">✨ Novidades da IA</button>
@@ -740,15 +869,6 @@
                 <button class="quick-option-btn" onclick="sendQuickQuery('comandos', this.textContent)" data-pt="🤖 Comandos & RPC" data-en="🤖 Commands &amp; RPC">🤖 Comandos & RPC</button>
             </div>
 
-            <!-- Input e Botão de Envio -->
-            <div class="assistant-input-area">
-                <div class="assistant-input-wrapper">
-                    <textarea id="userInput" placeholder="Digite sua dúvida..." data-pt-placeholder="Digite sua dúvida..." data-en-placeholder="Type your question..." rows="1"></textarea>
-                </div>
-                <button class="assistant-send-btn" onclick="sendMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
         </div>
     </section>
 
@@ -795,7 +915,7 @@
         const fmtWait = ms => { const s = Math.max(Math.ceil(ms / 1000), 1), m = Math.floor(s / 60); return m ? `${m} min ${String(s % 60).padStart(2, '0')} s` : `${s} s`; };
         const DISCORD_CLIENT_ID = "1556367785792118865";
         // Volta para ESTA mesma página. Cadastre exatamente esta URL em Developer Portal > OAuth2 > Redirects (a raiz do site)
-        const DISCORD_REDIRECT_URI = window.location.origin; // https://azul-groove.vercel.app (a raiz repassa ?code para esta página)
+        const DISCORD_REDIRECT_URI = window.location.origin + '/chat'; // o chat conclui o login e já abre logado
         const DEFAULT_AVATAR = 'https://cdn.discordapp.com/embed/avatars/0.png';
 
         const savedLang = localStorage.getItem('site_lang');
@@ -1359,6 +1479,28 @@ Use a base local e os resultados só quando forem relevantes para a pergunta; em
         }
         window.triggerGoogleLogin = () => fbLogin('google');
         window.triggerGithubLogin = () => fbLogin('github');
+    </script>
+    <script>
+        (function () {
+            var eq = document.getElementById('bgEq'), n = 56, i, b;
+            for (i = 0; i < n; i++) {
+                b = document.createElement('i');
+                var w = Math.sin(i / n * Math.PI);
+                b.style.cssText = '--h:' + (.25 + Math.random() * .75 * (.4 + w * .6)).toFixed(2) + ';--d:' + (.7 + Math.random() * 1.1).toFixed(2) + 's;--l:' + (-Math.random() * 2).toFixed(2) + 's;--e:' + (.3 + i * .015).toFixed(2) + 's';
+                eq.appendChild(b);
+            }
+            var d = document.getElementById('bgDots');
+            for (i = 0; i < 40; i++) {
+                b = document.createElement('b');
+                b.style.cssText = 'left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;--d:' + (3 + Math.random() * 4).toFixed(1) + 's;--l:' + (-Math.random() * 6).toFixed(1) + 's';
+                d.appendChild(b);
+            }
+            // tela inicial só enquanto não há conversa (igual ao chat)
+            var body = document.getElementById('chatBody'), box = document.querySelector('.assistant-container');
+            function chk() { box.classList.toggle('chatting', body.querySelectorAll('.chat-message').length > 1); }
+            new MutationObserver(chk).observe(body, { childList: true });
+            chk();
+        })();
     </script>
     <script src="main.js"></script>
 </body>

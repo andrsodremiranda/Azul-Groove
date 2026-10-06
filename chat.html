@@ -73,6 +73,10 @@ button{font-family:inherit;cursor:pointer}
 .gate p{color:var(--m);max-width:420px}
 .gate .btn{background:var(--p);color:#fff;padding:12px 24px;border:0;border-radius:12px;text-decoration:none;font-weight:600;font-size:1rem}
 .gate .btn:disabled{opacity:.4;cursor:not-allowed}
+.gate .btn{cursor:pointer;display:inline-flex;gap:10px;align-items:center;justify-content:center}
+.gate .lg{display:flex;flex-direction:column;gap:10px;width:min(340px,100%)}
+.gate .btn.gg{background:#fff;color:#1f1f1f}.gate .btn.gh{background:#24292f;border:1px solid var(--line)}
+.gate small{color:var(--m);max-width:420px;line-height:1.45}.gate .err{color:#ed4245;font-size:.9rem;display:none}
 .chk{display:flex;gap:10px;align-items:flex-start;text-align:left;max-width:420px;font-size:.9rem;color:#b9bbbe;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:12px 14px;border-radius:12px;cursor:pointer}
 .chk a{color:var(--p)}
 @media(max-width:760px){.side{position:fixed;inset:0 auto 0 0;z-index:5;transform:translateX(-100%);transition:.25s}.side.open{transform:none}#menuBtn{display:inline-block}.box textarea{font-size:16px}}
@@ -218,9 +222,16 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 </div>
 <div class="gate" id="gateLogin">
   <img class="logo" src="aumentar-o-tamanho-d.png" alt="Azul Groove" onerror="this.style.display='none'">
-  <h2>Entre com o Discord, Google ou GitHub para usar o chat</h2>
-  <p>Suas conversas ficam salvas na sua conta.</p>
-  <a class="btn" href="assistente.html">Fazer login</a>
+  <h2 id="lgT">Entre para usar o chat</h2>
+  <p id="lgP">Suas conversas ficam salvas só no seu navegador.</p>
+  <p class="err" id="lgErr" role="alert"></p>
+  <div class="lg" id="lgBtns">
+    <button class="btn" onclick="loginDiscord()"><i class="fab fa-discord"></i> Entrar com o Discord</button>
+    <button class="btn gg" onclick="loginFirebase('google')"><i class="fab fa-google" style="color:#ea4335"></i> Entrar com o Google</button>
+    <button class="btn gh" onclick="loginFirebase('github')"><i class="fab fa-github"></i> Entrar com o GitHub</button>
+  </div>
+  <small>🔒 O login com Google e GitHub é processado pelo Firebase. A ASTM Software não salva suas conversas nem seus dados: ficam só no seu navegador. (O Firebase pode manter o registro da conta, como nome e e-mail, para o login funcionar.)</small>
+  <small><a href="assistente.html" style="color:#8ea1ff">Só quer testar? Use o assistente como visitante</a></small>
 </div>
 <aside class="side" id="side">
   <div class="brand" onclick="goHome()" title="Voltar ao início" style="cursor:pointer"><img class="logo" src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove</div>
@@ -578,6 +589,7 @@ const NEWS_AI = [
   '**Aparência:** novo botão para restaurar o padrão.',
   '**Login com Google e GitHub:** além do Discord, via Firebase. Em ⚙️ > Conta há "Entrar com outra conta".',
   '**Boas-vindas e apoio:** mensagem ao entrar e botão 💙 para apoiar o projeto pela LivePix.',
+  '**Login corrigido:** entrar com Discord, Google ou GitHub agora acontece direto no chat, e o login do Discord volta para o chat (em vez de recomeçar).',
   '**Azul Groove IA vs. outras IAs:** a página da IA agora tem um comparativo e explica como usar um modelo local (Ollama ou LM Studio).'
 ];
 const newsVer = hit => String([...(NEWS_AI.join('|') + (hit ? hit.e.resposta : ''))].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7));
@@ -917,13 +929,13 @@ function exportConv() { const c = get(); if (!c || !c.msgs.length) return toast(
 function logout() {
   ['azul_session_type', 'azul_user_id', 'azul_user_name', 'azul_user_avatar', 'azul_terms_accepted', 'azul_visitor_count'].forEach(n => document.cookie = n + '=; Max-Age=0; path=/');
   localStorage.removeItem('azul_profile');
-  location.href = 'assistente.html';
+  location.href = 'chat.html';
 }
 
 function switchAccount() { // troca de conta sem perder o aceite dos termos
   ['azul_session_type', 'azul_user_id', 'azul_user_name', 'azul_user_avatar', 'azul_visitor_count'].forEach(n => document.cookie = n + '=; Max-Age=0; path=/');
   localStorage.removeItem('azul_profile');
-  location.href = 'assistente.html';
+  location.href = 'chat.html';
 }
 const SUPPORT_URL = 'https://livepix.gg/astmsoftware';
 function apoio() { window.open(SUPPORT_URL, '_blank', 'noopener,noreferrer'); }
@@ -936,12 +948,50 @@ function showWelcome() {
   $('wlP').textContent = 'Você entrou com ' + prov + '. Aqui você conversa com IAs, pesquisa na internet e guarda tudo só neste navegador. Se curtir o projeto, dá para apoiar a ASTM Software pelo botão 💙 na barra lateral.';
   $('welcome').style.display = 'flex';
 }
+const setCk = (n, v, d) => { document.cookie = n + '=' + encodeURIComponent(v || '') + '; max-age=' + d * 86400 + '; path=/; SameSite=Lax'; };
+const DISCORD_ID = '1556367785792118865';
+const DISCORD_REDIRECT = location.origin + '/chat'; // cadastre exatamente esta URL no Discord (OAuth2 > Redirects)
+function lgErr(msg) { const e = $('lgErr'); e.textContent = msg; e.style.display = msg ? 'block' : 'none'; }
+function loginDiscord() {
+  const state = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Math.random()).slice(2);
+  try { sessionStorage.setItem('azul_oauth_state', state); } catch (e) {}
+  setCk('azul_terms_accepted', 'true', 7);
+  location.href = 'https://discord.com/oauth2/authorize?' + new URLSearchParams({ client_id: DISCORD_ID, response_type: 'code', redirect_uri: DISCORD_REDIRECT, scope: 'identify email guilds', state }).toString();
+}
+// volta do Discord para cá (?code=...&state=...): troca o código pelo usuário no servidor (api/discord.js)
+function discordCallback() {
+  const q = new URLSearchParams(location.search), code = q.get('code'), err = q.get('error');
+  if (!code && !err) return false;
+  const st = q.get('state');
+  history.replaceState({}, '', location.pathname);
+  $('gateLogin').style.display = 'flex';
+  if (err || !code) { lgErr('Login cancelado. Tente novamente.'); return true; }
+  let saved = null; try { saved = sessionStorage.getItem('azul_oauth_state'); sessionStorage.removeItem('azul_oauth_state'); } catch (e) {}
+  if (!st || st !== saved) { lgErr('Não foi possível validar o login. Tente de novo.'); return true; }
+  $('lgT').textContent = 'Entrando com o Discord…'; $('lgBtns').style.display = 'none'; lgErr('');
+  fetch('/api/discord', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(u => {
+      const nm = u.global_name || u.username, av = u.avatar ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=128` : 'https://cdn.discordapp.com/embed/avatars/0.png';
+      setCk('azul_session_type', 'discord', 7); setCk('azul_terms_accepted', 'true', 7); setCk('azul_user_name', nm, 7); setCk('azul_user_avatar', av, 7); setCk('azul_user_id', u.id, 7);
+      document.cookie = 'azul_visitor_count=; Max-Age=0; path=/';
+      try {
+        localStorage.setItem('azul_profile', JSON.stringify({ id: u.id, username: u.username, name: nm, email: u.email || '', total: (u.guilds || []).length, provider: 'discord', guilds: (u.guilds || []).slice(0, 100).map(g => ({ n: g.name, o: !!g.owner })) }));
+        sessionStorage.setItem('azul_welcome', '1');
+      } catch (e) {}
+      location.replace(location.pathname); // recarrega já logado
+    })
+    .catch(e => { console.error('Discord:', e); $('lgT').textContent = 'Entre para usar o chat'; $('lgBtns').style.display = 'flex'; lgErr('Erro ao entrar com o Discord. Tente novamente.'); });
+  return true;
+}
+const loginFirebase = k => window.fbLogin ? window.fbLogin(k) : lgErr('Carregando o login… tente de novo em um instante.');
 function acceptLic() {
   document.cookie = 'azul_terms_accepted=true; max-age=' + 7 * 86400 + '; path=/; SameSite=Lax';
   $('gateLic').style.display = 'none';
   boot();
 }
 function boot() {
+  if (discordCallback()) return;
   if (ck('azul_terms_accepted') !== 'true') { $('gateLic').style.display = 'flex'; return; }
   if (!['discord', 'google', 'github'].includes(ck('azul_session_type')) || !uid) { $('gateLogin').style.display = 'flex'; return; }
   init();
@@ -1056,6 +1106,38 @@ addEventListener('beforeunload', () => { try { SY && SY.conn && SY.conn.send({ t
 applyTheme(); applyLook(); initSide(); paintPrefs(); paintMdl();
 boot(); // por último, depois de todas as funções e constantes existirem
 checkNews(); setInterval(tick, 1000);
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut, getAdditionalUserInfo } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+  const auth = getAuth(initializeApp({
+    apiKey: "AIzaSyCwuydTDr_86jTiJhwjLSv0ShVXmlh_PQs", authDomain: "azul-groove.firebaseapp.com", projectId: "azul-groove",
+    storageBucket: "azul-groove.firebasestorage.app", messagingSenderId: "782973452661", appId: "1:782973452661:web:106fe77a43e7466175133c"
+  }));
+  window.fbLogin = async kind => {
+    lgErr('');
+    const provider = kind === 'google' ? new GoogleAuthProvider() : new GithubAuthProvider();
+    if (kind === 'github') provider.addScope('user:email');
+    if (kind === 'google') provider.setCustomParameters({ prompt: 'select_account' });
+    try {
+      const cred = await signInWithPopup(auth, provider), u = cred.user, info = getAdditionalUserInfo(cred) || {}, pd = (u.providerData && u.providerData[0]) || {};
+      const email = u.email || pd.email || '', username = info.username || (email ? email.split('@')[0] : '');
+      const nm = u.displayName || pd.displayName || username || (kind === 'google' ? 'Google' : 'GitHub');
+      await signOut(auth); // o cookie do site é a sessão; o Firebase só serve para validar o login
+      setCk('azul_session_type', kind, 7); setCk('azul_terms_accepted', 'true', 7); setCk('azul_user_name', nm, 7);
+      setCk('azul_user_avatar', u.photoURL || pd.photoURL || '', 7); setCk('azul_user_id', kind + '_' + u.uid, 7);
+      document.cookie = 'azul_visitor_count=; Max-Age=0; path=/';
+      try { localStorage.setItem('azul_profile', JSON.stringify({ id: kind + '_' + u.uid, username, name: nm, email, total: 0, provider: kind, guilds: [] })); sessionStorage.setItem('azul_welcome', '1'); } catch (e) {}
+      location.replace(location.pathname);
+    } catch (e) {
+      console.error('Firebase:', e); const k = e && e.code, n = kind === 'google' ? 'Google' : 'GitHub';
+      lgErr(k === 'auth/popup-closed-by-user' || k === 'auth/cancelled-popup-request' ? 'Login cancelado. Tente novamente.'
+        : k === 'auth/popup-blocked' ? 'O navegador bloqueou a janela de login. Libere pop-ups para este site.'
+        : k === 'auth/unauthorized-domain' ? 'Este domínio não está autorizado no Firebase (Authentication > Configurações > Domínios autorizados).'
+        : k === 'auth/account-exists-with-different-credential' ? 'Já existe uma conta com este e-mail em outro provedor. Entre pelo que usou antes.'
+        : 'Erro ao entrar com o ' + n + '. Tente novamente.');
+    }
+  };
 </script>
 </body>
 </html>
