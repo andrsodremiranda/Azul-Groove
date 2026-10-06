@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IA local no Azul Groove: guia de CORS e conexão</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<style>
+:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--ok:#3ddc97;--warn:#ffb454}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;padding:0 18px 70px}
+a{color:#8ea1ff}
+.w{max-width:820px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.top a{color:var(--mut);text-decoration:none;font-size:.9rem}
+h1{font-size:clamp(1.7rem,5vw,2.4rem);letter-spacing:-.5px;line-height:1.15;margin:10px 0 10px}
+h2{font-size:1.25rem;margin:36px 0 10px}
+p,li{color:var(--mut)}
+p{margin-bottom:10px}
+b,strong{color:var(--tx)}
+code{font-family:ui-monospace,Menlo,monospace;background:rgba(88,101,242,.16);color:#cdd5ff;padding:2px 7px;border-radius:6px;font-size:.88em}
+pre{background:#050716;border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto;font-size:.84rem;color:#cdd5ff;margin:10px 0;position:relative}
+pre code{background:none;padding:0}
+.cp{position:absolute;top:8px;right:8px;background:var(--ac);border:0;color:#fff;border-radius:8px;padding:5px 10px;font-size:.75rem;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0}
+.flow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.flow span{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.88rem;color:var(--tx)}
+.flow i{color:var(--ac2);font-style:normal}
+.flow .bad{border-color:var(--warn)}
+.note{border-left:3px solid var(--warn);background:rgba(255,180,84,.07);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
+.okb{border-left:3px solid var(--ok);background:rgba(61,220,151,.07);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 18px;margin:10px 0}
+summary{cursor:pointer;padding:12px 0;font-weight:700;color:var(--tx)}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+ol,ul{padding-left:22px;margin:8px 0 12px}
+li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:10px 0}
+td,th{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;color:var(--mut)}
+th{color:var(--tx)}
+.scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="top"><a href="chat.html" id="back">&larr; Voltar para o chat</a><a href="index.html">Azul Groove</a></div>
+
+<h1>Usando IA local (Ollama, LM Studio, Jan)</h1>
+<p>Este guia explica como o site conversa com uma IA no seu computador e como evitar o erro <b>"Não consegui conectar"</b> ou <b>"blocked by CORS"</b>.</p>
+
+<h2>Como funciona</h2>
+<p>As mensagens <b>não passam pelo nosso servidor</b>. Quem fala com a IA é o seu próprio navegador, direto no programa que está no seu PC.</p>
+<div class="flow"><span>Site (HTTPS)</span><i>&rarr;</i><span>Seu navegador</span><i>&rarr;</i><span>127.0.0.1 (seu PC)</span><i>&rarr;</i><span>Ollama / LM Studio / Jan</span></div>
+<p>Como o site e o programa local são "origens" diferentes, o navegador só entrega a resposta se o programa disser, por um cabeçalho chamado <b>CORS</b>, que aquele site pode ler. Sem isso, o servidor até responde (status 200), mas o navegador bloqueia.</p>
+<div class="note"><b>Importante:</b> isso só funciona no <b>mesmo computador</b> onde a IA roda. No celular ou em outro aparelho, <code>127.0.0.1</code> é o próprio aparelho, então use um provedor na nuvem (OpenAI, OpenRouter, Groq...).</div>
+
+<h2>Checklist rápido</h2>
+<ol>
+<li>O programa está aberto e o <b>servidor local está iniciado</b>?</li>
+<li>Tem um <b>modelo baixado</b> e carregado?</li>
+<li>O <b>CORS</b> (ou hosts confiáveis) está liberado para <code>azul-groove.vercel.app</code>?</li>
+<li>Você <b>aceitou a permissão de rede local</b> que o navegador pede?</li>
+<li>A <b>URL no ⚙️</b> está certa e termina em <code>/v1</code>?</li>
+</ol>
+
+<h2>Passo a passo por programa</h2>
+
+<details open><summary>Ollama (mais simples)</summary>
+<ol>
+<li>Feche o Ollama completamente (inclusive o ícone da bandeja).</li>
+<li>Inicie liberando a origem:</li>
+</ol>
+<p><b>Windows (PowerShell):</b></p>
+<pre><button class="cp">copiar</button><code>$env:OLLAMA_ORIGINS="*"; ollama serve</code></pre>
+<p><b>Linux / Mac:</b></p>
+<pre><button class="cp">copiar</button><code>OLLAMA_ORIGINS="*" ollama serve</code></pre>
+<ol start="3"><li>Baixe um modelo: <code>ollama pull llama3.2</code></li>
+<li>No ⚙️ do site: provedor <b>Ollama (no seu PC)</b>. URL: <code>http://127.0.0.1:11434/v1</code>. Chave vazia.</li></ol>
+<p>Para restringir só ao seu site, troque <code>*</code> por <code>https://azul-groove.vercel.app</code>.</p>
+</details>
+
+<details><summary>LM Studio</summary>
+<ol>
+<li>Baixe e carregue um modelo.</li>
+<li>Abra a aba <b>Developer</b> e ligue o servidor (Start).</li>
+<li>Nas configurações do servidor, ative <b>Enable CORS</b> (reinicie o servidor depois).</li>
+<li>No ⚙️ do site: provedor <b>LM Studio (no seu PC)</b>. URL: <code>http://127.0.0.1:1234/v1</code>.</li>
+</ol>
+</details>
+
+<details><summary>Jan</summary>
+<ol>
+<li>Abra <b>Settings &gt; Local API Server</b>.</li>
+<li>Se existir <b>CORS</b> ou <b>Trusted Hosts</b> (hosts confiáveis), ative/adicione <code>azul-groove.vercel.app</code> (ou <code>*</code>).</li>
+<li>Defina uma <b>API Key</b> (qualquer texto) e use a mesma no site.</li>
+<li><b>Pare e inicie o servidor de novo</b> depois de mudar.</li>
+<li>No ⚙️ do site: <b>Outro (compatível com OpenAI)</b>. URL: <code>http://127.0.0.1:1337/v1</code>. Clique em "Buscar modelos disponíveis" e escolha o modelo.</li>
+</ol>
+<div class="note">Algumas versões do Jan <b>não têm mais</b> a opção de CORS. Nesse caso, atualize o Jan, use Ollama/LM Studio ou use o proxy abaixo.</div>
+</details>
+
+<details><summary>Proxy de CORS (quando o programa não permite liberar)</summary>
+<p>Um mini script em Python que recebe a chamada do site, acrescenta o cabeçalho de CORS e repassa ao programa. Salve como <code>cors_proxy.py</code> e rode <code>python cors_proxy.py</code>. Depois use <code>http://127.0.0.1:1338/v1</code> no ⚙️ (em vez da porta original).</p>
+<pre><button class="cp">copiar</button><code>from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+import urllib.request, urllib.error
+
+TARGET = "http://127.0.0.1:1337"   # porta do seu programa (Jan)
+PORT = 1338                         # porta do proxy
+
+class H(BaseHTTPRequestHandler):
+    def cors(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+    def do_OPTIONS(self):
+        self.send_response(204); self.cors(); self.end_headers()
+    def fwd(self):
+        n = int(self.headers.get("Content-Length") or 0)
+        body = self.rfile.read(n) if n else None
+        h = {k: v for k, v in self.headers.items()
+             if k.lower() in ("authorization", "content-type")}
+        req = urllib.request.Request(TARGET + self.path, data=body,
+                                     headers=h, method=self.command)
+        try:
+            r = urllib.request.urlopen(req, timeout=600)
+        except urllib.error.HTTPError as e:
+            r = e
+        data = r.read()
+        self.send_response(r.getcode())
+        self.send_header("Content-Type", r.headers.get("Content-Type", "application/json"))
+        self.send_header("Content-Length", str(len(data)))
+        self.cors(); self.end_headers(); self.wfile.write(data)
+    do_GET = do_POST = fwd
+
+ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre>
+</details>
+
+<h2>Permissão de rede local</h2>
+<p>Navegadores novos (Chrome, Edge) perguntam se o site pode acessar dispositivos na sua rede local. <b>Permita.</b> Se você negou sem querer, clique no ícone ao lado do endereço do site &gt; Configurações do site &gt; libere "Rede local" e recarregue (Ctrl+F5).</p>
+<p><b>Safari</b> costuma bloquear sites HTTPS acessando <code>http://127.0.0.1</code>. Nele, prefira Chrome, Edge ou Firefox, ou um provedor na nuvem.</p>
+
+<h2>Como testar a conexão</h2>
+<p>Abra o site, aperte <b>F12 &gt; Console</b> e rode:</p>
+<pre><button class="cp">copiar</button><code>fetch('http://127.0.0.1:1337/v1/models').then(r=&gt;r.json()).then(console.log)</code></pre>
+<p>Troque a porta pela do seu programa (Ollama <code>11434</code>, LM Studio <code>1234</code>, Jan <code>1337</code>).</p>
+<div class="scroll"><table>
+<tr><th>O que aparece</th><th>O que significa</th></tr>
+<tr><td>Lista de modelos</td><td>Tudo certo.</td></tr>
+<tr><td><code>blocked by CORS</code> / falta <code>Access-Control-Allow-Origin</code></td><td>O servidor responde, mas o CORS/hosts confiáveis não está liberado.</td></tr>
+<tr><td><code>ERR_CONNECTION_REFUSED</code></td><td>Servidor desligado ou porta errada.</td></tr>
+<tr><td><code>401</code> / <code>403</code></td><td>A chave de API não bate com a do programa.</td></tr>
+<tr><td><code>404</code></td><td>URL sem <code>/v1</code> ou modelo com nome diferente.</td></tr>
+</table></div>
+
+<div class="okb">Não quer mexer em nada disso? Escolha um provedor na nuvem no ⚙️ (OpenAI, OpenRouter, Groq, Gemini). Eles não precisam de CORS: basta colar a chave.</div>
+</div>
+<script>
+// Voltar: vai para a página de onde você veio (chat ou assistente); sem origem conhecida, abre o chat
+document.getElementById('back').addEventListener('click', e => {
+  e.preventDefault();
+  try { const r = document.referrer; if (r && new URL(r).origin === location.origin && !/ia-local/.test(r)) { location.href = r; return; } } catch (_) {}
+  location.href = 'chat.html';
+});
+document.querySelectorAll('.cp').forEach(b => b.onclick = () => {
+  const t = b.parentElement.querySelector('code').innerText;
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.textContent = 'copiado!'; setTimeout(() => b.textContent = 'copiar', 1500); }).catch(() => { b.textContent = 'selecione e copie'; });
+});
+</script>
+</body>
+</html>

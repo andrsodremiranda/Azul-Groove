@@ -295,6 +295,7 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
       <label><span>Chave da API <span id="cfgLink"></span></span><input type="password" id="cfgKey" placeholder="vazio se for local (Ollama)" autocomplete="off"></label>
       <label>Modelos (o primeiro é usado antes)<input type="text" id="cfgModels" autocomplete="off"></label>
       <div class="row" style="justify-content:flex-start"><button class="btn2" onclick="loadModels()"><i class="fas fa-rotate"></i> Buscar modelos disponíveis</button></div>
+            <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="ia-local.html" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
       <input type="text" id="cfgFilter" placeholder="Filtrar modelos (ex.: free, llama)" oninput="renderModels()" style="display:none">
       <div class="mlist" id="cfgList" style="display:none"></div>
       <label class="chk2"><input type="checkbox" id="cfgRem"> Lembrar a chave neste aparelho (desmarcado: some ao fechar a aba)</label>
@@ -578,7 +579,7 @@ const NEWS_AI = [
   '**Barras de rolagem novas:** mais finas e discretas, no tom do tema.',
   '**Licença de Uso da IA:** nova licença explicando que o Azul Groove não coleta seus dados, que tudo fica salvo só no seu navegador e que as respostas vêm de serviços de terceiros. Ela aparece junto com os termos.',
   '**Site da Azul Groove IA:** nova página que apresenta a IA e como ela funciona. Procure a seção \"Azul Groove IA\" no site.',
-  '**Modo Visitante:** quem não entra com uma conta (Discord, Google ou GitHub) pode mandar 5 mensagens por minuto.',
+  '**Modo Visitante:** quem não entra com uma conta (Discord, Google ou GitHub) pode conversar sem limite de mensagens, mas a pesquisa na internet e os recursos completos ficam no login.',
   '**Digitação na tela inicial:** o texto de boas-vindas agora aparece letra por letra, com cursor.',
   '**Modos de resposta:** Sério, Descontraído, Humor e Didático, na tela inicial ou em ⚙️ > Estilo.',
   '**Dados do Azul Groove opcionais:** dá para desligar a base do bot quando ela atrapalhar as respostas.',
@@ -706,8 +707,8 @@ async function news() {
   $('news').style.display = 'flex'; try { localStorage.setItem('azul_news_seen', newsVer(hit)); } catch (e) {} $('newsBtn').classList.remove('dot');
 }
 const netHint = base => /localhost|127\.0\.0\.1/.test(base)
-  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*.'
-  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS).';
+  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*. Guia completo (Ollama, LM Studio, Jan e CORS): ia-local.html'
+  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS). Veja o guia: ia-local.html';
 
 // ===== Estilo, memória e aprendizado =====
 const PREF_KEY = 'azul_prefs';

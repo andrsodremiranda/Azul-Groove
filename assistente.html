@@ -551,6 +551,17 @@
         #cfg .mlist { display: flex; flex-wrap: wrap; gap: 6px; max-height: 140px; overflow-y: auto; }
         #cfg .mlist button { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.06); color: #dbdee1; border-radius: 999px; padding: 5px 10px; font-size: .78rem; cursor: pointer; }
         #cfg .mlist button.on { background: #5865F2; color: #fff; border-color: #5865F2; }
+
+        /* ===== chips e botões nas configurações (uma cor só) ===== */
+        #cfg .modal-card > * { flex-shrink: 0; }
+        #cfg .btn2 { transition: transform .2s, filter .2s; }
+        #cfg .btn2:hover { transform: translateY(-2px); filter: brightness(1.12); }
+        #cfg .btn2.find, #cfg .btn2.ok { background: linear-gradient(135deg,#5865f2,#7a5cff); box-shadow: 0 6px 18px rgba(88,101,242,.45); }
+        #cfg .mlist { gap: 8px; max-height: 170px; padding: 2px; flex-shrink: 0; }
+        #cfg .mlist button { transition: transform .15s, box-shadow .2s; padding: 7px 14px; font-size: .8rem; font-weight: 600; background: rgba(255,255,255,.05); border: 1px solid rgba(88,101,242,.3); color: #aab4ff; }
+        #cfg .mlist button:hover { transform: translateY(-2px); border-color: #5865f2; color: #fff; }
+        #cfg .mlist button.on { background: linear-gradient(135deg,#5865f2,#7a5cff); color: #fff; border-color: transparent; box-shadow: 0 4px 14px rgba(88,101,242,.45); }
+        #cfg #cfgFilter { border-radius: 14px; padding: 12px 14px; }
         .cfg-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #202225; color: #fff; border: 1px solid rgba(255,255,255,.12); padding: 10px 16px; border-radius: 12px; z-index: 10000; opacity: 0; transition: .25s; pointer-events: none; }
         .cfg-toast.on { opacity: 1; }
 
@@ -662,14 +673,35 @@
             .chat-message { max-width: 94%; }
         }
         @media (prefers-reduced-motion: reduce) { .orb, .eq i, .bgdots b { animation: none !important; } .eq i { transform: scaleY(var(--h)); } }
+
+        /* ===== novo design (igual ao index) ===== */
+        :root { --bg: #07091a; --card: #0f1330; --inp: #0b0f2b; --line: #222a5c; --p: #5865f2; --p2: #4752c4; --t: #e9ecff; --m: #9aa3d6; --hi: #ffffff; --soft: rgba(88,101,242,.1); --ac2: #1fb6ff; --gr: linear-gradient(135deg,#5865f2,#7a5cff); }
+        .bg { background: radial-gradient(ellipse 70% 55% at 50% 40%, rgba(88,101,242,.32) 0%, rgba(7,9,26,0) 70%), radial-gradient(520px 420px at 92% 8%, rgba(31,182,255,.18), transparent), var(--bg); background-size: 150% 150%, auto, auto; animation: bgmove 18s ease-in-out infinite alternate; }
+        @keyframes bgmove { from { background-position: 0% 0%, 0 0, 0 0; } to { background-position: 100% 100%, 0 0, 0 0; } }
+        .o1 { background: #5865f2; } .o2 { background: #1fb6ff; opacity: .34; } .o3 { background: #7a5cff; opacity: .34; }
+        #fx { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .logo-t { background: linear-gradient(90deg, var(--ac2), var(--p), #7a5cff, var(--ac2)); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: shine 7s linear infinite; font-weight: 800; }
+        @keyframes shine { from { background-position: 0 0; } to { background-position: 300% 0; } }
+        nav .logo i, .auth-portal-card h2 i { color: var(--p); }
+        nav { background: rgba(7,9,26,.72); }
+        .hero-ic { width: 60px; height: 60px; border-radius: 18px; display: grid; place-items: center; font-size: 1.5rem; color: #fff; background: var(--gr); box-shadow: 0 0 40px rgba(88,101,242,.55); animation: floaty 4s ease-in-out infinite; }
+        @keyframes floaty { 50% { transform: translateY(-8px); } }
+        .hero h2 { font-weight: 700; background: linear-gradient(90deg, var(--ac2), var(--p), #7a5cff, var(--ac2)); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: shine 9s linear infinite; }
+        .cta-button, .assistant-send-btn { background: var(--gr); }
+        .cta-button:hover, .assistant-send-btn:hover { background: var(--gr); filter: brightness(1.15); }
+        .user .message-bubble { background: var(--gr); }
+        .auth-portal-card, .modal-card { border-radius: 22px; }
+        .assistant-input-wrapper { background: rgba(11,15,43,.85); }
+        .quick-option-btn:hover, .cfg-btn:hover, .ai-news-btn:hover { background: var(--gr); border-color: transparent; }
+        @media (prefers-reduced-motion: reduce) { .bg, .logo-t, .hero h2, .hero-ic { animation: none !important; } #fx { display: none; } }
     </style>
 </head>
 <body>
-    <div class="bg" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="bgdots" id="bgDots"></div><div class="eq" id="bgEq"></div></div>
+    <div class="bg" aria-hidden="true"><canvas id="fx"></canvas><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="bgdots" id="bgDots"></div><div class="eq" id="bgEq"></div></div>
     <!-- Portal de Autenticação Inicial -->
     <div class="auth-portal-overlay" id="authPortalModal">
         <div class="auth-portal-card">
-            <h2><img src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove</h2>
+            <h2><i class="fab fa-discord"></i> <span class="logo-t">Azul Groove</span></h2>
             <p data-pt="Para acessar o assistente virtual e os serviços, concorde com os termos e escolha uma opção:" data-en="To access the virtual assistant and services, accept the terms and choose an option:">Para acessar o assistente virtual e os serviços, concorde com os termos e escolha uma opção:</p>
             <p id="authError" role="alert" style="display:none;color:#ed4245;margin-bottom:14px"></p>
             
@@ -693,7 +725,7 @@
                     <i class="fab fa-github"></i> <span data-pt="Entrar com o GitHub" data-en="Sign in with GitHub">Entrar com o GitHub</span>
                 </button>
                 <button id="visitorBtn" class="btn-custom-action btn-visitor-mode btn-disabled" disabled onclick="continueAsVisitor()">
-                    <i class="fas fa-user-secret"></i> <span data-pt="Continuar como Visitante (5 Mensagens por Minuto)" data-en="Continue as Visitor (5 Messages per Minute)">Continuar como Visitante (5 Mensagens por Minuto)</span>
+                    <i class="fas fa-user-secret"></i> <span data-pt="Continuar como Visitante" data-en="Continue as Visitor">Continuar como Visitante</span>
                 </button>
             </div>
         </div>
@@ -708,11 +740,13 @@
             <label>URL base da API<input type="text" id="cfgBase" placeholder="https://.../v1" autocomplete="off"></label>
             <label><span>Chave da API <span id="cfgLink"></span></span><input type="password" id="cfgKey" placeholder="vazio se for local (Ollama)" autocomplete="off"></label>
             <label>Modelos (o primeiro é usado antes)<input type="text" id="cfgModels" autocomplete="off"></label>
-            <div class="row" style="justify-content:flex-start"><button class="btn2" onclick="loadModels()"><i class="fas fa-rotate"></i> Buscar modelos disponíveis</button></div>
+            <small>👇 Clique em um modelo para usá-lo (★ = principal). Clique de novo para tirar.</small>
             <input type="text" id="cfgFilter" placeholder="Filtrar modelos (ex.: free, llama)" oninput="renderModels()" style="display:none">
             <div class="mlist" id="cfgList" style="display:none"></div>
+            <div class="row" style="justify-content:flex-start"><button class="btn2 find" onclick="loadModels()"><i class="fas fa-rotate"></i> Buscar modelos disponíveis</button></div>
+            <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="ia-local.html" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
             <label class="chk2"><input type="checkbox" id="cfgRem"> Lembrar a chave neste aparelho (desmarcado: some ao fechar a aba)</label>
-            <label class="chk2"><input type="checkbox" id="cfgWeb"> Pesquisar na internet (Wikipedia)</label>
+            <small>🔎 A pesquisa na internet (16 buscadores) só funciona no <a href="chat.html" target="_blank" rel="noopener">chat completo, com login</a>.</small>
             <small id="cfgMsg"></small>
             <div class="row"><button class="btn2 dng" onclick="clearCfg()"><i class="fas fa-key"></i> Remover chave</button><button class="btn2" onclick="closeCfg()">Fechar</button><button class="btn2 ok" onclick="saveCfg()">Salvar IA</button></div>
         </div>
@@ -774,7 +808,7 @@
     <nav>
         <div class="nav-container">
             <div class="logo">
-                <img src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove
+                <i class="fab fa-discord"></i> <span class="logo-t">Azul Groove</span>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html#home" data-pt="Início" data-en="Home">Início</a></li>
@@ -834,7 +868,7 @@
 
             <!-- Tela inicial (some quando a conversa começa) -->
             <div class="hero">
-                <img src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'">
+                <div class="hero-ic"><i class="fas fa-music"></i></div>
                 <h2 data-pt="Como posso ajudar?" data-en="How can I help?">Como posso ajudar?</h2>
             </div>
 
@@ -909,10 +943,9 @@
     <script src="data.js"></script>
 
     <script>
-        const VIS = { max: 5, wait: 60000, key: 'azul_vis' };
-        const visGet = () => { let v = {}; try { v = JSON.parse(localStorage.getItem(VIS.key) || '{}'); } catch (e) {} if (v.lock && Date.now() >= v.lock) { v = {}; try { localStorage.removeItem(VIS.key); } catch (e) {} } return { n: v.n || 0, lock: v.lock || 0 }; };
-        const visSet = v => { try { localStorage.setItem(VIS.key, JSON.stringify(v)); } catch (e) {} };
-        const fmtWait = ms => { const s = Math.max(Math.ceil(ms / 1000), 1), m = Math.floor(s / 60); return m ? `${m} min ${String(s % 60).padStart(2, '0')} s` : `${s} s`; };
+        const VIS = { every: 5, key: 'azul_vis' }; // sem limite: só um aviso a cada 5 mensagens
+        const visGet = () => { let v = {}; try { v = JSON.parse(localStorage.getItem(VIS.key) || '{}'); } catch (e) {} return { n: v.n || 0 }; };
+        const visSet = v => { try { localStorage.setItem(VIS.key, JSON.stringify({ n: v.n })); } catch (e) {} };
         const DISCORD_CLIENT_ID = "1556367785792118865";
         // Volta para ESTA mesma página. Cadastre exatamente esta URL em Developer Portal > OAuth2 > Redirects (a raiz do site)
         const DISCORD_REDIRECT_URI = window.location.origin + '/chat'; // o chat conclui o login e já abre logado
@@ -1087,8 +1120,7 @@
             setCookie('azul_session_type', 'visitor', 1);
             hidePortal();
             restoreHistory();
-            const left = Math.max(VIS.max - visGet().n, 0);
-            appendBotMessage(t(`Modo Visitante ativado! Você pode enviar ${VIS.max} mensagens por minuto (restam ${left}). Esta é a versão de teste: para ter configurações de IA, fundos e várias conversas, entre com o Discord e use o chat completo.`, `Visitor mode enabled! You can send ${VIS.max} messages per minute (${left} left). This is the trial version: sign in with Discord to get AI settings, wallpapers and multiple chats in the full chat.`), false);
+            appendBotMessage(t('Modo Visitante ativado! Pode conversar sem limite de mensagens. 🔎 Entre com Discord, Google ou GitHub para usar o chat completo, com pesquisa na internet, configurações de IA, fundos e várias conversas.', 'Visitor mode enabled! Chat with no message limit. 🔎 Sign in with Discord, Google or GitHub for the full chat, with internet search, AI settings, wallpapers and multiple chats.'), false);
         }
 
         function logoutSession() {
@@ -1146,8 +1178,11 @@ let MODELS = [];
 const curModels = () => $('cfgModels').value.split(',').map(s => s.trim()).filter(Boolean);
 function renderModels() {
   const f = norm($('cfgFilter').value), sel = curModels(), box = $('cfgList');
-  box.innerHTML = MODELS.filter(m => !f || norm(m).includes(f)).slice(0, 100).map(m => `<button type="button" class="${sel.includes(m) ? 'on' : ''}" data-m="${esc(m)}">${esc(m)}</button>`).join('') || '<small>Nenhum modelo encontrado.</small>';
-  $('cfgFilter').style.display = box.style.display = MODELS.length ? '' : 'none';
+  const rank = m => (sel.includes(m) ? 0 : /:free$/.test(m) ? 1 : 2);
+  const src = MODELS.length ? [...MODELS].sort((a, b) => rank(a) - rank(b)) : sel; // antes de carregar, já mostra os modelos atuais
+  box.innerHTML = src.filter(m => !f || norm(m).includes(f)).slice(0, 120).map(m => `<button type="button" class="${sel.includes(m) ? 'on' : ''}" data-m="${esc(m)}">${sel[0] === m ? '★ ' : ''}${esc(m)}</button>`).join('') || '<small>Nenhum modelo encontrado.</small>';
+  box.style.display = src.length ? '' : 'none';
+  $('cfgFilter').style.display = MODELS.length ? '' : 'none';
 }
 async function listModels(base, key) {
   const h = key ? { Authorization: 'Bearer ' + key } : {};
@@ -1164,29 +1199,36 @@ async function listModels(base, key) {
   if (net === tries.length) throw new Error(netHint(base));
   throw new Error(`Nenhum endereço de modelos respondeu (${st}). A URL deve terminar em /v1, por exemplo http://localhost:11434/v1`);
 }
-async function loadModels(silent) {
-  const base = $('cfgBase').value.trim().replace(/\/+$/, ''), m = $('cfgMsg');
-  if (!okBase(base)) { if (!silent) m.textContent = '⚠️ URL inválida.'; return; }
-  if (!silent) m.textContent = 'Buscando modelos...';
+const linkGuide = s => String(s).replace(/ia-local\.html/g, '<a href="ia-local.html" target="_blank" rel="noopener" style="display:inline-block;margin:6px 0 2px;padding:7px 14px;border-radius:10px;background:#5865F2;color:#fff;text-decoration:none;font-weight:600">📖 Abrir o guia de IA local</a>');
+async function loadModels(mode) {
+  const auto = mode === true || mode === 'auto', base = $('cfgBase').value.trim().replace(/\/+$/, ''), m = $('cfgMsg');
+  if (!okBase(base)) { if (!auto) m.textContent = '⚠️ URL inválida.'; return; }
+  m.textContent = 'Buscando modelos...';
   try {
     MODELS = await listModels(base, $('cfgKey').value.trim());
-    m.textContent = MODELS.length ? `✅ ${MODELS.length} modelos. Clique para escolher; digite no filtro para procurar (ex.: free).` : 'Conectou, mas não há modelos. No Ollama, instale um: ollama pull llama3.2';
-  } catch (e) { MODELS = []; if (!silent) m.textContent = '⚠️ ' + e.message; }
+    if (MODELS.length && !curModels().some(x => MODELS.includes(x))) { const first = MODELS.find(x => /:free$/.test(x)) || MODELS[0]; $('cfgModels').value = first; m.textContent = `✅ ${MODELS.length} modelos. Já selecionei "${first}" para você. Clique em outro para trocar.`; }
+    else m.textContent = MODELS.length ? `✅ ${MODELS.length} modelos. Clique em um para usar (★ = principal; os grátis aparecem primeiro).` : 'Conectou, mas não há modelos. No Ollama, instale um: ollama pull llama3.2';
+  } catch (e) { MODELS = []; const loud = !auto || /recusada/.test(e.message);
+    m.innerHTML = loud ? '⚠️ ' + linkGuide(esc(e.message)) : 'Não consegui listar os modelos automaticamente. Confira a chave/URL ou clique em "Buscar modelos disponíveis".';
+    if (auto && !loud && !PRESETS[$('cfgProv').value].key) m.innerHTML = ''; }
   renderModels();
 }
+const wantAuto = (id, key) => !PRESETS[id].key || !!key || id === 'openrouter'; // quem precisa de chave só lista com a chave (OpenRouter é público)
 
         function openCfg() {
             const g = getCfg();
             $('cfgProv').innerHTML = Object.entries(PRESETS).map(([id, p]) => `<option value="${id}">${p.n}</option>`).join('');
             $('cfgProv').value = g.provider; $('cfgBase').value = g.base; $('cfgModels').value = g.models; $('cfgKey').value = g.key;
             let rem = false; try { rem = !!localStorage.getItem(KEY_STORE); } catch (e) {}
-            $('cfgRem').checked = rem; $('cfgWeb').checked = g.web; $('cfgMsg').textContent = ''; $('cfgFilter').value = '';
+            $('cfgRem').checked = rem; $('cfgMsg').textContent = ''; $('cfgFilter').value = '';
             MODELS = []; renderModels(); linkHint(); $('cfg').style.display = 'flex';
-            $('cfgList').onclick = e => { const b = e.target.closest('button'); if (!b) return; const s = curModels(), i = s.indexOf(b.dataset.m); i < 0 ? s.push(b.dataset.m) : s.splice(i, 1); $('cfgModels').value = s.join(', '); renderModels(); };
-            if (!PRESETS[g.provider].key) loadModels(true);
+            $('cfgList').onclick = e => { const b = e.target.closest('button'); if (!b) return; const m = b.dataset.m, s = curModels(), i = s.indexOf(m); if (i === 0) s.shift(); else { if (i > 0) s.splice(i, 1); s.unshift(m); } $('cfgModels').value = s.slice(0, 3).join(', '); renderModels(); };
+            if (wantAuto(g.provider, g.key)) loadModels('auto');
+  $('cfgKey').onchange = () => { if ($('cfgKey').value.trim()) loadModels('auto'); };
+  $('cfgBase').onchange = () => { if (wantAuto($('cfgProv').value, $('cfgKey').value.trim())) loadModels('auto'); };
         }
         function linkHint() { const u = PRESETS[$('cfgProv').value].url; $('cfgLink').innerHTML = u ? `(<a href="${u}" target="_blank" rel="noopener noreferrer">gerar chave</a>)` : ''; }
-        function provChange() { const P = PRESETS[$('cfgProv').value]; $('cfgBase').value = P.base; $('cfgModels').value = P.models; MODELS = []; renderModels(); linkHint(); $('cfgMsg').textContent = ''; if (!P.key) loadModels(true); }
+        function provChange() { const P = PRESETS[$('cfgProv').value]; $('cfgBase').value = P.base; $('cfgModels').value = P.models; MODELS = []; renderModels(); linkHint(); $('cfgMsg').textContent = ''; if (wantAuto($('cfgProv').value, $('cfgKey').value.trim())) loadModels('auto'); }
         function closeCfg() { $('cfg').style.display = 'none'; }
         const okBase = u => /^https:\/\/[^\s/]+/i.test(u) || /^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?(\/|$)/i.test(u);
         function saveCfg() {
@@ -1194,7 +1236,7 @@ async function loadModels(silent) {
             if (!okBase(base)) { $('cfgMsg').textContent = '⚠️ A URL deve começar com https:// (ou http://localhost para IA no seu PC).'; return; }
             const key = $('cfgKey').value.trim();
             try {
-                localStorage.setItem(CFG_KEY, JSON.stringify({ provider: $('cfgProv').value, base, models: $('cfgModels').value.trim(), web: $('cfgWeb').checked }));
+                localStorage.setItem(CFG_KEY, JSON.stringify({ provider: $('cfgProv').value, base, models: $('cfgModels').value.trim(), web: getCfg().web }));
                 sessionStorage.removeItem(KEY_STORE); localStorage.removeItem(KEY_STORE);
                 if (key) (($('cfgRem').checked) ? localStorage : sessionStorage).setItem(KEY_STORE, key);
             } catch (e) {}
@@ -1207,23 +1249,62 @@ async function loadModels(silent) {
             closeCfg(); cfgToast('Configurações removidas');
         }
         const netHint = base => /localhost|127\.0\.0\.1/.test(base)
-  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*.'
-  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS).';
+  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*. Guia completo (Ollama, LM Studio, Jan e CORS): ia-local.html'
+  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS). Veja o guia: ia-local.html';
 
 const strip = s => String(s || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
-async function wiki(q) {
-  const u = `https://pt.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=2&prop=extracts|info&inprop=url&exintro=1&explaintext=1&exchars=700&format=json&origin=*`;
+async function wiki(q, lang = 'pt', proj = 'wikipedia', label = 'Wikipedia PT', big = false) {
+  const u = `https://${lang}.${proj}.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=${big ? 3 : 2}&prop=extracts|info&inprop=url&exintro=1&explaintext=1&exchars=${big ? 1400 : 700}&format=json&origin=*`;
   const d = await (await fetch(u, { signal: AbortSignal.timeout(6000) })).json();
-  return Object.values(d.query?.pages || {}).map(p => ({ title: p.title + ' (Wikipedia)', url: p.fullurl, text: strip(p.extract) }));
+  return Object.values(d.query?.pages || {}).map(p => ({ title: p.title + ' (' + label + ')', url: p.fullurl, text: strip(p.extract) }));
 }
 async function ddgInstant(q) {
   const d = await (await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(q)}&format=json&no_html=1&skip_disambig=1`, { signal: AbortSignal.timeout(6000) })).json();
   return d.AbstractText && d.AbstractURL ? [{ title: d.Heading || 'DuckDuckGo', url: d.AbstractURL, text: strip(d.AbstractText) }] : [];
 }
-async function searchWeb(q) {
-  const rs = await Promise.allSettled([wiki(q), ddgInstant(q)]), seen = new Set(), all = [];
+async function wikidata(q) {
+  const d = await (await fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(q)}&language=pt&uselang=pt&limit=3&format=json&origin=*`, { signal: AbortSignal.timeout(6000) })).json();
+  return (d.search || []).filter(x => x.description).map(x => ({ title: x.label + ' (Wikidata)', url: 'https://www.wikidata.org/wiki/' + x.id, text: x.label + ': ' + x.description }));
+}
+async function musicbrainz(q) {
+  const d = await (await fetch(`https://musicbrainz.org/ws/2/artist/?query=${encodeURIComponent(q)}&limit=2&fmt=json`, { signal: AbortSignal.timeout(6000) })).json();
+  return (d.artists || []).filter(a => a.score >= 90).map(a => ({ title: a.name + ' (MusicBrainz)', url: 'https://musicbrainz.org/artist/' + a.id, text: [a.name, a.type, a.disambiguation, a.country && 'país: ' + a.country, a['life-span'] && a['life-span'].begin && 'desde ' + a['life-span'].begin].filter(Boolean).join(' · ') }));
+}
+async function openlib(q) {
+  const d = await (await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&limit=2&fields=key,title,author_name,first_publish_year`, { signal: AbortSignal.timeout(6000) })).json();
+  return (d.docs || []).map(b => ({ title: b.title + ' (Open Library)', url: 'https://openlibrary.org' + b.key, text: b.title + (b.author_name ? ', de ' + b.author_name.slice(0, 2).join(' e ') : '') + (b.first_publish_year ? ', publicado pela 1ª vez em ' + b.first_publish_year : '') + '.' }));
+}
+const unent = x => { const t = document.createElement('textarea'); t.innerHTML = x; return t.value; };
+async function jget(u) { const r = await fetch(u, { signal: AbortSignal.timeout(6000) }); if (!r.ok) throw new Error(r.status); return r.json(); }
+const hnews = async q => (await jget(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(q)}&tags=story&hitsPerPage=3`)).hits.filter(h => h.title).map(h => ({ title: h.title + ' (Hacker News)', url: h.url || 'https://news.ycombinator.com/item?id=' + h.objectID, text: h.title + (h.points != null ? ' · ' + h.points + ' pontos' : '') + (h.created_at ? ' · ' + h.created_at.slice(0, 4) : '') + '.' }));
+const stack = async q => (await jget(`https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(q)}&site=stackoverflow&pagesize=3`)).items.map(x => ({ title: unent(x.title) + ' (Stack Overflow)', url: x.link, text: unent(x.title) + ' · ' + (x.is_answered ? 'com resposta' : 'sem resposta') + ' · ' + x.answer_count + ' respostas.' }));
+const crossref = async q => (await jget(`https://api.crossref.org/works?query=${encodeURIComponent(q)}&rows=3&select=title,DOI,author,issued,container-title`)).message.items.filter(x => x.title && x.title[0]).map(x => { const au = x.author && x.author[0] ? ', de ' + [x.author[0].given, x.author[0].family].filter(Boolean).join(' ') + (x.author.length > 1 ? ' e outros' : '') : '', jo = x['container-title'] && x['container-title'][0] ? ', em ' + x['container-title'][0] : '', yr = x.issued && x.issued['date-parts'] && x.issued['date-parts'][0] && x.issued['date-parts'][0][0] ? ' (' + x.issued['date-parts'][0][0] + ')' : ''; return { title: x.title[0].slice(0, 120) + ' (Crossref)', url: 'https://doi.org/' + x.DOI, text: x.title[0] + au + jo + yr + '.' }; });
+const itunes = async q => (await jget(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&country=BR&limit=3&media=music`)).results.filter(x => (x.trackName || x.collectionName) && (x.trackViewUrl || x.collectionViewUrl)).map(x => { const nm = x.trackName || x.collectionName; return { title: nm + ' (iTunes)', url: x.trackViewUrl || x.collectionViewUrl, text: nm + ', de ' + x.artistName + (x.trackName && x.collectionName ? ', álbum ' + x.collectionName : '') + (x.primaryGenreName ? ' · ' + x.primaryGenreName : '') + (x.releaseDate ? ' · ' + x.releaseDate.slice(0, 4) : '') + '.' }; });
+const osm = async q => (await jget(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=2&accept-language=pt-BR`)).map(x => ({ title: x.display_name.split(',')[0] + ' (OpenStreetMap)', url: `https://www.openstreetmap.org/${x.osm_type}/${x.osm_id}`, text: x.display_name + (x.type ? ' · tipo: ' + x.type : '') + '.' }));
+const archive = async q => (await jget(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl%5B%5D=identifier&fl%5B%5D=title&fl%5B%5D=year&rows=3&output=json`)).response.docs.filter(x => x.title).map(x => ({ title: String(x.title).slice(0, 120) + ' (Internet Archive)', url: 'https://archive.org/details/' + x.identifier, text: x.title + (x.year ? ' (' + x.year + ')' : '') + ', disponível no Internet Archive.' }));
+const ENGINES = {
+  wikipt: { n: 'Wikipedia (PT)', f: (q, b) => wiki(q, 'pt', 'wikipedia', 'Wikipedia PT', b) },
+  wikien: { n: 'Wikipedia (EN)', f: (q, b) => wiki(q, 'en', 'wikipedia', 'Wikipedia EN', b) },
+  wikies: { n: 'Wikipedia (ES)', f: (q, b) => wiki(q, 'es', 'wikipedia', 'Wikipedia ES', b) },
+  ddg: { n: 'DuckDuckGo', f: ddgInstant },
+  wikidata: { n: 'Wikidata', f: wikidata },
+  wikt: { n: 'Wikcionário (palavras)', f: (q, b) => wiki(q, 'pt', 'wiktionary', 'Wikcionário', b) },
+  wnews: { n: 'Wikinotícias', f: (q, b) => wiki(q, 'pt', 'wikinews', 'Wikinotícias', b) },
+  voy: { n: 'Wikiviagem (viagens)', f: (q, b) => wiki(q, 'pt', 'wikivoyage', 'Wikiviagem', b) },
+  mb: { n: 'MusicBrainz (música)', f: musicbrainz },
+  itunes: { n: 'iTunes (músicas)', f: itunes },
+  ol: { n: 'Open Library (livros)', f: openlib },
+  archive: { n: 'Internet Archive', f: archive },
+  stack: { n: 'Stack Overflow (código)', f: stack },
+  hn: { n: 'Hacker News (tecnologia)', f: hnews },
+  crossref: { n: 'Crossref (artigos científicos)', f: crossref },
+  osm: { n: 'OpenStreetMap (lugares)', f: osm }
+};
+function engSet(m) { document.querySelectorAll('#engBox input').forEach(i => i.checked = m === 'all' ? true : m === 'none' ? false : ['wikipt', 'ddg'].includes(i.dataset.e)); }
+async function searchWeb(q, engines = ['wikipt', 'ddg'], big = false) {
+  const rs = await Promise.allSettled(engines.filter(k => ENGINES[k]).map(k => ENGINES[k].f(q, big))), seen = new Set(), all = [];
   for (const r of rs) if (r.status === 'fulfilled') for (const x of r.value) if (x.text && !seen.has(x.url)) { seen.add(x.url); all.push(x); }
-  return all.slice(0, 5);
+  return all.slice(0, big ? 10 : 6);
 }
 
 const SMALL = /^(oi+|ola|e ai|opa|tudo (bem|certo|joia)|como (vai|esta)|bom dia|boa tarde|boa noite|obrigad[oa]|valeu|tchau|ate mais|beleza|ok|kk+)\b/;
@@ -1239,7 +1320,7 @@ const cleanAI = t => String(t || '').replace(/<think>[\s\S]*?(<\/think>|$)/gi, '
             const messages = [...hist.filter((m, i) => !(i === hist.length - 1 && m.role === 'user' && m.content === text)), { role: 'user', content: text }];
             const local = strip(localHtml || '');
             const smallTalk = SMALL.test(norm(text).trim());
-            const results = cfg.web && text.length > 3 && !local && !smallTalk ? await searchWeb(text.slice(0, 200)).catch(() => []) : [];
+            const results = []; // pesquisa na internet: só no chat completo, com login
             const web = results.map((r, i) => `[${i + 1}] ${r.title}\n${r.text.slice(0, 500)}`).join('\n\n');
             const n = getUserName();
             const system = `Você é o assistente do Azul Groove (bot de música para Discord, da ASTM Software). Responda em ${isEnglishIndex ? 'inglês' : 'português do Brasil'}, de forma curta, clara e amigável.${n ? ' Usuário: ' + n + '.' : ''}
@@ -1344,13 +1425,12 @@ Use a base local e os resultados só quando forem relevantes para a pergunta; em
 
         function triggerLoginPrompt() {
             const old = document.getElementById('loginPrompt'); if (old) old.remove();
-            const wait = fmtWait(visGet().lock - Date.now());
             const chatBody = document.getElementById('chatBody');
             chatBody.insertAdjacentHTML('beforeend',
                 `<div class="chat-message bot" id="loginPrompt"><div class="message-bubble"><div class="msg-text">${t(
-                    `Você usou as ${VIS.max} mensagens por minuto do Modo Visitante. Entre com o Discord para usar sem limite ou aguarde ${wait} para liberar mais ${VIS.max}:`,
-                    `You used the ${VIS.max} messages per minute of Visitor Mode. Sign in with Discord for unlimited use or wait ${wait} to get ${VIS.max} more:`)}</div>
-                <div style="margin-top:12px"><button class="btn-custom-action btn-discord-login" onclick="triggerDiscordLogin()"><i class="fab fa-discord"></i> ${t('Entrar com o Discord', 'Sign in with Discord')}</button></div>
+                    '💙 Gostando da conversa? Faça login para usar o chat completo, com <b>pesquisa na internet</b> (16 buscadores), configurações de IA, fundos e várias conversas. Você pode continuar como visitante quando quiser.',
+                    '💙 Enjoying the chat? Sign in to use the full chat, with <b>internet search</b> (16 search engines), AI settings, wallpapers and multiple chats. You can keep going as a visitor anytime.')}</div>
+                <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn-custom-action btn-discord-login" onclick="triggerDiscordLogin()"><i class="fab fa-discord"></i> ${t('Discord', 'Discord')}</button><button class="btn-custom-action btn-google-login" onclick="triggerGoogleLogin()"><i class="fab fa-google" style="color:#ea4335"></i> Google</button><button class="btn-custom-action btn-github-login" onclick="triggerGithubLogin()"><i class="fab fa-github"></i> GitHub</button></div>
                 <span class="message-time">${getCurrentTime()}</span></div></div>`);
             chatBody.scrollTop = chatBody.scrollHeight;
         }
@@ -1364,11 +1444,9 @@ Use a base local e os resultados só quando forem relevantes para a pergunta; em
             if (!type) { showPortal(); return; }
             if (type === 'visitor') {
                 const v = visGet();
-                if (v.lock) { triggerLoginPrompt(); return; }
                 v.n++;
-                if (v.n >= VIS.max) v.lock = Date.now() + VIS.wait;
                 visSet(v);
-                visWarn = VIS.max - v.n;
+                visWarn = v.n % VIS.every === 0 ? 0 : null;
             }
 
             busy = true;
@@ -1388,7 +1466,7 @@ Use a base local e os resultados só quando forem relevantes para a pergunta; em
                     try { reply = await askAI(label || text, local); }
                     catch (e) {
                         const msg = /fetch/i.test(e.message) ? t('Não consegui falar com a IA (a API está ligada?).', 'Could not reach the AI (is the API on?).') : e.message;
-                        reply = local ? personalize(local) + '\n\n⚠️ ' + esc(msg) : '⚠️ ' + esc(msg);
+                        reply = local ? personalize(local) + '\n\n⚠️ ' + linkGuide(esc(msg)) : '⚠️ ' + linkGuide(esc(msg));
                     }
                 } else if (typeof astmBotKnowledge === 'undefined') {
                     reply = t('Base de conhecimento não carregada corretamente.', 'Knowledge base not loaded correctly.');
@@ -1401,11 +1479,7 @@ Use a base local e os resultados só quando forem relevantes para a pergunta; em
             const indicator = document.getElementById('typingIndicator');
             if (indicator) indicator.remove();
             appendBotMessage(reply);
-            if (visWarn !== null) {
-                if (visWarn <= 0) triggerLoginPrompt();
-                else if (visWarn <= 2) appendBotMessage(t(`⚠️ Restam ${visWarn} mensagem(ns) no Modo Visitante. Entre com o Discord para usar sem limite.`, `⚠️ ${visWarn} message(s) left in Visitor Mode. Sign in with Discord for unlimited use.`), false);
-                visWarn = null;
-            }
+            if (visWarn === 0) { triggerLoginPrompt(); visWarn = null; }
             busy = false;
         }
 
@@ -1503,5 +1577,15 @@ Use a base local e os resultados só quando forem relevantes para a pergunta; em
         })();
     </script>
     <script src="main.js"></script>
+    <script>
+    (function () {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var cv = document.getElementById('fx'); if (!cv) return;
+        var cx = cv.getContext('2d'), W, H, P = [];
+        function rs() { W = cv.width = innerWidth; H = cv.height = innerHeight; P = []; for (var i = 0, n = Math.min(70, Math.floor(W / 18)); i < n; i++) P.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + .4, vx: (Math.random() - .5) * .25, vy: -Math.random() * .35 - .08, a: Math.random() * .5 + .15 }); }
+        rs(); addEventListener('resize', rs);
+        (function loop() { cx.clearRect(0, 0, W, H); for (var i = 0; i < P.length; i++) { var p = P[i]; p.x += p.vx; p.y += p.vy; if (p.y < -5) { p.y = H + 5; p.x = Math.random() * W; } cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 6.283); cx.fillStyle = 'rgba(140,170,255,' + p.a + ')'; cx.fill(); } requestAnimationFrame(loop); })();
+    })();
+    </script>
 </body>
 </html>
