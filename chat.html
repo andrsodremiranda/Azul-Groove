@@ -789,7 +789,7 @@ function cmpPick(k) {
 const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 let KB = null;
 async function searchKB(q) {
-  if (!KB) { try { KB = await (await fetch('data/conhecimento.json')).json(); } catch (e) { KB = []; } }
+  if (!KB) { try { const r = await fetch('data/conhecimento.json'); KB = r.ok ? await r.json() : []; } catch (e) { KB = []; } }
   const t = norm(q), words = t.split(/\W+/).filter(w => w.length > 2);
   return KB.map(e => { let score = 0;
     for (const g of e.tags || []) { const n = norm(g); if (t === n) score += 5; else if (t.includes(n)) score += 3; else if (words.includes(n)) score += 2; }
@@ -957,30 +957,35 @@ function loginDiscord() {
   const state = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Math.random()).slice(2);
   try { sessionStorage.setItem('azul_oauth_state', state); } catch (e) {}
   setCk('azul_terms_accepted', 'true', 7);
-  location.href = 'https://discord.com/oauth2/authorize?' + new URLSearchParams({ client_id: DISCORD_ID, response_type: 'code', redirect_uri: DISCORD_REDIRECT, scope: 'identify email guilds', state }).toString();
+  location.href = 'https://discord.com/oauth2/authorize?' + new URLSearchParams({ client_id: DISCORD_ID, response_type: 'token', redirect_uri: DISCORD_REDIRECT, scope: 'identify email guilds', state }).toString();
 }
-// volta do Discord para cá (?code=...&state=...): troca o código pelo usuário no servidor (api/discord.js)
+// volta do Discord para cá (#access_token=...&state=...): busca o usuário direto no Discord, sem servidor
 function discordCallback() {
-  const q = new URLSearchParams(location.search), code = q.get('code'), err = q.get('error');
-  if (!code && !err) return false;
-  const st = q.get('state');
+  const h = new URLSearchParams(location.hash.replace(/^#/, '')), q = new URLSearchParams(location.search);
+  const token = h.get('access_token'), err = q.get('error') || h.get('error');
+  if (!token && !err) return false;
+  const st = h.get('state') || q.get('state');
   history.replaceState({}, '', location.pathname);
   $('gateLogin').style.display = 'flex';
-  if (err || !code) { lgErr('Login cancelado. Tente novamente.'); return true; }
+  if (err || !token) { lgErr('Login cancelado. Tente novamente.'); return true; }
   let saved = null; try { saved = sessionStorage.getItem('azul_oauth_state'); sessionStorage.removeItem('azul_oauth_state'); } catch (e) {}
   if (!st || st !== saved) { lgErr('Não foi possível validar o login. Tente de novo.'); return true; }
   $('lgT').textContent = 'Entrando com o Discord…'; $('lgBtns').style.display = 'none'; lgErr('');
-  fetch('/api/discord', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) })
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(u => {
+  const hd = { Authorization: 'Bearer ' + token };
+  Promise.all([
+    fetch('https://discord.com/api/users/@me', { headers: hd }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
+    fetch('https://discord.com/api/users/@me/guilds', { headers: hd }).then(r => r.ok ? r.json() : []).catch(() => [])
+  ])
+    .then(([u, guilds]) => {
+      u.guilds = Array.isArray(guilds) ? guilds : [];
       const nm = u.global_name || u.username, av = u.avatar ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=128` : 'https://cdn.discordapp.com/embed/avatars/0.png';
       setCk('azul_session_type', 'discord', 7); setCk('azul_terms_accepted', 'true', 7); setCk('azul_user_name', nm, 7); setCk('azul_user_avatar', av, 7); setCk('azul_user_id', u.id, 7);
       document.cookie = 'azul_visitor_count=; Max-Age=0; path=/';
       try {
-        localStorage.setItem('azul_profile', JSON.stringify({ id: u.id, username: u.username, name: nm, email: u.email || '', total: (u.guilds || []).length, provider: 'discord', guilds: (u.guilds || []).slice(0, 100).map(g => ({ n: g.name, o: !!g.owner })) }));
+        localStorage.setItem('azul_profile', JSON.stringify({ id: u.id, username: u.username, name: nm, email: u.email || '', total: u.guilds.length, provider: 'discord', guilds: u.guilds.slice(0, 100).map(g => ({ n: g.name, o: !!g.owner })) }));
         sessionStorage.setItem('azul_welcome', '1');
       } catch (e) {}
-      location.replace(location.pathname); // recarrega já logado
+      location.replace(location.pathname); // recarrega já logado (o token não é guardado)
     })
     .catch(e => { console.error('Discord:', e); $('lgT').textContent = 'Entre para usar o chat'; $('lgBtns').style.display = 'flex'; lgErr('Erro ao entrar com o Discord. Tente novamente.'); });
   return true;
