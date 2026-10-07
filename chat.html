@@ -259,6 +259,40 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 #cfg .tabs button{white-space:nowrap;padding:9px 13px}
 #cfg .card>.pane{grid-column:1;grid-row:3;padding:16px}#cfg .card>.row{grid-column:1;grid-row:4;padding:12px 16px}}
 @media(prefers-reduced-motion:reduce){#cfg .card>.pane:not([hidden]){animation:none}}
+/* ===== novo menu de novidades ===== */
+.nw-pn{position:fixed;top:62px;right:16px;z-index:18;width:min(430px,calc(100vw - 32px));max-height:min(78vh,640px);display:none;flex-direction:column;background:color-mix(in srgb,var(--card) 90%,transparent);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 90px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden}
+.nw-pn.open{display:flex;animation:nwIn .32s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes nwIn{from{opacity:0;transform:translateY(-12px) scale(.96)}}
+.nw-h,.nw-tabs,.nw-f{flex-shrink:0}
+.nw-h{display:flex;align-items:center;gap:12px;padding:18px 18px 14px;background:linear-gradient(120deg,color-mix(in srgb,var(--p) 32%,transparent),color-mix(in srgb,#1fb6ff 10%,transparent) 60%,transparent)}
+.nw-hi{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--p),#1fb6ff);box-shadow:0 8px 22px color-mix(in srgb,var(--p) 50%,transparent)}
+.nw-ht{flex:1;min-width:0}.nw-ht b{display:block;font-size:1.1rem;color:var(--tx)}.nw-ht small{color:var(--m);font-size:.78rem}
+.nw-h .ib{width:34px;height:34px;border-radius:11px;background:var(--soft);font-size:1.05rem}
+.nw-h .ib:hover{background:color-mix(in srgb,var(--p) 28%,transparent)}
+.nw-tabs{display:flex;gap:6px;padding:0 16px 12px;border-bottom:1px solid var(--line);overflow-x:auto}
+.nw-tabs button{border:0;background:var(--soft);color:var(--m);border-radius:99px;padding:7px 14px;font:600 .8rem inherit;font-family:inherit;cursor:pointer;white-space:nowrap;transition:.15s}
+.nw-tabs button b{margin-left:4px;font-size:.7rem;opacity:.8}.nw-tabs button:hover{color:var(--tx)}
+.nw-tabs button.on{background:linear-gradient(135deg,var(--p),#7a5cff);color:#fff;box-shadow:0 6px 16px color-mix(in srgb,var(--p) 45%,transparent)}
+.nw-list{overflow-y:auto;padding:14px 14px 6px;flex:1 1 auto;min-height:0}
+.nw-it{display:flex;gap:12px;padding:14px;border-radius:18px;margin-bottom:8px;border:1px solid transparent;background:var(--soft);animation:nwItIn .4s both;animation-delay:calc(var(--k)*40ms);transition:background .15s,transform .15s}
+@keyframes nwItIn{from{opacity:0;transform:translateY(10px)}}
+.nw-it:hover{background:color-mix(in srgb,var(--p) 10%,var(--soft));transform:translateX(-3px)}
+.nw-it.fresh{border-color:color-mix(in srgb,var(--p) 55%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--p) 16%,transparent),color-mix(in srgb,#1fb6ff 5%,transparent))}
+.nw-ic{flex:0 0 38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--p),#7a5cff);font-size:.95rem}
+.nw-it.site .nw-ic{background:linear-gradient(135deg,#1fb6ff,#3ddc97)}
+.nw-bd{min-width:0;flex:1}
+.nw-meta{display:flex;gap:8px;align-items:center;font-size:.72rem;color:var(--m);margin-bottom:5px}
+.nw-tag{font-weight:700;letter-spacing:.5px;padding:2px 9px;border-radius:99px;background:rgba(88,101,242,.22);color:#aab4ff}
+.nw-tag.site{background:rgba(31,182,255,.14);color:#1fb6ff}
+:root[data-theme=light] .nw-tag{color:#4752c4}:root[data-theme=light] .nw-tag.site{color:#0a7bb5}
+.nw-nw{color:#ff4d8d;font-weight:800}
+.nw-it h4{font-size:.96rem;margin-bottom:3px;color:var(--tx)}
+.nw-it p{color:var(--t);font-size:.86rem;line-height:1.5}
+.nw-empty{text-align:center;color:var(--m);padding:30px 10px}
+.nw-f{display:flex;gap:10px;justify-content:center;padding:12px 18px;border-top:1px solid var(--line);font-size:.86rem;color:var(--m)}
+.nw-f a{color:#8ea1ff;font-weight:600;text-decoration:none}.nw-f a:hover{text-decoration:underline}
+@media(max-width:560px){.nw-pn{left:10px;right:10px;width:auto;top:56px;max-height:80vh}}
+@media(prefers-reduced-motion:reduce){.nw-pn.open,.nw-it{animation:none!important}}
 </style>
 </head>
 <body>
@@ -301,7 +335,7 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
     <h1 id="title"></h1>
     <button class="ib" id="themeBtn" title="Modo claro/escuro" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
     <button class="ib" id="deepBtn" title="Modo aprofundado" onclick="setPrefs({deep:!getPrefs().deep})"><i class="fas fa-layer-group"></i></button>
-    <button class="ib" id="newsBtn" title="Novidades do site" onclick="news()"><i class="fas fa-wand-magic-sparkles"></i></button>
+    <button class="ib" id="newsBtn" data-news title="Novidades" aria-haspopup="dialog" aria-expanded="false" aria-controls="news" onclick="news()"><i class="fas fa-wand-magic-sparkles"></i></button>
     <button class="ib" title="Configurações" onclick="openCfg()"><i class="fas fa-gear"></i></button>
     <button class="ib" id="moreBtn" title="Menu da conversa" onclick="$('dd').classList.toggle('open')"><i class="fas fa-ellipsis-vertical"></i></button>
     <div class="dd" id="dd" onclick="closeMenu()">
@@ -329,7 +363,7 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
   </div>
   <div class="modes" id="modes"></div>
   <div class="chips">
-    <button onclick="news()">✨ Novidades</button>
+    <button data-news onclick="news()">✨ Novidades</button>
   </div>
 </main>
 <div class="pop" id="mdlPop"></div>
@@ -432,8 +466,11 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
   <div class="card sm"><h3 id="dlgT" style="color:var(--tx)"></h3><p id="dlgP"></p><input type="text" id="dlgI" style="display:none" autocomplete="off">
     <div class="row"><button class="btn2" onclick="dlgClose(false)">Cancelar</button><button class="btn2 ok" id="dlgOk" onclick="dlgClose(true)">OK</button></div></div>
 </div>
-<div class="modal" id="news" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeNews();this.dn=false">
-  <div class="card"><div class="ch"><h3>✨ Novidades</h3><button class="ib" onclick="closeNews()" title="Fechar"><i class="fas fa-xmark"></i></button></div><div id="newsBody"></div></div>
+<div class="nw-pn" id="news" role="dialog" aria-label="Novidades">
+  <div class="nw-h"><span class="nw-hi"><i class="fas fa-wand-magic-sparkles"></i></span><div class="nw-ht"><b>Novidades</b><small>Tudo o que mudou no Azul Groove</small></div><button class="ib" onclick="closeNews()" title="Fechar" aria-label="Fechar"><i class="fas fa-xmark"></i></button></div>
+  <div class="nw-tabs" id="nwTabs"></div>
+  <div class="nw-list" id="nwList"></div>
+  <div class="nw-f"><a href="blog.html" target="_blank" rel="noopener">Ver no blog</a><span>·</span><a href="docs.html" target="_blank" rel="noopener">Documentação</a></div>
 </div>
 <script>
 const $ = id => document.getElementById(id);
@@ -677,8 +714,43 @@ const NEWS_AI = [
   '**Login corrigido:** entrar com Discord, Google ou GitHub agora acontece direto no chat, e o login do Discord volta para o chat (em vez de recomeçar).',
   '**Azul Groove IA vs. outras IAs:** a página da IA agora tem um comparativo e explica como usar um modelo local (Ollama ou LM Studio).'
 ];
-const newsVer = hit => String([...(NEWS_AI.join('|') + (hit ? hit.e.resposta : ''))].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7));
-async function checkNews() { const hit = (await searchKB('novidades'))[0]; let seen = ''; try { seen = localStorage.getItem('azul_news_seen') || ''; } catch (e) {} if (seen !== newsVer(hit)) $('newsBtn').classList.add('dot'); }
+// ----- menu de novidades (painel) -----
+const NW_KEY = 'azul_news_r';
+const NW_ICONS = [[/aviso/i, 'fa-triangle-exclamation'], [/docs/i, 'fa-book'], [/config/i, 'fa-sliders'], [/escolha a ia|modelos/i, 'fa-wand-magic-sparkles'], [/sincroniza/i, 'fa-arrows-rotate'],
+  [/conta|estat/i, 'fa-chart-simple'], [/rolagem/i, 'fa-bars-staggered'], [/licen/i, 'fa-file-contract'], [/\bvs\b/i, 'fa-scale-balanced'], [/site da/i, 'fa-robot'], [/visitante/i, 'fa-user'],
+  [/digita/i, 'fa-keyboard'], [/modos de/i, 'fa-masks-theater'], [/dados do azul/i, 'fa-database'], [/aprofund/i, 'fa-layer-group'], [/buscador/i, 'fa-globe'], [/mem[óo]ria/i, 'fa-brain'],
+  [/curiosidade/i, 'fa-lightbulb'], [/apar[êe]ncia/i, 'fa-palette'], [/login/i, 'fa-right-to-bracket'], [/boas-vindas|apoio/i, 'fa-heart']];
+const nwHash = t => String([...t].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7));
+function nwParse(raw, src) {
+  const t = String(raw).replace(/^[•\-]\s*/, '').trim(), m = t.match(/^\*\*(.+?):?\*\*\s*([\s\S]*)$/), title = m ? m[1].trim() : '', body = m ? m[2].trim() : t;
+  const ic = (NW_ICONS.find(([re]) => re.test(title || body)) || [])[1] || (src === 'site' ? 'fa-globe' : 'fa-wand-magic-sparkles');
+  return { s: src, t: title, b: body.charAt(0).toUpperCase() + body.slice(1), i: ic, h: nwHash(t) };
+}
+async function nwItems() {
+  let hit = null; try { hit = (await searchKB('novidades'))[0]; } catch (e) {}
+  const site = (hit ? hit.e.resposta : '').split('\n').map(x => x.trim()).filter(l => l && !/:\**$/.test(l));
+  return [...NEWS_AI.map(x => nwParse(x, 'ia')), ...site.map(x => nwParse(x, 'site'))];
+}
+function nwSeen(items) {
+  let a = null; try { a = JSON.parse(localStorage.getItem(NW_KEY)); } catch (e) {}
+  if (!Array.isArray(a)) { a = items.slice(3).map(i => i.h); try { localStorage.setItem(NW_KEY, JSON.stringify(a)); } catch (e) {} }
+  return new Set(a);
+}
+const nwMark = items => { try { const a = JSON.parse(localStorage.getItem(NW_KEY)) || []; localStorage.setItem(NW_KEY, JSON.stringify([...new Set([...a, ...items.map(i => i.h)])].slice(-300))); } catch (e) {} };
+async function checkNews() { const it = await nwItems(), seen = nwSeen(it); if (it.some(i => !seen.has(i.h))) $('newsBtn').classList.add('dot'); }
+let nwList = [], nwFresh = new Set(), nwFilter = 'all';
+function nwRender() {
+  const lab = { all: 'Tudo', ia: '🤖 IA', site: '🌐 Site' }, cnt = k => k === 'all' ? nwList.length : nwList.filter(i => i.s === k).length;
+  $('nwTabs').innerHTML = Object.keys(lab).filter(k => k === 'all' || cnt(k)).map(k => `<button class="${nwFilter === k ? 'on' : ''}" data-f="${k}">${lab[k]} <b>${cnt(k)}</b></button>`).join('');
+  const items = nwList.filter(i => nwFilter === 'all' || i.s === nwFilter);
+  $('nwList').innerHTML = items.map((n, k) => { const fr = nwFresh.has(n.h);
+    return `<article class="nw-it ${n.s} ${fr ? 'fresh' : ''}" style="--k:${k}"><span class="nw-ic"><i class="fas ${n.i}"></i></span><div class="nw-bd"><div class="nw-meta"><span class="nw-tag ${n.s}">${n.s === 'ia' ? 'IA' : 'SITE'}</span>${fr ? '<span class="nw-nw">não lida</span>' : ''}</div>${n.t ? `<h4>${esc(n.t)}</h4>` : ''}<p>${fmt(esc(n.b))}</p></div></article>`; }).join('') || '<div class="nw-empty">Nada por aqui ainda.</div>';
+}
+(() => {
+  $('nwTabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; nwFilter = b.dataset.f; nwRender(); $('nwList').scrollTop = 0; };
+  // fecha ao clicar fora (composedPath: o botão clicado é recriado ao trocar de aba e já não está mais no painel)
+  document.addEventListener('click', e => { const pn = $('news'); if (!pn.classList.contains('open')) return; if (!e.composedPath().includes(pn) && !e.target.closest('[data-news]')) closeNews(); });
+})();
 let dlgRes = null;
 function dlg({ title, text = '', ok = 'OK', danger = false, input = null }) {
   return new Promise(res => {
@@ -694,7 +766,7 @@ function dlgClose(v) {
   const hasInput = $('dlgI').style.display !== 'none', r = dlgRes; dlgRes = null;
   if (r) r(v ? (hasInput ? $('dlgI').value : true) : (hasInput ? null : false));
 }
-const closeNews = () => $('news').style.display = 'none';
+const closeNews = () => { $('news').classList.remove('open'); $('newsBtn').setAttribute('aria-expanded', 'false'); };
 let MODELS = [];
 const curModels = () => $('cfgModels').value.split(',').map(s => s.trim()).filter(Boolean);
 function renderModels() {
@@ -784,11 +856,11 @@ function delCur() { delConv(cur, { stopPropagation() {} }); }
 async function delAll() { if (!await dlg({ title: 'Apagar todas as conversas?', text: 'Isso não pode ser desfeito.', ok: 'Apagar tudo', danger: true })) return; convs = []; save(); cur = null; closeCfg(); newConv(); toast('Conversas apagadas'); }
 function exportAll() { if (!convs.length) return toast('Nada para salvar'); download(JSON.stringify(convs, null, 2), 'azul-groove-conversas.json', 'application/json'); }
 async function news() {
-  const hit = (await searchKB('novidades'))[0];
-  const site = (hit ? hit.e.resposta : '').split('\n').map(x => x.trim()).filter(l => l && !/:\**$/.test(l));
-  let i = 0; const li = l => `<li style="--i:${i++}">${fmt(esc(l.replace(/^[•\-]\s*/, '')))}</li>`;
-  $('newsBody').innerHTML = '<h4 class="nh">🤖 Novidades da IA</h4><ul class="nl">' + NEWS_AI.map(l => li(l)).join('') + '</ul>' + (site.length ? '<h4 class="nh" style="margin-top:14px">🌐 Novidades do site</h4><ul class="nl">' + site.map(l => li(l)).join('') + '</ul>' : '');
-  $('news').style.display = 'flex'; try { localStorage.setItem('azul_news_seen', newsVer(hit)); } catch (e) {} $('newsBtn').classList.remove('dot');
+  const pn = $('news'); if (pn.classList.contains('open')) return closeNews();
+  closeMenu(); nwList = await nwItems(); if (pn.classList.contains('open')) return;
+  const seen = nwSeen(nwList); nwFresh = new Set(nwList.filter(i => !seen.has(i.h)).map(i => i.h)); nwFilter = 'all';
+  nwRender(); $('nwList').scrollTop = 0; pn.classList.add('open'); $('newsBtn').setAttribute('aria-expanded', 'true');
+  nwMark(nwList); $('newsBtn').classList.remove('dot');
 }
 const netHint = base => /localhost|127\.0\.0\.1/.test(base)
   ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*. Guia completo (Ollama, LM Studio, Jan e CORS): docs.html#/ia-local'
