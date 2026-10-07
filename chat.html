@@ -480,6 +480,33 @@ const CURIOS = [
   { c: 'brasil', l: 'aviação no Brasil', t: 'a Embraer foi fundada em 1969, em São José dos Campos (SP), e é uma das maiores fabricantes de aviões do mundo.' },
   { c: 'brasil', l: 'aviação no Brasil', t: 'a Varig, fundada em 1927 em Porto Alegre, foi a primeira companhia aérea do Brasil.' },
   { c: 'brasil', l: 'aviação no Brasil', t: 'o Aeroporto de Guarulhos (GRU) é o que mais movimenta passageiros no Brasil.' },
+  { c: 'ambiente', t: 'o oceano produz pelo menos metade do oxigênio da atmosfera, em boa parte graças ao fitoplâncton, algas microscópicas que fazem fotossíntese.' },
+  { c: 'ambiente', t: 'os recifes de coral cobrem menos de 1% do fundo do oceano, mas abrigam cerca de 25% das espécies marinhas.' },
+  { c: 'ambiente', t: 'só cerca de 3% da água do planeta é doce, e a maior parte dela está congelada ou no subsolo.' },
+  { c: 'ambiente', t: 'reciclar uma lata de alumínio gasta cerca de 95% menos energia do que produzir uma nova a partir do minério.' },
+  { c: 'ambiente', t: 'o vidro pode ser reciclado infinitas vezes sem perder qualidade.' },
+  { c: 'ambiente', t: 'o papel pode ser reciclado de 5 a 7 vezes, porque as fibras vão ficando mais curtas a cada ciclo.' },
+  { c: 'ambiente', t: 'uma garrafa PET pode levar centenas de anos para se decompor na natureza.' },
+  { c: 'ambiente', t: 'cerca de 75% das principais culturas alimentares do mundo dependem, ao menos em parte, de polinizadores como abelhas, borboletas e morcegos.' },
+  { c: 'ambiente', t: 'o sexo dos filhotes de tartaruga-marinha é definido pela temperatura da areia do ninho: ninhos mais quentes geram mais fêmeas.' },
+  { c: 'ambiente', t: 'a camada de ozônio está em recuperação graças ao Protocolo de Montreal, de 1987, um dos acordos ambientais mais bem-sucedidos da história.' },
+  { c: 'ambiente', t: 'lâmpadas de LED chegam a gastar cerca de 80% menos energia do que as incandescentes.' },
+  { c: 'ambiente', t: 'o Dia Mundial do Meio Ambiente é comemorado em 5 de junho.' },
+  { c: 'ambiente', t: 'a compostagem transforma restos de comida e de poda em adubo, e ajuda a reduzir o lixo que vai para os aterros.' },
+  { c: 'ambiente', t: 'estima-se que milhões de toneladas de plástico cheguem aos oceanos todos os anos.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'a Amazônia é a maior floresta tropical do mundo e abriga cerca de 10% das espécies conhecidas do planeta.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'as árvores da Amazônia liberam vapor de água que forma os "rios voadores", massas de ar úmido que ajudam a levar chuva a outras regiões do Brasil.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'o Pantanal é considerado a maior planície alagável do planeta.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'o Cerrado é considerado a savana mais rica em biodiversidade do mundo e abriga nascentes de grandes bacias hidrográficas do país.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'restam cerca de 12% da cobertura original da Mata Atlântica, que mesmo assim ainda abriga milhares de espécies que só existem lá.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'o pau-brasil, árvore que deu nome ao país, foi tão explorado desde o século XVI que hoje é considerado ameaçado de extinção.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'o mico-leão-dourado, símbolo da Mata Atlântica, foi salvo da beira da extinção por programas de conservação, mas ainda precisa de proteção.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'o Brasil guarda cerca de 12% da água doce do planeta.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'mais de 80% da eletricidade brasileira vem de fontes renováveis, como hidrelétricas, ventos, sol e biomassa.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'a maior parte da energia eólica do Brasil é gerada no Nordeste, graças aos ventos constantes da região.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'a Eco-92, grande conferência da ONU sobre meio ambiente, aconteceu no Rio de Janeiro, em 1992.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'a COP30, a conferência do clima da ONU, aconteceu em Belém (PA), em novembro de 2025.' },
+  { c: 'brasil', l: 'meio ambiente no Brasil', t: 'o Brasil está entre os países que mais reciclam latas de alumínio, com índices acima de 95% nos últimos anos.' },
   { c: 'geral', t: 'o Discord foi lançado em 2015.' }
 ];
 const GREET_NAME = [n => `Oi, ${n}! Vamos nessa?`, n => `Olá, ${n}! Como posso ajudar hoje?`, n => `E aí, ${n}! Qual é a dúvida de hoje?`, n => `Bem-vindo de volta, ${n}!`,
@@ -491,7 +518,7 @@ const calm = t => getPrefs().tone === 'serio' ? t.replace(/\s*[\u{1F300}-\u{1FAF
 const pickGreeting = () => {
   const r = Math.random(), n = first ? `<b>${esc(first)}</b>` : '', pool = CURIOS.filter(x => getPrefs().topics.includes(x.c));
   if (r < .25) return `${period()}${first ? ', ' + n : ''}! São <span class="clk">${clock()}</span>. ${first ? 'Vamos nessa?' : 'Como posso ajudar?'}`;
-  if (r < .55 && pool.length) { const x = rand(pool), lb = x.l || (x.c === 'musica' ? 'música' : x.c === 'aviacao' ? 'aviação' : ''); return `<span class="cur">💡 <b>Curiosidade${lb ? ' de ' + lb : ''}:</b> ${x.t}</span>`; }
+  if (r < .55 && pool.length) { const x = rand(pool), lb = x.l || ({ musica: 'música', aviacao: 'aviação', ambiente: 'meio ambiente' }[x.c] || ''); return `<span class="cur">💡 <b>Curiosidade${lb ? ' de ' + lb : ''}:</b> ${x.t}</span>`; }
   return calm(rand([...(first ? GREET_NAME.map(f => f(n)) : []), ...GREET_ANON]));
 };
 const tick = () => document.querySelectorAll('.clk').forEach(e => { if (e.closest('.typing')) return; const t = clock(); if (e.textContent !== t) e.textContent = t; });
@@ -643,6 +670,7 @@ const NEWS_AI = [
   '**16 buscadores:** Wikipedia (PT, EN, ES), Wikcionário, Wikinotícias, Wikiviagem, DuckDuckGo, MusicBrainz, iTunes, Open Library, Internet Archive, Stack Overflow, Hacker News, Crossref, OpenStreetMap e Wikidata.',
   '**Memória e treino:** peça para a IA lembrar de coisas, defina seu jeito de falar e use 👍 e Comparar para ela aprender seu estilo.',
   '**Mais curiosidades:** aviação (mundo e Brasil) e música, com filtro por tema.',
+  '**Curiosidades de meio ambiente:** novo tema nas curiosidades da tela inicial, com fatos sobre oceanos, reciclagem, energia e a natureza do Brasil. Ligue ou desligue em ⚙️ > Estilo.',
   '**Aparência:** novo botão para restaurar o padrão.',
   '**Login com Google e GitHub:** além do Discord, via Firebase. Em ⚙️ > Conta há "Entrar com outra conta".',
   '**Boas-vindas e apoio:** mensagem ao entrar e botão 💙 para apoiar o projeto pela LivePix.',
@@ -776,11 +804,11 @@ const TONES = {
   didatico: { n: 'Didático', p: 'Explique de forma didática, em passos curtos e com exemplos simples.' }
 };
 const DEEP = 'MODO APROFUNDADO: dê uma resposta completa e bem organizada, com contexto, explicação em partes (títulos curtos em **negrito**), exemplos práticos e, no fim, um resumo de 1 ou 2 frases. Aproveite todas as fontes relevantes dos resultados da web e indique-as pelo número, como [1] e [2]. Mais conteúdo útil, sem enrolação, e sem inventar nada que as fontes ou o seu conhecimento não sustentem.';
-const TOPICS = { musica: '🎵 Música', aviacao: '✈️ Aviação', brasil: '🇧🇷 Brasil', geral: '🌍 Gerais' };
+const TOPICS = { musica: '🎵 Música', aviacao: '✈️ Aviação', ambiente: '🌱 Meio ambiente', brasil: '🇧🇷 Brasil', geral: '🌍 Gerais' };
 function getPrefs() {
   let p = {}; try { p = JSON.parse(localStorage.getItem(PREF_KEY) || '{}'); } catch (e) {}
   return { tone: TONES[p.tone] ? p.tone : 'normal', kb: p.kb === 'off' ? 'off' : 'auto', style: String(p.style || '').slice(0, 400), mem: Array.isArray(p.mem) ? p.mem.slice(0, 20) : [],
-    learn: p.learn !== false, deep: p.deep === true, likes: Array.isArray(p.likes) ? p.likes.slice(-6) : [], topics: Array.isArray(p.topics) ? p.topics : Object.keys(TOPICS) };
+    learn: p.learn !== false, deep: p.deep === true, likes: Array.isArray(p.likes) ? p.likes.slice(-6) : [], topics: (() => { const t = Array.isArray(p.topics) ? p.topics : Object.keys(TOPICS); return (p.tv || 0) < 2 && !t.includes('ambiente') ? [...t, 'ambiente'] : t; })(), tv: 2 };
 }
 function setPrefs(x) { try { localStorage.setItem(PREF_KEY, JSON.stringify({ ...getPrefs(), ...x })); } catch (e) {} paintPrefs(); }
 function paintPrefs() {

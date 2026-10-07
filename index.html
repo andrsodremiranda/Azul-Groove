@@ -117,28 +117,46 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 .rv{transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 
 /* ===== menu de novidades ===== */
-.nw-btn{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:99px;border:1px solid var(--line);background:rgba(15,19,48,.92);color:var(--tx);font:600 .9rem system-ui,sans-serif;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45);backdrop-filter:blur(10px)}
-.nw-btn:hover{border-color:var(--ac);box-shadow:0 10px 34px rgba(88,101,242,.5)}
-.nw-btn i{color:var(--ac2)}
-.nw-dot{position:absolute;top:-3px;right:-3px;width:13px;height:13px;border-radius:50%;background:#ff4d8d;border:2px solid var(--bg);display:none;animation:pulse 1.4s ease-in-out infinite}
-.nw-btn.new .nw-dot{display:block}
-.nw-panel{position:fixed;right:20px;bottom:78px;z-index:41;width:min(380px,calc(100vw - 40px));max-height:min(70vh,560px);display:none;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.6);overflow:hidden}
-.nw-panel.open{display:flex;animation:up .3s cubic-bezier(.2,.7,.2,1)}
-.nw-h{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line);font-weight:800}
-.nw-h button{background:none;border:0;color:var(--mut);font-size:1.1rem;cursor:pointer;padding:4px 8px;border-radius:8px}
-.nw-h button:hover{color:#fff;background:rgba(88,101,242,.2)}
-.nw-list{overflow-y:auto;padding:10px}
-.nw-it{padding:12px 14px;border-radius:14px;margin-bottom:6px}
-.nw-it:hover{background:rgba(88,101,242,.1)}
-.nw-meta{display:flex;gap:8px;align-items:center;font-size:.72rem;color:var(--mut);margin-bottom:4px}
-.nw-tag{font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:99px;background:rgba(31,182,255,.12);color:var(--ac2)}
-.nw-tag.up{background:rgba(88,101,242,.2);color:#aab4ff}
-.nw-it h4{font-size:.98rem;margin-bottom:2px}
-.nw-it p{color:var(--mut);font-size:.87rem;line-height:1.5}
-.nw-it a{color:#8ea1ff;font-size:.85rem;font-weight:600}
-.nw-f{padding:12px 18px;border-top:1px solid var(--line);text-align:center;font-size:.88rem}
+.nw-btn{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:10px;padding:10px 20px 10px 10px;border-radius:99px;border:1px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,var(--ac),var(--ac2)) border-box;color:var(--tx);font:700 .9rem system-ui,sans-serif;cursor:pointer;box-shadow:0 12px 34px rgba(0,0,0,.5);transition:transform .2s,box-shadow .2s}
+.nw-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(88,101,242,.55)}
+.nw-btn .bell{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-size:.82rem}
+.nw-btn.new .bell i{animation:nwRing 2.6s ease-in-out infinite;transform-origin:50% 0}
+@keyframes nwRing{0%,60%,100%{transform:rotate(0)}65%{transform:rotate(16deg)}70%{transform:rotate(-14deg)}75%{transform:rotate(10deg)}80%{transform:rotate(-6deg)}}
+.nw-dot{position:absolute;top:-6px;right:-4px;min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:#ff4d8d;color:#fff;font-size:.72rem;display:none;place-items:center;border:2px solid var(--bg)}
+.nw-btn.new .nw-dot{display:grid}
+.nw-panel{position:fixed;right:20px;bottom:86px;z-index:41;width:min(430px,calc(100vw - 40px));max-height:min(78vh,650px);display:none;flex-direction:column;background:color-mix(in srgb,var(--card) 90%,transparent);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 90px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden}
+.nw-panel.open{display:flex;animation:nwIn .32s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes nwIn{from{opacity:0;transform:translateY(16px) scale(.96)}}
+.nw-h{display:flex;align-items:center;gap:12px;padding:18px 18px 14px;background:linear-gradient(120deg,rgba(88,101,242,.35),rgba(31,182,255,.12) 60%,transparent)}
+.nw-hi{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 8px 22px rgba(88,101,242,.55)}
+.nw-ht{flex:1}.nw-ht b{display:block;font-size:1.12rem;font-weight:800}.nw-ht small{color:var(--mut);font-size:.78rem}
+.nw-h button{background:rgba(255,255,255,.06);border:0;color:var(--mut);font-size:1.2rem;cursor:pointer;width:34px;height:34px;border-radius:11px}
+.nw-h button:hover{color:#fff;background:rgba(88,101,242,.3)}
+.nw-tabs{display:flex;gap:6px;padding:0 16px 12px;border-bottom:1px solid var(--line);overflow-x:auto}
+.nw-tabs button{border:0;background:rgba(255,255,255,.05);color:var(--mut);border-radius:99px;padding:7px 14px;font:600 .8rem system-ui,sans-serif;cursor:pointer;white-space:nowrap;transition:.15s}
+.nw-tabs button b{margin-left:4px;font-size:.7rem;opacity:.8}.nw-tabs button:hover{color:#fff}
+.nw-tabs button.on{background:linear-gradient(135deg,var(--ac),#7a5cff);color:#fff;box-shadow:0 6px 16px rgba(88,101,242,.45)}
+.nw-h,.nw-tabs,.nw-f{flex-shrink:0}
+.nw-list{overflow-y:auto;padding:14px 14px 6px;flex:1 1 auto;min-height:0}
+.nw-it{display:flex;gap:12px;padding:14px;border-radius:18px;margin-bottom:8px;border:1px solid transparent;background:rgba(255,255,255,.03);animation:nwItIn .4s both;animation-delay:calc(var(--k)*45ms);transition:background .15s,transform .15s}
+@keyframes nwItIn{from{opacity:0;transform:translateY(10px)}}
+.nw-it:hover{background:rgba(88,101,242,.1);transform:translateX(3px)}
+.nw-it.fresh{border-color:rgba(88,101,242,.55);background:linear-gradient(135deg,rgba(88,101,242,.16),rgba(31,182,255,.05))}
+.nw-ic{flex:0 0 38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#5865f2,#7a5cff);font-size:.95rem}
+.nw-it.up .nw-ic{background:linear-gradient(135deg,#1fb6ff,#3ddc97)}
+.nw-bd{min-width:0;flex:1}
+.nw-meta{display:flex;gap:8px;align-items:center;font-size:.72rem;color:var(--mut);margin-bottom:5px}
+.nw-tag{font-weight:700;letter-spacing:.5px;padding:2px 9px;border-radius:99px;background:rgba(31,182,255,.14);color:var(--ac2)}
+.nw-tag.new{background:rgba(88,101,242,.22);color:#aab4ff}
+.nw-nw{color:#ff4d8d;font-weight:800}
+.nw-it h4{font-size:.98rem;margin-bottom:3px}.nw-it p{color:var(--mut);font-size:.86rem;line-height:1.5}
+.nw-it a{display:inline-flex;gap:6px;align-items:center;margin-top:9px;padding:6px 13px;border-radius:99px;background:rgba(88,101,242,.18);color:#bcc6ff;font-size:.8rem;font-weight:700;transition:.15s}
+.nw-it a:hover{background:var(--ac);color:#fff}
+.nw-empty{text-align:center;color:var(--mut);padding:30px 10px}
+.nw-f{display:flex;gap:10px;justify-content:center;padding:12px 18px;border-top:1px solid var(--line);font-size:.86rem;color:var(--mut)}
 .nw-f a{color:#8ea1ff;font-weight:600}
-@media(max-width:560px){.nw-btn span{display:none}.nw-btn{padding:14px}}
+@media(max-width:560px){.nw-btn .t{display:none}.nw-btn{padding:10px}.nw-panel{left:10px;right:10px;width:auto;bottom:80px;max-height:78vh}}
+@media(prefers-reduced-motion:reduce){.nw-panel.open,.nw-it,.nw-btn .bell i{animation:none!important}}
 
 /* ===== cores animadas no fundo ===== */
 .glow{animation:hue 22s ease-in-out infinite alternate}
@@ -304,11 +322,12 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 </div></footer>
 
 
-<button class="nw-btn" id="nwBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="nwPanel"><i class="fas fa-bell"></i><span data-pt="Novidades" data-en="What's new">Novidades</span><b class="nw-dot"></b></button>
+<button class="nw-btn" id="nwBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="nwPanel"><span class="bell"><i class="fas fa-bell"></i></span><span class="t" data-pt="Novidades" data-en="What's new">Novidades</span><b class="nw-dot" id="nwCount"></b></button>
 <div class="nw-panel" id="nwPanel" role="dialog" aria-label="Novidades">
-  <div class="nw-h"><span id="nwTitle">Novidades</span><button id="nwClose" aria-label="Fechar">&times;</button></div>
+  <div class="nw-h"><span class="nw-hi"><i class="fas fa-wand-magic-sparkles"></i></span><div class="nw-ht"><b id="nwTitle">Novidades</b><small id="nwSub">Tudo o que mudou no Azul Groove</small></div><button id="nwClose" aria-label="Fechar">&times;</button></div>
+  <div class="nw-tabs" id="nwTabs"></div>
   <div class="nw-list" id="nwList"></div>
-  <div class="nw-f"><a href="blog.html" id="nwBlog">Ver todas no blog</a></div>
+  <div class="nw-f"><a href="blog.html" id="nwBlog">Ver todas no blog</a><span>·</span><a href="docs.html" id="nwDocs">Documentação</a></div>
 </div>
 
 <script>
@@ -321,32 +340,48 @@ function applyLanguage() {
 }
 
 // ===== Novidades: edite só esta lista (a mais nova primeiro) =====
-const NEWS_VER = '2026-10-05';
+const NEWS_VER = '2026-10-06';
 const NEWS = [
-  { d: '05 Out 2026', t: 'new', pt: ['Novo visual do site', 'Início, blog, privacidade, licenças e o assistente ganharam um design novo, com fundo animado e digitação.'], en: ['New site design', 'Home, blog, privacy, licenses and the assistant got a fresh look, with an animated background and typing effect.'] },
-  { d: '05 Out 2026', t: 'up', pt: ['Assistente sem limite de mensagens', 'O modo visitante não tem mais o limite de 5 mensagens por minuto. Faça login quando quiser o chat completo.'], en: ['Assistant with no message limit', 'Visitor mode no longer has the 5 messages per minute limit. Sign in whenever you want the full chat.'], link: ['assistente.html', 'Abrir o assistente', 'Open the assistant'] },
-  { d: '05 Out 2026', t: 'new', pt: ['Pesquisa na internet com 16 buscadores', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow e mais. No chat completo com login você controla quais usar.'], en: ['Internet search with 16 engines', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow and more. In the full chat you choose which ones to use.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
-  { d: '05 Out 2026', t: 'new', pt: ['Guia de IA local', 'Como usar Ollama, LM Studio ou Jan no seu PC e liberar o CORS para evitar o erro de conexão.'], en: ['Local AI guide', 'How to use Ollama, LM Studio or Jan on your PC and enable CORS to avoid the connection error.'], link: ['ia-local.html', 'Ler o guia', 'Read the guide'] },
-  { d: 'Recente', t: 'up', pt: ['Login com Google e GitHub', 'Além do Discord, agora dá para entrar com Google ou GitHub.'], en: ['Google and GitHub sign-in', 'Besides Discord, you can now sign in with Google or GitHub.'], link: ['chat.html', 'Entrar', 'Sign in'] }
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-sliders', pt: ['Novo menu de configurações', 'Abas laterais com ícones, interruptores no lugar das caixinhas e visual de vidro, no chat.'], en: ['New settings menu', 'Side tabs with icons, toggle switches instead of checkboxes and a glass look, in the chat.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-arrows-rotate', pt: ['Sincronização entre aparelhos', 'Gere um código no aparelho A e digite no B para passar as conversas pela internet. O código vale 5 minutos.'], en: ['Sync between devices', 'Generate a code on device A and type it on B to move your chats over the internet. The code lasts 5 minutes.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-wand-magic-sparkles', pt: ['Escolha a IA ao lado do enviar', 'Novo menu com busca, ícones por marca (Google, Meta e outras), selo de modelos grátis e tela de limites da API.'], en: ['Pick the AI next to send', 'New menu with search, brand icons (Google, Meta and more), a free-model badge and an API limits screen.'], link: ['chat.html', 'Experimentar', 'Try it'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-robot', pt: ['Site da Azul Groove IA', 'Uma página para conhecer a IA, ver como ela funciona e baixar o app para Windows.'], en: ['Azul Groove AI site', 'A page to meet the AI, see how it works and download the Windows app.'], link: ['ia.html', 'Conhecer a IA', 'Meet the AI'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Licença de Uso da IA', 'Explica que não coletamos seus dados, que tudo fica no seu navegador e que as respostas vêm de serviços de terceiros.'], en: ['AI Use License', 'Explains that we do not collect your data, that everything stays in your browser and that replies come from third-party services.'], link: ['licenca-ia.html', 'Ler a licença', 'Read the license'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-book', pt: ['Docs: pesquisa na internet e limites', 'Nova página sobre a pesquisa na internet e links diretos para IA local e limites das APIs, dentro do chat.'], en: ['Docs: internet search and limits', 'New page about internet search and direct links to local AI and API limits from the chat.'], link: ['docs.html#/pesquisa-web', 'Ler no Docs', 'Read in Docs'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-chart-simple', pt: ['Estatísticas de uso', 'Em Configurações > Conta: perguntas por dia, tempo médio de resposta e modelos mais usados.'], en: ['Usage stats', 'In Settings > Account: questions per day, average reply time and most used models.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-palette', pt: ['Novo visual do site', 'Início, blog, privacidade, licenças e o assistente ganharam um design novo, com fundo animado e digitação.'], en: ['New site design', 'Home, blog, privacy, licenses and the assistant got a fresh look, with an animated background and typing effect.'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'up', i: 'fa-comments', pt: ['Assistente sem limite de mensagens', 'O modo visitante não tem mais o limite de 5 mensagens por minuto. Faça login quando quiser o chat completo.'], en: ['Assistant with no message limit', 'Visitor mode no longer has the 5 messages per minute limit. Sign in whenever you want the full chat.'], link: ['assistente.html', 'Abrir o assistente', 'Open the assistant'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-globe', pt: ['Pesquisa na internet com 16 buscadores', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow e mais. No chat completo com login você controla quais usar.'], en: ['Internet search with 16 engines', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow and more. In the full chat you choose which ones to use.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-desktop', pt: ['Guia de IA local', 'Como usar Ollama, LM Studio ou Jan no seu PC e liberar o CORS para evitar o erro de conexão.'], en: ['Local AI guide', 'How to use Ollama, LM Studio or Jan on your PC and enable CORS to avoid the connection error.'], link: ['docs.html#/ia-local', 'Ler o guia', 'Read the guide'] },
+  { iso: '0', d: 'Recente', t: 'up', i: 'fa-right-to-bracket', pt: ['Login com Google e GitHub', 'Além do Discord, agora dá para entrar com Google ou GitHub.'], en: ['Google and GitHub sign-in', 'Besides Discord, you can now sign in with Google or GitHub.'], link: ['chat.html', 'Entrar', 'Sign in'] }
 ];
+let NW_SEEN = '', nwFilter = 'all';
+try { NW_SEEN = localStorage.getItem('azul_news_idx') || ''; } catch (e) {}
+const nwFresh = n => n.iso > NW_SEEN;
 function renderNews() {
   const l = document.getElementById('nwList'); if (!l) return;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  l.innerHTML = NEWS.map(n => { const x = n[en ? 'en' : 'pt'];
-    return `<div class="nw-it"><div class="nw-meta"><span class="nw-tag ${n.t}">${n.t === 'new' ? (en ? 'NEW' : 'NOVO') : (en ? 'UPDATE' : 'MELHORIA')}</span><span>${esc(n.d)}</span></div><h4>${esc(x[0])}</h4><p>${esc(x[1])}</p>${n.link ? `<a href="${n.link[0]}">${esc(n.link[en ? 2 : 1])} &rarr;</a>` : ''}</div>`; }).join('');
+  const cnt = { all: NEWS.length, new: NEWS.filter(n => n.t === 'new').length, up: NEWS.filter(n => n.t === 'up').length };
+  const lab = { all: en ? 'All' : 'Tudo', new: en ? 'New' : 'Novos', up: en ? 'Updates' : 'Melhorias' };
+  document.getElementById('nwTabs').innerHTML = Object.keys(lab).map(k => `<button class="${nwFilter === k ? 'on' : ''}" data-f="${k}">${lab[k]} <b>${cnt[k]}</b></button>`).join('');
+  const items = NEWS.filter(n => nwFilter === 'all' || n.t === nwFilter);
+  l.innerHTML = items.map((n, k) => { const x = n[en ? 'en' : 'pt'], fr = nwFresh(n);
+    return `<article class="nw-it ${n.t} ${fr ? 'fresh' : ''}" style="--k:${k}"><span class="nw-ic"><i class="fas ${n.i || 'fa-wand-magic-sparkles'}"></i></span><div class="nw-bd"><div class="nw-meta"><span class="nw-tag ${n.t}">${n.t === 'new' ? (en ? 'NEW' : 'NOVO') : (en ? 'UPDATE' : 'MELHORIA')}</span><span>${esc(n.d)}</span>${fr ? `<span class="nw-nw">${en ? 'unread' : 'não lida'}</span>` : ''}</div><h4>${esc(x[0])}</h4><p>${esc(x[1])}</p>${n.link ? `<a href="${n.link[0]}">${esc(n.link[en ? 2 : 1])} <i class="fas fa-arrow-right"></i></a>` : ''}</div></article>`; }).join('') || `<div class="nw-empty">${en ? 'Nothing here yet.' : 'Nada por aqui ainda.'}</div>`;
   document.getElementById('nwTitle').textContent = en ? "What's new" : 'Novidades';
+  document.getElementById('nwSub').textContent = en ? 'Everything that changed in Azul Groove' : 'Tudo o que mudou no Azul Groove';
   document.getElementById('nwBlog').textContent = en ? 'See all on the blog' : 'Ver todas no blog';
+  document.getElementById('nwDocs').textContent = en ? 'Documentation' : 'Documentação';
 }
 (function () {
-  const btn = document.getElementById('nwBtn'), pn = document.getElementById('nwPanel'); let seen = '';
-  try { seen = localStorage.getItem('azul_news_idx') || ''; } catch (e) {}
-  if (seen !== NEWS_VER) btn.classList.add('new');
+  const btn = document.getElementById('nwBtn'), pn = document.getElementById('nwPanel'), unread = NEWS.filter(nwFresh).length;
+  if (unread) { btn.classList.add('new'); document.getElementById('nwCount').textContent = unread; }
   const set = o => { pn.classList.toggle('open', o); btn.setAttribute('aria-expanded', o);
     if (o) { btn.classList.remove('new'); try { localStorage.setItem('azul_news_idx', NEWS_VER); } catch (e) {} } };
   btn.onclick = () => set(!pn.classList.contains('open'));
   document.getElementById('nwClose').onclick = () => set(false);
+  document.getElementById('nwTabs').onclick = e => { const b = e.target.closest('button'); if (b) { nwFilter = b.dataset.f; renderNews(); } };
   addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
-  document.addEventListener('click', e => { if (pn.classList.contains('open') && !pn.contains(e.target) && !btn.contains(e.target)) set(false); });
+  document.addEventListener('click', e => { const path = e.composedPath(); if (pn.classList.contains('open') && !path.includes(pn) && !path.includes(btn)) set(false); });
 })();
 function toggleIndexLang() { en = !en; try { localStorage.setItem('site_lang', en ? 'en' : 'pt'); } catch (e) {} applyLanguage(); }
 document.addEventListener('DOMContentLoaded', () => {
