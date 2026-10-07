@@ -229,6 +229,36 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 .pop .st{margin:6px 8px}
 @media(max-width:760px){.pop{left:8px!important;right:8px;width:auto;top:auto!important;bottom:8px;max-height:78vh;border-radius:26px}}
 @media(prefers-reduced-motion:reduce){.pop.on,.it{animation:none!important}}
+/* ===== novo menu de configurações ===== */
+#cfg .card{display:grid;grid-template-columns:216px minmax(0,1fr);grid-template-rows:auto 1fr auto;gap:0;padding:0;max-width:900px;height:min(86vh,690px);max-height:none;overflow:hidden;border-radius:28px;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);box-shadow:0 30px 90px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05)}
+#cfg .ch{grid-column:1/-1;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,color-mix(in srgb,var(--p) 20%,transparent),transparent 70%)}
+#cfg .chh{display:flex;align-items:center;gap:14px}#cfg .chh h3{font-size:1.15rem}#cfg .chh small{font-size:.78rem}
+#cfg .chi{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;font-size:1.05rem;background:linear-gradient(135deg,var(--p),#1fb6ff);box-shadow:0 8px 22px color-mix(in srgb,var(--p) 50%,transparent)}
+#cfg .tabs{grid-column:1;grid-row:2/4;flex-direction:column;flex-wrap:nowrap;align-content:flex-start;gap:4px;padding:14px 10px;border-radius:0;border-right:1px solid var(--line);background:color-mix(in srgb,var(--soft) 55%,transparent);overflow-y:auto}
+#cfg .tabs button{flex:none;display:flex;align-items:center;gap:12px;text-align:left;padding:11px 14px;border-radius:14px;font-size:.92rem;transition:background .15s,color .15s,transform .15s}
+#cfg .tabs button i{width:20px;text-align:center;font-size:1rem}
+#cfg .tabs button:hover{background:var(--soft);color:var(--tx);transform:translateX(2px)}
+#cfg .tabs button.on{background:linear-gradient(135deg,var(--p),color-mix(in srgb,var(--p) 55%,#1fb6ff));color:#fff;box-shadow:0 8px 22px color-mix(in srgb,var(--p) 45%,transparent);transform:none}
+#cfg .card>.pane{grid-column:2;grid-row:2;overflow-y:auto;padding:20px 24px 24px;gap:14px;align-content:flex-start}
+#cfg .card>.pane:not([hidden]){animation:paneIn .3s cubic-bezier(.2,.8,.3,1)}
+@keyframes paneIn{from{opacity:0;transform:translateX(16px)}}
+#cfg .card>.row{grid-column:2;grid-row:3;padding:14px 24px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--soft) 45%,transparent)}
+#cfg .sec{display:flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p)}
+#cfg .sec:not(:first-child){margin-top:8px;padding-top:16px;border-top:1px solid var(--line)}
+#cfg .card input[type=text],#cfg .card input[type=password],#cfg .card select,#cfg .card textarea{background:var(--inp);border:1px solid var(--line);border-radius:12px;padding:11px 14px;color:var(--tx);font:inherit;width:100%;transition:border-color .15s,box-shadow .15s}
+#cfg .card input:focus,#cfg .card select:focus,#cfg .card textarea:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 25%,transparent)}
+#cfg .card>.pane>.chk2{flex-direction:row-reverse;justify-content:space-between;padding:12px 14px;background:var(--soft);border-radius:14px;cursor:pointer;font-size:.88rem;color:var(--tx);transition:background .15s}
+#cfg .card>.pane>.chk2:hover{background:color-mix(in srgb,var(--p) 12%,var(--soft))}
+#cfg .card>.pane>.chk2 input{appearance:none;-webkit-appearance:none;width:42px;height:24px;margin:0;border-radius:99px;position:relative;flex-shrink:0;cursor:pointer;background:color-mix(in srgb,var(--m) 35%,transparent);transition:background .2s}
+#cfg .card>.pane>.chk2 input::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
+#cfg .card>.pane>.chk2 input:checked{background:var(--p)}#cfg .card>.pane>.chk2 input:checked::after{transform:translateX(18px)}
+#cfg .btn2{border-radius:12px;transition:background .15s,transform .15s}#cfg .btn2:hover{transform:translateY(-1px)}
+@media(max-width:760px){
+#cfg .card{grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto;height:92vh;border-radius:24px}
+#cfg .tabs{grid-column:1;grid-row:2;flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--line);padding:8px}
+#cfg .tabs button{white-space:nowrap;padding:9px 13px}
+#cfg .card>.pane{grid-column:1;grid-row:3;padding:16px}#cfg .card>.row{grid-column:1;grid-row:4;padding:12px 16px}}
+@media(prefers-reduced-motion:reduce){#cfg .card>.pane:not([hidden]){animation:none}}
 </style>
 </head>
 <body>
@@ -305,21 +335,24 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 <div class="pop" id="mdlPop"></div>
 <div class="modal" id="cfg" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeCfg();this.dn=false">
   <div class="card">
-    <div class="ch"><h3>Configurações</h3><button class="ib" onclick="closeCfg()" title="Fechar"><i class="fas fa-xmark"></i></button></div>
-    <div class="tabs"><button data-t="ia" onclick="tab('ia')">IA</button><button data-t="ap" onclick="tab('ap')">Aparência</button><button data-t="es" onclick="tab('es')">Estilo</button><button data-t="da" onclick="tab('da')">Dados</button><button data-t="sy" onclick="tab('sy')">Sync</button><button data-t="co" onclick="tab('co')">Conta</button></div>
+    <div class="ch"><div class="chh"><span class="chi"><i class="fas fa-sliders"></i></span><div><h3>Configurações</h3><small>Ajuste a IA, o visual e os seus dados</small></div></div><button class="ib" onclick="closeCfg()" title="Fechar"><i class="fas fa-xmark"></i></button></div>
+    <div class="tabs"><button data-t="ia" onclick="tab('ia')"><i class="fas fa-robot"></i><span>IA</span></button><button data-t="ap" onclick="tab('ap')"><i class="fas fa-palette"></i><span>Aparência</span></button><button data-t="es" onclick="tab('es')"><i class="fas fa-wand-magic-sparkles"></i><span>Estilo</span></button><button data-t="da" onclick="tab('da')"><i class="fas fa-database"></i><span>Dados</span></button><button data-t="sy" onclick="tab('sy')"><i class="fas fa-arrows-rotate"></i><span>Sync</span></button><button data-t="co" onclick="tab('co')"><i class="fas fa-user"></i><span>Conta</span></button></div>
     <div class="pane" id="p_ia">
       <small>Funciona com qualquer serviço compatível com o protocolo OpenAI Chat. Tudo fica só neste navegador.</small>
+      <div class="sec"><i class="fas fa-plug"></i> Conexão</div>
       <label>Provedor<select id="cfgProv" onchange="provChange()"></select></label>
       <label>URL base da API<input type="text" id="cfgBase" placeholder="https://.../v1" autocomplete="off"></label>
       <label><span>Chave da API <span id="cfgLink"></span></span><input type="password" id="cfgKey" placeholder="vazio se for local (Ollama)" autocomplete="off"></label>
+      <small>📊 Quantas mensagens dá para mandar? <a href="docs.html#/limites" target="_blank" rel="noopener" style="color:#8ea1ff">Veja os limites das APIs</a>.</small>
       <label>Modelos (o primeiro é usado antes)<input type="text" id="cfgModels" autocomplete="off"></label>
       <div class="row" style="justify-content:flex-start"><button class="btn2" onclick="loadModels()"><i class="fas fa-rotate"></i> Buscar modelos disponíveis</button></div>
-            <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="ia-local.html" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
+            <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="docs.html#/ia-local" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
       <input type="text" id="cfgFilter" placeholder="Filtrar modelos (ex.: free, llama)" oninput="renderModels()" style="display:none">
       <div class="mlist" id="cfgList" style="display:none"></div>
+      <div class="sec"><i class="fas fa-shield-halved"></i> Privacidade e pesquisa</div>
       <label class="chk2"><input type="checkbox" id="cfgRem"> Lembrar a chave neste aparelho (desmarcado: some ao fechar a aba)</label>
       <label class="chk2"><input type="checkbox" id="cfgWeb" onchange="$('engWrap').style.display=this.checked?'':'none'"> Pesquisar na internet</label>
-      <details class="more"><summary>Saiba mais</summary><p>Quando está ligado, antes de responder o chat procura a sua pergunta (até 200 caracteres) nas fontes marcadas, como Wikipédia, DuckDuckGo, Wikidata, MusicBrainz e Open Library. A busca é feita direto do seu navegador, sem chave. Os trechos encontrados vão junto com a pergunta para o serviço de IA que você escolheu, para ele responder com dados mais atuais, e a resposta mostra as fontes. Não é usada em conversa casual (oi, obrigado) nem quando a base do Azul Groove já responde bem. A sua chave de API nunca é enviada aos buscadores. Desligada, a pergunta vai só para o serviço de IA. Mais fontes marcadas deixam a resposta mais lenta.</p></details>
+      <small>🔎 <a href="docs.html#/pesquisa-web" target="_blank" rel="noopener" style="color:#8ea1ff">Saiba mais sobre a pesquisa na internet</a>.</small>
       <div class="pane" id="engWrap">
         <div class="topics" id="engBox"></div>
         <div class="row" style="justify-content:flex-start"><button class="btn2" onclick="engSet('all')">Todos</button><button class="btn2" onclick="engSet('none')">Nenhum</button><button class="btn2" onclick="engSet('def')">Padrão</button></div>
@@ -592,6 +625,9 @@ function toggleSide() { if (isMobile()) $('side').classList.toggle('open'); else
 function initSide() { try { if (localStorage.getItem('azul_side') === 'off') document.body.classList.add('side-off'); } catch (e) {} }
 const goHome = () => newConv();
 const NEWS_AI = [
+  '**Novo menu de configurações:** abas laterais com ícones, interruptores no lugar das caixinhas e botões de salvar sempre à vista.',
+  '**Links para o Docs:** o aviso de IA local, o "Saiba mais" da pesquisa na internet e os limites da API agora levam direto ao guia certo.',
+  '**Menu de modelos renovado:** busca, ícones por marca, selo de modelos grátis e tela de limites da API.',
   '**Sincronização entre aparelhos:** em ⚙️ > Sync, gere um código no aparelho A e digite no B para passar as conversas pela internet. O código vale 5 minutos e, ao desconectar, o outro aparelho recebe um aviso.',
   '**Escolha a IA:** o botão ao lado do enviar deixa você escolher qual modelo responde (Google, Meta e outros que você adicionou).',
   '**Conta e estatísticas:** em ⚙️ > Conta você vê seus logins e números de uso (perguntas por dia, tempo médio, modelos mais usados).',
@@ -727,8 +763,8 @@ async function news() {
   $('news').style.display = 'flex'; try { localStorage.setItem('azul_news_seen', newsVer(hit)); } catch (e) {} $('newsBtn').classList.remove('dot');
 }
 const netHint = base => /localhost|127\.0\.0\.1/.test(base)
-  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*. Guia completo (Ollama, LM Studio, Jan e CORS): ia-local.html'
-  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS). Veja o guia: ia-local.html';
+  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*. Guia completo (Ollama, LM Studio, Jan e CORS): docs.html#/ia-local'
+  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS). Veja o guia: docs.html#/ia-local';
 
 // ===== Estilo, memória e aprendizado =====
 const PREF_KEY = 'azul_prefs';
@@ -1039,6 +1075,7 @@ function limHtml() {
   return `<div class="ph"><button class="bk" data-back="1" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button><b>Limites da API</b><span>${esc(P.n)}</span></div>`
     + `<div class="st"><div><b>${today}</b>perguntas hoje</div><div><b>${s.lim || 0}</b>vezes no limite</div></div>`
     + `<div class="pnote">${L ? `Os limites (pedidos por minuto, por dia e tokens) dependem da sua conta e do modelo, e quem define é o ${esc(L[0])}. <a href="${L[1]}" target="_blank" rel="noopener">Ver limites oficiais</a>.` : 'Em IA no seu PC ou em outro serviço não há cota do provedor: vale o desempenho do seu computador ou as regras do serviço que você usa.'}</div>`
+    + '<div class="pnote">📘 Tudo sobre limites e erros: <a href="docs.html#/limites" target="_blank" rel="noopener">veja no Docs</a>.</div>'
     + '<div class="pnote">💡 Erro 429 significa limite atingido: espere um pouco ou escolha outro modelo. Modelos grátis (:free) costumam ter cotas menores. Em <b>Automático</b>, se um modelo falhar, o chat tenta o próximo da lista.</div>';
 }
 function mdlFill(q = '') {
@@ -1052,7 +1089,7 @@ function mdlFill(q = '') {
     + Object.entries(g).map(([k, a]) => `<div class="pg">${k}</div>` + a.map(m => it(m, mShort(m).replace(' (grátis)', ''), PRESETS[cfg.provider].n, ICON[k][0], ICON[k][1], /:free$/.test(m))).join('')).join('')
     + (q && !list.length ? '<div class="pnote">Nenhum modelo encontrado.</div>' : '')
     + '<div class="pf"><button data-lim="1"><i class="fas fa-gauge-high"></i>Limites da API</button><button data-cfg="1"><i class="fas fa-plus"></i>Adicionar IA</button></div>'
-    + '<div class="pnote">🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="https://azul-groove.vercel.app/ia-local.html" target="_blank" rel="noopener">Veja como liberar o CORS e conectar</a>.</div>';
+    + '<div class="pnote">🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="docs.html#/ia-local" target="_blank" rel="noopener">Veja como liberar o CORS e conectar</a>.</div>';
   const qi = $('mdlQ'); if (qi) qi.oninput = () => { mdlFill(qi.value); const x = $('mdlQ'); x.focus(); x.setSelectionRange(x.value.length, x.value.length); };
   pop.onclick = ev => { if (ev.target.closest('a')) return; const b = ev.target.closest('button'); if (!b) return;
     if (b.dataset.lim) { pop.classList.add('q'); pop.innerHTML = limHtml(); mdlPlace(); } else if (b.dataset.back) { mdlFill(); mdlPlace(); }

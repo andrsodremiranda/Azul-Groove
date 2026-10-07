@@ -149,6 +149,7 @@ const D = [
 <a class="card" href="#/ia-local"><b>🖥️ IA no seu PC</b>Ollama, LM Studio, Jan e CORS.</a>
 <a class="card" href="#/bot-adicionar"><b>🎵 Bot do Discord</b>Adicionar, comandos e problemas.</a>
 <a class="card" href="#/limites"><b>📊 Limites</b>Mensagens por minuto, por dia e tokens.</a>
+<a class="card" href="#/pesquisa-web"><b>🔎 Pesquisar na internet</b>Como funciona e o que sai do seu PC.</a>
 <a class="card" href="#/erros"><b>⚠️ Erros comuns</b>401, 402, 404, 429, CORS e mais.</a>
 <a class="card" href="#/faq"><b>❓ Central de dúvidas</b>Perguntas frequentes por assunto.</a>
 </div>
@@ -404,6 +405,26 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <p>No menu de cada conversa você pode <b>renomear</b>, <b>salvar</b> (em <code>.txt</code> ou <code>.json</code>), <b>copiar</b> e <b>apagar</b>. As conversas ficam guardadas só no seu navegador (ou na pasta de dados do app).</p>
 <h3>Quanto a IA lembra</h3>
 <p>O chat envia as <b>últimas 20 mensagens</b> da conversa para a IA. O que ficou para trás não é "lembrado", a não ser que esteja na <b>memória</b>.</p>`},
+
+{id:'pesquisa-web',cat:'Usar o chat',t:'Pesquisar na internet',h:`
+<p class="lead">Com a pesquisa ligada, o chat busca informações na web antes de responder. Ajuda em assuntos recentes ou específicos, que a IA sozinha pode não saber.</p>
+<h3>Como funciona</h3>
+<ol>
+<li><b>Você faz a pergunta</b>O chat usa até 200 caracteres dela como texto de busca.</li>
+<li><b>As fontes respondem</b>A busca é feita direto do seu navegador, nas fontes marcadas, sem chave.</li>
+<li><b>A IA recebe os trechos</b>Os resultados vão junto com a pergunta para o serviço de IA que você escolheu.</li>
+<li><b>Você vê as fontes</b>A resposta mostra de onde vieram as informações.</li>
+</ol>
+<h3>Ligar, desligar e escolher fontes</h3>
+<p>Abra <b>⚙️ → IA</b> e use o interruptor <b>Pesquisar na internet</b>. Ligado, aparece a lista de fontes (Wikipédia, DuckDuckGo, Wikidata, MusicBrainz, Open Library e outras). Use <b>Todos</b>, <b>Nenhum</b> ou <b>Padrão</b>. Marcar muitas fontes deixa a resposta mais lenta; se uma falhar, as outras continuam.</p>
+<h3>Quando a pesquisa não é usada</h3>
+<ul><li>Em conversa casual, como "oi" ou "obrigado".</li><li>Quando a base do Azul Groove já responde bem à pergunta.</li><li>Quando a pesquisa está desligada.</li></ul>
+<h3>Modo aprofundado</h3>
+<p>Busca mais resultados e traz mais texto de cada um, para respostas mais completas. Fica mais lento. Ative em <b>⚙️ → Estilo</b> ou use o botão <b>Aprofundar</b> em uma resposta.</p>
+<h3>Privacidade</h3>
+<div class="note"><b>O texto da busca sai do seu computador.</b> Ele vai para as fontes escolhidas e, junto com os resultados, para o serviço de IA. A sua chave de API <b>nunca</b> é enviada aos buscadores. Para uma conversa 100% local, <b>desligue a pesquisa</b> e use uma <a href="#/ia-local">IA no seu PC</a>.</div>
+<details><summary>A resposta veio sem fontes</summary><p>Pode não ter havido resultado útil, ou a pergunta era casual e a pesquisa não foi usada. Tente reformular com mais detalhes ou ligue o modo aprofundado.</p></details>
+<details><summary>A resposta está demorando</summary><p>Menos fontes marcadas deixam a busca mais rápida. Modelos grátis também ficam lentos nos horários de pico. Veja os <a href="#/limites">limites</a>.</p></details>`},
 
 {id:'personalizar',cat:'Usar o chat',t:'Tema, fundo e conversas',h:`
 <ul><li><b>Tema:</b> claro ou escuro, com troca animada.</li><li><b>Fundo:</b> escolha cores, envie sua imagem ou desligue os efeitos.</li><li><b>Barra lateral:</b> pode ser recolhida. Clique em "Azul Groove" para voltar ao início.</li><li><b>Menu da conversa:</b> renomear, salvar (<code>.txt</code> ou <code>.json</code>), copiar e apagar.</li><li><b>Memória:</b> peça para a IA lembrar de algo ou defina seu jeito de falar.</li></ul>

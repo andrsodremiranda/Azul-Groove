@@ -740,15 +740,16 @@
             <label>Provedor<select id="cfgProv" onchange="provChange()"></select></label>
             <label>URL base da API<input type="text" id="cfgBase" placeholder="https://.../v1" autocomplete="off"></label>
             <label><span>Chave da API <span id="cfgLink"></span></span><input type="password" id="cfgKey" placeholder="vazio se for local (Ollama)" autocomplete="off"></label>
+            <small>📊 Quantas mensagens dá para mandar? <a href="docs.html#/limites" target="_blank" rel="noopener" style="color:#8ea1ff">Veja os limites das APIs</a>.</small>
             <label>Modelos (o primeiro é usado antes)<input type="text" id="cfgModels" autocomplete="off"></label>
             <small>👇 Clique em um modelo para usá-lo (★ = principal). Clique de novo para tirar.</small>
             <input type="text" id="cfgFilter" placeholder="Filtrar modelos (ex.: free, llama)" oninput="renderModels()" style="display:none">
             <div class="mlist" id="cfgList" style="display:none"></div>
             <div class="row" style="justify-content:flex-start"><button class="btn2 find" onclick="loadModels()"><i class="fas fa-rotate"></i> Buscar modelos disponíveis</button></div>
-            <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="ia-local.html" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
+            <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="docs.html#/ia-local" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
             <label class="chk2"><input type="checkbox" id="cfgRem"> Lembrar a chave neste aparelho (desmarcado: some ao fechar a aba)</label>
             <small>🔎 A pesquisa na internet (16 buscadores) só funciona no <a href="chat.html" target="_blank" rel="noopener">chat completo, com login</a>.</small>
-            <details class="more"><summary>Saiba mais</summary><p>A pesquisa procura a sua pergunta em fontes públicas (Wikipédia, DuckDuckGo, Wikidata, MusicBrainz, Open Library e outras) e envia os trechos encontrados, junto com a pergunta, ao serviço de IA que você escolheu, para ele responder com dados mais atuais. Ela só funciona no chat completo, com login. A sua chave de API nunca é enviada aos buscadores.</p></details>
+            <small>🔎 <a href="docs.html#/pesquisa-web" target="_blank" rel="noopener" style="color:#8ea1ff">Saiba mais sobre a pesquisa na internet</a>.</small>
             <small id="cfgMsg"></small>
             <div class="row"><button class="btn2 dng" onclick="clearCfg()"><i class="fas fa-key"></i> Remover chave</button><button class="btn2" onclick="closeCfg()">Fechar</button><button class="btn2 ok" onclick="saveCfg()">Salvar IA</button></div>
         </div>
@@ -1201,7 +1202,7 @@ async function listModels(base, key) {
   if (net === tries.length) throw new Error(netHint(base));
   throw new Error(`Nenhum endereço de modelos respondeu (${st}). A URL deve terminar em /v1, por exemplo http://localhost:11434/v1`);
 }
-const linkGuide = s => String(s).replace(/ia-local\.html/g, '<a href="ia-local.html" target="_blank" rel="noopener" style="display:inline-block;margin:6px 0 2px;padding:7px 14px;border-radius:10px;background:#5865F2;color:#fff;text-decoration:none;font-weight:600">📖 Abrir o guia de IA local</a>');
+const linkGuide = s => String(s).replace(/docs\.html#\/ia-local/g, '<a href="docs.html#/ia-local" target="_blank" rel="noopener" style="display:inline-block;margin:6px 0 2px;padding:7px 14px;border-radius:10px;background:#5865F2;color:#fff;text-decoration:none;font-weight:600">📖 Abrir o guia de IA local</a>');
 async function loadModels(mode) {
   const auto = mode === true || mode === 'auto', base = $('cfgBase').value.trim().replace(/\/+$/, ''), m = $('cfgMsg');
   if (!okBase(base)) { if (!auto) m.textContent = '⚠️ URL inválida.'; return; }
@@ -1251,8 +1252,8 @@ const wantAuto = (id, key) => !PRESETS[id].key || !!key || id === 'openrouter'; 
             closeCfg(); cfgToast('Configurações removidas');
         }
         const netHint = base => /localhost|127\.0\.0\.1/.test(base)
-  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*. Guia completo (Ollama, LM Studio, Jan e CORS): ia-local.html'
-  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS). Veja o guia: ia-local.html';
+  ? 'Não consegui conectar. Confira se o Ollama está aberto (ollama serve) e se a URL está certa. Se o site não abre em localhost ou 127.0.0.1, inicie o Ollama com OLLAMA_ORIGINS=*. Guia completo (Ollama, LM Studio, Jan e CORS): docs.html#/ia-local'
+  : 'Não consegui conectar. Confira a URL e a internet; alguns serviços bloqueiam uso direto pelo navegador (CORS). Veja o guia: docs.html#/ia-local';
 
 const strip = s => String(s || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 async function wiki(q, lang = 'pt', proj = 'wikipedia', label = 'Wikipedia PT', big = false) {
