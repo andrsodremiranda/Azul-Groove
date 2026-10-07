@@ -130,10 +130,9 @@ details ol,details ul{margin-top:4px}
 <script>
 
 const OR = 'https://openrouter.ai';
-const REL = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases/tag/azul';
-const SETUP = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases/download/azul/AzulGroove-Setup.exe';
-const PORT = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases/download/azul/AzulGroove-Portable.exe';
-const SHA = '1412b97ddcd69b0b6d51449482936ba431f1dba9f940746aec239c45a1c018b4';
+const REL = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases';
+const ASSIST = 'https://github.com/astmsoftware/ASTM/releases/download/azul/AzulGroove-Assistente.exe';
+const RELA = 'https://github.com/astmsoftware/ASTM/releases/tag/azul';
 const INVITE = 'https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064';
 const DISCORD = 'https://discord.gg/g4cW4zRvjf';
 const D = [
@@ -142,7 +141,7 @@ const D = [
 {id:'inicio',cat:'Começar',t:'Bem-vindo',h:`
 <p class="lead">Aqui fica <b>tudo</b> sobre o Azul Groove: o <b>bot de música</b> para Discord, o <b>chat com IA</b> no site e o <b>app para Windows</b>. Escolha um assunto ou use a busca no topo.</p>
 <div class="grid">
-<a class="card" href="#/baixar-app"><b>⬇️ Baixar o app (Windows)</b>Setup ou Portable, com verificação de segurança.</a>
+<a class="card" href="#/baixar-app"><b>⬇️ Baixar o app (Windows)</b>Pelo Assistente de instalação, sempre na versão mais recente.</a>
 <a class="card" href="#/primeiros-passos"><b>🚀 Primeiros passos</b>Do zero ao chat funcionando.</a>
 <a class="card" href="#/login"><b>👤 Entrar na conta</b>Discord, Google, GitHub e modo visitante.</a>
 <a class="card" href="#/chave-api"><b>🔑 Pegar chave de API</b>Passo a passo de cada provedor.</a>
@@ -220,40 +219,31 @@ const D = [
 
 /* ================= APP WINDOWS ================= */
 {id:'baixar-app',cat:'App para Windows',t:'Baixar o app',h:`
-<p class="lead">O app abre o Azul Groove numa <b>janela própria</b>, sem barra de endereço e com ícone na bandeja do Windows. Há duas versões. Escolha uma:</p>
+<p class="lead">O app abre o Azul Groove numa <b>janela própria</b>, sem barra de endereço e com ícone na bandeja do Windows. Para instalar, baixe o <b>Assistente de instalação</b>: ele pega sozinho a versão mais recente.</p>
 <div class="dl">
-<div class="dlc rec"><span class="tag">RECOMENDADO</span><h3>Instalador (Setup)</h3><small>AzulGroove-Setup.exe</small><p>Instala o app no computador. Melhor para usar no dia a dia.</p><a class="dlb" href="${SETUP}">⬇ Baixar o Setup</a></div>
-<div class="dlc"><span class="tag">SEM INSTALAR</span><h3>Portable</h3><small>AzulGroove-Portable.exe · 63,2 MB</small><p>Abre direto, sem instalar nada. Bom para testar ou usar em outro PC.</p><a class="dlb alt" href="${PORT}">⬇ Baixar o Portable</a></div>
+<div class="dlc rec"><span class="tag">RECOMENDADO</span><h3>Assistente de instalação</h3><small>AzulGroove-Assistente.exe</small><p>Baixa e instala o app, repara uma instalação com problema e deixa escolher qualquer versão.</p><a class="dlb" href="${ASSIST}">⬇ Baixar o Assistente</a></div>
 </div>
-<p>Todas as versões ficam na página oficial: <a target="_blank" rel="noopener" href="${REL}">GitHub · Azul-Groove-app (releases)</a>.</p>
-<h3>Qual escolher?</h3>
-<div class="sc"><table><tr><th></th><th>Setup</th><th>Portable</th></tr>
-<tr><td>Precisa instalar?</td><td>Sim, o instalador faz tudo sozinho</td><td>Não, é só abrir</td></tr>
-<tr><td>Ideal para</td><td>Usar sempre no seu PC</td><td>Testar, ou levar em pen drive</td></tr>
-<tr><td>Dados do app</td><td colspan="2"><code>%LocalAppData%\\AzulGroove</code> (nas duas)</td></tr></table></div>
-<h3>Conferir se o arquivo é íntegro (opcional)</h3>
-<p>Cada arquivo tem uma "impressão digital" (SHA-256). Se a sua for igual à da página oficial, o arquivo não foi alterado no caminho. Impressão do <b>Portable</b> publicada na versão atual:</p>
-<pre><code class="hash">${SHA}</code></pre>
-<p>Para calcular a do arquivo baixado, abra o <b>PowerShell</b> na pasta de downloads e rode:</p>
-<pre><code>Get-FileHash .\\AzulGroove-Portable.exe -Algorithm SHA256</code></pre>
-<p>Compare o valor de <code>Hash</code> com o da página da versão (a do Setup também aparece lá). Se for diferente, apague o arquivo e baixe de novo.</p>
-<div class="note"><b>Atenção:</b> se uma nova versão for publicada, o número muda. Sempre compare com o valor que está na <a target="_blank" rel="noopener" href="${REL}">página da versão</a>.</div>
+<p>O Assistente tem a <a target="_blank" rel="noopener" href="${RELA}">própria página de download</a>. As versões do app ficam na <a target="_blank" rel="noopener" href="${REL}">página oficial no GitHub</a>.</p>
+<h3>O que o Assistente faz</h3>
+<div class="sc"><table><tr><th>Opção</th><th>Para quê</th></tr>
+<tr><td>Setup (instalador)</td><td>Instala o app no computador. Melhor para usar no dia a dia.</td></tr>
+<tr><td>Portable (sem instalar)</td><td>Salva um arquivo que abre direto, sem instalar. Bom para testar ou levar em pen drive.</td></tr>
+<tr><td>Baixar a versão mais recente</td><td>Pega a versão mais nova do app.</td></tr>
+<tr><td>Escolher uma versão</td><td>Instala uma versão específica, se precisar.</td></tr>
+<tr><td>Reparar instalação</td><td>Reinstala a versão mais recente e mantém seus dados.</td></tr>
+<tr><td>Dados do app</td><td><code>%LocalAppData%\\AzulGroove</code> (nos dois formatos)</td></tr></table></div>
 <p>Pronto para instalar? Siga <a href="#/instalar-app">Instalar e usar o app</a>.</p>`},
 
 {id:'instalar-app',cat:'App para Windows',t:'Instalar e usar o app',h:`
-<h3>Instalando com o Setup</h3>
+<h3>Instalando com o Assistente</h3>
 <ol class="steps">
-<li><b>Baixe o AzulGroove-Setup.exe</b>Pela <a href="#/baixar-app">página de download</a> ou pela página inicial do site.</li>
+<li><b>Baixe o AzulGroove-Assistente.exe</b>Pela <a href="#/baixar-app">página de download</a> ou pela página inicial do site.</li>
 <li><b>Dê dois cliques no arquivo</b>Se o Windows avisar "editor desconhecido" ou "O Windows protegeu o computador", clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.</li>
-<li><b>Aguarde</b>Ele instala sozinho e abre o app ao terminar.</li>
+<li><b>Escolha o formato</b>Setup (instala no computador) ou Portable (abre direto, sem instalar).</li>
+<li><b>Clique em "Baixar a versão mais recente"</b>Ele baixa, instala e abre o app ao terminar. No Portable, ele pede a pasta onde guardar o arquivo.</li>
 <li><b>Entre na sua conta</b>A tela de login do chat aparece. Veja <a href="#/login">Entrar na conta</a>.</li>
 </ol>
-<div class="note"><b>Por que o aviso do Windows?</b> O SmartScreen costuma avisar sobre programas novos ou ainda pouco baixados. Confira a impressão digital (SHA-256) em <a href="#/baixar-app">Baixar o app</a> e baixe só pelo link oficial desta página.</div>
-<h3>Usando a versão Portable</h3>
-<ol class="steps">
-<li><b>Baixe o AzulGroove-Portable.exe</b>E guarde numa pasta de sua escolha.</li>
-<li><b>Dê dois cliques</b>Abre sem instalar. O aviso do Windows funciona como acima.</li>
-</ol>
+<div class="note"><b>Por que o aviso do Windows?</b> O SmartScreen costuma avisar sobre programas novos ou ainda pouco baixados. Baixe só pelo link oficial desta página.</div>
 <div class="okb">Seus dados (conversas, configurações) ficam em <code>%LocalAppData%\\AzulGroove</code>. Para abrir a pasta: pressione <kbd>Win</kbd>+<kbd>R</kbd>, cole o caminho e dê Enter.</div>
 <h3>Bandeja do Windows</h3>
 <ul>
@@ -262,12 +252,12 @@ const D = [
 <li>No mesmo menu você troca o <b>tema</b> (automático, claro ou escuro) e o <b>atalho de teclado</b>.</li>
 </ul>
 <h3>Atualizar</h3>
-<p>Baixe a versão nova na <a target="_blank" rel="noopener" href="${REL}">página oficial</a> e instale por cima (Setup) ou troque o arquivo (Portable). Suas conversas ficam na pasta de dados.</p>
+<p>O app confere se há versão nova ao abrir e se atualiza sozinho. Para desligar isso, ou verificar na hora, use o ícone da bandeja: <b>Atualizar automaticamente</b> e <b>Verificar atualização agora</b>. Se preferir, abra o Assistente e use <b>Baixar a versão mais recente</b>: ele instala por cima e mantém suas conversas.</p>
 <h3>Remover o app</h3>
 <ul><li><b>Setup:</b> normalmente em <b>Configurações → Aplicativos</b>, procure por Azul Groove e desinstale.</li><li><b>Portable:</b> feche pela bandeja (<b>Sair</b>) e apague o arquivo. Para apagar também as conversas, apague a pasta <code>%LocalAppData%\\AzulGroove</code>.</li></ul>
 <h3>O app não abre ou fecha sozinho</h3>
 <details><summary>Nada acontece ao dar dois cliques</summary><p>Veja se ele já não está na bandeja do Windows (seta ^ perto do relógio). Se estiver, clique no ícone para abrir a janela.</p></details>
-<details><summary>O Windows ou o antivírus bloqueou o arquivo</summary><p>Confira o SHA-256 (<a href="#/baixar-app">Baixar o app</a>). Se bater com a página oficial, libere o arquivo no antivírus ou use "Executar assim mesmo".</p></details>
+<details><summary>O Windows ou o antivírus bloqueou o arquivo</summary><p>Baixe só pelo link oficial (<a href="#/baixar-app">Baixar o app</a>). Se o antivírus bloquear mesmo assim, libere o arquivo ou use "Executar assim mesmo".</p></details>
 <details><summary>Quero começar do zero</summary><p>Saia pela bandeja, apague a pasta <code>%LocalAppData%\\AzulGroove</code> e abra o app de novo. Isso apaga conversas e configurações.</p></details>
 <details><summary>A IA local não responde no app</summary><p>O app roda no mesmo PC, então funciona como no navegador. Siga <a href="#/ia-local">IA no seu PC</a> (servidor ligado e CORS liberado).</p></details>`},
 
@@ -532,8 +522,8 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <details><summary>Existe limite no modo visitante?</summary><p>Não há limite de mensagens. Aparece só um aviso de tempos em tempos convidando a fazer login, e você pode fechar.</p></details>
 <details><summary>Como troco de conta?</summary><p>Em <b>⚙️ → Conta → Entrar com outra conta</b>.</p></details>
 <h3>App para Windows</h3>
-<details><summary>Setup ou Portable?</summary><p>Setup para usar sempre; Portable para testar sem instalar. Veja <a href="#/baixar-app">Baixar o app</a>.</p></details>
-<details><summary>O Windows disse "editor desconhecido". É seguro?</summary><p>É um aviso comum para programas novos. Baixe só pelo link oficial desta documentação e confira o SHA-256. Depois, <b>Mais informações → Executar assim mesmo</b>.</p></details>
+<details><summary>Setup ou Portable?</summary><p>No Assistente, escolha Setup para usar sempre ou Portable para testar sem instalar. Veja <a href="#/baixar-app">Baixar o app</a>.</p></details>
+<details><summary>O Windows disse "editor desconhecido". É seguro?</summary><p>É um aviso comum para programas novos. Baixe só pelo link oficial desta documentação. Depois, <b>Mais informações → Executar assim mesmo</b>.</p></details>
 <details><summary>O app do Windows salva meus dados?</summary><p>Sim, em <code>%LocalAppData%\\AzulGroove</code>. Feche pelo menu da bandeja (<b>Sair</b>) para garantir que tudo seja gravado.</p></details>
 <details><summary>Cliquei no X e o app não fechou</summary><p>Ele foi para a bandeja do Windows. Para fechar de verdade, botão direito no ícone → <b>Sair</b>.</p></details>
 <h3>Bot do Discord</h3>

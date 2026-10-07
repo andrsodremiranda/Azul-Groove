@@ -689,6 +689,7 @@ function toggleSide() { if (isMobile()) $('side').classList.toggle('open'); else
 function initSide() { try { if (localStorage.getItem('azul_side') === 'off') document.body.classList.add('side-off'); } catch (e) {} }
 const goHome = () => newConv();
 const NEWS_AI = [
+  '**Assistente de instalação:** novo programa para Windows que baixa e instala sozinho a versão mais recente do app. Também repara a instalação e deixa escolher outra versão. Baixe na página da Azul Groove IA.',
   '**Novo menu de configurações:** abas laterais com ícones, interruptores no lugar das caixinhas e botões de salvar sempre à vista.',
   '**Links para o Docs:** o aviso de IA local, o "Saiba mais" da pesquisa na internet e os limites da API agora levam direto ao guia certo.',
   '**Menu de modelos renovado:** busca, ícones por marca, selo de modelos grátis e tela de limites da API.',
@@ -716,7 +717,7 @@ const NEWS_AI = [
 ];
 // ----- menu de novidades (painel) -----
 const NW_KEY = 'azul_news_r';
-const NW_ICONS = [[/aviso/i, 'fa-triangle-exclamation'], [/docs/i, 'fa-book'], [/config/i, 'fa-sliders'], [/escolha a ia|modelos/i, 'fa-wand-magic-sparkles'], [/sincroniza/i, 'fa-arrows-rotate'],
+const NW_ICONS = [[/assistente de instala/i, 'fa-screwdriver-wrench'], [/aviso/i, 'fa-triangle-exclamation'], [/docs/i, 'fa-book'], [/config/i, 'fa-sliders'], [/escolha a ia|modelos/i, 'fa-wand-magic-sparkles'], [/sincroniza/i, 'fa-arrows-rotate'],
   [/conta|estat/i, 'fa-chart-simple'], [/rolagem/i, 'fa-bars-staggered'], [/licen/i, 'fa-file-contract'], [/\bvs\b/i, 'fa-scale-balanced'], [/site da/i, 'fa-robot'], [/visitante/i, 'fa-user'],
   [/digita/i, 'fa-keyboard'], [/modos de/i, 'fa-masks-theater'], [/dados do azul/i, 'fa-database'], [/aprofund/i, 'fa-layer-group'], [/buscador/i, 'fa-globe'], [/mem[óo]ria/i, 'fa-brain'],
   [/curiosidade/i, 'fa-lightbulb'], [/apar[êe]ncia/i, 'fa-palette'], [/login/i, 'fa-right-to-bracket'], [/boas-vindas|apoio/i, 'fa-heart']];
