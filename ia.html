@@ -112,6 +112,20 @@ footer a{color:#aab4ff;margin:0 9px}
 .rv.in{opacity:1;transform:none}
 @media(max-width:700px){.flow>span{display:none}.bar .hide{display:none}.hero p{min-height:7.5em}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.rv,.hero .btns,.demo .m{opacity:1!important;transform:none!important}.eq i{transform:scaleY(var(--h))}}
+.appbox{display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:center;padding:28px;border-radius:22px;border:1px solid rgba(88,101,242,.5);background:linear-gradient(135deg,rgba(88,101,242,.22),rgba(28,31,38,.8) 55%);box-shadow:0 20px 60px rgba(88,101,242,.18)}
+.appart{position:relative;display:grid;place-items:center;height:160px}
+.appart i{font-size:5.5rem;color:#fff;filter:drop-shadow(0 0 28px rgba(88,101,242,.9));animation:float 5s ease-in-out infinite alternate;position:relative;z-index:1}
+.appart span{position:absolute;inset:12px;border-radius:50%;border:2px solid rgba(88,101,242,.5);animation:ring 3s ease-out infinite}
+@keyframes ring{from{transform:scale(.6);opacity:.9}to{transform:scale(1.25);opacity:0}}
+.applist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.dl{position:relative;display:flex;flex-direction:column;gap:4px;padding:24px 22px 20px;border-radius:18px;background:rgba(15,17,23,.7);border:1px solid var(--line);transition:transform .3s,border-color .3s,box-shadow .3s}
+.dl:hover{transform:translateY(-6px);border-color:var(--p);box-shadow:0 14px 36px rgba(88,101,242,.4)}
+.dl.rec{border-color:rgba(88,101,242,.8);background:linear-gradient(160deg,rgba(88,101,242,.3),rgba(15,17,23,.75))}
+.dl>i{font-size:1.5rem;color:#aab4ff;margin-bottom:8px;transition:transform .3s}.dl:hover>i{transform:translateY(4px)}
+.dl b{color:#fff;font-size:1.1rem}.dl small{color:var(--m)}.dl em{font-style:normal;color:#b5bac1;font-size:.9rem;margin-top:6px}
+.dl .tag{position:absolute;top:14px;right:14px;font-size:.62rem;font-weight:700;letter-spacing:.08em;padding:3px 9px;border-radius:99px;background:var(--p);color:#fff}.dl .tag.t2{background:rgba(255,255,255,.12);color:#cfd3ff}
+.appnote{margin:20px 0 0;max-width:72ch;color:var(--m);font-size:.9rem}.appnote i{color:#aab4ff;margin-right:6px}.appnote a{color:#aab4ff;text-decoration:underline}
+@media(max-width:760px){.appbox{grid-template-columns:1fr;padding:20px}.appart{height:110px}.appart i{font-size:4rem}}
 </style>
 </head>
 <body>
@@ -139,6 +153,7 @@ footer a{color:#aab4ff;margin:0 9px}
   <div class="btns" id="heroBtns">
     <a class="btn" href="chat.html"><i class="fas fa-flask"></i> Testar a IA</a>
     <a class="btn ghost" href="#o-que-e"><i class="fas fa-circle-info"></i> Saiba mais</a>
+    <a class="btn ghost" href="#baixar"><i class="fab fa-windows"></i> Baixar o app</a>
   </div>
   <i class="fas fa-chevron-down scroll" aria-hidden="true"></i>
 </div>
@@ -205,6 +220,19 @@ footer a{color:#aab4ff;margin:0 9px}
     <div class="card rv" style="--dl:.2s"><h3>Entre com Discord, Google ou GitHub</h3><p>O login serve para guardar as suas conversas neste navegador, para você voltar a elas depois.</p></div>
     <div class="card rv" style="--dl:.3s"><h3>Converse</h3><p>Escreva a primeira mensagem. Se quiser, troque o serviço de IA nas configurações do chat.</p></div>
   </div>
+</div></section>
+
+<section class="s" id="baixar"><div class="wrap">
+  <h2 class="rv">Baixar o app</h2>
+  <p class="lead rv" style="--dl:.1s">O Azul Groove numa janela própria no Windows: sem barra de endereço e com ícone na bandeja, perto do relógio.</p>
+  <div class="appbox rv" style="--dl:.2s">
+    <div class="appart" aria-hidden="true"><i class="fab fa-windows"></i><span></span></div>
+    <div class="applist">
+      <a class="dl rec" href="https://github.com/andrsodremiranda/Azul-Groove-app/releases/download/azul/AzulGroove-Setup.exe"><span class="tag">RECOMENDADO</span><i class="fas fa-download"></i><b>Instalador (Setup)</b><small>AzulGroove-Setup.exe</small><em>Instala no computador. Melhor para usar no dia a dia.</em></a>
+      <a class="dl" href="https://github.com/andrsodremiranda/Azul-Groove-app/releases/download/azul/AzulGroove-Portable.exe"><span class="tag t2">SEM INSTALAR</span><i class="fas fa-box-open"></i><b>Portable</b><small>AzulGroove-Portable.exe · 63,2 MB</small><em>Abre direto, sem instalar nada. Bom para testar.</em></a>
+    </div>
+  </div>
+  <p class="appnote rv" style="--dl:.3s"><i class="fas fa-shield-halved"></i> O Windows pode avisar "editor desconhecido": clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>. Baixe só por estes links e confira o SHA-256 no <a href="docs.html#/baixar-app">passo a passo completo</a>. Todas as versões estão na <a href="https://github.com/andrsodremiranda/Azul-Groove-app/releases/tag/azul" target="_blank" rel="noopener">página oficial no GitHub</a>.</p>
 </div></section>
 
 <section class="cta"><div class="wrap rv">

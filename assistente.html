@@ -694,7 +694,8 @@
         .assistant-input-wrapper { background: rgba(11,15,43,.85); }
         .quick-option-btn:hover, .cfg-btn:hover, .ai-news-btn:hover { background: var(--gr); border-color: transparent; }
         @media (prefers-reduced-motion: reduce) { .bg, .logo-t, .hero h2, .hero-ic { animation: none !important; } #fx { display: none; } }
-    </style>
+    .more{font-size:.82rem;color:var(--m,#9aa3d6)}.more summary{cursor:pointer;color:#8ea1ff;font-weight:600}.more p{margin-top:6px;line-height:1.55}
+</style>
 </head>
 <body>
     <div class="bg" aria-hidden="true"><canvas id="fx"></canvas><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="bgdots" id="bgDots"></div><div class="eq" id="bgEq"></div></div>
@@ -747,6 +748,7 @@
             <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="ia-local.html" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
             <label class="chk2"><input type="checkbox" id="cfgRem"> Lembrar a chave neste aparelho (desmarcado: some ao fechar a aba)</label>
             <small>🔎 A pesquisa na internet (16 buscadores) só funciona no <a href="chat.html" target="_blank" rel="noopener">chat completo, com login</a>.</small>
+            <details class="more"><summary>Saiba mais</summary><p>A pesquisa procura a sua pergunta em fontes públicas (Wikipédia, DuckDuckGo, Wikidata, MusicBrainz, Open Library e outras) e envia os trechos encontrados, junto com a pergunta, ao serviço de IA que você escolheu, para ele responder com dados mais atuais. Ela só funciona no chat completo, com login. A sua chave de API nunca é enviada aos buscadores.</p></details>
             <small id="cfgMsg"></small>
             <div class="row"><button class="btn2 dng" onclick="clearCfg()"><i class="fas fa-key"></i> Remover chave</button><button class="btn2" onclick="closeCfg()">Fechar</button><button class="btn2 ok" onclick="saveCfg()">Salvar IA</button></div>
         </div>

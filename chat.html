@@ -198,18 +198,37 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 ::-webkit-scrollbar-thumb:hover{background:color-mix(in srgb,var(--m) 70%,transparent);background-clip:padding-box}
 .mdl{background:var(--soft);border:0;color:var(--t);border-radius:18px;padding:0 12px;height:40px;font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:6px;flex-shrink:0;max-width:150px}
 .mdl span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mdl i{color:var(--p)}
-.pop{position:fixed;display:none;z-index:25;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px;width:280px;max-height:55vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.45)}
-.pop h6{margin:8px 10px 4px;font-size:.72rem;color:var(--m);text-transform:uppercase;letter-spacing:.06em}
-.pop button{display:flex;gap:10px;align-items:flex-start;width:100%;border:0;background:none;color:var(--tx);text-align:left;padding:9px 10px;border-radius:10px}
-.pop button:hover{background:var(--soft)}.pop button i{width:14px;margin-top:3px;color:var(--p)}
-.pop button b{display:block;font-size:.92rem;font-weight:600}.pop button small{color:var(--m);font-size:.78rem}
-.pop hr{border:0;border-top:1px solid var(--line);margin:6px 4px}
 .code{font:700 2rem ui-monospace,Consolas,monospace;letter-spacing:.3em;text-align:center;background:var(--inp);border-radius:12px;padding:12px;color:var(--tx)}
 .st{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.st div{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:.8rem;color:var(--m)}.st b{display:block;font-size:1.3rem;color:var(--tx)}
 .bars{display:flex;align-items:flex-end;gap:6px;height:70px;margin-bottom:18px}.bars i{flex:1;background:var(--p);border-radius:5px 5px 0 0;position:relative}
 .bars i::after{content:attr(data-d);position:absolute;top:100%;left:50%;transform:translateX(-50%);font-size:.65rem;color:var(--m);font-style:normal;margin-top:3px}
 .acct{display:flex;align-items:center;gap:12px;justify-content:space-between}.acct img{width:48px;height:48px;border-radius:50%}.tabs{flex-wrap:wrap}
 @media(max-width:760px){.mdl span{display:none}.mdl{padding:0 11px}}
+.pnote{margin:6px 10px;font-size:.78rem;color:var(--m);line-height:1.5}.pnote a{color:var(--p)}.pnote b{color:var(--tx)}
+.more{font-size:.82rem;color:var(--m)}.more summary{cursor:pointer;color:var(--p);font-weight:600}.more p{margin-top:6px;line-height:1.55}
+.pop{position:fixed;display:none;z-index:25;width:330px;max-height:min(72vh,580px);overflow-y:auto;padding:10px;background:color-mix(in srgb,var(--card) 86%,transparent);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--line);border-radius:24px;box-shadow:0 26px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06)}
+.pop.on{animation:popIn .24s cubic-bezier(.2,.9,.3,1.15)}@keyframes popIn{from{opacity:0;transform:translateY(12px) scale(.95)}}
+.ph{display:flex;align-items:center;gap:8px;padding:6px 8px 10px}.ph b{flex:1;color:var(--tx);font-size:1rem}
+.ph span{font-size:.7rem;font-weight:700;color:var(--p);background:color-mix(in srgb,var(--p) 16%,transparent);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.bk{border:0;background:var(--soft);color:var(--tx);width:32px;height:32px;border-radius:10px}.bk:hover{background:color-mix(in srgb,var(--p) 25%,transparent)}
+.ps{width:100%;margin:0 0 8px;background:var(--soft);border:1px solid transparent;border-radius:14px;padding:10px 14px;color:var(--tx);font:inherit;font-size:.86rem}.ps:focus{outline:none;border-color:var(--p)}
+.pg{margin:12px 10px 4px;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m)}
+.it{display:flex;align-items:center;gap:12px;width:100%;border:1px solid transparent;background:none;color:var(--tx);text-align:left;padding:9px 10px;border-radius:16px;transition:background .15s,transform .15s,border-color .15s;animation:itIn .32s both;animation-delay:calc(var(--i,0)*28ms)}
+@keyframes itIn{from{opacity:0;transform:translateX(-10px)}}
+.pop.q .it{animation:none}
+.it:hover{background:var(--soft);transform:translateX(3px)}
+.it.sel{border-color:color-mix(in srgb,var(--p) 70%,transparent);background:color-mix(in srgb,var(--p) 14%,transparent)}
+.tile{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-size:1rem;flex-shrink:0;background:linear-gradient(135deg,#5865F2,#1fb6ff);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.tile.g{background:linear-gradient(135deg,#4285f4,#34a853 60%,#fbbc05)}.tile.m{background:linear-gradient(135deg,#0866ff,#00c6ff)}.tile.a{background:linear-gradient(135deg,#a855f7,#ec4899)}.tile.o{background:linear-gradient(135deg,#475569,#94a3b8)}
+.it .tx{flex:1;min-width:0}.it b{display:block;font-size:.92rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.it small{color:var(--m);font-size:.76rem}
+.it .ck{color:var(--p);opacity:0;transform:scale(.3);transition:.22s cubic-bezier(.2,1.4,.4,1)}.it.sel .ck{opacity:1;transform:none}
+.bdg{font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(61,220,151,.16);color:#3ddc97;margin-left:7px;vertical-align:1px}
+.pf{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.pf button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:0;background:var(--soft);color:var(--t);padding:11px 8px;border-radius:14px;font-size:.78rem;font-weight:600;transition:.15s}
+.pf button i{color:var(--p)}.pf button:hover{background:color-mix(in srgb,var(--p) 20%,transparent);transform:translateY(-2px)}
+.pop .st{margin:6px 8px}
+@media(max-width:760px){.pop{left:8px!important;right:8px;width:auto;top:auto!important;bottom:8px;max-height:78vh;border-radius:26px}}
+@media(prefers-reduced-motion:reduce){.pop.on,.it{animation:none!important}}
 </style>
 </head>
 <body>
@@ -300,6 +319,7 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
       <div class="mlist" id="cfgList" style="display:none"></div>
       <label class="chk2"><input type="checkbox" id="cfgRem"> Lembrar a chave neste aparelho (desmarcado: some ao fechar a aba)</label>
       <label class="chk2"><input type="checkbox" id="cfgWeb" onchange="$('engWrap').style.display=this.checked?'':'none'"> Pesquisar na internet</label>
+      <details class="more"><summary>Saiba mais</summary><p>Quando está ligado, antes de responder o chat procura a sua pergunta (até 200 caracteres) nas fontes marcadas, como Wikipédia, DuckDuckGo, Wikidata, MusicBrainz e Open Library. A busca é feita direto do seu navegador, sem chave. Os trechos encontrados vão junto com a pergunta para o serviço de IA que você escolheu, para ele responder com dados mais atuais, e a resposta mostra as fontes. Não é usada em conversa casual (oi, obrigado) nem quando a base do Azul Groove já responde bem. A sua chave de API nunca é enviada aos buscadores. Desligada, a pergunta vai só para o serviço de IA. Mais fontes marcadas deixam a resposta mais lenta.</p></details>
       <div class="pane" id="engWrap">
         <div class="topics" id="engBox"></div>
         <div class="row" style="justify-content:flex-start"><button class="btn2" onclick="engSet('all')">Todos</button><button class="btn2" onclick="engSet('none')">Nenhum</button><button class="btn2" onclick="engSet('def')">Padrão</button></div>
@@ -916,7 +936,7 @@ async function send(text, label) {
   let reply, ctx = '', ai = false; const t0 = Date.now();
   try { reply = await askAI(c); ai = true; stAdd('ai', askAI.model, Date.now() - t0); }
   catch (e) {
-    ctx = e.local || ''; stAdd(ctx ? 'local' : 'err');
+    ctx = e.local || ''; stAdd(ctx ? 'local' : 'err'); if (/\[429\]|limite atingido/.test(e.message)) stAdd('lim');
     reply = ctx ? rand(OPENERS).replace('{n}', `<b>${esc(first || 'amigo')}</b>`) + '\n\n' + fmt(esc(ctx))
       : '⚠️ ' + (/fetch/i.test(e.message) ? 'Não consegui falar com a IA (a API está ligada?).' : e.message);
   }
@@ -1012,23 +1032,40 @@ const mShort = m => String(m).replace(/^.*\//, '').replace(/:free$/, ' (grátis)
 const getPick = () => { try { const p = localStorage.getItem(PICK); return p && getCfg().models.split(',').map(x => x.trim()).includes(p) ? p : ''; } catch (e) { return ''; } };
 function paintMdl() { const p = getPick(); $('mdlName').textContent = p ? mShort(p) : 'Auto'; $('mdlBtn').title = p || 'Automático'; }
 function setPick(m) { try { m ? localStorage.setItem(PICK, m) : localStorage.removeItem(PICK); } catch (e) {} paintMdl(); $('mdlPop').style.display = 'none'; }
-function mdlMenu(e) {
-  e.stopPropagation(); const pop = $('mdlPop'); if (pop.style.display === 'block') { pop.style.display = 'none'; return; }
-  const cfg = getCfg(), list = cfg.models.split(',').map(x => x.trim()).filter(Boolean), cur = getPick(), g = {};
-  list.forEach(m => (g[maker(m)] = g[maker(m)] || []).push(m));
-  const it = (m, t, sub) => `<button data-m="${esc(m)}"><i class="fas ${m === cur ? 'fa-check' : ''}"></i><span><b>${esc(t)}</b><small>${esc(sub)}</small></span></button>`;
-  pop.innerHTML = it('', 'Automático', 'Usa a ordem definida em ⚙️') + Object.entries(g).map(([k, a]) => `<h6>${k}</h6>` + a.map(m => it(m, mShort(m), PRESETS[cfg.provider].n)).join('')).join('')
-    + '<hr><button data-cfg="1"><i class="fas fa-gear"></i><span><b>Adicionar ou trocar IA</b><small>Provedor, chave e modelos</small></span></button>';
-  pop.onclick = ev => { const b = ev.target.closest('button'); if (!b) return; if (b.dataset.cfg) { pop.style.display = 'none'; openCfg('ia'); } else setPick(b.dataset.m); };
-  const r = $('mdlBtn').getBoundingClientRect(); pop.style.display = 'block';
-  pop.style.left = Math.max(8, Math.min(r.left, innerWidth - 288)) + 'px'; pop.style.top = Math.max(8, r.top - pop.offsetHeight - 8) + 'px';
+const LIMITS = { openrouter: ['OpenRouter', 'https://openrouter.ai/docs/api-reference/limits'], openai: ['OpenAI', 'https://platform.openai.com/docs/guides/rate-limits'], groq: ['Groq', 'https://console.groq.com/docs/rate-limits'], gemini: ['Google Gemini', 'https://ai.google.dev/gemini-api/docs/rate-limits'], together: ['Together AI', 'https://docs.together.ai/docs/rate-limits'] };
+function mdlPlace() { const pop = $('mdlPop'), r = $('mdlBtn').getBoundingClientRect(); pop.style.left = Math.max(8, Math.min(r.left, innerWidth - 288)) + 'px'; pop.style.top = Math.max(8, r.top - pop.offsetHeight - 8) + 'px'; }
+function limHtml() {
+  const cfg = getCfg(), P = PRESETS[cfg.provider], L = LIMITS[cfg.provider], s = stGet(), today = s.days[dk(new Date())] || 0;
+  return `<div class="ph"><button class="bk" data-back="1" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button><b>Limites da API</b><span>${esc(P.n)}</span></div>`
+    + `<div class="st"><div><b>${today}</b>perguntas hoje</div><div><b>${s.lim || 0}</b>vezes no limite</div></div>`
+    + `<div class="pnote">${L ? `Os limites (pedidos por minuto, por dia e tokens) dependem da sua conta e do modelo, e quem define é o ${esc(L[0])}. <a href="${L[1]}" target="_blank" rel="noopener">Ver limites oficiais</a>.` : 'Em IA no seu PC ou em outro serviço não há cota do provedor: vale o desempenho do seu computador ou as regras do serviço que você usa.'}</div>`
+    + '<div class="pnote">💡 Erro 429 significa limite atingido: espere um pouco ou escolha outro modelo. Modelos grátis (:free) costumam ter cotas menores. Em <b>Automático</b>, se um modelo falhar, o chat tenta o próximo da lista.</div>';
 }
+function mdlFill(q = '') {
+  const pop = $('mdlPop'), cfg = getCfg(), all = cfg.models.split(',').map(x => x.trim()).filter(Boolean), cur = getPick(), g = {}, ICON = { Google: ['g', 'fab fa-google'], Meta: ['m', 'fas fa-infinity'], Outros: ['o', 'fas fa-microchip'] };
+  const list = q ? all.filter(m => m.toLowerCase().includes(q.toLowerCase())) : all; let n = 0;
+  list.forEach(m => (g[maker(m)] = g[maker(m)] || []).push(m));
+  const it = (m, t, sub, tile, ic, free) => `<button class="it ${m === cur ? 'sel' : ''}" data-m="${esc(m)}" style="--i:${n++}"><span class="tile ${tile}"><i class="${ic}"></i></span><span class="tx"><b>${esc(t)}${free ? '<span class="bdg">GRÁTIS</span>' : ''}</b><small>${esc(sub)}</small></span><i class="fas fa-circle-check ck"></i></button>`;
+  pop.classList.toggle('q', !!q);
+  pop.innerHTML = `<div class="ph"><b>Escolher a IA</b><span>${esc(PRESETS[cfg.provider].n)}</span></div>` + (all.length > 6 ? `<input class="ps" id="mdlQ" placeholder="Buscar modelo…" value="${esc(q)}" autocomplete="off">` : '')
+    + (q ? '' : it('', 'Automático', 'Usa a ordem definida em ⚙️', 'a', 'fas fa-wand-magic-sparkles'))
+    + Object.entries(g).map(([k, a]) => `<div class="pg">${k}</div>` + a.map(m => it(m, mShort(m).replace(' (grátis)', ''), PRESETS[cfg.provider].n, ICON[k][0], ICON[k][1], /:free$/.test(m))).join('')).join('')
+    + (q && !list.length ? '<div class="pnote">Nenhum modelo encontrado.</div>' : '')
+    + '<div class="pf"><button data-lim="1"><i class="fas fa-gauge-high"></i>Limites da API</button><button data-cfg="1"><i class="fas fa-plus"></i>Adicionar IA</button></div>'
+    + '<div class="pnote">🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="https://azul-groove.vercel.app/ia-local.html" target="_blank" rel="noopener">Veja como liberar o CORS e conectar</a>.</div>';
+  const qi = $('mdlQ'); if (qi) qi.oninput = () => { mdlFill(qi.value); const x = $('mdlQ'); x.focus(); x.setSelectionRange(x.value.length, x.value.length); };
+  pop.onclick = ev => { if (ev.target.closest('a')) return; const b = ev.target.closest('button'); if (!b) return;
+    if (b.dataset.lim) { pop.classList.add('q'); pop.innerHTML = limHtml(); mdlPlace(); } else if (b.dataset.back) { mdlFill(); mdlPlace(); }
+    else if (b.dataset.cfg) { pop.style.display = 'none'; openCfg('ia'); } else if (b.dataset.m !== undefined) setPick(b.dataset.m); };
+}
+function mdlMenu(e) { e.stopPropagation(); const pop = $('mdlPop'); if (pop.style.display === 'block') { pop.style.display = 'none'; return; } mdlFill(); pop.style.display = 'block'; pop.classList.remove('on'); void pop.offsetWidth; pop.classList.add('on'); mdlPlace(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('mdlPop').style.display = 'none'; });
 document.addEventListener('click', e => { if (!e.target.closest('#mdlPop')) $('mdlPop').style.display = 'none'; });
 
 // ----- estatísticas -----
 const ST_KEY = 'azul_stats', dk = d => d.toLocaleDateString('sv');
 const stGet = () => { let o = {}; try { o = JSON.parse(localStorage.getItem(ST_KEY) || '{}'); } catch (e) {} return { days: {}, models: {}, ai: 0, local: 0, err: 0, ms: 0, n: 0, ...o }; };
-function stAdd(k, model, ms) { const s = stGet(), d = dk(new Date()); s.days[d] = (s.days[d] || 0) + 1; s[k]++; if (model) s.models[model] = (s.models[model] || 0) + 1; if (ms) { s.ms += ms; s.n++; } try { localStorage.setItem(ST_KEY, JSON.stringify(s)); } catch (e) {} }
+function stAdd(k, model, ms) { const s = stGet(), d = dk(new Date()); if (k !== 'lim') s.days[d] = (s.days[d] || 0) + 1; s[k] = (s[k] || 0) + 1; if (model) s.models[model] = (s.models[model] || 0) + 1; if (ms) { s.ms += ms; s.n++; } try { localStorage.setItem(ST_KEY, JSON.stringify(s)); } catch (e) {} }
 async function stReset() { if (!await dlg({ title: 'Zerar estatísticas?', ok: 'Zerar', danger: true })) return; try { localStorage.removeItem(ST_KEY); } catch (e) {} paintStats(); }
 function paintStats() {
   const s = stGet(), msgs = convs.reduce((t, c) => t + c.msgs.length, 0);

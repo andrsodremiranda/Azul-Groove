@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentação · Azul Groove</title>
+<meta name="description" content="Documentação do Azul Groove: bot de música para Discord, chat com IA e app para Windows.">
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<style>
+:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--ok:#3ddc97;--warn:#ffb454}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65}
+a{color:#8ea1ff}
+b{color:var(--tx)}
+code{font-family:ui-monospace,Menlo,monospace;background:rgba(88,101,242,.16);color:#cdd5ff;padding:2px 7px;border-radius:6px;font-size:.88em}
+pre{background:#050716;border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto;font-size:.84rem;color:#cdd5ff;margin:10px 0}
+pre code{background:none;padding:0}
+/* animação de entrada */
+#splash{position:fixed;inset:0;z-index:99;background:radial-gradient(circle at 50% 40%,#16205a,#07091a 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s,visibility .6s;cursor:pointer}
+#splash.off{opacity:0;visibility:hidden}
+.lg{position:relative;width:112px;height:112px}
+.lg img{width:112px;height:112px;border-radius:26px;position:relative;z-index:2;animation:pop .9s cubic-bezier(.2,1.4,.4,1) both}
+.lg i{position:absolute;inset:0;border-radius:26px;border:2px solid var(--ac2);animation:ring 1.6s ease-out infinite}
+.lg i:nth-child(2){animation-delay:.5s}
+.eq{display:flex;gap:6px;align-items:center;height:34px}
+.eq b{width:7px;border-radius:4px;background:linear-gradient(var(--ac2),var(--ac));animation:eq 1s ease-in-out infinite}
+.eq b:nth-child(2){animation-delay:.12s}.eq b:nth-child(3){animation-delay:.24s}.eq b:nth-child(4){animation-delay:.36s}.eq b:nth-child(5){animation-delay:.48s}
+#splash h2{font-size:1.5rem;letter-spacing:-.3px;animation:up .8s .5s both}
+#splash small{color:var(--mut);animation:up .8s .8s both}
+@keyframes pop{from{transform:scale(.3) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes ring{from{transform:scale(1);opacity:.8}to{transform:scale(2);opacity:0}}
+@keyframes eq{0%,100%{height:8px}50%{height:34px}}
+@keyframes up{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* layout */
+header{position:sticky;top:0;z-index:20;background:rgba(7,9,26,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 18px}
+header .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--tx);text-decoration:none}
+header .brand img{width:30px;height:30px;border-radius:8px}
+header .brand span{color:var(--mut);font-weight:500}
+#q{flex:1;max-width:380px;margin-left:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--tx);font-size:.9rem}
+#menu{display:none;background:none;border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 10px;font-size:1.1rem}
+.wrap{display:flex;max-width:1180px;margin:0 auto}
+aside{width:270px;flex:none;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;padding:22px 14px 40px 18px;border-right:1px solid var(--line)}
+aside h4{font-size:.72rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac2);margin:18px 8px 6px}
+aside h4:first-child{margin-top:0}
+aside a{display:block;color:var(--mut);text-decoration:none;padding:7px 10px;border-radius:8px;font-size:.92rem}
+aside a:hover{background:var(--card);color:var(--tx)}
+aside a.on{background:rgba(88,101,242,.18);color:var(--tx);font-weight:600}
+main{flex:1;min-width:0;padding:34px clamp(18px,4vw,48px) 80px;max-width:820px}
+.cat{color:var(--ac2);font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+h1{font-size:clamp(1.7rem,4.5vw,2.3rem);letter-spacing:-.5px;line-height:1.15;margin:6px 0 16px}
+h3{font-size:1.1rem;margin:26px 0 8px}
+p,li{color:var(--mut)}p{margin-bottom:10px}
+ol,ul{padding-left:22px;margin:8px 0 12px}li{margin-bottom:6px}
+.note,.okb{padding:10px 14px;border-radius:0 10px 10px 0;margin:14px 0;color:var(--mut)}
+.note{border-left:3px solid var(--warn);background:rgba(255,180,84,.07)}
+.okb{border-left:3px solid var(--ok);background:rgba(61,220,151,.07)}
+.sc{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
+td,th{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;color:var(--mut);vertical-align:top}th{color:var(--tx)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:16px 0}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;color:var(--mut);transition:.2s}
+.card:hover{border-color:var(--ac);transform:translateY(-2px)}
+.card b{display:block;margin-bottom:4px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:2px 16px;margin:10px 0}
+summary{cursor:pointer;padding:12px 0;font-weight:700;color:var(--tx)}
+details p{margin-top:2px}
+.pn{display:flex;justify-content:space-between;gap:10px;margin-top:40px;padding-top:18px;border-top:1px solid var(--line)}
+.pn a{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;text-decoration:none;color:var(--tx);font-size:.9rem}
+.pn a:hover{border-color:var(--ac)}
+@media(max-width:820px){#menu{display:block}aside{position:fixed;left:0;top:57px;z-index:15;background:var(--bg);transform:translateX(-100%);transition:.25s;width:82%;max-width:300px}aside.open{transform:none}#q{max-width:none}}
+
+/* ===== extras (docs detalhado) ===== */
+.btn-top{background:var(--ac);color:#fff!important;text-decoration:none;padding:8px 14px;border-radius:10px;font-size:.88rem;font-weight:600;white-space:nowrap}
+.btn-top:hover{filter:brightness(1.1)}
+.hl{font-size:.9rem;white-space:nowrap;text-decoration:none}
+.lead{font-size:1.05rem}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 18px;margin:16px 0 22px}
+.toc b{display:block;font-size:.72rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac2);margin-bottom:6px}
+.toc a{display:block;color:var(--mut);text-decoration:none;padding:3px 0;font-size:.92rem}
+.toc a:hover{color:var(--tx)}
+h3{scroll-margin-top:72px}
+pre{position:relative}
+.cp{position:absolute;top:8px;right:8px;background:var(--ac);border:0;color:#fff;border-radius:8px;padding:5px 10px;font-size:.75rem;cursor:pointer}
+.flow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.flow span{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:.88rem;color:var(--tx)}
+.flow i{color:var(--ac2);font-style:normal}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:18px 0}
+.dlc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.dlc.rec{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac) inset}
+.dlc h3{margin:0;font-size:1.1rem}
+.dlc small{color:var(--mut)}
+.dlc .tag{align-self:flex-start;background:rgba(88,101,242,.2);color:#c3cbff;font-size:.68rem;font-weight:700;letter-spacing:.08em;padding:3px 9px;border-radius:99px}
+.dlb{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ac);color:#fff!important;text-decoration:none;padding:11px 16px;border-radius:12px;font-weight:600;margin-top:4px}
+.dlb:hover{filter:brightness(1.12)}
+.dlb.alt{background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.hash{display:block;word-break:break-all;font-size:.78rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:12px 0}
+.steps li{counter-increment:s;position:relative;padding:4px 0 14px 46px;margin:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.9rem}
+.steps li b:first-child{display:block;color:var(--tx);margin-bottom:2px}
+.bad{border-left:3px solid #ff6b6b;background:rgba(255,107,107,.07);padding:10px 14px;border-radius:0 10px 10px 0;margin:14px 0;color:var(--mut)}
+kbd{font-family:ui-monospace,Menlo,monospace;background:#050716;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:.85em;color:var(--tx)}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details ol,details ul{margin-top:4px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0}
+.cols>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.cols>div b{display:block;margin-bottom:4px}
+.upd{color:var(--mut);font-size:.8rem;margin-top:30px}
+@media(max-width:820px){.hl{display:none}}
+</style>
+</head>
+<body>
+
+<div id="splash" title="Clique para pular">
+  <div class="lg"><i></i><i></i><img src="aumentar-o-tamanho-d.png" alt="Azul Groove"></div>
+  <div class="eq"><b></b><b></b><b></b><b></b><b></b></div>
+  <h2>Azul Groove Docs</h2><small>Carregando a documentação...</small>
+</div>
+<header>
+  <button id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="#/inicio"><img src="aumentar-o-tamanho-d.png" alt=""> Azul Groove <span>Docs</span></a>
+  <input id="q" type="search" placeholder="Buscar (ex.: chave, 429, Ollama, instalar)" aria-label="Buscar na documentação">
+  <a class="hl" href="chat.html">Abrir chat →</a>
+  <a class="btn-top" href="#/baixar-app">⬇ Baixar app</a>
+</header>
+<div class="wrap"><aside id="nav"></aside><main id="main"></main></div>
+
+<script>
+
+const OR = 'https://openrouter.ai';
+const REL = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases/tag/azul';
+const SETUP = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases/download/azul/AzulGroove-Setup.exe';
+const PORT = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases/download/azul/AzulGroove-Portable.exe';
+const SHA = '1412b97ddcd69b0b6d51449482936ba431f1dba9f940746aec239c45a1c018b4';
+const INVITE = 'https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064';
+const DISCORD = 'https://discord.gg/g4cW4zRvjf';
+const D = [
+
+/* ================= COMEÇAR ================= */
+{id:'inicio',cat:'Começar',t:'Bem-vindo',h:`
+<p class="lead">Aqui fica <b>tudo</b> sobre o Azul Groove: o <b>bot de música</b> para Discord, o <b>chat com IA</b> no site e o <b>app para Windows</b>. Escolha um assunto ou use a busca no topo.</p>
+<div class="grid">
+<a class="card" href="#/baixar-app"><b>⬇️ Baixar o app (Windows)</b>Setup ou Portable, com verificação de segurança.</a>
+<a class="card" href="#/primeiros-passos"><b>🚀 Primeiros passos</b>Do zero ao chat funcionando.</a>
+<a class="card" href="#/login"><b>👤 Entrar na conta</b>Discord, Google, GitHub e modo visitante.</a>
+<a class="card" href="#/chave-api"><b>🔑 Pegar chave de API</b>Passo a passo de cada provedor.</a>
+<a class="card" href="#/ia-local"><b>🖥️ IA no seu PC</b>Ollama, LM Studio, Jan e CORS.</a>
+<a class="card" href="#/bot-adicionar"><b>🎵 Bot do Discord</b>Adicionar, comandos e problemas.</a>
+<a class="card" href="#/limites"><b>📊 Limites</b>Mensagens por minuto, por dia e tokens.</a>
+<a class="card" href="#/erros"><b>⚠️ Erros comuns</b>401, 402, 404, 429, CORS e mais.</a>
+<a class="card" href="#/faq"><b>❓ Central de dúvidas</b>Perguntas frequentes por assunto.</a>
+</div>
+<h3>O Azul Groove em três partes</h3>
+<div class="cols">
+<div><b>🎵 Bot de música</b>Toca música no seu servidor do Discord com comandos de barra, como <code>/play</code>.</div>
+<div><b>💬 Chat com IA</b>Converse com uma IA pelo site. Você escolhe o serviço (nuvem) ou usa um modelo no seu PC.</div>
+<div><b>🪟 App para Windows</b>O mesmo chat numa janela própria, com ícone na bandeja.</div>
+</div>
+<div class="okb"><b>Dica:</b> não achou o que procurava? Digite uma palavra na busca (por exemplo <code>429</code>, <code>chave</code> ou <code>instalar</code>) e a lista ao lado mostra só as páginas que falam disso.</div>`},
+
+{id:'como-funciona',cat:'Começar',t:'Como funciona',h:`
+<p>Entender o caminho da sua mensagem ajuda a resolver quase qualquer problema depois.</p>
+<div class="flow"><span>Você escreve</span><i>→</i><span>Seu navegador (ou o app)</span><i>→</i><span>Serviço de IA</span><i>→</i><span>Resposta no chat</span></div>
+<p>O Azul Groove <b>não cria nem treina um modelo próprio</b>. O chat é uma interface (parecida com o Open WebUI): ele leva a sua mensagem até o serviço de IA que você escolheu e mostra a resposta. A qualidade e o conteúdo da resposta vêm desse serviço.</p>
+<h3>O que passa por onde</h3>
+<div class="sc"><table><tr><th>O quê</th><th>Onde fica</th></tr>
+<tr><td>Suas mensagens</td><td>Vão do seu navegador direto ao serviço de IA. <b>Não passam pelo servidor do Azul Groove.</b></td></tr>
+<tr><td>Histórico das conversas</td><td>Só no seu navegador (ou na pasta de dados do app).</td></tr>
+<tr><td>Sua chave de API</td><td>Só no seu navegador. Veja <a href="#/seguranca">Segurança</a>.</td></tr>
+<tr><td>Login (Google e GitHub)</td><td>Processado pelo Firebase. Veja <a href="#/login">Entrar na conta</a>.</td></tr></table></div>
+<h3>Os três caminhos para ter uma IA</h3>
+<div class="sc"><table><tr><th>Caminho</th><th>Custo</th><th>Privacidade</th><th>Quando escolher</th></tr>
+<tr><td><b>Nuvem grátis</b> (OpenRouter <code>:free</code>)</td><td>Grátis, com limites</td><td>A mensagem vai ao provedor</td><td>Testar e uso leve.</td></tr>
+<tr><td><b>Nuvem paga</b> (OpenAI, Groq, Gemini, Together)</td><td>Por uso (tokens)</td><td>A mensagem vai ao provedor</td><td>Respostas melhores e rápidas.</td></tr>
+<tr><td><b>Local</b> (Ollama, LM Studio, Jan)</td><td>Grátis, sem limite</td><td>Nada sai do seu PC*</td><td>Privacidade total, mesmo computador.</td></tr></table></div>
+<p><small>* Com pesquisa na internet desligada. Com a pesquisa ligada, o texto buscado sai do seu computador.</small></p>`},
+
+{id:'primeiros-passos',cat:'Começar',t:'Primeiros passos',h:`
+<p>Em cerca de um minuto o chat está respondendo. Só precisa decidir de onde vem a IA (veja <a href="#/como-funciona">Como funciona</a>).</p>
+<ol class="steps">
+<li><b>Aceite os termos e entre</b>Leia os Termos de Uso e a Política de Privacidade, marque que concorda e entre com Discord, Google ou GitHub. Mais em <a href="#/login">Entrar na conta</a>.</li>
+<li><b>Abra as configurações</b>No <a href="chat.html">chat</a>, clique no ícone <b>⚙️</b>.</li>
+<li><b>Escolha o provedor</b>URL e modelo já vêm preenchidos. Para IA local, escolha Ollama ou LM Studio.</li>
+<li><b>Cole a chave de API</b>Só para provedores na nuvem. IA local não precisa. Veja <a href="#/chave-api">Pegar uma chave</a>.</li>
+<li><b>Salve e mande uma mensagem</b>Se aparecer um erro, procure o código em <a href="#/erros">Erros comuns</a>.</li>
+</ol>
+<div class="okb"><b>Privacidade:</b> as mensagens não passam pelo servidor do Azul Groove. Seu navegador fala direto com o provedor.</div>
+<div class="note"><b>Sem querer gastar?</b> Use o OpenRouter com um modelo que termina em <code>:free</code>, ou uma <a href="#/ia-local">IA local</a>.</div>
+<h3>Quero só testar rápido</h3>
+<p>Na página do <a href="assistente.html">Assistente Virtual</a> dá para usar o <b>modo visitante</b>, sem criar conta. Para configurações de IA, fundos e várias conversas guardadas, entre com uma conta e use o chat completo.</p>`},
+
+/* ================= CONTA ================= */
+{id:'login',cat:'Conta',t:'Entrar na conta',h:`
+<p>O login serve para <b>guardar as suas conversas neste navegador</b> e liberar o chat completo. Você pode entrar de três jeitos:</p>
+<div class="sc"><table><tr><th>Provedor</th><th>Como funciona</th></tr>
+<tr><td><b>Discord</b></td><td>Você é levado ao Discord, autoriza (nome, e-mail e lista de servidores) e volta direto para o chat.</td></tr>
+<tr><td><b>Google</b></td><td>Abre uma janela do Google para escolher a conta. Processado pelo Firebase.</td></tr>
+<tr><td><b>GitHub</b></td><td>Abre uma janela do GitHub. Processado pelo Firebase.</td></tr></table></div>
+<div class="okb"><b>Sobre os seus dados:</b> o login com Google e GitHub é processado pelo Firebase. A ASTM Software não salva suas conversas nem seus dados: ficam só no seu navegador. O Firebase pode manter o registro da conta (como nome e e-mail) para o login funcionar.</div>
+<h3>Passo a passo</h3>
+<ol class="steps">
+<li><b>Abra o chat</b>Se você ainda não entrou, a tela de login aparece sozinha.</li>
+<li><b>Aceite os termos</b>É preciso marcar que leu e concorda, uma vez.</li>
+<li><b>Escolha Discord, Google ou GitHub</b>Autorize quando o provedor pedir.</li>
+<li><b>Pronto</b>Você vê uma mensagem de boas-vindas e o chat abre já logado. A sessão dura cerca de 7 dias.</li>
+</ol>
+<h3>Trocar de conta ou sair</h3>
+<ul><li><b>Entrar com outra conta:</b> em <b>⚙️ → Conta</b>. Você volta à tela de login sem precisar aceitar os termos de novo.</li><li><b>Sair da conta:</b> no mesmo lugar. Apaga a sessão deste navegador.</li></ul>
+<h3>Modo visitante</h3>
+<p>Na página do <a href="assistente.html">Assistente Virtual</a> você pode continuar como visitante, <b>sem limite de mensagens</b>. De tempos em tempos aparece um aviso convidando a fazer login; dá para fechar e continuar. O chat completo, as configurações de IA, os fundos e as várias conversas exigem login.</p>
+<h3>Problemas ao entrar</h3>
+<details><summary>A janela de login não abre (Google/GitHub)</summary><p>O navegador bloqueou o pop-up. Libere pop-ups para o site (ícone ao lado do endereço) e tente de novo.</p></details>
+<details><summary>"Este domínio não está autorizado no Firebase"</summary><p>É uma configuração do site, não sua. Avise a gente no <a target="_blank" rel="noopener" href="${DISCORD}">Discord</a>.</p></details>
+<details><summary>"Já existe uma conta com este e-mail em outro provedor"</summary><p>Você já entrou antes com esse e-mail usando outro provedor (por exemplo, Google). Entre pelo que usou da primeira vez.</p></details>
+<details><summary>Voltei para a tela de login depois do Discord</summary><p>Atualize a página com <kbd>Ctrl</kbd>+<kbd>F5</kbd> e tente de novo, sem fechar a aba durante o login. Se continuar, avise no Discord.</p></details>
+<details><summary>"Login cancelado"</summary><p>Você fechou a janela ou recusou a autorização. Basta tentar de novo.</p></details>`},
+
+/* ================= APP WINDOWS ================= */
+{id:'baixar-app',cat:'App para Windows',t:'Baixar o app',h:`
+<p class="lead">O app abre o Azul Groove numa <b>janela própria</b>, sem barra de endereço e com ícone na bandeja do Windows. Há duas versões. Escolha uma:</p>
+<div class="dl">
+<div class="dlc rec"><span class="tag">RECOMENDADO</span><h3>Instalador (Setup)</h3><small>AzulGroove-Setup.exe</small><p>Instala o app no computador. Melhor para usar no dia a dia.</p><a class="dlb" href="${SETUP}">⬇ Baixar o Setup</a></div>
+<div class="dlc"><span class="tag">SEM INSTALAR</span><h3>Portable</h3><small>AzulGroove-Portable.exe · 63,2 MB</small><p>Abre direto, sem instalar nada. Bom para testar ou usar em outro PC.</p><a class="dlb alt" href="${PORT}">⬇ Baixar o Portable</a></div>
+</div>
+<p>Todas as versões ficam na página oficial: <a target="_blank" rel="noopener" href="${REL}">GitHub · Azul-Groove-app (releases)</a>.</p>
+<h3>Qual escolher?</h3>
+<div class="sc"><table><tr><th></th><th>Setup</th><th>Portable</th></tr>
+<tr><td>Precisa instalar?</td><td>Sim, o instalador faz tudo sozinho</td><td>Não, é só abrir</td></tr>
+<tr><td>Ideal para</td><td>Usar sempre no seu PC</td><td>Testar, ou levar em pen drive</td></tr>
+<tr><td>Dados do app</td><td colspan="2"><code>%LocalAppData%\\AzulGroove</code> (nas duas)</td></tr></table></div>
+<h3>Conferir se o arquivo é íntegro (opcional)</h3>
+<p>Cada arquivo tem uma "impressão digital" (SHA-256). Se a sua for igual à da página oficial, o arquivo não foi alterado no caminho. Impressão do <b>Portable</b> publicada na versão atual:</p>
+<pre><code class="hash">${SHA}</code></pre>
+<p>Para calcular a do arquivo baixado, abra o <b>PowerShell</b> na pasta de downloads e rode:</p>
+<pre><code>Get-FileHash .\\AzulGroove-Portable.exe -Algorithm SHA256</code></pre>
+<p>Compare o valor de <code>Hash</code> com o da página da versão (a do Setup também aparece lá). Se for diferente, apague o arquivo e baixe de novo.</p>
+<div class="note"><b>Atenção:</b> se uma nova versão for publicada, o número muda. Sempre compare com o valor que está na <a target="_blank" rel="noopener" href="${REL}">página da versão</a>.</div>
+<p>Pronto para instalar? Siga <a href="#/instalar-app">Instalar e usar o app</a>.</p>`},
+
+{id:'instalar-app',cat:'App para Windows',t:'Instalar e usar o app',h:`
+<h3>Instalando com o Setup</h3>
+<ol class="steps">
+<li><b>Baixe o AzulGroove-Setup.exe</b>Pela <a href="#/baixar-app">página de download</a> ou pela página inicial do site.</li>
+<li><b>Dê dois cliques no arquivo</b>Se o Windows avisar "editor desconhecido" ou "O Windows protegeu o computador", clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.</li>
+<li><b>Aguarde</b>Ele instala sozinho e abre o app ao terminar.</li>
+<li><b>Entre na sua conta</b>A tela de login do chat aparece. Veja <a href="#/login">Entrar na conta</a>.</li>
+</ol>
+<div class="note"><b>Por que o aviso do Windows?</b> O SmartScreen costuma avisar sobre programas novos ou ainda pouco baixados. Confira a impressão digital (SHA-256) em <a href="#/baixar-app">Baixar o app</a> e baixe só pelo link oficial desta página.</div>
+<h3>Usando a versão Portable</h3>
+<ol class="steps">
+<li><b>Baixe o AzulGroove-Portable.exe</b>E guarde numa pasta de sua escolha.</li>
+<li><b>Dê dois cliques</b>Abre sem instalar. O aviso do Windows funciona como acima.</li>
+</ol>
+<div class="okb">Seus dados (conversas, configurações) ficam em <code>%LocalAppData%\\AzulGroove</code>. Para abrir a pasta: pressione <kbd>Win</kbd>+<kbd>R</kbd>, cole o caminho e dê Enter.</div>
+<h3>Bandeja do Windows</h3>
+<ul>
+<li>Clicar no <b>X</b> da janela manda o app para a <b>bandeja</b> (perto do relógio), em vez de fechar.</li>
+<li>Para <b>fechar de verdade</b>, clique com o botão direito no ícone da bandeja e escolha <b>Sair</b>.</li>
+<li>No mesmo menu você troca o <b>tema</b> (automático, claro ou escuro) e o <b>atalho de teclado</b>.</li>
+</ul>
+<h3>Atualizar</h3>
+<p>Baixe a versão nova na <a target="_blank" rel="noopener" href="${REL}">página oficial</a> e instale por cima (Setup) ou troque o arquivo (Portable). Suas conversas ficam na pasta de dados.</p>
+<h3>Remover o app</h3>
+<ul><li><b>Setup:</b> normalmente em <b>Configurações → Aplicativos</b>, procure por Azul Groove e desinstale.</li><li><b>Portable:</b> feche pela bandeja (<b>Sair</b>) e apague o arquivo. Para apagar também as conversas, apague a pasta <code>%LocalAppData%\\AzulGroove</code>.</li></ul>
+<h3>O app não abre ou fecha sozinho</h3>
+<details><summary>Nada acontece ao dar dois cliques</summary><p>Veja se ele já não está na bandeja do Windows (seta ^ perto do relógio). Se estiver, clique no ícone para abrir a janela.</p></details>
+<details><summary>O Windows ou o antivírus bloqueou o arquivo</summary><p>Confira o SHA-256 (<a href="#/baixar-app">Baixar o app</a>). Se bater com a página oficial, libere o arquivo no antivírus ou use "Executar assim mesmo".</p></details>
+<details><summary>Quero começar do zero</summary><p>Saia pela bandeja, apague a pasta <code>%LocalAppData%\\AzulGroove</code> e abra o app de novo. Isso apaga conversas e configurações.</p></details>
+<details><summary>A IA local não responde no app</summary><p>O app roda no mesmo PC, então funciona como no navegador. Siga <a href="#/ia-local">IA no seu PC</a> (servidor ligado e CORS liberado).</p></details>`},
+
+/* ================= CONFIGURAR A IA ================= */
+{id:'chave-api',cat:'Configurar a IA',t:'Pegar uma chave de API',h:`
+<p>A chave de API é como uma <b>senha da sua conta</b> no provedor de IA. Ela diz ao serviço que o pedido é seu (e quem paga o uso, se for pago). O caminho é parecido em todos:</p>
+<ol class="steps">
+<li><b>Crie uma conta</b>No site do provedor (tabela abaixo).</li>
+<li><b>Abra a página de chaves</b>Procure por "API keys".</li>
+<li><b>Crie uma chave</b>Clique em <b>Create API key</b> e dê um nome, como "Azul Groove".</li>
+<li><b>Copie na hora</b>Quase sempre ela aparece uma vez só. Guarde num lugar seguro.</li>
+<li><b>Cole no ⚙️ do chat</b>Escolha o provedor correspondente e cole no campo da chave.</li>
+</ol>
+<div class="sc"><table><tr><th>Provedor</th><th>Chave</th><th>URL base</th><th>Modelo de exemplo</th></tr>
+<tr><td><b>OpenRouter</b></td><td><a target="_blank" rel="noopener" href="${OR}/settings/keys">settings/keys</a></td><td><code>openrouter.ai/api/v1</code></td><td><code>:free</code></td></tr>
+<tr><td><b>OpenAI</b></td><td><a target="_blank" rel="noopener" href="https://platform.openai.com/api-keys">api-keys</a></td><td><code>api.openai.com/v1</code></td><td><code>gpt-4o-mini</code></td></tr>
+<tr><td><b>Groq</b></td><td><a target="_blank" rel="noopener" href="https://console.groq.com/keys">console.groq.com/keys</a></td><td><code>api.groq.com/openai/v1</code></td><td><code>llama-3.3-70b-versatile</code></td></tr>
+<tr><td><b>Gemini</b></td><td><a target="_blank" rel="noopener" href="https://aistudio.google.com/apikey">aistudio.google.com/apikey</a></td><td><code>generativelanguage.googleapis.com/v1beta/openai</code></td><td><code>gemini-2.0-flash</code></td></tr>
+<tr><td><b>Together</b></td><td><a target="_blank" rel="noopener" href="https://api.together.ai/settings/api-keys">api-keys</a></td><td><code>api.together.xyz/v1</code></td><td><code>Llama-3.3-70B-Instruct-Turbo</code></td></tr></table></div>
+<p>Use sempre o endereço com <code>https://</code> na frente. Outro serviço compatível com OpenAI? Escolha <b>Outro</b> no ⚙️ e informe a URL.</p>
+<h3>Detalhes por provedor</h3>
+<details><summary>OpenRouter (tem modelos grátis)</summary><ol><li>Crie a conta e abra <a target="_blank" rel="noopener" href="${OR}/settings/keys">settings/keys</a>.</li><li>Crie a chave e copie.</li><li>No ⚙️ do chat: provedor <b>OpenRouter</b>.</li><li>Para não gastar, escolha um modelo que termine em <code>:free</code>.</li></ol><p>Limites dos modelos grátis em <a href="#/limites">Limites</a>.</p></details>
+<details><summary>OpenAI</summary><ol><li>Crie a conta e abra <a target="_blank" rel="noopener" href="https://platform.openai.com/api-keys">platform.openai.com/api-keys</a>.</li><li>Crie a chave e copie.</li><li>É um serviço <b>pago por uso</b>: adicione crédito no painel e defina um limite de gasto.</li><li>No ⚙️: provedor <b>OpenAI</b>, modelo <code>gpt-4o-mini</code> para começar.</li></ol></details>
+<details><summary>Groq</summary><ol><li>Crie a conta e abra <a target="_blank" rel="noopener" href="https://console.groq.com/keys">console.groq.com/keys</a>.</li><li>Crie a chave e copie.</li><li>No ⚙️: provedor <b>Groq</b>, modelo <code>llama-3.3-70b-versatile</code>.</li></ol><p>As respostas costumam ser muito rápidas. Confira os limites do seu plano na página oficial.</p></details>
+<details><summary>Gemini (Google AI Studio)</summary><ol><li>Entre com sua conta Google em <a target="_blank" rel="noopener" href="https://aistudio.google.com/apikey">aistudio.google.com/apikey</a>.</li><li>Crie a chave e copie.</li><li>No ⚙️: provedor <b>Gemini</b>, modelo <code>gemini-2.0-flash</code>.</li></ol></details>
+<details><summary>Together</summary><ol><li>Crie a conta e abra <a target="_blank" rel="noopener" href="https://api.together.ai/settings/api-keys">api-keys</a>.</li><li>Crie a chave e copie.</li><li>No ⚙️: provedor <b>Together</b>, modelo <code>Llama-3.3-70B-Instruct-Turbo</code> (use o nome completo que o provedor mostra).</li></ol></details>
+<div class="bad"><b>Nunca</b> compartilhe a chave no Discord, em prints ou em repositórios públicos. Veja <a href="#/seguranca">Segurança</a>.</div>`},
+
+{id:'modelos',cat:'Configurar a IA',t:'Escolher o modelo',h:`
+<p>O <b>modelo</b> é o "cérebro" que gera a resposta. Cada provedor tem vários, e a escolha muda velocidade, qualidade e custo.</p>
+<div class="sc"><table><tr><th>Quero…</th><th>Sugestão</th></tr>
+<tr><td>Conversar e pesquisar com qualidade</td><td>Modelos de 70B (Llama 3.3 70B) ou Gemini Flash.</td></tr>
+<tr><td>Gastar nada</td><td>OpenRouter com modelo que termina em <code>:free</code>.</td></tr>
+<tr><td>Respostas muito rápidas</td><td>Groq.</td></tr>
+<tr><td>Privacidade total</td><td>IA local. Comece com <code>llama3.2</code> e suba se o PC aguentar.</td></tr></table></div>
+<h3>Vários modelos de uma vez</h3>
+<p>Modelos grátis ficam lentos ou indisponíveis em horários de pico. No ⚙️ você pode colocar <b>vários modelos separados por vírgula</b>: se o primeiro falhar, o chat tenta o próximo.</p>
+<pre><code>meta-llama/llama-3.3-70b-instruct:free, google/gemini-2.0-flash-exp:free</code></pre>
+<p><small>Os nomes dos modelos grátis mudam com o tempo. Use o botão <b>Buscar modelos disponíveis</b> no ⚙️ para ver os atuais.</small></p>
+<h3>Buscar modelos disponíveis</h3>
+<p>No ⚙️, depois de colocar a URL (e a chave, se precisar), clique em <b>Buscar modelos disponíveis</b>. O chat lista o que o provedor oferece e você escolhe. Se der erro <code>404</code>, confira se a URL termina em <code>/v1</code>.</p>
+<h3>Modo profundo</h3>
+<p>Para perguntas que pedem respostas longas e detalhadas, o chat tem um <b>modo profundo</b>, com resposta de até 3.500 tokens (no modo normal são 1.500). Veja <a href="#/limites">Limites</a>.</p>`},
+
+{id:'ia-local',cat:'Configurar a IA',t:'IA no seu PC (Ollama, LM Studio, Jan)',h:`
+<p class="lead">Grátis, sem limite de mensagens e nada sai do seu computador. Este guia também resolve o erro <b>"Não consegui conectar"</b> e <b>"blocked by CORS"</b>.</p>
+<h3>Como funciona</h3>
+<p>As mensagens <b>não passam pelo nosso servidor</b>. Quem fala com a IA é o seu próprio navegador (ou o app), direto no programa que está no seu PC.</p>
+<div class="flow"><span>Site (HTTPS)</span><i>→</i><span>Seu navegador</span><i>→</i><span>127.0.0.1 (seu PC)</span><i>→</i><span>Ollama / LM Studio / Jan</span></div>
+<p>Como o site e o programa local são "origens" diferentes, o navegador só entrega a resposta se o programa disser, por um cabeçalho chamado <b>CORS</b>, que aquele site pode ler. Sem isso, o servidor até responde (status 200), mas o navegador bloqueia.</p>
+<div class="note"><b>Importante:</b> só funciona no <b>mesmo computador</b> onde a IA roda. No celular ou em outro aparelho, <code>127.0.0.1</code> é o próprio aparelho: use um provedor na nuvem.</div>
+<h3>Resumo por programa</h3>
+<div class="sc"><table><tr><th>Programa</th><th>URL no ⚙️</th><th>O que liberar</th></tr>
+<tr><td>Ollama</td><td><code>http://127.0.0.1:11434/v1</code></td><td>Iniciar com <code>OLLAMA_ORIGINS="*"</code></td></tr>
+<tr><td>LM Studio</td><td><code>http://127.0.0.1:1234/v1</code></td><td>Developer → Start e ativar <b>Enable CORS</b></td></tr>
+<tr><td>Jan</td><td><code>http://127.0.0.1:1337/v1</code></td><td>Local API Server: ligar e liberar hosts</td></tr></table></div>
+<h3>Checklist rápido</h3>
+<ol><li>O programa está aberto e o <b>servidor local está iniciado</b>?</li><li>Tem um <b>modelo baixado</b> e carregado?</li><li>O <b>CORS</b> (ou hosts confiáveis) está liberado para <code>azul-groove.vercel.app</code>?</li><li>Você <b>aceitou a permissão de rede local</b> que o navegador pede?</li><li>A <b>URL no ⚙️</b> está certa e termina em <code>/v1</code>?</li></ol>
+<h3>Passo a passo por programa</h3>
+<details open><summary>Ollama (mais simples)</summary>
+<ol><li>Feche o Ollama completamente (inclusive o ícone da bandeja).</li><li>Inicie liberando a origem:</li></ol>
+<p><b>Windows (PowerShell):</b></p>
+<pre><code>$env:OLLAMA_ORIGINS="*"; ollama serve</code></pre>
+<p><b>Linux / Mac:</b></p>
+<pre><code>OLLAMA_ORIGINS="*" ollama serve</code></pre>
+<ol start="3"><li>Baixe um modelo: <code>ollama pull llama3.2</code></li><li>No ⚙️ do site: provedor <b>Ollama (no seu PC)</b>. URL: <code>http://127.0.0.1:11434/v1</code>. Chave vazia.</li></ol>
+<p>Para restringir só ao seu site, troque <code>*</code> por <code>https://azul-groove.vercel.app</code>.</p></details>
+<details><summary>LM Studio</summary>
+<ol><li>Baixe e carregue um modelo.</li><li>Abra a aba <b>Developer</b> e ligue o servidor (Start).</li><li>Nas configurações do servidor, ative <b>Enable CORS</b> (reinicie o servidor depois).</li><li>No ⚙️ do site: provedor <b>LM Studio (no seu PC)</b>. URL: <code>http://127.0.0.1:1234/v1</code>.</li></ol></details>
+<details><summary>Jan</summary>
+<ol><li>Abra <b>Settings → Local API Server</b>.</li><li>Se existir <b>CORS</b> ou <b>Trusted Hosts</b> (hosts confiáveis), ative/adicione <code>azul-groove.vercel.app</code> (ou <code>*</code>).</li><li>Defina uma <b>API Key</b> (qualquer texto) e use a mesma no site.</li><li><b>Pare e inicie o servidor de novo</b> depois de mudar.</li><li>No ⚙️ do site: <b>Outro (compatível com OpenAI)</b>. URL: <code>http://127.0.0.1:1337/v1</code>. Clique em "Buscar modelos disponíveis" e escolha o modelo.</li></ol>
+<div class="note">Algumas versões do Jan <b>não têm mais</b> a opção de CORS. Nesse caso, atualize o Jan, use Ollama/LM Studio ou use o proxy abaixo.</div></details>
+<details><summary>Proxy de CORS (quando o programa não permite liberar)</summary>
+<p>Um mini script em Python que recebe a chamada do site, acrescenta o cabeçalho de CORS e repassa ao programa. Salve como <code>cors_proxy.py</code> e rode <code>python cors_proxy.py</code>. Depois use <code>http://127.0.0.1:1338/v1</code> no ⚙️ (em vez da porta original).</p>
+<pre><code>from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+import urllib.request, urllib.error
+
+TARGET = "http://127.0.0.1:1337"   # porta do seu programa (Jan)
+PORT = 1338                         # porta do proxy
+
+class H(BaseHTTPRequestHandler):
+    def cors(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+    def do_OPTIONS(self):
+        self.send_response(204); self.cors(); self.end_headers()
+    def fwd(self):
+        n = int(self.headers.get("Content-Length") or 0)
+        body = self.rfile.read(n) if n else None
+        h = {k: v for k, v in self.headers.items()
+             if k.lower() in ("authorization", "content-type")}
+        req = urllib.request.Request(TARGET + self.path, data=body,
+                                     headers=h, method=self.command)
+        try:
+            r = urllib.request.urlopen(req, timeout=600)
+        except urllib.error.HTTPError as e:
+            r = e
+        data = r.read()
+        self.send_response(r.getcode())
+        self.send_header("Content-Type", r.headers.get("Content-Type", "application/json"))
+        self.send_header("Content-Length", str(len(data)))
+        self.cors(); self.end_headers(); self.wfile.write(data)
+    do_GET = do_POST = fwd
+
+ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></details>
+<h3>Permissão de rede local</h3>
+<p>Navegadores novos (Chrome, Edge) perguntam se o site pode acessar dispositivos na sua rede local. <b>Permita.</b> Se você negou sem querer, clique no ícone ao lado do endereço do site → Configurações do site → libere "Rede local" e recarregue (<kbd>Ctrl</kbd>+<kbd>F5</kbd>).</p>
+<p><b>Safari</b> costuma bloquear sites HTTPS acessando <code>http://127.0.0.1</code>. Nele, prefira Chrome, Edge ou Firefox, ou um provedor na nuvem.</p>
+<h3>Como testar a conexão</h3>
+<p>Abra o site, aperte <kbd>F12</kbd> → Console e rode:</p>
+<pre><code>fetch('http://127.0.0.1:1337/v1/models').then(r=&gt;r.json()).then(console.log)</code></pre>
+<p>Troque a porta pela do seu programa (Ollama <code>11434</code>, LM Studio <code>1234</code>, Jan <code>1337</code>).</p>
+<div class="sc"><table><tr><th>O que aparece</th><th>O que significa</th></tr>
+<tr><td>Lista de modelos</td><td>Tudo certo.</td></tr>
+<tr><td><code>blocked by CORS</code> / falta <code>Access-Control-Allow-Origin</code></td><td>O servidor responde, mas o CORS/hosts confiáveis não está liberado.</td></tr>
+<tr><td><code>ERR_CONNECTION_REFUSED</code></td><td>Servidor desligado ou porta errada.</td></tr>
+<tr><td><code>401</code> / <code>403</code></td><td>A chave de API não bate com a do programa.</td></tr>
+<tr><td><code>404</code></td><td>URL sem <code>/v1</code> ou modelo com nome diferente.</td></tr></table></div>
+<div class="okb">Não quer mexer em nada disso? Escolha um provedor na nuvem no ⚙️ (OpenAI, OpenRouter, Groq, Gemini). Eles não precisam de CORS: basta colar a chave.</div>`},
+
+/* ================= USAR O CHAT ================= */
+{id:'recursos',cat:'Usar o chat',t:'Recursos do chat',h:`
+<p>O que você pode fazer no chat do Azul Groove:</p>
+<div class="cols">
+<div><b>💬 Conversar</b>Tire dúvidas, peça textos, ideias e explicações, e continue a conversa de onde parou.</div>
+<div><b>🔎 Pesquisar na internet</b>Ative a pesquisa para a IA buscar informações atuais antes de responder.</div>
+<div><b>🧠 Memória</b>Peça para a IA lembrar de algo ou defina o jeito como ela deve falar com você.</div>
+<div><b>🔀 Escolher o serviço</b>OpenRouter, OpenAI, Groq, Gemini, Together ou um modelo no seu PC.</div>
+</div>
+<h3>Pesquisa na internet</h3>
+<p>Com a pesquisa ligada, a IA busca informações na web antes de responder, o que ajuda em assuntos recentes. O texto da busca sai do seu computador. Para uma conversa 100% local, <b>desligue a pesquisa</b> e use um modelo local.</p>
+<h3>Salvar e organizar conversas</h3>
+<p>No menu de cada conversa você pode <b>renomear</b>, <b>salvar</b> (em <code>.txt</code> ou <code>.json</code>), <b>copiar</b> e <b>apagar</b>. As conversas ficam guardadas só no seu navegador (ou na pasta de dados do app).</p>
+<h3>Quanto a IA lembra</h3>
+<p>O chat envia as <b>últimas 20 mensagens</b> da conversa para a IA. O que ficou para trás não é "lembrado", a não ser que esteja na <b>memória</b>.</p>`},
+
+{id:'personalizar',cat:'Usar o chat',t:'Tema, fundo e conversas',h:`
+<ul><li><b>Tema:</b> claro ou escuro, com troca animada.</li><li><b>Fundo:</b> escolha cores, envie sua imagem ou desligue os efeitos.</li><li><b>Barra lateral:</b> pode ser recolhida. Clique em "Azul Groove" para voltar ao início.</li><li><b>Menu da conversa:</b> renomear, salvar (<code>.txt</code> ou <code>.json</code>), copiar e apagar.</li><li><b>Memória:</b> peça para a IA lembrar de algo ou defina seu jeito de falar.</li></ul>
+<div class="okb">No app para Windows, o tema também pode ser trocado pelo menu do ícone da bandeja. Veja <a href="#/instalar-app">Instalar e usar o app</a>.</div>`},
+
+/* ================= BOT ================= */
+{id:'bot-adicionar',cat:'Bot do Discord',t:'Adicionar o bot ao servidor',h:`
+<p>O Azul Groove é um bot de música e moderação da ASTM Software.</p>
+<a class="dlb" style="display:inline-flex" target="_blank" rel="noopener" href="${INVITE}">➕ Adicionar ao Discord</a>
+<ol class="steps">
+<li><b>Clique no botão acima</b>Você será levado ao Discord. Entre na sua conta, se pedir.</li>
+<li><b>Escolha o servidor</b>Só aparecem os servidores onde você tem a permissão <b>Gerenciar servidor</b>.</li>
+<li><b>Aceite as permissões</b>O bot pede o que precisa para entrar no canal de voz e tocar.</li>
+<li><b>Configure</b>No servidor, digite <code>/setup</code> para ajustar as permissões e o bot.</li>
+<li><b>Toque algo</b>Entre num canal de voz e use <code>/play</code>.</li>
+</ol>
+<div class="note">Não aparece o seu servidor na lista? Você precisa da permissão <b>Gerenciar servidor</b> nele. Peça a quem administra.</div>`},
+
+{id:'bot-comandos',cat:'Bot do Discord',t:'Comandos do bot',h:`
+<p>Digite <code>/</code> no Discord e escolha o comando na lista.</p>
+<div class="sc"><table><tr><th>Comando</th><th>O que faz</th></tr>
+<tr><td><code>/help</code></td><td>Mostra a lista de todos os comandos.</td></tr>
+<tr><td><code>/setup</code></td><td>Configura as permissões e o bot.</td></tr>
+<tr><td><code>/play [música]</code></td><td>Toca uma música ou playlist (YouTube, Spotify e mais).</td></tr>
+<tr><td><code>/pause</code></td><td>Pausa a música atual.</td></tr>
+<tr><td><code>/skip</code></td><td>Pula para a próxima faixa.</td></tr>
+<tr><td><code>/stop</code></td><td>Para a reprodução e limpa a fila.</td></tr>
+<tr><td><code>/about</code></td><td>Mostra informações e a versão do Azul Groove.</td></tr></table></div>
+<p>O bot tem mais de 36 comandos. Use <code>/help</code> para ver todos.</p>`},
+
+{id:'bot-problemas',cat:'Bot do Discord',t:'Bot offline ou sem som',h:`
+<details open><summary>O bot aparece offline</summary><ul><li>Veja se o Discord está com instabilidade em <a target="_blank" rel="noopener" href="https://discordstatus.com">discordstatus.com</a> e tente de novo em alguns minutos.</li><li>Veja se o bot continua no servidor (lista de membros). Se foi removido, <a href="#/bot-adicionar">adicione de novo</a>.</li><li>Confira as permissões do bot no servidor.</li></ul></details>
+<details><summary>Ele entra no canal, mas não toca nada</summary><ul><li>Confirme se ele tem permissão para <b>Conectar</b> e <b>Falar</b> no canal de voz.</li><li>Entre num canal de voz <b>antes</b> de usar <code>/play</code>.</li><li>Teste outra música ou link.</li></ul></details>
+<details><summary>Os comandos de barra não aparecem</summary><ul><li>Digite <code>/</code> e espere a lista carregar.</li><li>Confira se o bot tem permissão de usar comandos de barra no canal.</li><li>Rode <code>/setup</code> se ainda não configurou o servidor.</li></ul></details>
+<p>Ainda com problema? <a target="_blank" rel="noopener" href="${DISCORD}">Peça ajuda no Discord →</a> (veja como pedir em <a href="#/contato">Falar com a gente</a>).</p>`},
+
+/* ================= REFERÊNCIA ================= */
+{id:'limites',cat:'Referência',t:'Limites',h:`
+<p>Existem três tipos de limite, e é fácil confundir:</p>
+<ul><li><b>Requisições:</b> quantas mensagens por minuto/dia. Passou, vem o erro <code>429</code>.</li><li><b>Tokens:</b> tamanho do texto (1 token ≈ 3 a 4 letras). Serviços pagos cobram por token.</li><li><b>Contexto:</b> quanto da conversa o modelo lembra de uma vez.</li></ul>
+<h3>OpenRouter (modelos <code>:free</code>)</h3>
+<div class="sc"><table><tr><th>Limite</th><th>Valor</th></tr><tr><td>Por minuto</td><td>20 requisições</td></tr><tr><td>Por dia, sem nunca ter comprado créditos</td><td>50 requisições</td></tr><tr><td>Por dia, após comprar US$ 10 (uma vez)</td><td>1.000 requisições</td></tr></table></div>
+<p>Vale por conta: outra chave ou conta não aumenta. Saldo negativo dá <code>402</code> até em modelo grátis. Modelos grátis ficam lentos no pico: no ⚙️ coloque <b>vários modelos separados por vírgula</b> e o chat tenta o próximo.</p>
+<p><small>Conferido em set/2026; muda com frequência. <a target="_blank" rel="noopener" href="${OR}/docs/api-reference/limits">Ver oficial</a>.</small></p>
+<h3>Outros provedores</h3>
+<p>Variam por modelo e plano. Veja a página oficial: <a target="_blank" rel="noopener" href="https://console.groq.com/docs/rate-limits">Groq</a> · <a target="_blank" rel="noopener" href="https://ai.google.dev/gemini-api/docs/rate-limits">Gemini</a> · <a target="_blank" rel="noopener" href="https://platform.openai.com/docs/guides/rate-limits">OpenAI</a> · <a target="_blank" rel="noopener" href="https://docs.together.ai/docs/rate-limits">Together</a>.</p>
+<h3>Limites do chat do Azul Groove</h3>
+<ul><li>Envia as <b>últimas 20 mensagens</b> para a IA.</li><li>Resposta de até <b>1.500 tokens</b> (3.500 no modo profundo).</li><li>IA local: sem limite, depende do seu PC.</li><li><b>Modo visitante</b> (Assistente Virtual): sem limite de mensagens.</li></ul>`},
+
+{id:'erros',cat:'Referência',t:'Erros comuns',h:`
+<div class="sc"><table><tr><th>Erro</th><th>Significa</th><th>Faça</th></tr>
+<tr><td><code>401</code></td><td>Chave errada ou vencida.</td><td>Gere outra e cole sem espaços.</td></tr>
+<tr><td><code>402</code></td><td>Sem saldo.</td><td>Adicione crédito ou use modelo grátis.</td></tr>
+<tr><td><code>404</code></td><td>URL sem <code>/v1</code> ou modelo errado.</td><td>Confira a URL e use "Buscar modelos".</td></tr>
+<tr><td><code>429</code></td><td>Limite atingido.</td><td>Espere um minuto (ou o dia seguinte) ou troque de modelo.</td></tr>
+<tr><td><code>blocked by CORS</code></td><td>O navegador bloqueou a resposta.</td><td>Veja <a href="#/ia-local">IA no seu PC</a>.</td></tr>
+<tr><td><code>ERR_CONNECTION_REFUSED</code></td><td>Servidor local desligado ou porta errada.</td><td>Abra o programa e inicie o servidor.</td></tr>
+<tr><td>Resposta vazia</td><td>Modelo grátis sobrecarregado.</td><td>Tente de novo ou use mais de um modelo.</td></tr></table></div>
+<h3>Detalhes de cada erro</h3>
+<details><summary>401: chave recusada</summary><ul><li>Cole a chave de novo, sem espaço no começo ou no fim.</li><li>Confira se o <b>provedor</b> escolhido no ⚙️ é o mesmo da chave (chave do Groq não funciona no OpenAI).</li><li>Se continuar, apague a chave no painel do provedor e crie outra.</li></ul></details>
+<details><summary>402: sem saldo</summary><ul><li>Adicione crédito no painel do provedor.</li><li>No OpenRouter, saldo negativo bloqueia até modelos <code>:free</code>.</li><li>Ou troque para um modelo grátis / IA local.</li></ul></details>
+<details><summary>404: modelo ou URL não encontrados</summary><ul><li>A URL deve terminar em <code>/v1</code> (veja a tabela em <a href="#/chave-api">Pegar uma chave</a>).</li><li>O nome do modelo precisa ser <b>exatamente</b> o do provedor. Use <b>Buscar modelos disponíveis</b>.</li></ul></details>
+<details><summary>429: muitas requisições</summary><ul><li>Espere um minuto e tente de novo.</li><li>Se for limite diário, só no dia seguinte (ou compre créditos).</li><li>Coloque mais de um modelo no ⚙️ para o chat tentar outro.</li></ul><p>Mais em <a href="#/limites">Limites</a>.</p></details>
+<details><summary>CORS ou conexão recusada (IA local)</summary><p>Siga o <a href="#/ia-local">guia completo de IA no seu PC</a>: servidor ligado, modelo carregado, CORS liberado e URL com <code>/v1</code>.</p></details>
+<details><summary>Resposta vazia ou muito lenta</summary><p>Quase sempre é modelo grátis sobrecarregado. Tente de novo, use outro modelo ou coloque vários separados por vírgula.</p></details>`},
+
+{id:'seguranca',cat:'Referência',t:'Segurança e privacidade',h:`
+<h3>Sua chave de API</h3>
+<ul><li>A chave fica <b>só no seu navegador</b> e some ao fechar a aba, a menos que você marque "Lembrar a chave neste aparelho".</li><li>Em PC compartilhado, não marque e use "Remover configurações" no ⚙️ ao terminar.</li><li><b>Nunca</b> poste a chave no Discord, em prints ou em repositório público. Vazou? Apague no site do provedor e crie outra.</li><li>Em serviço pago, defina um <b>limite de gasto</b> no painel.</li></ul>
+<h3>Suas conversas</h3>
+<ul><li>As mensagens vão do seu navegador direto ao provedor da IA, <b>sem passar pelo servidor do Azul Groove</b>. Valem as regras de privacidade do provedor.</li><li>O histórico fica guardado <b>só no seu navegador</b> (ou na pasta de dados do app). Limpar os dados do site apaga as conversas.</li><li>Com IA local e pesquisa desligada, nada sai do seu computador.</li></ul>
+<h3>Seu login</h3>
+<p>O login com Google e GitHub é processado pelo Firebase. A ASTM Software não salva suas conversas nem seus dados; o Firebase pode manter o registro da conta (nome e e-mail) para o login funcionar. Veja <a href="#/login">Entrar na conta</a>.</p>
+<h3>Documentos oficiais</h3>
+<p><a href="privacidade.html">Política de Privacidade</a> · <a href="licenca.html">Termos de Uso</a> · <a href="licenca-ia.html">Licença de Uso da IA</a></p>`},
+
+{id:'glossario',cat:'Referência',t:'Glossário',h:`
+<div class="sc"><table><tr><th>Termo</th><th>O que é</th></tr>
+<tr><td><b>IA / modelo</b></td><td>O programa que gera as respostas. "Modelo" é cada versão específica (ex.: Llama 3.3 70B).</td></tr>
+<tr><td><b>Provedor</b></td><td>O serviço que roda o modelo e atende o pedido (OpenRouter, OpenAI, Groq, Gemini, Together).</td></tr>
+<tr><td><b>Chave de API</b></td><td>Uma "senha" da sua conta no provedor. Identifica quem está pedindo e quem paga.</td></tr>
+<tr><td><b>URL base</b></td><td>O endereço onde o provedor recebe os pedidos (ex.: <code>https://api.openai.com/v1</code>).</td></tr>
+<tr><td><b>Token</b></td><td>Pedaço de texto (cerca de 3 a 4 letras). Limites e preços são medidos em tokens.</td></tr>
+<tr><td><b>Contexto</b></td><td>Quanto da conversa o modelo consegue considerar de uma vez.</td></tr>
+<tr><td><b>IA local</b></td><td>Modelo rodando no seu próprio computador (Ollama, LM Studio, Jan).</td></tr>
+<tr><td><b>127.0.0.1</b></td><td>O endereço "deste computador". Por isso a IA local só funciona no mesmo PC.</td></tr>
+<tr><td><b>CORS</b></td><td>Regra do navegador: um site só lê a resposta de outro endereço se este permitir.</td></tr>
+<tr><td><b>SHA-256</b></td><td>"Impressão digital" de um arquivo, usada para ver se ele não foi alterado.</td></tr>
+<tr><td><b>Bandeja</b></td><td>A área perto do relógio do Windows onde o app fica rodando em segundo plano.</td></tr></table></div>`},
+
+/* ================= DÚVIDAS ================= */
+{id:'faq',cat:'Dúvidas',t:'Central de dúvidas',h:`
+<p>Perguntas frequentes, por assunto. Não achou? Use a busca no topo ou veja <a href="#/contato">Falar com a gente</a>.</p>
+<h3>Geral</h3>
+<details><summary>Preciso pagar para usar o chat?</summary><p>Não. Dá para usar modelos grátis do OpenRouter ou IA local. Qualquer custo vem do provedor que você escolher.</p></details>
+<details><summary>A IA é de vocês?</summary><p>Não. Não criamos nem treinamos um modelo próprio: o chat leva a sua mensagem ao serviço que você escolheu e mostra a resposta. Veja <a href="#/como-funciona">Como funciona</a>.</p></details>
+<details><summary>Funciona no celular?</summary><p>Sim, com provedores na nuvem. IA local não funciona, pois <code>127.0.0.1</code> seria o próprio celular.</p></details>
+<details><summary>Qual modelo escolher?</summary><p>Para conversar e pesquisar, modelos de 70B (Llama 3.3 70B) ou Gemini Flash. Em IA local, comece com <code>llama3.2</code> e suba se o PC aguentar. Veja <a href="#/modelos">Escolher o modelo</a>.</p></details>
+<h3>Privacidade e dados</h3>
+<details><summary>Minhas conversas ficam em algum servidor?</summary><p>Não passam pelo Azul Groove: vão do seu navegador direto ao provedor da IA, e valem as regras dele. Na IA local, nada sai do seu PC.</p></details>
+<details><summary>Onde fica o histórico?</summary><p>Só no seu navegador (ou na pasta de dados do app). Se limpar os dados do site, as conversas somem. Dá para salvar uma conversa em <code>.txt</code> ou <code>.json</code> pelo menu dela.</p></details>
+<details><summary>Quem vê minha chave de API?</summary><p>Só o seu navegador e o provedor para o qual você a envia. Veja <a href="#/seguranca">Segurança e privacidade</a>.</p></details>
+<h3>Conta e login</h3>
+<details><summary>Por que preciso entrar para usar o chat?</summary><p>O login guarda as suas conversas neste navegador e libera o chat completo. Para só testar, use o <a href="assistente.html">Assistente Virtual</a> como visitante.</p></details>
+<details><summary>Existe limite no modo visitante?</summary><p>Não há limite de mensagens. Aparece só um aviso de tempos em tempos convidando a fazer login, e você pode fechar.</p></details>
+<details><summary>Como troco de conta?</summary><p>Em <b>⚙️ → Conta → Entrar com outra conta</b>.</p></details>
+<h3>App para Windows</h3>
+<details><summary>Setup ou Portable?</summary><p>Setup para usar sempre; Portable para testar sem instalar. Veja <a href="#/baixar-app">Baixar o app</a>.</p></details>
+<details><summary>O Windows disse "editor desconhecido". É seguro?</summary><p>É um aviso comum para programas novos. Baixe só pelo link oficial desta documentação e confira o SHA-256. Depois, <b>Mais informações → Executar assim mesmo</b>.</p></details>
+<details><summary>O app do Windows salva meus dados?</summary><p>Sim, em <code>%LocalAppData%\\AzulGroove</code>. Feche pelo menu da bandeja (<b>Sair</b>) para garantir que tudo seja gravado.</p></details>
+<details><summary>Cliquei no X e o app não fechou</summary><p>Ele foi para a bandeja do Windows. Para fechar de verdade, botão direito no ícone → <b>Sair</b>.</p></details>
+<h3>Bot do Discord</h3>
+<details><summary>O bot não toca. O que faço?</summary><p>Veja <a href="#/bot-problemas">Bot offline ou sem som</a>: normalmente é permissão de falar no canal de voz.</p></details>
+<details><summary>Quais são os comandos?</summary><p>Digite <code>/help</code> no Discord ou veja <a href="#/bot-comandos">Comandos do bot</a>.</p></details>`},
+
+{id:'contato',cat:'Dúvidas',t:'Falar com a gente',h:`
+<p>Não resolveu? Fale com a equipe no Discord:</p>
+<a class="dlb" style="display:inline-flex" target="_blank" rel="noopener" href="${DISCORD}">💬 Entrar no servidor de suporte</a>
+<h3>Como pedir ajuda para resolver mais rápido</h3>
+<p>Mande estas informações:</p>
+<ol><li>O que você estava fazendo (chat, app, bot).</li><li>O <b>código do erro</b> ou a mensagem que apareceu (<code>401</code>, <code>429</code>, "blocked by CORS"...).</li><li>Qual provedor ou programa local você usa.</li><li>Se é no navegador ou no app, e em qual sistema.</li></ol>
+<div class="bad"><b>Nunca</b> mande a sua chave de API, nem em print. Se aparecer na imagem, apague (borre) antes de enviar.</div>
+<p>Outros links: <a href="privacidade.html">Política de Privacidade</a> · <a href="licenca.html">Termos de Uso</a> · <a href="blog.html">Blog</a></p>`}
+];
+
+
+const $ = id => document.getElementById(id), norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const strip = h => h.replace(/<[^>]+>/g,' ');
+const cur = () => (location.hash.match(/#\/([\w-]+)/)||[])[1] || 'inicio';
+function nav(filter){
+  const t = norm(filter||''); let html = '', last = '';
+  D.forEach(a => { if (t && !norm(a.t+' '+a.cat+' '+strip(a.h)).includes(t)) return;
+    if (a.cat !== last) { html += `<h4>${a.cat}</h4>`; last = a.cat; }
+    html += `<a href="#/${a.id}" data-id="${a.id}">${a.t}</a>`; });
+  $('nav').innerHTML = html || '<p style="padding:10px;color:var(--mut)">Nada encontrado.</p>'; mark();
+}
+function mark(){ const id = cur(); document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('on', a.dataset.id === id)); }
+function slug(s){ return norm(s).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+function enhance(){
+  const m = $('main');
+  // botão "copiar" em blocos de código
+  m.querySelectorAll('pre').forEach(p => { const b = document.createElement('button'); b.className = 'cp'; b.textContent = 'copiar'; b.type = 'button';
+    b.onclick = () => { const t = p.querySelector('code').innerText; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.textContent = 'copiado!'; setTimeout(() => b.textContent = 'copiar', 1500); }).catch(() => { b.textContent = 'selecione e copie'; }); };
+    p.appendChild(b); });
+  // "Nesta página" quando há vários tópicos
+  const hs = m.querySelectorAll('h3');
+  if (hs.length >= 4) { let t = '<div class="toc"><b>Nesta página</b>'; hs.forEach((h, i) => { h.id = 'h-' + i + '-' + slug(h.textContent); t += `<a href="#" data-to="${h.id}">${h.textContent}</a>`; }); t += '</div>';
+    const h1 = m.querySelector('h1'); h1.insertAdjacentHTML('afterend', t);
+    m.querySelectorAll('.toc a').forEach(a => a.onclick = e => { e.preventDefault(); document.getElementById(a.dataset.to).scrollIntoView({behavior:'smooth'}); }); }
+}
+function show(){
+  const id = cur(); const i = Math.max(0, D.findIndex(a => a.id === id)), a = D[i];
+  const p = D[i-1], n = D[i+1];
+  $('main').innerHTML = `<div class="cat">${a.cat}</div><h1>${a.t}</h1>${a.h}<div class="pn">${p?`<a href="#/${p.id}">← ${p.t}</a>`:'<span></span>'}${n?`<a href="#/${n.id}">${n.t} →</a>`:'<span></span>'}</div><p class="upd">Documentação do Azul Groove · ASTM Software</p>`;
+  enhance(); document.title = a.t + ' · Documentação · Azul Groove'; mark(); scrollTo(0,0); $('nav').classList.remove('open');
+}
+$('q').addEventListener('input', e => nav(e.target.value));
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter') { const f = document.querySelector('#nav a'); if (f) { location.hash = f.getAttribute('href'); } } });
+$('menu').onclick = () => $('nav').classList.toggle('open');
+addEventListener('hashchange', show); nav(); show();
+// animação de entrada: só na primeira vez da sessão; clique pula
+const sp = $('splash'); let seen = false; try { seen = sessionStorage.getItem('docs_splash'); sessionStorage.setItem('docs_splash','1'); } catch(e){}
+const hideSp = () => { sp.classList.add('off'); setTimeout(() => sp.remove(), 700); };
+if (seen) sp.remove(); else { setTimeout(hideSp, 2200); sp.onclick = hideSp; }
+
+</script>
+</body>
+</html>
