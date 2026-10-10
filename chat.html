@@ -206,27 +206,30 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 @media(max-width:760px){.mdl span{display:none}.mdl{padding:0 11px}}
 .pnote{margin:6px 10px;font-size:.78rem;color:var(--m);line-height:1.5}.pnote a{color:var(--p)}.pnote b{color:var(--tx)}
 .more{font-size:.82rem;color:var(--m)}.more summary{cursor:pointer;color:var(--p);font-weight:600}.more p{margin-top:6px;line-height:1.55}
-.pop{position:fixed;display:none;z-index:25;width:330px;max-height:min(72vh,580px);overflow-y:auto;padding:10px;background:color-mix(in srgb,var(--card) 86%,transparent);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--line);border-radius:24px;box-shadow:0 26px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06)}
+.pop{position:fixed;display:none;flex-direction:column;z-index:25;width:340px;max-width:calc(100vw - 20px);max-height:min(72vh,580px);padding:8px;overflow:hidden;background:color-mix(in srgb,var(--card) 96%,transparent);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--line);border-radius:22px;box-shadow:0 26px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06)}
+.pop .ph{flex:none}.pq{flex:none;position:relative;margin:0 2px 6px}.pq i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--m);font-size:.8rem;pointer-events:none}.pq .ps{margin:0;padding-left:36px}
+.pb{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 2px 4px;scrollbar-width:thin;scrollbar-color:rgba(148,155,164,.35) transparent}.pb::-webkit-scrollbar{width:6px}.pb::-webkit-scrollbar-thumb{background:rgba(148,155,164,.35);border-radius:9px}
+.pft{flex:none;margin-top:4px;padding-top:8px;border-top:1px solid var(--line)}
 .pop.on{animation:popIn .24s cubic-bezier(.2,.9,.3,1.15)}@keyframes popIn{from{opacity:0;transform:translateY(12px) scale(.95)}}
-.ph{display:flex;align-items:center;gap:8px;padding:6px 8px 10px}.ph b{flex:1;color:var(--tx);font-size:1rem}
-.ph span{font-size:.7rem;font-weight:700;color:var(--p);background:color-mix(in srgb,var(--p) 16%,transparent);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.ph{display:flex;align-items:center;gap:8px;padding:6px 8px 10px;min-width:0}.ph b{flex:1;min-width:0;color:var(--tx);font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph span{flex:0 1 auto;min-width:0;max-width:150px;overflow:hidden;text-overflow:ellipsis;font-size:.7rem;font-weight:700;color:var(--p);background:color-mix(in srgb,var(--p) 16%,transparent);padding:4px 10px;border-radius:99px;white-space:nowrap}
 .bk{border:0;background:var(--soft);color:var(--tx);width:32px;height:32px;border-radius:10px}.bk:hover{background:color-mix(in srgb,var(--p) 25%,transparent)}
 .ps{width:100%;margin:0 0 8px;background:var(--soft);border:1px solid transparent;border-radius:14px;padding:10px 14px;color:var(--tx);font:inherit;font-size:.86rem}.ps:focus{outline:none;border-color:var(--p)}
 .pg{margin:12px 10px 4px;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m)}
 .it{display:flex;align-items:center;gap:12px;width:100%;border:1px solid transparent;background:none;color:var(--tx);text-align:left;padding:9px 10px;border-radius:16px;transition:background .15s,transform .15s,border-color .15s;animation:itIn .32s both;animation-delay:calc(var(--i,0)*28ms)}
 @keyframes itIn{from{opacity:0;transform:translateX(-10px)}}
 .pop.q .it{animation:none}
-.it:hover{background:var(--soft);transform:translateX(3px)}
+.it:hover,.it:focus-visible{background:var(--soft);outline:none}
 .it.sel{border-color:color-mix(in srgb,var(--p) 70%,transparent);background:color-mix(in srgb,var(--p) 14%,transparent)}
 .tile{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-size:1rem;flex-shrink:0;background:linear-gradient(135deg,#5865F2,#1fb6ff);box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .tile.g{background:linear-gradient(135deg,#4285f4,#34a853 60%,#fbbc05)}.tile.m{background:linear-gradient(135deg,#0866ff,#00c6ff)}.tile.a{background:linear-gradient(135deg,#a855f7,#ec4899)}.tile.o{background:linear-gradient(135deg,#475569,#94a3b8)}
-.it .tx{flex:1;min-width:0}.it b{display:block;font-size:.92rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.it small{color:var(--m);font-size:.76rem}
+.it .tx{flex:1;min-width:0}.it b{display:flex;align-items:center;min-width:0;font-size:.92rem;font-weight:600}.it .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.it small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.it small{color:var(--m);font-size:.76rem}
 .it .ck{color:var(--p);opacity:0;transform:scale(.3);transition:.22s cubic-bezier(.2,1.4,.4,1)}.it.sel .ck{opacity:1;transform:none}
-.bdg{font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(61,220,151,.16);color:#3ddc97;margin-left:7px;vertical-align:1px}
-.pf{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.bdg{flex:none;font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(61,220,151,.16);color:#3ddc97;margin-left:7px;vertical-align:1px}
+.pf{display:flex;gap:8px}
 .pf button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:0;background:var(--soft);color:var(--t);padding:11px 8px;border-radius:14px;font-size:.78rem;font-weight:600;transition:.15s}
 .pf button i{color:var(--p)}.pf button:hover{background:color-mix(in srgb,var(--p) 20%,transparent);transform:translateY(-2px)}
-.pop .st{margin:6px 8px}
+.pop .st{margin:2px 2px 6px}
 @media(max-width:760px){.pop{left:8px!important;right:8px;width:auto;top:auto!important;bottom:8px;max-height:78vh;border-radius:26px}}
 @media(prefers-reduced-motion:reduce){.pop.on,.it{animation:none!important}}
 /* ===== novo menu de configurações ===== */
@@ -689,7 +692,7 @@ function toggleSide() { if (isMobile()) $('side').classList.toggle('open'); else
 function initSide() { try { if (localStorage.getItem('azul_side') === 'off') document.body.classList.add('side-off'); } catch (e) {} }
 const goHome = () => newConv();
 const NEWS_AI = [
-  '**Menu de modelos no lugar certo:** na tela de nova conversa o menu Escolher a IA não cobre mais o cabeçalho nem a caixa de texto. Ele abre para o lado com mais espaço, rola por dentro quando precisa e se alinha ao botão.',
+  '**Novo menu Escolher a IA:** refeito do zero. O título e o rodapé ficam fixos e só a lista rola, a busca não perde o foco ao digitar, o menu abre para o lado com mais espaço sem cobrir o cabeçalho e dá para navegar pelas setas do teclado.',
   '**Correções no menu e nos avisos:** o menu \"Escolher a IA\" não fica mais cortado na borda da tela, o botão Limites da API agora abre a tela de limites sem fechar o menu, e o aviso \"Configurações salvas\" aparece no centro da tela.',
   '**Assistente de instalação:** novo programa para Windows que baixa e instala sozinho a versão mais recente do app. Também repara a instalação e deixa escolher outra versão. Baixe na página da Azul Groove IA.',
   '**Novo menu de configurações:** abas laterais com ícones, interruptores no lugar das caixinhas e botões de salvar sempre à vista.',
@@ -1172,44 +1175,54 @@ const getPick = () => { try { const p = localStorage.getItem(PICK); return p && 
 function paintMdl() { const p = getPick(); $('mdlName').textContent = p ? mShort(p) : 'Auto'; $('mdlBtn').title = p || 'Automático'; }
 function setPick(m) { try { m ? localStorage.setItem(PICK, m) : localStorage.removeItem(PICK); } catch (e) {} paintMdl(); $('mdlPop').style.display = 'none'; }
 const LIMITS = { openrouter: ['OpenRouter', 'https://openrouter.ai/docs/api-reference/limits'], openai: ['OpenAI', 'https://platform.openai.com/docs/guides/rate-limits'], groq: ['Groq', 'https://console.groq.com/docs/rate-limits'], gemini: ['Google Gemini', 'https://ai.google.dev/gemini-api/docs/rate-limits'], together: ['Together AI', 'https://docs.together.ai/docs/rate-limits'] };
-function mdlPlace() { // abre para o lado (cima/baixo) com mais espaço, limita a altura e alinha na direita do botão
-  const pop = $('mdlPop'), r = $('mdlBtn').getBoundingClientRect(), M = 8, G = 8;
-  pop.style.maxHeight = '';
-  if (innerWidth <= 760) return; // no celular o CSS já usa folha embaixo
-  const w = pop.offsetWidth || 330, h = pop.offsetHeight, above = r.top - G - M, below = innerHeight - r.bottom - G - M;
-  const up = h <= above || above >= below, space = up ? above : below, hh = h > space ? Math.max(180, space) : h;
-  if (h > space) pop.style.maxHeight = hh + 'px';
+function mdlPlace() { // prende o menu ao botão, escolhe o lado com mais espaço e limita a altura (só a lista rola)
+  const pop = $('mdlPop'), r = $('mdlBtn').getBoundingClientRect(), M = 10, G = 10;
+  pop.style.maxHeight = ''; pop.style.top = ''; pop.style.bottom = '';
+  if (innerWidth <= 760) { pop.style.left = ''; return; } // no celular o CSS usa uma folha embaixo
+  const w = pop.offsetWidth || 340, h = pop.offsetHeight, above = r.top - G - M, below = innerHeight - r.bottom - G - M;
+  const up = h <= above || above >= below, space = Math.max(up ? above : below, 240);
+  pop.style.maxHeight = Math.min(580, space) + 'px';
   pop.style.left = Math.max(M, Math.min(r.right - w, innerWidth - w - M)) + 'px';
-  pop.style.top = Math.max(M, up ? r.top - G - hh : r.bottom + G) + 'px';
+  if (up) pop.style.bottom = Math.max(M, innerHeight - r.top + G) + 'px'; else pop.style.top = Math.max(M, r.bottom + G) + 'px'; // ancorado: se a lista encolher, o menu continua colado no botão
+  pop.style.transformOrigin = (up ? 'bottom' : 'top') + ' right';
 }
 function limHtml() {
   const cfg = getCfg(), P = PRESETS[cfg.provider], L = LIMITS[cfg.provider], s = stGet(), today = s.days[dk(new Date())] || 0;
-  return `<div class="ph"><button class="bk" data-back="1" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button><b>Limites da API</b><span>${esc(P.n)}</span></div>`
+  return `<div class="ph"><button class="bk" data-back="1" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button><b>Limites da API</b><span title="${esc(P.n)}">${esc(P.n)}</span></div><div class="pb">`
     + `<div class="st"><div><b>${today}</b>perguntas hoje</div><div><b>${s.lim || 0}</b>vezes no limite</div></div>`
     + `<div class="pnote">${L ? `Os limites (pedidos por minuto, por dia e tokens) dependem da sua conta e do modelo, e quem define é o ${esc(L[0])}. <a href="${L[1]}" target="_blank" rel="noopener">Ver limites oficiais</a>.` : 'Em IA no seu PC ou em outro serviço não há cota do provedor: vale o desempenho do seu computador ou as regras do serviço que você usa.'}</div>`
     + '<div class="pnote">📘 Tudo sobre limites e erros: <a href="docs.html#/limites" target="_blank" rel="noopener">veja no Docs</a>.</div>'
-    + '<div class="pnote">💡 Erro 429 significa limite atingido: espere um pouco ou escolha outro modelo. Modelos grátis (:free) costumam ter cotas menores. Em <b>Automático</b>, se um modelo falhar, o chat tenta o próximo da lista.</div>';
+    + '<div class="pnote">💡 Erro 429 significa limite atingido: espere um pouco ou escolha outro modelo. Modelos grátis (:free) costumam ter cotas menores. Em <b>Automático</b>, se um modelo falhar, o chat tenta o próximo da lista.</div></div>';
 }
-function mdlFill(q = '') {
+function mdlList(q = '') { // só a lista muda ao buscar (a busca e o rodapé não são recriados)
   const pop = $('mdlPop'), cfg = getCfg(), all = cfg.models.split(',').map(x => x.trim()).filter(Boolean), cur = getPick(), g = {}, ICON = { Google: ['g', 'fab fa-google'], Meta: ['m', 'fas fa-infinity'], Outros: ['o', 'fas fa-microchip'] };
   const list = q ? all.filter(m => m.toLowerCase().includes(q.toLowerCase())) : all; let n = 0;
   list.forEach(m => (g[maker(m)] = g[maker(m)] || []).push(m));
-  const it = (m, t, sub, tile, ic, free) => `<button class="it ${m === cur ? 'sel' : ''}" data-m="${esc(m)}" style="--i:${n++}"><span class="tile ${tile}"><i class="${ic}"></i></span><span class="tx"><b>${esc(t)}${free ? '<span class="bdg">GRÁTIS</span>' : ''}</b><small>${esc(sub)}</small></span><i class="fas fa-circle-check ck"></i></button>`;
+  const it = (m, t, sub, tile, ic, free) => `<button class="it ${m === cur ? 'sel' : ''}" data-m="${esc(m)}" style="--i:${n++}"><span class="tile ${tile}"><i class="${ic}"></i></span><span class="tx"><b><span class="nm">${esc(t)}</span>${free ? '<span class="bdg">GRÁTIS</span>' : ''}</b><small>${esc(sub)}</small></span><i class="fas fa-circle-check ck"></i></button>`;
   pop.classList.toggle('q', !!q);
-  pop.innerHTML = `<div class="ph"><b>Escolher a IA</b><span>${esc(PRESETS[cfg.provider].n)}</span></div>` + (all.length > 6 ? `<input class="ps" id="mdlQ" placeholder="Buscar modelo…" value="${esc(q)}" autocomplete="off">` : '')
-    + (q ? '' : it('', 'Automático', 'Usa a ordem definida em ⚙️', 'a', 'fas fa-wand-magic-sparkles'))
+  $('mdlList').innerHTML = (q ? '' : it('', 'Automático', 'Usa a ordem definida em ⚙️', 'a', 'fas fa-wand-magic-sparkles'))
     + Object.entries(g).map(([k, a]) => `<div class="pg">${k}</div>` + a.map(m => it(m, mShort(m).replace(' (grátis)', ''), PRESETS[cfg.provider].n, ICON[k][0], ICON[k][1], /:free$/.test(m))).join('')).join('')
     + (q && !list.length ? '<div class="pnote">Nenhum modelo encontrado.</div>' : '')
-    + '<div class="pf"><button data-lim="1"><i class="fas fa-gauge-high"></i>Limites da API</button><button data-cfg="1"><i class="fas fa-plus"></i>Adicionar IA</button></div>'
-    + '<div class="pnote">🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="docs.html#/ia-local" target="_blank" rel="noopener">Veja como liberar o CORS e conectar</a>.</div>';
-  const qi = $('mdlQ'); if (qi) qi.oninput = () => { mdlFill(qi.value); const x = $('mdlQ'); x.focus(); x.setSelectionRange(x.value.length, x.value.length); };
-  pop.onclick = ev => { if (ev.target.closest('a')) return; const b = ev.target.closest('button'); if (!b) return;
-    if (b.dataset.lim) { pop.classList.add('q'); pop.innerHTML = limHtml(); mdlPlace(); } else if (b.dataset.back) { mdlFill(); mdlPlace(); }
-    else if (b.dataset.cfg) { pop.style.display = 'none'; openCfg('ia'); } else if (b.dataset.m !== undefined) setPick(b.dataset.m); };
+    + (q ? '' : '<div class="pnote">🖥️ IA local (Ollama, LM Studio, Jan)? <a href="docs.html#/ia-local" target="_blank" rel="noopener">Veja como conectar</a>.</div>');
 }
-function mdlMenu(e) { e.stopPropagation(); const pop = $('mdlPop'); if (pop.style.display === 'block') { pop.style.display = 'none'; return; } mdlFill(); pop.style.display = 'block'; pop.classList.remove('on'); void pop.offsetWidth; pop.classList.add('on'); mdlPlace(); }
+function mdlFill() {
+  const pop = $('mdlPop'), cfg = getCfg(), P = PRESETS[cfg.provider], many = cfg.models.split(',').map(x => x.trim()).filter(Boolean).length > 6;
+  pop.classList.remove('q');
+  pop.innerHTML = `<div class="ph"><b>Escolher a IA</b><span title="${esc(P.n)}">${esc(P.n)}</span></div>`
+    + (many ? '<div class="pq"><i class="fas fa-magnifying-glass"></i><input class="ps" id="mdlQ" placeholder="Buscar modelo…" autocomplete="off"></div>' : '')
+    + '<div class="pb" id="mdlList"></div>'
+    + '<div class="pft"><div class="pf"><button data-lim="1"><i class="fas fa-gauge-high"></i>Limites da API</button><button data-cfg="1"><i class="fas fa-plus"></i>Adicionar IA</button></div></div>';
+  mdlList();
+}
+$('mdlPop').onclick = ev => { const pop = $('mdlPop'); if (ev.target.closest('a')) return; const b = ev.target.closest('button'); if (!b) return;
+  if (b.dataset.lim) { pop.classList.add('q'); pop.innerHTML = limHtml(); mdlPlace(); } else if (b.dataset.back) { mdlFill(); mdlPlace(); }
+  else if (b.dataset.cfg) { pop.style.display = 'none'; openCfg('ia'); } else if (b.dataset.m !== undefined) setPick(b.dataset.m); };
+$('mdlPop').addEventListener('input', e => { if (e.target.id === 'mdlQ') mdlList(e.target.value); });
+$('mdlPop').addEventListener('keydown', e => { if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return; const its = [...$('mdlPop').querySelectorAll('.it')]; if (!its.length) return; e.preventDefault();
+  const i = its.indexOf(document.activeElement); its[e.key === 'ArrowDown' ? Math.min(its.length - 1, i + 1) : (i < 0 ? 0 : Math.max(0, i - 1))].focus(); });
+function mdlMenu(e) { e.stopPropagation(); const pop = $('mdlPop'); if (pop.style.display === 'flex') { pop.style.display = 'none'; return; } mdlFill(); pop.style.display = 'flex'; pop.classList.remove('on'); mdlPlace(); void pop.offsetWidth; pop.classList.add('on'); const sel = pop.querySelector('.it.sel'); if (sel) sel.scrollIntoView({ block: 'nearest' }); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') $('mdlPop').style.display = 'none'; });
-addEventListener('resize', () => { if ($('mdlPop').style.display === 'block') mdlPlace(); });
+addEventListener('resize', () => { if ($('mdlPop').style.display === 'flex') mdlPlace(); });
 document.addEventListener('click', e => { if (!e.composedPath().includes($('mdlPop'))) $('mdlPop').style.display = 'none'; }); // composedPath: o botão clicado já foi trocado pelo innerHTML, então e.target.closest() falharia e fecharia o menu
 
 // ----- estatísticas -----
