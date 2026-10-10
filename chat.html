@@ -106,7 +106,7 @@ button{font-family:inherit;cursor:pointer}
 .dd{display:none;position:absolute;right:16px;top:calc(100% - 4px);min-width:220px;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.35);animation:rise .2s both}
 .dd.open{display:flex}.dd button{display:flex;gap:10px;align-items:center;background:none;border:0;color:var(--t);padding:9px 12px;border-radius:9px;text-align:left;font-size:.9rem}
 .dd button:hover{background:var(--soft)}.dd .dng{color:#ed4245}.dd hr{border:0;border-top:1px solid var(--line);margin:4px 0}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--card);color:var(--tx);border:1px solid var(--line);padding:10px 16px;border-radius:12px;z-index:30;opacity:0;transition:.25s;pointer-events:none}.toast.on{opacity:1}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--card);color:var(--tx);border:1px solid var(--line);padding:10px 16px;border-radius:12px;z-index:30;opacity:0;transition:.25s;pointer-events:none}.toast.on{opacity:1}.toast.mid{top:50%;bottom:auto;transform:translate(-50%,-50%);max-width:min(90vw,420px);text-align:center;padding:14px 22px;font-weight:600;box-shadow:0 18px 60px rgba(0,0,0,.5);z-index:40}
 body,.side,.top,.box,.m,.conv,.chips button,.card,.dd,.ib{transition:background-color .45s ease,color .45s ease,border-color .45s ease}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 ::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}
@@ -655,7 +655,7 @@ function getCfg() {
   const prov = PRESETS[g.provider] ? g.provider : 'openrouter', P = PRESETS[prov];
   return { provider: prov, base: g.base || P.base, models: g.models || P.models, web: g.web !== false, engines: Array.isArray(g.engines) ? g.engines.filter(x => ENGINES[x]) : ['wikipt', 'ddg'], key: k };
 }
-const toast = t => { const e = $('toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 2000); };
+const toast = (t, mid) => { const e = $('toast'); e.textContent = t; e.classList.toggle('mid', !!mid); e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 2000); };
 const LOOK_KEY = 'azul_look', WALL_KEY = 'azul_wall';
 const WALLS = { none: { n: 'Padrão' }, aurora: { n: 'Aurora', css: 'linear-gradient(135deg,#0f2027,#203a43,#2c5364)' }, neon: { n: 'Neon', css: 'linear-gradient(135deg,#12002f,#3a0ca3,#4361ee)' },
   sunset: { n: 'Pôr do sol', css: 'linear-gradient(135deg,#41295a,#c0392b,#f39c12)' }, forest: { n: 'Floresta', css: 'linear-gradient(135deg,#0b3d2e,#1b6b4a,#8fd694)' },
@@ -689,6 +689,7 @@ function toggleSide() { if (isMobile()) $('side').classList.toggle('open'); else
 function initSide() { try { if (localStorage.getItem('azul_side') === 'off') document.body.classList.add('side-off'); } catch (e) {} }
 const goHome = () => newConv();
 const NEWS_AI = [
+  '**Correções no menu e nos avisos:** o menu \"Escolher a IA\" não fica mais cortado na borda da tela, o botão Limites da API agora abre a tela de limites sem fechar o menu, e o aviso \"Configurações salvas\" aparece no centro da tela.',
   '**Assistente de instalação:** novo programa para Windows que baixa e instala sozinho a versão mais recente do app. Também repara a instalação e deixa escolher outra versão. Baixe na página da Azul Groove IA.',
   '**Novo menu de configurações:** abas laterais com ícones, interruptores no lugar das caixinhas e botões de salvar sempre à vista.',
   '**Links para o Docs:** o aviso de IA local, o "Saiba mais" da pesquisa na internet e os limites da API agora levam direto ao guia certo.',
@@ -824,7 +825,7 @@ function saveCfg() {
     sessionStorage.removeItem(KEY_STORE); localStorage.removeItem(KEY_STORE);
     if (key) (($('cfgRem').checked) ? localStorage : sessionStorage).setItem(KEY_STORE, key);
   } catch (e) {}
-  closeCfg(); paintMdl(); toast('✅ Configurações salvas');
+  closeCfg(); paintMdl(); toast('✅ Configurações salvas', true);
 }
 async function clearCfg() { if (!await dlg({ title: 'Remover configurações da IA?', text: 'A chave e o provedor salvos neste navegador serão apagados.', ok: 'Remover', danger: true })) return; try { localStorage.removeItem(CFG_KEY); localStorage.removeItem(KEY_STORE); sessionStorage.removeItem(KEY_STORE); } catch (e) {} closeCfg(); toast('Configurações removidas'); }
 // ----- tema -----
@@ -1170,7 +1171,7 @@ const getPick = () => { try { const p = localStorage.getItem(PICK); return p && 
 function paintMdl() { const p = getPick(); $('mdlName').textContent = p ? mShort(p) : 'Auto'; $('mdlBtn').title = p || 'Automático'; }
 function setPick(m) { try { m ? localStorage.setItem(PICK, m) : localStorage.removeItem(PICK); } catch (e) {} paintMdl(); $('mdlPop').style.display = 'none'; }
 const LIMITS = { openrouter: ['OpenRouter', 'https://openrouter.ai/docs/api-reference/limits'], openai: ['OpenAI', 'https://platform.openai.com/docs/guides/rate-limits'], groq: ['Groq', 'https://console.groq.com/docs/rate-limits'], gemini: ['Google Gemini', 'https://ai.google.dev/gemini-api/docs/rate-limits'], together: ['Together AI', 'https://docs.together.ai/docs/rate-limits'] };
-function mdlPlace() { const pop = $('mdlPop'), r = $('mdlBtn').getBoundingClientRect(); pop.style.left = Math.max(8, Math.min(r.left, innerWidth - 288)) + 'px'; pop.style.top = Math.max(8, r.top - pop.offsetHeight - 8) + 'px'; }
+function mdlPlace() { const pop = $('mdlPop'), r = $('mdlBtn').getBoundingClientRect(), w = pop.offsetWidth || 330, h = pop.offsetHeight; pop.style.left = Math.max(8, Math.min(r.left, innerWidth - w - 8)) + 'px'; pop.style.top = Math.max(8, Math.min(r.top - h - 8, innerHeight - h - 8)) + 'px'; } // usa a largura real do menu (antes sobrava 42px para fora da tela)
 function limHtml() {
   const cfg = getCfg(), P = PRESETS[cfg.provider], L = LIMITS[cfg.provider], s = stGet(), today = s.days[dk(new Date())] || 0;
   return `<div class="ph"><button class="bk" data-back="1" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button><b>Limites da API</b><span>${esc(P.n)}</span></div>`
@@ -1198,7 +1199,8 @@ function mdlFill(q = '') {
 }
 function mdlMenu(e) { e.stopPropagation(); const pop = $('mdlPop'); if (pop.style.display === 'block') { pop.style.display = 'none'; return; } mdlFill(); pop.style.display = 'block'; pop.classList.remove('on'); void pop.offsetWidth; pop.classList.add('on'); mdlPlace(); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') $('mdlPop').style.display = 'none'; });
-document.addEventListener('click', e => { if (!e.target.closest('#mdlPop')) $('mdlPop').style.display = 'none'; });
+addEventListener('resize', () => { if ($('mdlPop').style.display === 'block') mdlPlace(); });
+document.addEventListener('click', e => { if (!e.composedPath().includes($('mdlPop'))) $('mdlPop').style.display = 'none'; }); // composedPath: o botão clicado já foi trocado pelo innerHTML, então e.target.closest() falharia e fecharia o menu
 
 // ----- estatísticas -----
 const ST_KEY = 'azul_stats', dk = d => d.toLocaleDateString('sv');
