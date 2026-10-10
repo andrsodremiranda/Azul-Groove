@@ -689,6 +689,7 @@ function toggleSide() { if (isMobile()) $('side').classList.toggle('open'); else
 function initSide() { try { if (localStorage.getItem('azul_side') === 'off') document.body.classList.add('side-off'); } catch (e) {} }
 const goHome = () => newConv();
 const NEWS_AI = [
+  '**Menu de modelos no lugar certo:** na tela de nova conversa o menu Escolher a IA não cobre mais o cabeçalho nem a caixa de texto. Ele abre para o lado com mais espaço, rola por dentro quando precisa e se alinha ao botão.',
   '**Correções no menu e nos avisos:** o menu \"Escolher a IA\" não fica mais cortado na borda da tela, o botão Limites da API agora abre a tela de limites sem fechar o menu, e o aviso \"Configurações salvas\" aparece no centro da tela.',
   '**Assistente de instalação:** novo programa para Windows que baixa e instala sozinho a versão mais recente do app. Também repara a instalação e deixa escolher outra versão. Baixe na página da Azul Groove IA.',
   '**Novo menu de configurações:** abas laterais com ícones, interruptores no lugar das caixinhas e botões de salvar sempre à vista.',
@@ -1171,7 +1172,16 @@ const getPick = () => { try { const p = localStorage.getItem(PICK); return p && 
 function paintMdl() { const p = getPick(); $('mdlName').textContent = p ? mShort(p) : 'Auto'; $('mdlBtn').title = p || 'Automático'; }
 function setPick(m) { try { m ? localStorage.setItem(PICK, m) : localStorage.removeItem(PICK); } catch (e) {} paintMdl(); $('mdlPop').style.display = 'none'; }
 const LIMITS = { openrouter: ['OpenRouter', 'https://openrouter.ai/docs/api-reference/limits'], openai: ['OpenAI', 'https://platform.openai.com/docs/guides/rate-limits'], groq: ['Groq', 'https://console.groq.com/docs/rate-limits'], gemini: ['Google Gemini', 'https://ai.google.dev/gemini-api/docs/rate-limits'], together: ['Together AI', 'https://docs.together.ai/docs/rate-limits'] };
-function mdlPlace() { const pop = $('mdlPop'), r = $('mdlBtn').getBoundingClientRect(), w = pop.offsetWidth || 330, h = pop.offsetHeight; pop.style.left = Math.max(8, Math.min(r.left, innerWidth - w - 8)) + 'px'; pop.style.top = Math.max(8, Math.min(r.top - h - 8, innerHeight - h - 8)) + 'px'; } // usa a largura real do menu (antes sobrava 42px para fora da tela)
+function mdlPlace() { // abre para o lado (cima/baixo) com mais espaço, limita a altura e alinha na direita do botão
+  const pop = $('mdlPop'), r = $('mdlBtn').getBoundingClientRect(), M = 8, G = 8;
+  pop.style.maxHeight = '';
+  if (innerWidth <= 760) return; // no celular o CSS já usa folha embaixo
+  const w = pop.offsetWidth || 330, h = pop.offsetHeight, above = r.top - G - M, below = innerHeight - r.bottom - G - M;
+  const up = h <= above || above >= below, space = up ? above : below, hh = h > space ? Math.max(180, space) : h;
+  if (h > space) pop.style.maxHeight = hh + 'px';
+  pop.style.left = Math.max(M, Math.min(r.right - w, innerWidth - w - M)) + 'px';
+  pop.style.top = Math.max(M, up ? r.top - G - hh : r.bottom + G) + 'px';
+}
 function limHtml() {
   const cfg = getCfg(), P = PRESETS[cfg.provider], L = LIMITS[cfg.provider], s = stGet(), today = s.days[dk(new Date())] || 0;
   return `<div class="ph"><button class="bk" data-back="1" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button><b>Limites da API</b><span>${esc(P.n)}</span></div>`
