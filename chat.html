@@ -106,7 +106,13 @@ button{font-family:inherit;cursor:pointer}
 .dd{display:none;position:absolute;right:16px;top:calc(100% - 4px);min-width:220px;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.35);animation:rise .2s both}
 .dd.open{display:flex}.dd button{display:flex;gap:10px;align-items:center;background:none;border:0;color:var(--t);padding:9px 12px;border-radius:9px;text-align:left;font-size:.9rem}
 .dd button:hover{background:var(--soft)}.dd .dng{color:#ed4245}.dd hr{border:0;border-top:1px solid var(--line);margin:4px 0}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--card);color:var(--tx);border:1px solid var(--line);padding:10px 16px;border-radius:12px;z-index:30;opacity:0;transition:.25s;pointer-events:none}.toast.on{opacity:1}.toast.mid{top:50%;bottom:auto;transform:translate(-50%,-50%);max-width:min(90vw,420px);text-align:center;padding:14px 22px;font-weight:600;box-shadow:0 18px 60px rgba(0,0,0,.5);z-index:40}
+.toast{position:fixed;top:max(18px,env(safe-area-inset-top,0px));left:50%;width:max-content;z-index:40;display:flex;align-items:center;gap:10px;max-width:min(92vw,440px);padding:8px 18px 8px 8px;border-radius:99px;color:var(--tx);font-size:.9rem;font-weight:600;line-height:1.3;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);opacity:0;transform:translate(-50%,-14px) scale(.96);transition:opacity .22s,transform .3s cubic-bezier(.2,1.1,.3,1);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0) scale(1)}
+.toast .ti{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:.85rem;background:var(--soft)}
+.toast.ok .ti{background:rgba(61,220,151,.18);color:#3ddc97}.toast.warn .ti{background:rgba(251,191,36,.18);color:#fbbf24}
+.toast .tt{min-width:0;overflow-wrap:anywhere}
+:root[data-theme=light] .toast{box-shadow:0 12px 32px rgba(30,40,90,.18)}
+@media(prefers-reduced-motion:reduce){.toast{transition:opacity .15s}}
 body,.side,.top,.box,.m,.conv,.chips button,.card,.dd,.ib{transition:background-color .45s ease,color .45s ease,border-color .45s ease}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 ::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}
@@ -658,7 +664,13 @@ function getCfg() {
   const prov = PRESETS[g.provider] ? g.provider : 'openrouter', P = PRESETS[prov];
   return { provider: prov, base: g.base || P.base, models: g.models || P.models, web: g.web !== false, engines: Array.isArray(g.engines) ? g.engines.filter(x => ENGINES[x]) : ['wikipt', 'ddg'], key: k };
 }
-const toast = (t, mid) => { const e = $('toast'); e.textContent = t; e.classList.toggle('mid', !!mid); e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 2000); };
+const toast = t => { // aviso no topo: ícone + texto (o emoji do início vira o ícone)
+  const e = $('toast'), m = String(t).match(/^(\p{Extended_Pictographic}\uFE0F?)\s*([\s\S]*)$/u), ic = m ? m[1] : '', tx = m ? m[2] : String(t);
+  const ok = /^(✅|✔|☑)/u.test(ic), warn = /^(⚠|❌|⛔|🚫)/u.test(ic);
+  e.className = 'toast' + (ok ? ' ok' : warn ? ' warn' : '');
+  e.innerHTML = (ic ? `<span class="ti">${ok ? '<i class="fas fa-check"></i>' : warn ? '<i class="fas fa-triangle-exclamation"></i>' : ic}</span>` : '') + '<span class="tt"></span>';
+  e.querySelector('.tt').textContent = tx; void e.offsetWidth; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 2600);
+};
 const LOOK_KEY = 'azul_look', WALL_KEY = 'azul_wall';
 const WALLS = { none: { n: 'Padrão' }, aurora: { n: 'Aurora', css: 'linear-gradient(135deg,#0f2027,#203a43,#2c5364)' }, neon: { n: 'Neon', css: 'linear-gradient(135deg,#12002f,#3a0ca3,#4361ee)' },
   sunset: { n: 'Pôr do sol', css: 'linear-gradient(135deg,#41295a,#c0392b,#f39c12)' }, forest: { n: 'Floresta', css: 'linear-gradient(135deg,#0b3d2e,#1b6b4a,#8fd694)' },
@@ -693,6 +705,7 @@ function initSide() { try { if (localStorage.getItem('azul_side') === 'off') doc
 const goHome = () => newConv();
 const NEWS_AI = [
   '**Novo menu Escolher a IA:** refeito do zero. O título e o rodapé ficam fixos e só a lista rola, a busca não perde o foco ao digitar, o menu abre para o lado com mais espaço sem cobrir o cabeçalho e dá para navegar pelas setas do teclado.',
+  '**Avisos redesenhados:** o aviso Configurações salvas e os demais avisos agora aparecem no topo da tela, com ícone, sem cobrir a caixa de texto.',
   '**Correções no menu e nos avisos:** o menu \"Escolher a IA\" não fica mais cortado na borda da tela, o botão Limites da API agora abre a tela de limites sem fechar o menu, e o aviso \"Configurações salvas\" aparece no centro da tela.',
   '**Assistente de instalação:** novo programa para Windows que baixa e instala sozinho a versão mais recente do app. Também repara a instalação e deixa escolher outra versão. Baixe na página da Azul Groove IA.',
   '**Novo menu de configurações:** abas laterais com ícones, interruptores no lugar das caixinhas e botões de salvar sempre à vista.',
