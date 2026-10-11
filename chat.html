@@ -238,6 +238,36 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 .pop .st{margin:2px 2px 6px}
 @media(max-width:760px){.pop{left:8px!important;right:8px;width:auto;top:auto!important;bottom:8px;max-height:78vh;border-radius:26px}}
 @media(prefers-reduced-motion:reduce){.pop.on,.it{animation:none!important}}
+/* ===== janela de apoio (QR Code) ===== */
+@property --apa{syntax:'<angle>';inherits:false;initial-value:0deg}
+#apoio{z-index:35;background:rgba(5,7,14,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:apFade .25s both}
+#apoio.out{animation:apFadeOut .2s both}
+.apc{position:relative;overflow:hidden;width:min(380px,100%);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:24px 22px 18px;border-radius:26px;background:color-mix(in srgb,var(--card) 94%,transparent);border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.07);animation:apPop .5s cubic-bezier(.2,1.15,.3,1) both}
+#apoio.out .apc{animation:apOut .2s ease-in both}
+.apc>*:not(.apg){position:relative;animation:apUp .45s calc(.07s*var(--i,0) + .08s) both}
+.apg{position:absolute;left:50%;top:-90px;width:300px;height:240px;margin-left:-150px;border-radius:50%;background:radial-gradient(closest-side,rgba(88,101,242,.5),rgba(236,72,153,.18) 60%,transparent);filter:blur(24px);pointer-events:none;animation:apDrift 6s ease-in-out infinite alternate}
+.apc h3{color:var(--tx);font-size:1.15rem;display:flex;align-items:center;gap:8px}
+.aph{display:inline-block;animation:apBeat 1.8s ease-in-out infinite}
+.apw{position:relative;width:214px;height:214px}
+.apr{position:absolute;inset:-5px;border-radius:28px;background:conic-gradient(from var(--apa),#5865f2,#ec4899,#1fb6ff,#5865f2);filter:blur(10px);opacity:.75;animation:apSpin 5s linear infinite}
+.apq{position:absolute;inset:0;padding:11px;border-radius:22px;background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 14px 36px rgba(0,0,0,.35)}
+.apqi{position:relative;width:100%;height:100%;overflow:hidden;border-radius:12px}
+.apqi svg{display:block;width:100%;height:100%}
+.apqi::after{content:'';position:absolute;left:0;right:0;top:0;height:34%;background:linear-gradient(to bottom,transparent,rgba(88,101,242,.28) 70%,rgba(88,101,242,.75) 98%,transparent);transform:translateY(-110%);animation:apScan 1.5s .55s ease-in-out 1 both}
+.apc p{max-width:310px;font-size:.86rem;line-height:1.55;color:var(--m)}
+.apu{max-width:100%;font-size:.76rem;color:var(--m);opacity:.85;overflow-wrap:anywhere;text-decoration:none}.apu:hover{color:var(--p);text-decoration:underline}
+.apb{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.apb .btn2{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:10px 16px;transition:background .15s,transform .15s}.apb .btn2:hover{transform:translateY(-2px)}.apb .btn2.ok:hover{background:color-mix(in srgb,var(--p) 85%,#fff)}
+.apx{border:0;border-radius:12px;padding:9px 26px;font-weight:600;background:var(--soft);color:var(--tx);transition:background .15s}.apx:hover{background:color-mix(in srgb,var(--p) 22%,transparent)}
+.apx:focus-visible,.apb .btn2:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+@keyframes apFade{from{opacity:0}}@keyframes apFadeOut{to{opacity:0}}
+@keyframes apPop{from{opacity:0;transform:translateY(26px) scale(.9)}}@keyframes apOut{to{opacity:0;transform:translateY(12px) scale(.96)}}
+@keyframes apUp{from{opacity:0;transform:translateY(14px)}}
+@keyframes apBeat{0%,60%,100%{transform:scale(1)}15%{transform:scale(1.28)}30%{transform:scale(1.05)}42%{transform:scale(1.2)}}
+@keyframes apSpin{to{--apa:360deg}}@keyframes apDrift{to{transform:translateX(26px) scale(1.12)}}
+@keyframes apScan{to{transform:translateY(300%)}}
+:root[data-theme=light] .apc{box-shadow:0 30px 80px rgba(30,40,90,.28)}:root[data-theme=light] .apq{box-shadow:0 0 0 1px rgba(0,0,0,.08),0 14px 36px rgba(30,40,90,.25)}
+@media(prefers-reduced-motion:reduce){#apoio,#apoio.out,.apc,.apc>*,.aph,.apr,.apg,.apqi::after{animation:none!important}}
 /* ===== novo menu de configurações ===== */
 #cfg .card{display:grid;grid-template-columns:216px minmax(0,1fr);grid-template-rows:auto 1fr auto;gap:0;padding:0;max-width:900px;height:min(86vh,690px);max-height:none;overflow:hidden;border-radius:28px;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);box-shadow:0 30px 90px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05)}
 #cfg .ch{grid-column:1/-1;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,color-mix(in srgb,var(--p) 20%,transparent),transparent 70%)}
@@ -470,6 +500,16 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 </div>
 <div class="modal" id="cmp" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeCmp();this.dn=false">
   <div class="card wide"><div class="ch"><h3>⚖️ Comparar respostas</h3><button class="ib" onclick="closeCmp()" title="Fechar"><i class="fas fa-xmark"></i></button></div><div id="cmpBody"></div><small>Ao escolher, a IA anota qual você preferiu e aprende com isso (dá para desligar em ⚙️ &gt; Estilo).</small></div>
+</div>
+<div class="modal" id="apoio" role="dialog" aria-modal="true" aria-labelledby="apT" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)apoioClose();this.dn=false">
+  <div class="apc"><div class="apg"></div>
+    <h3 id="apT" style="--i:0"><span class="aph">💙</span> Apoiar o projeto</h3>
+    <div class="apw" id="apW" style="--i:1"><div class="apr"></div><div class="apq"><div class="apqi" id="apQr"></div></div></div>
+    <p style="--i:2">Aponte a câmera do celular para o QR Code e faça o apoio pela LivePix. Também dá para abrir o link direto neste aparelho.</p>
+    <a class="apu" id="apUrl" target="_blank" rel="noopener" style="--i:3"></a>
+    <div class="apb" style="--i:4"><button class="btn2" onclick="apoioCopy()"><i class="far fa-copy"></i> Copiar link</button><button class="btn2 ok" onclick="apoioOpen()"><i class="fas fa-up-right-from-square"></i> Abrir no navegador</button></div>
+    <button class="apx" id="apX" onclick="apoioClose()" style="--i:5">Fechar</button>
+  </div>
 </div>
 <div class="modal" id="dlg" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)dlgClose(false);this.dn=false">
   <div class="card sm"><h3 id="dlgT" style="color:var(--tx)"></h3><p id="dlgP"></p><input type="text" id="dlgI" style="display:none" autocomplete="off">
@@ -705,6 +745,7 @@ function initSide() { try { if (localStorage.getItem('azul_side') === 'off') doc
 const goHome = () => newConv();
 const NEWS_AI = [
   '**Novo menu Escolher a IA:** refeito do zero. O título e o rodapé ficam fixos e só a lista rola, a busca não perde o foco ao digitar, o menu abre para o lado com mais espaço sem cobrir o cabeçalho e dá para navegar pelas setas do teclado.',
+  '**Apoio com QR Code:** o botão 💙 agora abre uma janela animada com o QR Code da LivePix, botão para copiar o link e outro para abrir no navegador.',
   '**Avisos redesenhados:** o aviso Configurações salvas e os demais avisos agora aparecem no topo da tela, com ícone, sem cobrir a caixa de texto.',
   '**Correções no menu e nos avisos:** o menu \"Escolher a IA\" não fica mais cortado na borda da tela, o botão Limites da API agora abre a tela de limites sem fechar o menu, e o aviso \"Configurações salvas\" aparece no centro da tela.',
   '**Assistente de instalação:** novo programa para Windows que baixa e instala sozinho a versão mais recente do app. Também repara a instalação e deixa escolher outra versão. Baixe na página da Azul Groove IA.',
@@ -1114,7 +1155,23 @@ function switchAccount() { // troca de conta sem perder o aceite dos termos
   location.href = 'chat.html';
 }
 const SUPPORT_URL = 'https://livepix.gg/astmsoftware';
-function apoio() { window.open(SUPPORT_URL, '_blank', 'noopener,noreferrer'); }
+// QR Code do link de apoio (gerado para SUPPORT_URL; se o link mudar, o QR some e ficam só os botões até gerar outro)
+const QR_FOR = 'https://livepix.gg/astmsoftware', QR_ROWS = ["1111111011110000101111111", "1000001001011100101000001", "1011101010100111001011101", "1011101010101101001011101", "1011101010001111101011101", "1000001000001010101000001", "1111111010101010101111111", "0000000000101001100000000", "1111001010101011110011101", "1111100110010000000100010", "0100011111110010011010000", "0011000101101110110011100", "1010111001100110111010111", "0001110011001001101110001", "0101001000100000010010110", "1001110001010011000110001", "1111101001010101111111111", "0000000011011110100010101", "1111111001100010101010111", "1000001001001011100010001", "1011101001110010111111011", "1011101010010101011011111", "1011101011011000011010110", "1000001011010111010010100", "1111111011100110011111111"];
+function qrSvg() {
+  const n = QR_ROWS.length, b = 3; let d = '';
+  QR_ROWS.forEach((r, y) => { for (let x = 0; x < n;) { if (r[x] === '1') { const l = x; while (r[x] === '1') x++; d += `M${l + b} ${y + b}h${x - l}v1h${l - x}z`; } else x++; } });
+  return `<svg viewBox="0 0 ${n + 2 * b} ${n + 2 * b}" shape-rendering="crispEdges" role="img" aria-label="QR Code para apoiar o projeto"><rect width="${n + 2 * b}" height="${n + 2 * b}" fill="#fff"/><path d="${d}" fill="#0b0d12"/></svg>`;
+}
+function apoio() {
+  const m = $('apoio'), ok = SUPPORT_URL === QR_FOR;
+  $('apW').style.display = ok ? '' : 'none'; if (ok) $('apQr').innerHTML = qrSvg();
+  $('apUrl').textContent = SUPPORT_URL.replace(/^https?:\/\//, ''); $('apUrl').href = SUPPORT_URL;
+  m.classList.remove('out'); m.style.display = 'flex';
+}
+function apoioClose() { const m = $('apoio'); if (m.style.display !== 'flex' || m.classList.contains('out')) return; m.classList.add('out'); setTimeout(() => { m.style.display = 'none'; m.classList.remove('out'); }, 200); }
+const apoioOpen = () => window.open(SUPPORT_URL, '_blank', 'noopener,noreferrer');
+async function apoioCopy() { try { await navigator.clipboard.writeText(SUPPORT_URL); toast('✅ Link copiado'); } catch (e) { toast('⚠️ Não foi possível copiar o link'); } }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') apoioClose(); });
 function showWelcome() {
   let go = false;
   try { go = sessionStorage.getItem('azul_welcome') === '1'; sessionStorage.removeItem('azul_welcome'); } catch (e) {}

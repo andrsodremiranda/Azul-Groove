@@ -10,6 +10,13 @@
 :root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--ok:#3ddc97;--warn:#ffb454}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+*{scrollbar-width:thin;scrollbar-color:#2c3578 #07091a}
+@supports not (scrollbar-color:auto){
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:#07091a}
+::-webkit-scrollbar-thumb{background:#2c3578;border-radius:8px;border:2px solid #07091a}
+::-webkit-scrollbar-thumb:hover{background:var(--ac)}
+}
 body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65}
 a{color:#8ea1ff}
 b{color:var(--tx)}
@@ -81,6 +88,7 @@ details p{margin-top:2px}
 .toc a{display:block;color:var(--mut);text-decoration:none;padding:3px 0;font-size:.92rem}
 .toc a:hover{color:var(--tx)}
 h3{scroll-margin-top:72px}
+h4.sub{font-size:.95rem;color:var(--tx);margin:18px 0 6px}
 pre{position:relative}
 .cp{position:absolute;top:8px;right:8px;background:var(--ac);border:0;color:#fff;border-radius:8px;padding:5px 10px;font-size:.75rem;cursor:pointer}
 .flow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:16px 0}
@@ -132,6 +140,7 @@ details ol,details ul{margin-top:4px}
 const OR = 'https://openrouter.ai';
 const REL = 'https://github.com/andrsodremiranda/Azul-Groove-app/releases';
 const ASSIST = 'https://github.com/astmsoftware/ASTM/releases/download/azul/AzulGroove-Assistente.exe';
+const BETA = 'https://github.com/astmsoftware/Azul-Groove-app-beta/releases';
 const RELA = 'https://github.com/astmsoftware/ASTM/releases/tag/azul';
 const INVITE = 'https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064';
 const DISCORD = 'https://discord.gg/g4cW4zRvjf';
@@ -142,6 +151,8 @@ const D = [
 <p class="lead">Aqui fica <b>tudo</b> sobre o Azul Groove: o <b>bot de música</b> para Discord, o <b>chat com IA</b> no site e o <b>app para Windows</b>. Escolha um assunto ou use a busca no topo.</p>
 <div class="grid">
 <a class="card" href="#/baixar-app"><b>⬇️ Baixar o app (Windows)</b>Pelo Assistente de instalação, sempre na versão mais recente.</a>
+<a class="card" href="#/beta"><b>🧪 Versão Beta</b>Novidades experimentais antes de todo mundo.</a>
+<a class="card" href="#/devkit"><b>🛠️ Dev Kit</b>Baixe os arquivos do app e modifique.</a>
 <a class="card" href="#/primeiros-passos"><b>🚀 Primeiros passos</b>Do zero ao chat funcionando.</a>
 <a class="card" href="#/login"><b>👤 Entrar na conta</b>Discord, Google, GitHub e modo visitante.</a>
 <a class="card" href="#/chave-api"><b>🔑 Pegar chave de API</b>Passo a passo de cada provedor.</a>
@@ -230,6 +241,8 @@ const D = [
 <tr><td>Portable (sem instalar)</td><td>Salva um arquivo que abre direto, sem instalar. Bom para testar ou levar em pen drive.</td></tr>
 <tr><td>Baixar a versão mais recente</td><td>Pega a versão mais nova do app.</td></tr>
 <tr><td>Escolher uma versão</td><td>Instala uma versão específica, se precisar.</td></tr>
+<tr><td>Versão beta</td><td>Instala a versão experimental, com novidades em teste. Veja <a href="#/beta">Versão Beta</a>.</td></tr>
+<tr><td>Dev Kit</td><td>Baixa os arquivos do app para você modificar. Veja <a href="#/devkit">Dev Kit</a>.</td></tr>
 <tr><td>Reparar instalação</td><td>Reinstala a versão mais recente e mantém seus dados.</td></tr>
 <tr><td>Dados do app</td><td><code>%LocalAppData%\\AzulGroove</code> (nos dois formatos)</td></tr></table></div>
 <p>Pronto para instalar? Siga <a href="#/instalar-app">Instalar e usar o app</a>.</p>`},
@@ -260,6 +273,114 @@ const D = [
 <details><summary>O Windows ou o antivírus bloqueou o arquivo</summary><p>Baixe só pelo link oficial (<a href="#/baixar-app">Baixar o app</a>). Se o antivírus bloquear mesmo assim, libere o arquivo ou use "Executar assim mesmo".</p></details>
 <details><summary>Quero começar do zero</summary><p>Saia pela bandeja, apague a pasta <code>%LocalAppData%\\AzulGroove</code> e abra o app de novo. Isso apaga conversas e configurações.</p></details>
 <details><summary>A IA local não responde no app</summary><p>O app roda no mesmo PC, então funciona como no navegador. Siga <a href="#/ia-local">IA no seu PC</a> (servidor ligado e CORS liberado).</p></details>`},
+
+/* ================= BETA E DEV KIT ================= */
+{id:'beta',cat:'Beta e Dev Kit',t:'Versão Beta (experimental)',h:`
+<p class="lead">A <b>versão Beta</b> é a experimental: ela recebe as novidades <b>antes</b> da versão normal, para você testar e ajudar a achar problemas. Nas configurações do app ela aparece como <b>Azul Groove Beta · Versão 1.1.0b</b>.</p>
+<div class="note"><b>Atenção:</b> por ser experimental, pode ter erros e mudar de um dia para o outro. Se algo der errado, é só <a href="#/beta-voltar">voltar para a versão normal</a>.</div>
+<h3>Como instalar</h3>
+<ol class="steps">
+<li><b>Abra o Assistente</b>Veja <a href="#/baixar-app">Baixar o app</a> se ainda não o tem.</li>
+<li><b>Escolha a opção de versão beta</b>Ele baixa e instala a versão experimental mais recente.</li>
+<li><b>Confira na tela de configurações</b>O título deve mostrar <b>Azul Groove Beta</b> e o número da versão (termina com <code>b</code>).</li>
+</ol>
+<p>Todas as versões beta ficam na <a target="_blank" rel="noopener" href="${BETA}">página de downloads do Beta no GitHub</a>.</p>
+<h3>O que tem de novo na 1.1.0b</h3>
+<div class="sc"><table><tr><th>Novidade</th><th>O que faz</th></tr>
+<tr><td><b>Modo offline</b></td><td>Roda sem internet: o painel continua funcionando, mas o site e o chat online ficam indisponíveis.</td></tr>
+<tr><td><b>Verificar atualização ao abrir</b></td><td>O app avisa quando sai uma versão nova. Dá para desligar.</td></tr>
+<tr><td><b>Botão "Verificar agora"</b></td><td>Procura uma versão nova na hora.</td></tr>
+<tr><td><b>Configuração inicial</b></td><td>Botão <b>Refazer</b> para repetir o passo a passo de nome, tipo de usuário, tema e atalho.</td></tr>
+<tr><td><b>Voltar para a versão normal</b></td><td>Troca o Beta pela versão estável com um clique. Veja <a href="#/beta-voltar">abaixo</a>.</td></tr>
+<tr><td><b>Discord Rich Presence</b></td><td>Janela própria para mostrar no Discord o que você está ouvindo. Veja <a href="#/beta-rpc">Rich Presence</a>.</td></tr>
+<tr><td><b>IA no seu PC</b></td><td>O Beta roda IA direto no computador, sem internet, e <b>escolhe o melhor modelo para o seu PC</b>. Veja a seção <b>IA no seu PC</b> abaixo.</td></tr></table></div>
+<h3>Atualizações e modo offline</h3>
+<ul>
+<li><b>Modo offline:</b> use quando estiver sem internet ou quiser só o painel e a IA do seu PC.</li>
+<li><b>Verificar atualização ao abrir o app:</b> deixa o Beta sempre em dia, já que novidades chegam com frequência.</li>
+<li><b>Verificar agora:</b> útil quando você viu um aviso de correção no Discord e não quer esperar.</li>
+</ul>
+<h3>IA no seu PC (painel do app)</h3>
+<p>O Azul Groove Beta <b>pode rodar uma IA no seu próprio computador</b>, sem internet e sem chave de API. O app confere o seu PC (por exemplo, quanta memória RAM ele tem) e <b>marca como recomendado o modelo que melhor combina com ele</b>. Depois de baixados, o motor e o modelo funcionam sem internet.</p>
+<p>Na seção <b>IA no seu PC</b> você vê o <b>estado da IA</b> e tem dois botões: <b>Desligar IA</b> e <b>Abrir chat offline</b>. Se ainda não escolheu nenhuma, o painel avisa para baixar uma. Há três abas: <b>Geral</b>, <b>Modelos</b> e <b>Adicionar</b>.</p>
+<h4 class="sub">Aba Geral</h4>
+<div class="sc"><table><tr><th>Opção</th><th>Para quê</th></tr>
+<tr><td><b>Usar a placa de vídeo (Vulkan)</b></td><td>Faz a IA usar a placa de vídeo, o que costuma deixar as respostas mais rápidas. O painel avisa se o motor Vulkan já está instalado no PC.</td></tr>
+<tr><td><b>Fechar a IA ao minimizar</b></td><td>Libera memória quando o app é minimizado ou vai para a bandeja. A IA liga de novo quando você volta.</td></tr></table></div>
+<h4 class="sub">Aba Modelos</h4>
+<p>Mostra os modelos disponíveis, com o tamanho do download e a memória RAM que cada um pede. Siga o que tem o selo <b>recomendado</b> ao lado do nome: é o que melhor combina com o seu PC. Por exemplo, num PC com cerca de 32 GB de RAM, o recomendado foi o Qwen 2.5 7B. Exemplos da lista:</p>
+<div class="sc"><table><tr><th>Modelo</th><th>Download</th><th>RAM</th><th>Para quê</th></tr>
+<tr><td><b>Qwen 2.5 · 1.5B</b></td><td>1,1 GB</td><td>~4 GB</td><td>Muito leve e rápido. Ideal para PCs simples e entende bem português para o tamanho.</td></tr>
+<tr><td><b>Llama 3.2 · 3B</b></td><td>2,0 GB</td><td>~8 GB</td><td>Equilíbrio entre qualidade e velocidade. Boa escolha para a maioria dos PCs.</td></tr>
+<tr><td><b>Qwen 2.5 · 3B</b></td><td>1,9 GB</td><td>~8 GB</td><td>Parecido com o Llama 3B, com respostas um pouco mais longas. Licença só para uso não comercial.</td></tr>
+<tr><td><b>Qwen 2.5 · 7B</b> <span style="background:rgba(88,101,242,.25);color:#c3cbff;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:99px">recomendado</span></td><td>4,7 GB</td><td>~16 GB</td><td>Respostas bem melhores, mas é pesado e responde mais devagar. Licença Apache 2.0.</td></tr></table></div>
+<p>Cada modelo tem dois botões: <b>Baixar e usar</b> (baixa e já deixa pronto) e <b>Só baixar</b> (guarda para usar depois). Cada modelo tem a sua licença, mostrada ao lado do tamanho: confira antes de usar em algo comercial.</p>
+<p><small>A lista e o modelo recomendado podem mudar entre as versões do Beta e de acordo com o seu PC.</small></p>
+<h4 class="sub">Aba Adicionar</h4>
+<div class="sc"><table><tr><th>Opção</th><th>Para quê</th></tr>
+<tr><td><b>Baixar outro modelo</b></td><td>Cole o link de um arquivo <code>.gguf</code> (por exemplo, do Hugging Face) e clique em <b>Baixar</b>.</td></tr>
+<tr><td><b>Já tem um modelo no PC?</b></td><td>Clique em <b>Importar .gguf</b> para usar um arquivo que você já tem, sem copiar nem baixar de novo.</td></tr></table></div>
+<div class="okb"><b>Dica:</b> modelos maiores respondem melhor, mas pedem mais RAM. Se o PC ficar lento, volte para um modelo menor ou ligue <b>Fechar a IA ao minimizar</b>.</div>
+<p>Para usar IA local pelo navegador ou com outros programas, veja <a href="#/ia-local">IA no seu PC (Ollama, LM Studio, Jan)</a>.</p>
+<div class="okb">Achou um erro no Beta? Conte no <a target="_blank" rel="noopener" href="${DISCORD}">servidor de suporte</a>: é para isso que o Beta existe.</div>`},
+
+{id:'beta-rpc',cat:'Beta e Dev Kit',t:'Discord Rich Presence (Beta)',h:`
+<p class="lead">O <b>Rich Presence</b> mostra no seu perfil do Discord o que você está ouvindo. No Beta ele tem uma janela de configuração própria, sem precisar criar nada no Discord.</p>
+<div class="okb"><b>Tudo em um só lugar:</b> em vez de usar vários apps separados para o Rich Presence, ele já vem dentro do Azul Groove.</div>
+<div class="note"><b>Lembre-se:</b> esta é a versão Beta, então pode ter erros e bugs. Se algo falhar, conte no <a target="_blank" rel="noopener" href="${DISCORD}">servidor de suporte</a> ou <a href="#/beta-voltar">volte para a versão normal</a>.</div>
+<h3>Abrindo e entendendo a janela</h3>
+<p>No topo da janela aparece o <b>estado atual</b> (por exemplo <b>Desligado</b> e "Nada tocando na presence agora"). Abaixo ficam três abas: <b>Conexão</b>, <b>Opções</b> e <b>Imagens</b>.</p>
+<h3>Aba Conexão</h3>
+<div class="sc"><table><tr><th>Campo</th><th>O que é</th></tr>
+<tr><td><b>Aplicativo do Discord</b></td><td>Você <b>não precisa configurar nada</b>: o app já usa um ID padrão. Só marque <b>Usar APP_ID customizado</b> se quiser o seu próprio aplicativo. O nome dele aparece como "Ouvindo ...".</td></tr>
+<tr><td><b>Abrir portal</b></td><td>Abre o portal de desenvolvedores do Discord, para quem for usar o APP_ID customizado.</td></tr>
+<tr><td><b>Testar conexão</b></td><td>Verifica se o app consegue falar com o Discord.</td></tr>
+<tr><td><b>Bot de música (opcional)</b></td><td>Liga a presence ao bot. Preencha o <b>link do websocket</b> (exemplo: <code>ws://localhost/ws</code>) e o <b>token</b> gerado pelo comando <code>/rich_presence</code> do bot.</td></tr></table></div>
+<p>Use <b>Mostrar</b> para conferir o token ao colar. Os botões do rodapé são <b>Desligar</b>, <b>Salvar</b> e <b>Cancelar</b>.</p>
+<div class="bad"><b>Nunca</b> compartilhe o token do bot, nem em print. Ele identifica a sua sessão.</div>
+<h3>Não aparece no Discord?</h3>
+<ol>
+<li>O <b>Discord de computador</b> precisa estar aberto (a presence não funciona pelo navegador).</li>
+<li>No Discord, confira em <b>Configurações → Atividade</b> se a exibição da atividade está ligada.</li>
+<li>Clique em <b>Testar conexão</b> na aba Conexão.</li>
+<li>Se usa o bot, confira o link do websocket e gere o token de novo com <code>/rich_presence</code>.</li>
+</ol>
+<p>Ainda sem sucesso? Veja <a href="#/contato">Falar com a gente</a>.</p>`},
+
+{id:'beta-voltar',cat:'Beta e Dev Kit',t:'Voltar para a versão normal',h:`
+<p class="lead">Não gostou de alguma novidade ou encontrou um problema? Dá para sair do Beta sem perder nada.</p>
+<ol class="steps">
+<li><b>Abra as configurações do app</b>Na seção do Beta, ache <b>Versão normal</b>.</li>
+<li><b>Clique em "Voltar para a versão normal"</b>O app instala a versão estável em segundo plano e reinicia sozinho.</li>
+<li><b>Pronto</b>Seu login e suas configurações continuam salvos.</li>
+</ol>
+<div class="okb">Também funciona pelo Assistente: use <b>Baixar a versão mais recente</b> ou <b>Reparar instalação</b>. Veja <a href="#/baixar-app">Baixar o app</a>.</div>`},
+
+{id:'devkit',cat:'Beta e Dev Kit',t:'Dev Kit (modificar o app)',h:`
+<p class="lead">O <b>Dev Kit</b> é para quem quer <b>mexer no app</b>. Ele baixa para o seu computador os arquivos do Azul Groove, direto do repositório da versão Beta, para você estudar, ajustar e criar a sua própria versão.</p>
+<div class="note"><b>Para quem é:</b> pessoas com algum conhecimento de programação. Se você só quer usar o app, prefira a <a href="#/baixar-app">versão normal</a> ou o <a href="#/beta">Beta</a>.</div>
+<h3>Como usar</h3>
+<ol class="steps">
+<li><b>Abra o Assistente</b>Veja <a href="#/baixar-app">Baixar o app</a>.</li>
+<li><b>Escolha a opção Dev Kit</b>Ele baixa os arquivos do app (o mesmo código do repositório do Beta).</li>
+<li><b>Abra os arquivos no seu editor</b>Por exemplo, o Visual Studio ou o VS Code.</li>
+<li><b>Modifique e teste</b>Faça as suas alterações e rode o app para ver o resultado.</li>
+</ol>
+<p>O código fica também no <a target="_blank" rel="noopener" href="${BETA}">repositório do Beta no GitHub</a>, onde você pode acompanhar as mudanças de cada versão.</p>
+<h3>O que você vai precisar</h3>
+<p>Nada para instalar por conta própria: o <b>Assistente baixa tudo para você</b>, em vez de você caçar vários programas separados.</p>
+<ul>
+<li>Um editor de código (Visual Studio ou VS Code).</li>
+<li>O <b>.NET 8 SDK</b>, para compilar o app.</li>
+<li>O <b>WebView2 Runtime</b> do Windows, que já vem na maioria dos computadores com Windows 10 e 11.</li>
+</ul>
+<h3>Antes de modificar</h3>
+<ul>
+<li>O Dev Kit <b>não é uma versão oficial</b>: o que você modificar não tem suporte da equipe.</li>
+<li>Leia os <a href="licenca.html">Termos de Uso</a> antes de compartilhar uma versão modificada.</li>
+<li>Guarde uma cópia dos arquivos originais, para poder voltar atrás.</li>
+</ul>
+<div class="bad"><b>Nunca</b> deixe chaves de API, tokens ou senhas dentro dos arquivos que você for publicar ou enviar para outras pessoas.</div>`},
 
 /* ================= CONFIGURAR A IA ================= */
 {id:'chave-api',cat:'Configurar a IA',t:'Pegar uma chave de API',h:`
@@ -503,6 +624,11 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <tr><td><b>127.0.0.1</b></td><td>O endereço "deste computador". Por isso a IA local só funciona no mesmo PC.</td></tr>
 <tr><td><b>CORS</b></td><td>Regra do navegador: um site só lê a resposta de outro endereço se este permitir.</td></tr>
 <tr><td><b>SHA-256</b></td><td>"Impressão digital" de um arquivo, usada para ver se ele não foi alterado.</td></tr>
+<tr><td><b>Beta</b></td><td>Versão experimental, com novidades em teste. Pode ter erros.</td></tr>
+<tr><td><b>Dev Kit</b></td><td>Pacote com os arquivos do app, para quem quer modificá-lo.</td></tr>
+<tr><td><b>Rich Presence</b></td><td>Mostra no perfil do Discord o que você está ouvindo.</td></tr>
+<tr><td><b>.gguf</b></td><td>Formato de arquivo dos modelos de IA que rodam no seu PC.</td></tr>
+<tr><td><b>Vulkan</b></td><td>Tecnologia que deixa a IA local usar a placa de vídeo.</td></tr>
 <tr><td><b>Bandeja</b></td><td>A área perto do relógio do Windows onde o app fica rodando em segundo plano.</td></tr></table></div>`},
 
 /* ================= DÚVIDAS ================= */
@@ -526,6 +652,12 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <details><summary>O Windows disse "editor desconhecido". É seguro?</summary><p>É um aviso comum para programas novos. Baixe só pelo link oficial desta documentação. Depois, <b>Mais informações → Executar assim mesmo</b>.</p></details>
 <details><summary>O app do Windows salva meus dados?</summary><p>Sim, em <code>%LocalAppData%\\AzulGroove</code>. Feche pelo menu da bandeja (<b>Sair</b>) para garantir que tudo seja gravado.</p></details>
 <details><summary>Cliquei no X e o app não fechou</summary><p>Ele foi para a bandeja do Windows. Para fechar de verdade, botão direito no ícone → <b>Sair</b>.</p></details>
+<h3>Beta e Dev Kit</h3>
+<details><summary>O que é a versão Beta?</summary><p>É a versão experimental do app, com novidades em teste. Veja <a href="#/beta">Versão Beta</a>.</p></details>
+<details><summary>Perco minhas conversas ao entrar ou sair do Beta?</summary><p>Ao voltar para a versão normal, o seu login e as suas configurações continuam salvos. Mesmo assim, salve as conversas importantes em <code>.txt</code> ou <code>.json</code> antes de trocar de versão.</p></details>
+<details><summary>Como volto para a versão normal?</summary><p>Nas configurações do app, clique em <b>Voltar para a versão normal</b>. Veja <a href="#/beta-voltar">o passo a passo</a>.</p></details>
+<details><summary>O Beta roda IA sem internet? Qual modelo ele usa?</summary><p>Sim. O app escolhe e marca como recomendado o modelo que melhor combina com o seu PC. Veja <a href="#/beta">Versão Beta</a>.</p></details>
+<details><summary>Para que serve o Dev Kit?</summary><p>Ele baixa os arquivos do app para você modificar. Veja <a href="#/devkit">Dev Kit</a>.</p></details>
 <h3>Bot do Discord</h3>
 <details><summary>O bot não toca. O que faço?</summary><p>Veja <a href="#/bot-problemas">Bot offline ou sem som</a>: normalmente é permissão de falar no canal de voz.</p></details>
 <details><summary>Quais são os comandos?</summary><p>Digite <code>/help</code> no Discord ou veja <a href="#/bot-comandos">Comandos do bot</a>.</p></details>`},
