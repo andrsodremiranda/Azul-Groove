@@ -855,12 +855,13 @@ async function listModels(base, key) {
 async function loadModels(silent) {
   const base = $('cfgBase').value.trim().replace(/\/+$/, ''), m = $('cfgMsg'), btn = $('btnLoad');
   if (!okBase(base)) { if (!silent) m.textContent = '⚠️ URL inválida.'; return; }
-  if (!silent) m.textContent = 'Buscando modelos... (pode levar até 25 s)';
+  const need = PRESETS[$('cfgProv').value].key, show = !silent || need; // automático: só avisa se o provedor usa chave
+  if (show) m.textContent = 'Buscando modelos... (pode levar até 25 s)';
   if (btn) btn.disabled = true;
   try {
-    MODELS = await listModels(base, $('cfgKey').value.trim());
+    MODELS = await listModels(base, $('cfgKey').value.trim()); mcSave(base, MODELS);
     m.textContent = MODELS.length ? `✅ ${MODELS.length} modelos encontrados. Clique para escolher (o 1º da lista é usado antes), depois clique em Salvar para eles aparecerem no menu do chat.` : 'Conectou, mas não há modelos. No Ollama, instale um: ollama pull llama3.2';
-  } catch (e) { MODELS = []; if (!silent) m.textContent = '⚠️ ' + e.message; }
+  } catch (e) { MODELS = []; if (show) m.textContent = '⚠️ ' + e.message; }
   finally { if (btn) btn.disabled = false; }
   renderModels();
 }
@@ -873,10 +874,25 @@ function openCfg(t) {
   $('cfgRem').checked = rem; $('cfgWeb').checked = g.web; $('engWrap').style.display = g.web ? '' : 'none'; $('engBox').innerHTML = Object.entries(ENGINES).map(([k, e]) => `<label class="chk2"><input type="checkbox" data-e="${k}" ${g.engines.includes(k) ? 'checked' : ''}> ${e.n}</label>`).join(''); paintPrefs(); $('cfgMsg').textContent = ''; $('cfgFilter').value = '';
   MODELS = []; renderModels(); linkHint(); applyTheme(); tab(t || 'ia'); $('cfg').style.display = 'flex';
   $('cfgList').onclick = e => { const b = e.target.closest('button'); if (!b) return; const s = curModels(), i = s.indexOf(b.dataset.m); i < 0 ? s.push(b.dataset.m) : s.splice(i, 1); $('cfgModels').value = s.join(', '); renderModels(); };
-  if (!PRESETS[g.provider].key) loadModels(true);
+  autoLoad(0);
 }
 function linkHint() { const u = PRESETS[$('cfgProv').value].url; $('cfgLink').innerHTML = u ? `(<a href="${u}" target="_blank" rel="noopener noreferrer">gerar chave</a>)` : ''; }
-function provChange() { const P = PRESETS[$('cfgProv').value]; $('cfgBase').value = P.base; $('cfgModels').value = P.models; MODELS = []; renderModels(); linkHint(); $('cfgMsg').textContent = ''; if (!P.key) loadModels(true); }
+function provChange() { const P = PRESETS[$('cfgProv').value]; $('cfgBase').value = P.base; $('cfgModels').value = P.models; MODELS = []; renderModels(); linkHint(); $('cfgMsg').textContent = ''; autoLoad(0); }
+let _al;
+function autoLoad(ms) { // busca sozinha ao abrir, trocar de provedor ou digitar URL/chave (se já puder consultar)
+  clearTimeout(_al);
+  _al = setTimeout(() => { const P = PRESETS[$('cfgProv').value]; if (okBase($('cfgBase').value.trim().replace(/\/+$/, '')) && (!P.key || $('cfgKey').value.trim())) loadModels(true); }, ms);
+}
+const MC = 'azul_models_cache';
+function mcSave(base, list) { try { localStorage.setItem(MC, JSON.stringify({ base, list, ts: Date.now() })); } catch (e) {} }
+function mcGet() { try { return JSON.parse(localStorage.getItem(MC) || 'null'); } catch (e) { return null; } }
+const srcModels = () => { const c = mcGet(); return c && c.base === getCfg().base && Array.isArray(c.list) ? c.list : []; };
+async function refreshSrc(force) { // atualiza a lista da fonte em segundo plano (a cada 6 h ou ao trocar de provedor)
+  const cfg = getCfg(), P = PRESETS[cfg.provider], c = mcGet();
+  if (!okBase(cfg.base) || (P.key && !cfg.key)) return;
+  if (!force && c && c.base === cfg.base && Date.now() - c.ts < 6 * 3600e3) return;
+  try { mcSave(cfg.base, await listModels(cfg.base, cfg.key)); } catch (e) {}
+}
 function closeCfg() { $('cfg').style.display = 'none'; }
 const okBase = u => /^https:\/\/[^\s/]+/i.test(u) || /^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?(\/|$)/i.test(u);
 function saveCfg() {
@@ -888,7 +904,7 @@ function saveCfg() {
     sessionStorage.removeItem(KEY_STORE); localStorage.removeItem(KEY_STORE);
     if (key) (($('cfgRem').checked) ? localStorage : sessionStorage).setItem(KEY_STORE, key);
   } catch (e) {}
-  closeCfg(); paintMdl(); toast('✅ Configurações salvas', true);
+  closeCfg(); paintMdl(); refreshSrc(true).then(paintMdl); toast('✅ Configurações salvas', true);
 }
 async function clearCfg() { if (!await dlg({ title: 'Remover configurações da IA?', text: 'A chave e o provedor salvos neste navegador serão apagados.', ok: 'Remover', danger: true })) return; try { localStorage.removeItem(CFG_KEY); localStorage.removeItem(KEY_STORE); sessionStorage.removeItem(KEY_STORE); } catch (e) {} closeCfg(); toast('Configurações removidas'); }
 // ----- tema -----
@@ -1246,7 +1262,7 @@ $('lic').addEventListener('change', e => { $('licBtn').disabled = !e.target.chec
 const PICK = 'azul_pick';
 const maker = m => /gemini|gemma|google/i.test(m) ? 'Google' : /llama|meta/i.test(m) ? 'Meta' : 'Outros';
 const mShort = m => String(m).replace(/^.*\//, '').replace(/:free$/, ' (grátis)');
-const getPick = () => { try { const p = localStorage.getItem(PICK); return p && getCfg().models.split(',').map(x => x.trim()).includes(p) ? p : ''; } catch (e) { return ''; } };
+const getPick = () => { try { const p = localStorage.getItem(PICK); return p && (getCfg().models.split(',').map(x => x.trim()).includes(p) || srcModels().includes(p)) ? p : ''; } catch (e) { return ''; } };
 function paintMdl() { const p = getPick(); $('mdlName').textContent = p ? mShort(p) : 'Auto'; $('mdlBtn').title = p || 'Automático'; }
 function setPick(m) { try { m ? localStorage.setItem(PICK, m) : localStorage.removeItem(PICK); } catch (e) {} paintMdl(); $('mdlPop').style.display = 'none'; }
 const LIMITS = { openrouter: ['OpenRouter', 'https://openrouter.ai/docs/api-reference/limits'], openai: ['OpenAI', 'https://platform.openai.com/docs/guides/rate-limits'], groq: ['Groq', 'https://console.groq.com/docs/rate-limits'], gemini: ['Google Gemini', 'https://ai.google.dev/gemini-api/docs/rate-limits'], together: ['Together AI', 'https://docs.together.ai/docs/rate-limits'] };
@@ -1272,16 +1288,18 @@ function limHtml() {
 function mdlList(q = '') { // só a lista muda ao buscar (a busca e o rodapé não são recriados)
   const pop = $('mdlPop'), cfg = getCfg(), all = cfg.models.split(',').map(x => x.trim()).filter(Boolean), cur = getPick(), g = {}, ICON = { Google: ['g', 'fab fa-google'], Meta: ['m', 'fas fa-infinity'], Outros: ['o', 'fas fa-microchip'] };
   const list = q ? all.filter(m => m.toLowerCase().includes(q.toLowerCase())) : all; let n = 0;
+  const extra = srcModels().filter(m => !all.includes(m) && (!q || m.toLowerCase().includes(q.toLowerCase()))), exTot = extra.length, exShow = extra.slice(0, q ? 100 : 40);
   list.forEach(m => (g[maker(m)] = g[maker(m)] || []).push(m));
   const it = (m, t, sub, tile, ic, free) => `<button class="it ${m === cur ? 'sel' : ''}" data-m="${esc(m)}" style="--i:${n++}"><span class="tile ${tile}"><i class="${ic}"></i></span><span class="tx"><b><span class="nm">${esc(t)}</span>${free ? '<span class="bdg">GRÁTIS</span>' : ''}</b><small>${esc(sub)}</small></span><i class="fas fa-circle-check ck"></i></button>`;
   pop.classList.toggle('q', !!q);
   $('mdlList').innerHTML = (q ? '' : it('', 'Automático', 'Usa a ordem definida em ⚙️', 'a', 'fas fa-wand-magic-sparkles'))
     + Object.entries(g).map(([k, a]) => `<div class="pg">${k}</div>` + a.map(m => it(m, mShort(m).replace(' (grátis)', ''), PRESETS[cfg.provider].n, ICON[k][0], ICON[k][1], /:free$/.test(m))).join('')).join('')
-    + (q && !list.length ? '<div class="pnote">Nenhum modelo encontrado.</div>' : '')
+    + (exShow.length ? `<div class="pg">Disponíveis na fonte (${exTot})</div>` + exShow.map(m => it(m, mShort(m).replace(' (grátis)', ''), PRESETS[cfg.provider].n, ICON[maker(m)][0], ICON[maker(m)][1], /:free$/.test(m))).join('') + (exTot > exShow.length ? '<div class="pnote">Digite na busca para ver os outros ' + (exTot - exShow.length) + '.</div>' : '') : '')
+    + (q && !list.length && !exShow.length ? '<div class="pnote">Nenhum modelo encontrado.</div>' : '')
     + (q ? '' : '<div class="pnote">🖥️ IA local (Ollama, LM Studio, Jan)? <a href="docs.html#/ia-local" target="_blank" rel="noopener">Veja como conectar</a>.</div>');
 }
 function mdlFill() {
-  const pop = $('mdlPop'), cfg = getCfg(), P = PRESETS[cfg.provider], many = cfg.models.split(',').map(x => x.trim()).filter(Boolean).length > 6;
+  const pop = $('mdlPop'), cfg = getCfg(), P = PRESETS[cfg.provider], many = cfg.models.split(',').map(x => x.trim()).filter(Boolean).length > 6 || srcModels().length > 0;
   pop.classList.remove('q');
   pop.innerHTML = `<div class="ph"><b>Escolher a IA</b><span title="${esc(P.n)}">${esc(P.n)}</span></div>`
     + (many ? '<div class="pq"><i class="fas fa-magnifying-glass"></i><input class="ps" id="mdlQ" placeholder="Buscar modelo…" autocomplete="off"></div>' : '')
@@ -1295,7 +1313,7 @@ $('mdlPop').onclick = ev => { const pop = $('mdlPop'); if (ev.target.closest('a'
 $('mdlPop').addEventListener('input', e => { if (e.target.id === 'mdlQ') mdlList(e.target.value); });
 $('mdlPop').addEventListener('keydown', e => { if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return; const its = [...$('mdlPop').querySelectorAll('.it')]; if (!its.length) return; e.preventDefault();
   const i = its.indexOf(document.activeElement); its[e.key === 'ArrowDown' ? Math.min(its.length - 1, i + 1) : (i < 0 ? 0 : Math.max(0, i - 1))].focus(); });
-function mdlMenu(e) { e.stopPropagation(); const pop = $('mdlPop'); if (pop.style.display === 'flex') { pop.style.display = 'none'; return; } mdlFill(); pop.style.display = 'flex'; pop.classList.remove('on'); mdlPlace(); void pop.offsetWidth; pop.classList.add('on'); const sel = pop.querySelector('.it.sel'); if (sel) sel.scrollIntoView({ block: 'nearest' }); }
+function mdlMenu(e) { e.stopPropagation(); const pop = $('mdlPop'); refreshSrc().then(() => { if (pop.style.display === 'flex' && $('mdlList') && !pop.classList.contains('q')) mdlList($('mdlQ') ? $('mdlQ').value : ''); }); if (pop.style.display === 'flex') { pop.style.display = 'none'; return; } mdlFill(); pop.style.display = 'flex'; pop.classList.remove('on'); mdlPlace(); void pop.offsetWidth; pop.classList.add('on'); const sel = pop.querySelector('.it.sel'); if (sel) sel.scrollIntoView({ block: 'nearest' }); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') $('mdlPop').style.display = 'none'; });
 addEventListener('resize', () => { if ($('mdlPop').style.display === 'flex') mdlPlace(); });
 document.addEventListener('click', e => { if (!e.composedPath().includes($('mdlPop'))) $('mdlPop').style.display = 'none'; }); // composedPath: o botão clicado já foi trocado pelo innerHTML, então e.target.closest() falharia e fecharia o menu
@@ -1384,7 +1402,8 @@ function syGot(m) {
 function syPush() { if (!SY || !SY.conn || !SY.conn.open) return; clearTimeout(syT); syT = setTimeout(() => { const c = get(); try { if (c && SY && SY.conn.open) SY.conn.send({ t: 'conv', d: c }); } catch (e) {} }, 600); }
 addEventListener('beforeunload', () => { try { SY && SY.conn && SY.conn.send({ t: 'bye' }); } catch (e) {} });
 
-applyTheme(); applyLook(); initSide(); paintPrefs(); paintMdl();
+applyTheme(); applyLook(); initSide(); paintPrefs(); paintMdl(); refreshSrc().then(paintMdl);
+$('cfgKey').addEventListener('input', () => autoLoad(700)); $('cfgBase').addEventListener('input', () => autoLoad(700));
 boot(); // por último, depois de todas as funções e constantes existirem
 checkNews(); setInterval(tick, 1000);
 </script>
