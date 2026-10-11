@@ -855,13 +855,13 @@ async function listModels(base, key) {
 async function loadModels(silent) {
   const base = $('cfgBase').value.trim().replace(/\/+$/, ''), m = $('cfgMsg'), btn = $('btnLoad');
   if (!okBase(base)) { if (!silent) m.textContent = '⚠️ URL inválida.'; return; }
-  const need = PRESETS[$('cfgProv').value].key, show = !silent || need; // automático: só avisa se o provedor usa chave
+  const need = PRESETS[$('cfgProv').value].key && $('cfgKey').value.trim(), show = !silent || need; // automático: só avisa se o provedor usa chave
   if (show) m.textContent = 'Buscando modelos... (pode levar até 25 s)';
   if (btn) btn.disabled = true;
   try {
     MODELS = await listModels(base, $('cfgKey').value.trim()); mcSave(base, MODELS);
     m.textContent = MODELS.length ? `✅ ${MODELS.length} modelos encontrados. Clique para escolher (o 1º da lista é usado antes), depois clique em Salvar para eles aparecerem no menu do chat.` : 'Conectou, mas não há modelos. No Ollama, instale um: ollama pull llama3.2';
-  } catch (e) { MODELS = []; if (show) m.textContent = '⚠️ ' + e.message; }
+  } catch (e) { const c = mcGet(); MODELS = c && c.base === base ? c.list : []; if (show) m.textContent = '⚠️ ' + e.message; }
   finally { if (btn) btn.disabled = false; }
   renderModels();
 }
@@ -872,7 +872,7 @@ function openCfg(t) {
   $('cfgProv').value = g.provider; $('cfgBase').value = g.base; $('cfgModels').value = g.models; $('cfgKey').value = g.key;
   let rem = false; try { rem = !!localStorage.getItem(KEY_STORE); } catch (e) {}
   $('cfgRem').checked = rem; $('cfgWeb').checked = g.web; $('engWrap').style.display = g.web ? '' : 'none'; $('engBox').innerHTML = Object.entries(ENGINES).map(([k, e]) => `<label class="chk2"><input type="checkbox" data-e="${k}" ${g.engines.includes(k) ? 'checked' : ''}> ${e.n}</label>`).join(''); paintPrefs(); $('cfgMsg').textContent = ''; $('cfgFilter').value = '';
-  MODELS = []; renderModels(); linkHint(); applyTheme(); tab(t || 'ia'); $('cfg').style.display = 'flex';
+  MODELS = srcModels().slice(); renderModels(); linkHint(); applyTheme(); tab(t || 'ia'); $('cfg').style.display = 'flex';
   $('cfgList').onclick = e => { const b = e.target.closest('button'); if (!b) return; const s = curModels(), i = s.indexOf(b.dataset.m); i < 0 ? s.push(b.dataset.m) : s.splice(i, 1); $('cfgModels').value = s.join(', '); renderModels(); };
   autoLoad(0);
 }
@@ -881,7 +881,7 @@ function provChange() { const P = PRESETS[$('cfgProv').value]; $('cfgBase').valu
 let _al;
 function autoLoad(ms) { // busca sozinha ao abrir, trocar de provedor ou digitar URL/chave (se já puder consultar)
   clearTimeout(_al);
-  _al = setTimeout(() => { const P = PRESETS[$('cfgProv').value]; if (okBase($('cfgBase').value.trim().replace(/\/+$/, '')) && (!P.key || $('cfgKey').value.trim())) loadModels(true); }, ms);
+  _al = setTimeout(() => { const P = PRESETS[$('cfgProv').value]; if (okBase($('cfgBase').value.trim().replace(/\/+$/, ''))) loadModels(true); }, ms);
 }
 const MC = 'azul_models_cache';
 function mcSave(base, list) { try { localStorage.setItem(MC, JSON.stringify({ base, list, ts: Date.now() })); } catch (e) {} }
