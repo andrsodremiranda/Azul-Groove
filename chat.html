@@ -419,6 +419,7 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
       <small>📊 Quantas mensagens dá para mandar? <a href="docs.html#/limites" target="_blank" rel="noopener" style="color:#8ea1ff">Veja os limites das APIs</a>.</small>
       <label>Modelos (o primeiro é usado antes)<input type="text" id="cfgModels" autocomplete="off"></label>
       <div class="row" style="justify-content:flex-start"><button class="btn2" id="btnLoad" onclick="loadModels()"><i class="fas fa-rotate"></i> Buscar modelos disponíveis</button></div>
+      <small id="cfgLoadMsg"></small>
             <small>🖥️ Usando IA local (Ollama, LM Studio, Jan)? <a href="docs.html#/ia-local" target="_blank" rel="noopener" style="color:#8ea1ff">Veja como liberar o CORS e conectar</a>.</small>
       <input type="text" id="cfgFilter" placeholder="Filtrar modelos (ex.: free, llama)" oninput="renderModels()" style="display:none">
       <div class="mlist" id="cfgList" style="display:none"></div>
@@ -702,7 +703,8 @@ function getCfg() {
   try { g = JSON.parse(localStorage.getItem(CFG_KEY) || '{}'); } catch (e) {}
   try { k = sessionStorage.getItem(KEY_STORE) || localStorage.getItem(KEY_STORE) || g.key || ''; } catch (e) {}
   const prov = PRESETS[g.provider] ? g.provider : 'openrouter', P = PRESETS[prov];
-  return { provider: prov, base: g.base || P.base, models: g.models || P.models, web: g.web !== false, engines: Array.isArray(g.engines) ? g.engines.filter(x => ENGINES[x]) : ['wikipt', 'ddg'], key: k };
+  const base = g.base || P.base, mc = mcGet(), fb = mc && mc.base === base && Array.isArray(mc.list) ? mc.list.slice(0, P.key ? 1 : 5).join(', ') : '';
+  return { provider: prov, base, models: g.models || P.models || fb, web: g.web !== false, engines: Array.isArray(g.engines) ? g.engines.filter(x => ENGINES[x]) : ['wikipt', 'ddg'], key: k };
 }
 const toast = t => { // aviso no topo: ícone + texto (o emoji do início vira o ícone)
   const e = $('toast'), m = String(t).match(/^(\p{Extended_Pictographic}\uFE0F?)\s*([\s\S]*)$/u), ic = m ? m[1] : '', tx = m ? m[2] : String(t);
@@ -853,14 +855,16 @@ async function listModels(base, key) {
   throw new Error(`A lista de modelos respondeu com erro ${st}. Confira a URL base (deve terminar em /v1) e o provedor.`);
 }
 async function loadModels(silent) {
-  const base = $('cfgBase').value.trim().replace(/\/+$/, ''), m = $('cfgMsg'), btn = $('btnLoad');
+  const base = $('cfgBase').value.trim().replace(/\/+$/, ''), m = $('cfgLoadMsg'), btn = $('btnLoad');
   if (!okBase(base)) { if (!silent) m.textContent = '⚠️ URL inválida.'; return; }
   const need = PRESETS[$('cfgProv').value].key && $('cfgKey').value.trim(), show = !silent || need; // automático: só avisa se o provedor usa chave
   if (show) m.textContent = 'Buscando modelos... (pode levar até 25 s)';
   if (btn) btn.disabled = true;
   try {
     MODELS = await listModels(base, $('cfgKey').value.trim()); mcSave(base, MODELS);
-    m.textContent = MODELS.length ? `✅ ${MODELS.length} modelos encontrados. Clique para escolher (o 1º da lista é usado antes), depois clique em Salvar para eles aparecerem no menu do chat.` : 'Conectou, mas não há modelos. No Ollama, instale um: ollama pull llama3.2';
+    let filled = false;
+    if (MODELS.length && !$('cfgModels').value.trim()) { $('cfgModels').value = MODELS.slice(0, PRESETS[$('cfgProv').value].key ? 1 : 5).join(', '); filled = true; }
+    m.textContent = MODELS.length ? `✅ ${MODELS.length} modelos encontrados. Clique para escolher (o 1º da lista é usado antes), depois clique em Salvar.` + (filled ? ' O campo Modelos estava vazio e eu preenchi sozinho.' : '') : 'Conectou, mas não há modelos. No Ollama, instale um: ollama pull llama3.2';
   } catch (e) { const c = mcGet(); MODELS = c && c.base === base ? c.list : []; if (show) m.textContent = '⚠️ ' + e.message; }
   finally { if (btn) btn.disabled = false; }
   renderModels();
@@ -871,13 +875,13 @@ function openCfg(t) {
   $('cfgProv').innerHTML = Object.entries(PRESETS).map(([id, p]) => `<option value="${id}">${p.n}</option>`).join('');
   $('cfgProv').value = g.provider; $('cfgBase').value = g.base; $('cfgModels').value = g.models; $('cfgKey').value = g.key;
   let rem = false; try { rem = !!localStorage.getItem(KEY_STORE); } catch (e) {}
-  $('cfgRem').checked = rem; $('cfgWeb').checked = g.web; $('engWrap').style.display = g.web ? '' : 'none'; $('engBox').innerHTML = Object.entries(ENGINES).map(([k, e]) => `<label class="chk2"><input type="checkbox" data-e="${k}" ${g.engines.includes(k) ? 'checked' : ''}> ${e.n}</label>`).join(''); paintPrefs(); $('cfgMsg').textContent = ''; $('cfgFilter').value = '';
+  $('cfgRem').checked = rem; $('cfgWeb').checked = g.web; $('engWrap').style.display = g.web ? '' : 'none'; $('engBox').innerHTML = Object.entries(ENGINES).map(([k, e]) => `<label class="chk2"><input type="checkbox" data-e="${k}" ${g.engines.includes(k) ? 'checked' : ''}> ${e.n}</label>`).join(''); paintPrefs(); $('cfgMsg').textContent = ''; $('cfgLoadMsg').textContent = ''; $('cfgFilter').value = '';
   MODELS = srcModels().slice(); renderModels(); linkHint(); applyTheme(); tab(t || 'ia'); $('cfg').style.display = 'flex';
   $('cfgList').onclick = e => { const b = e.target.closest('button'); if (!b) return; const s = curModels(), i = s.indexOf(b.dataset.m); i < 0 ? s.push(b.dataset.m) : s.splice(i, 1); $('cfgModels').value = s.join(', '); renderModels(); };
   autoLoad(0);
 }
 function linkHint() { const u = PRESETS[$('cfgProv').value].url; $('cfgLink').innerHTML = u ? `(<a href="${u}" target="_blank" rel="noopener noreferrer">gerar chave</a>)` : ''; }
-function provChange() { const P = PRESETS[$('cfgProv').value]; $('cfgBase').value = P.base; $('cfgModels').value = P.models; MODELS = []; renderModels(); linkHint(); $('cfgMsg').textContent = ''; autoLoad(0); }
+function provChange() { const P = PRESETS[$('cfgProv').value]; $('cfgBase').value = P.base; $('cfgModels').value = P.models; MODELS = []; renderModels(); linkHint(); $('cfgMsg').textContent = ''; $('cfgLoadMsg').textContent = ''; autoLoad(0); }
 let _al;
 function autoLoad(ms) { // busca sozinha ao abrir, trocar de provedor ou digitar URL/chave (se já puder consultar)
   clearTimeout(_al);
