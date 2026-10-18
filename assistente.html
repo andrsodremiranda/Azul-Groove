@@ -695,6 +695,32 @@
         .quick-option-btn:hover, .cfg-btn:hover, .ai-news-btn:hover { background: var(--gr); border-color: transparent; }
         @media (prefers-reduced-motion: reduce) { .bg, .logo-t, .hero h2, .hero-ic { animation: none !important; } #fx { display: none; } }
     .more{font-size:.82rem;color:var(--m,#9aa3d6)}.more summary{cursor:pointer;color:#8ea1ff;font-weight:600}.more p{margin-top:6px;line-height:1.55}
+
+    /* ===== novo menu (barra flutuante em pílula) ===== */
+    nav { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: 0; padding: 14px 20px 0; }
+    nav .nav-container { position: relative; max-width: 1200px; height: 64px; padding: 0 10px 0 12px; border-radius: 99px; border: 1px solid rgba(255,255,255,.08); background: linear-gradient(135deg, rgba(20,25,64,.62), rgba(10,13,38,.62)); backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%); box-shadow: 0 10px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07); }
+    nav .logo { gap: 11px; font-weight: 800; letter-spacing: -.3px; font-size: 1.12rem; }
+    nav .logo .lg { display: grid; place-items: center; filter: drop-shadow(0 4px 12px rgba(176,109,255,.55)); transition: transform .3s; }
+    nav .logo .lg svg { height: 36px; width: auto; display: block; }
+    nav .logo:hover .lg { transform: translateY(-2px) scale(1.08); }
+    .nav-links { gap: 4px; padding: 5px; border-radius: 99px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.05); }
+    .nav-links a { padding: 8px 16px; border-radius: 99px; font-weight: 600; font-size: .9rem; }
+    .nav-links a:hover { background: rgba(255,255,255,.08); color: #fff; }
+    .cta-button { border-radius: 99px; padding: 9px 16px; box-shadow: 0 5px 16px rgba(88,101,242,.5); }
+    .nav-lang-btn { border-radius: 99px !important; }
+    .burger { display: none; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.06); cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 0; }
+    .burger span { width: 18px; height: 2px; border-radius: 2px; background: #fff; transition: transform .25s, opacity .25s; }
+    .burger[aria-expanded=true] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .burger[aria-expanded=true] span:nth-child(2) { opacity: 0; }
+    .burger[aria-expanded=true] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .assistant-section { height: calc(100dvh - 78px); }
+    @media (max-width: 980px) {
+        .burger { display: flex; }
+        .nav-links { display: none; position: absolute; top: calc(100% + 10px); left: 0; right: 0; flex-direction: column; gap: 2px; padding: 10px; border-radius: 24px; background: rgba(9,12,34,.96); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(0,0,0,.6); }
+        .nav-links.open { display: flex; animation: fadeInMsg .25s both; }
+        .nav-links a { padding: 13px 16px; font-size: .98rem; }
+    }
+    @media (max-width: 560px) { nav { padding: 10px 10px 0; } nav .logo .logo-t { display: none; } .cta-button { display: inline-block; padding: 9px 13px; } }
 </style>
 <script src="halloween.js" defer></script>
 </head>
@@ -709,8 +735,8 @@
             
             <div class="terms-checkbox-container">
                 <input type="checkbox" id="acceptTerms" onchange="toggleTermsValidation()">
-                <label for="acceptTerms" data-pt='Li e concordo com os <a href="licenca.html" target="_blank">Termos de Uso e Licença</a> do Azul Groove e com a <a href="licenca-ia.html" target="_blank">Licença de Uso da IA</a>.' data-en='I have read and agree to the Azul Groove <a href="licenca.html" target="_blank">Terms of Use and License</a> and the <a href="licenca-ia.html" target="_blank">AI Use License</a>.'>
-                    Li e concordo com os <a href="licenca.html" target="_blank">Termos de Uso e Licença</a> do Azul Groove e com a <a href="licenca-ia.html" target="_blank">Licença de Uso da IA</a>.
+                <label for="acceptTerms" data-pt='Li e concordo com os <a href="legal.html#termos" target="_blank">Termos de Uso e Licença</a> do Azul Groove e com a <a href="legal.html#ia" target="_blank">Licença de Uso da IA</a>.' data-en='I have read and agree to the Azul Groove <a href="legal.html#termos" target="_blank">Terms of Use and License</a> and the <a href="legal.html#ia" target="_blank">AI Use License</a>.'>
+                    Li e concordo com os <a href="legal.html#termos" target="_blank">Termos de Uso e Licença</a> do Azul Groove e com a <a href="legal.html#ia" target="_blank">Licença de Uso da IA</a>.
                 </label>
             </div>
 
@@ -762,6 +788,18 @@
         <div class="modal-card">
             <h3><i class="fas fa-wand-magic-sparkles" style="color: #eb459e;"></i> <span data-pt="Novidades da IA - ASTM OS 15.0" data-en="AI News - ASTM OS 15.0">Novidades da IA - ASTM OS 15.0</span></h3>
             <div class="news-item">
+                <h4 data-pt="🛟 Central de Ajuda" data-en="🛟 Help Center">🛟 Central de Ajuda</h4>
+                <p data-pt="Nova página com respostas rápidas para as dúvidas mais comuns, com busca e perguntas organizadas por assunto." data-en="A new page with quick answers to the most common questions, with search and questions organized by topic.">Nova página com respostas rápidas para as dúvidas mais comuns, com busca e perguntas organizadas por assunto.</p>
+            </div>
+            <div class="news-item">
+                <h4 data-pt="🎨 Novo menu e logo" data-en="🎨 New menu and logo">🎨 Novo menu e logo</h4>
+                <p data-pt="O menu do topo virou uma barra flutuante de vidro, com menu próprio para celular e a nova logo da flor de lótus. O link Suporte agora abre a Central de Ajuda." data-en="The top menu is now a floating glass bar, with its own mobile menu and the new lotus flower logo. The Support link now opens the Help Center.">O menu do topo virou uma barra flutuante de vidro, com menu próprio para celular e a nova logo da flor de lótus. O link Suporte agora abre a Central de Ajuda.</p>
+            </div>
+            <div class="news-item">
+                <h4 data-pt="📄 Documentos legais em um só lugar" data-en="📄 Legal documents in one place">📄 Documentos legais em um só lugar</h4>
+                <p data-pt="Termos de Uso, Privacidade e Licença da IA agora ficam em uma única página, com abas e tradução." data-en="Terms of Use, Privacy and AI License now live on a single page, with tabs and translation.">Termos de Uso, Privacidade e Licença da IA agora ficam em uma única página, com abas e tradução.</p>
+            </div>
+            <div class="news-item">
                 <h4 data-pt="⚡ Respostas com Menor Latência" data-en="⚡ Lower Latency Responses">⚡ Respostas com Menor Latência</h4>
                 <p data-pt="A arquitetura do motor ASTM OS foi otimizada para respostas fluidas e tratamento seguro de limites de API." data-en="The ASTM OS engine architecture was optimized for smooth responses and safe API limit handling.">A arquitetura do motor ASTM OS foi otimizada para respostas fluidas e tratamento seguro de limites de API.</p>
             </div>
@@ -811,16 +849,16 @@
     <!-- NAVEGAÇÃO DE CIMA MANTIDA -->
     <nav>
         <div class="nav-container">
-            <div class="logo">
-                <i class="fab fa-discord"></i> <span class="logo-t">Azul Groove</span>
-            </div>
-            <ul class="nav-links">
+            <a class="logo" href="index.html">
+                <span class="lg"><svg viewBox="40 140 940 710" aria-hidden="true"><defs><linearGradient id="lotG" gradientUnits="userSpaceOnUse" x1="200" y1="820" x2="820" y2="240"><stop offset="0" stop-color="#6b8cff"/><stop offset=".5" stop-color="#b06dff"/><stop offset="1" stop-color="#ff6fff"/></linearGradient></defs><g fill="url(#lotG)"><path d="M512,148C455,203 413,262 388,327C455,392 497,480 512,588C527,480 569,392 636,327C611,262 569,203 512,148Z"/><path d="M379,358C350,420 360,520 413,605C455,668 490,745 503,812C503,720 497,640 485,570C470,480 430,410 379,358Z"/><path d="M645,358C674,420 664,520 611,605C569,668 534,745 521,812C521,720 527,640 539,570C554,480 594,410 645,358Z"/><path d="M216,264C275,280 325,308 360,341C340,400 340,470 354,525C310,484 262,458 214,445C200,380 204,320 216,264Z"/><path d="M808,264C749,280 699,308 664,341C684,400 684,470 670,525C714,484 762,458 810,445C824,380 820,320 808,264Z"/><path d="M52,452C170,445 270,470 345,545C415,620 465,720 489,831C300,845 100,740 52,452Z"/><path d="M972,452C854,445 754,470 679,545C609,620 559,720 535,831C724,845 924,740 972,452Z"/></g></svg></span> <span class="logo-t">Azul Groove</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html#home" data-pt="Início" data-en="Home">Início</a></li>
                 <li><a href="index.html#features" data-pt="Recursos" data-en="Features">Recursos</a></li>
                 <li><a href="index.html#commands" data-pt="Comandos" data-en="Commands">Comandos</a></li>
                 <li><a href="blog.html" data-pt="Blog" data-en="Blog">Blog</a></li>
                 <li><a href="index.html#license" data-pt="Licença" data-en="License">Licença</a></li>
-                <li><a href="index.html#support" data-pt="Suporte" data-en="Support">Suporte</a></li>
+                <li><a href="ajuda.html" data-pt="Suporte" data-en="Support">Suporte</a></li>
             </ul>
             
             <div style="display: flex; gap: 12px; align-items: center;">
@@ -843,6 +881,7 @@
                     data-en="Invite Bot"
                     >Adicionar Bot</a
                 >
+                <button class="burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
             </div>
         </div>
     </nav>
@@ -928,15 +967,15 @@
             </div>
             <div class="footer-section">
                 <h3 data-pt="Suporte" data-en="Support">Suporte</h3>
-                <p><a href="https://discord.gg/g4cW4zRvjf" data-pt="Central de Ajuda" data-en="Help Center">Central de Ajuda</a></p>
+                <p><a href="ajuda.html" data-pt="Central de Ajuda" data-en="Help Center">Central de Ajuda</a></p>
                 <p><a href="https://discord.gg/g4cW4zRvjf" data-pt="Contato" data-en="Contact Us">Contato</a></p>
                 <p><a href="https://top.gg/bot/1107120892472983603/vote" target="_blank" rel="noopener noreferrer" data-pt="Votar no Top.gg" data-en="Vote on Top.gg">Votar no Top.gg</a></p>
             </div>
             <div class="footer-section">
                 <h3 data-pt="Legal" data-en="Legal">Legal</h3>
-                <p><a href="licenca.html" data-pt="Termos de Uso" data-en="Terms of Service">Termos de Uso</a></p>
-                <p><a href="licenca-ia.html" data-pt="Licença de Uso da IA" data-en="AI Use License">Licença de Uso da IA</a></p>
-                <p><a href="privacidade.html" data-pt="Política de Privacidade" data-en="Privacy Policy">Política de Privacidade</a></p>
+                <p><a href="legal.html#termos" data-pt="Termos de Uso" data-en="Terms of Service">Termos de Uso</a></p>
+                <p><a href="legal.html#ia" data-pt="Licença de Uso da IA" data-en="AI Use License">Licença de Uso da IA</a></p>
+                <p><a href="legal.html#privacidade" data-pt="Política de Privacidade" data-en="Privacy Policy">Política de Privacidade</a></p>
             </div>
         </div>
         <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #2f3136;">
@@ -1581,6 +1620,16 @@ Use a base local e os resultados só quando forem relevantes para a pergunta; em
         })();
     </script>
     <script src="main.js"></script>
+    <script>
+    (function () {
+        var bg = document.getElementById('navBurger'), nl = document.getElementById('navLinks');
+        if (!bg || !nl) return;
+        function cl(o) { nl.classList.toggle('open', o); bg.setAttribute('aria-expanded', o); }
+        bg.onclick = function (e) { e.stopPropagation(); cl(!nl.classList.contains('open')); };
+        nl.addEventListener('click', function (e) { if (e.target.closest('a')) cl(false); });
+        document.addEventListener('click', function (e) { if (!e.target.closest('.nav-container')) cl(false); });
+    })();
+    </script>
     <script>
     (function () {
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;

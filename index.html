@@ -159,7 +159,7 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 .nw-it a{display:inline-flex;gap:6px;align-items:center;margin-top:9px;padding:6px 13px;border-radius:99px;background:rgba(88,101,242,.18);color:#bcc6ff;font-size:.8rem;font-weight:700;transition:.15s}
 .nw-it a:hover{background:var(--ac);color:#fff}
 .nw-empty{text-align:center;color:var(--mut);padding:30px 10px}
-.nw-f{display:flex;gap:10px;justify-content:center;padding:12px 18px;border-top:1px solid var(--line);font-size:.86rem;color:var(--mut)}
+.nw-f{display:flex;flex-wrap:wrap;gap:6px 10px;justify-content:center;padding:12px 18px;border-top:1px solid var(--line);font-size:.86rem;color:var(--mut)}
 .nw-f a{color:#8ea1ff;font-weight:600}
 @media(max-width:560px){.nw-btn .t{display:none}.nw-btn{padding:10px}.nw-panel{left:10px;right:10px;width:auto;bottom:80px;max-height:78vh}}
 @media(prefers-reduced-motion:reduce){.nw-panel.open,.nw-it,.nw-btn .bell i{animation:none!important}}
@@ -196,6 +196,45 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 .final .btn.pri{animation:glowp 2.2s ease-in-out infinite}
 @media(max-width:820px){.links{display:none}.hero{padding:70px 0 50px}.right .btn.pri{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.notes{display:none}.rv,.hero .pill,.hero h1,.hero p,.hero .cta,.hero .eq{opacity:1;transform:none}#fx{display:none}}
+
+/* ===== novo menu (barra flutuante em pílula) ===== */
+nav{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:0;padding:14px 0 0;box-shadow:none!important}
+nav.sc{background:transparent}
+nav .wrap{display:block;height:auto}
+.bar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px;padding:0 10px 0 12px;border-radius:99px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(20,25,64,.62),rgba(10,13,38,.62));backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.07);transition:background .3s,border-color .3s,box-shadow .3s}
+nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-shadow:0 14px 44px rgba(0,0,0,.55),0 0 0 1px rgba(88,101,242,.12)}
+.logo{gap:11px;font-weight:800;letter-spacing:-.3px;font-size:1.12rem}
+.logo .lg{display:grid;place-items:center;filter:drop-shadow(0 4px 12px rgba(176,109,255,.55));transition:transform .3s}
+.logo .lg svg{height:36px;width:auto;display:block}
+.logo:hover .lg{transform:translateY(-2px) scale(1.08)}
+.logo i{color:#fff}
+.logo .lt{background:linear-gradient(120deg,#fff,#c9d2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{gap:4px;padding:5px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05)}
+.links a{padding:8px 16px;border-radius:99px;font-weight:600;font-size:.9rem;color:var(--mut);transition:color .2s,background .2s,box-shadow .2s}
+.links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.links a.act{color:#fff;background:linear-gradient(135deg,var(--ac),#7a5cff);box-shadow:0 6px 16px rgba(88,101,242,.5)}
+.right{gap:8px}
+.right .btn{border-radius:99px}
+.right .btn.sm{padding:9px 16px}
+#indexLangBtn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);box-shadow:none}
+#indexLangBtn:hover{background:rgba(255,255,255,.12);box-shadow:none}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0}
+.burger span{width:18px;height:2px;border-radius:2px;background:#fff;transition:transform .25s,opacity .25s}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@media(max-width:820px){
+  .burger{display:flex}
+  .links{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;gap:2px;padding:10px;border-radius:24px;background:rgba(9,12,34,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .links.open{display:flex;animation:nwIn .25s cubic-bezier(.2,.9,.3,1.1)}
+  .links a{padding:13px 16px;border-radius:14px;font-size:.98rem}
+  .right .btn.pri{display:inline-flex}
+}
+@media(max-width:480px){
+  .logo .lt{display:none}
+  .right .btn.pri span{display:none}
+  .right .btn.pri{padding:9px 13px}
+}
 </style>
 <script src="halloween.js" defer></script>
 </head>
@@ -204,21 +243,22 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
 <canvas id="fx"></canvas>
 
-<nav><div class="wrap">
-  <div class="logo"><i class="fab fa-discord"></i> Azul Groove</div>
-  <div class="links">
+<nav id="topnav"><div class="wrap"><div class="bar">
+  <a class="logo" href="#home"><span class="lg"><svg viewBox="40 140 940 710" aria-hidden="true"><defs><linearGradient id="lotG" gradientUnits="userSpaceOnUse" x1="200" y1="820" x2="820" y2="240"><stop offset="0" stop-color="#6b8cff"/><stop offset=".5" stop-color="#b06dff"/><stop offset="1" stop-color="#ff6fff"/></linearGradient></defs><g fill="url(#lotG)"><path d="M512,148C455,203 413,262 388,327C455,392 497,480 512,588C527,480 569,392 636,327C611,262 569,203 512,148Z"/><path d="M379,358C350,420 360,520 413,605C455,668 490,745 503,812C503,720 497,640 485,570C470,480 430,410 379,358Z"/><path d="M645,358C674,420 664,520 611,605C569,668 534,745 521,812C521,720 527,640 539,570C554,480 594,410 645,358Z"/><path d="M216,264C275,280 325,308 360,341C340,400 340,470 354,525C310,484 262,458 214,445C200,380 204,320 216,264Z"/><path d="M808,264C749,280 699,308 664,341C684,400 684,470 670,525C714,484 762,458 810,445C824,380 820,320 808,264Z"/><path d="M52,452C170,445 270,470 345,545C415,620 465,720 489,831C300,845 100,740 52,452Z"/><path d="M972,452C854,445 754,470 679,545C609,620 559,720 535,831C724,845 924,740 972,452Z"/></g></svg></span><span class="lt">Azul Groove</span></a>
+  <div class="links" id="navLinks">
     <a href="#home" data-pt="Início" data-en="Home">Início</a>
     <a href="#features" data-pt="Recursos" data-en="Features">Recursos</a>
     <a href="#commands" data-pt="Comandos" data-en="Commands">Comandos</a>
     <a href="blog.html">Blog</a>
     <a href="#license" data-pt="Licença" data-en="License">Licença</a>
-    <a href="#support" data-pt="Suporte" data-en="Support">Suporte</a>
+    <a href="ajuda.html" data-pt="Suporte" data-en="Support">Suporte</a>
   </div>
   <div class="right">
     <button class="btn sm" onclick="toggleIndexLang()" id="indexLangBtn">🇧🇷 PT</button>
-    <a class="btn pri sm" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer" data-pt="Adicionar Bot" data-en="Invite Bot">Adicionar Bot</a>
+    <a class="btn pri sm" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer"><i class="fas fa-plus"></i> <span data-pt="Adicionar Bot" data-en="Invite Bot">Adicionar Bot</span></a>
+    <button class="burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
   </div>
-</div></nav>
+</div></div></nav>
 
 <header id="home" class="hero"><div class="wrap">
   <div class="pill"><i class="fas fa-music"></i> <span data-pt="Bot de música para Discord" data-en="Music bot for Discord">Bot de música para Discord</span></div>
@@ -277,7 +317,7 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
       <h3 data-pt="Termos de Uso e Privacidade" data-en="Terms of Use & Privacy Policy">Termos de Uso e Privacidade</h3>
       <p data-pt="Consulte os Termos de Uso e a Política de Privacidade oficiais da ASTM Software para o Azul Groove." data-en="Read our official Terms of Use and Privacy Policy developed by ASTM Software for Azul Groove.">Consulte os Termos de Uso e a Política de Privacidade oficiais da ASTM Software para o Azul Groove.</p>
     </div>
-    <a class="btn pri" href="licenca.html"><span data-pt="Ler Termos Completos" data-en="Read Full Terms">Ler Termos Completos</span> <i class="fas fa-arrow-right"></i></a>
+    <a class="btn pri" href="legal.html#termos"><span data-pt="Ler Termos Completos" data-en="Read Full Terms">Ler Termos Completos</span> <i class="fas fa-arrow-right"></i></a>
   </div>
 </div></section>
 
@@ -314,15 +354,16 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
     </div>
     <div>
       <h4 data-pt="Suporte" data-en="Support">Suporte</h4>
-      <p><a href="https://discord.gg/g4cW4zRvjf" data-pt="Central de Ajuda" data-en="Help Center">Central de Ajuda</a></p>
+      <p><a href="ajuda.html" data-pt="Central de Ajuda" data-en="Help Center">Central de Ajuda</a></p>
       <p><a href="https://discord.gg/g4cW4zRvjf" data-pt="Contato" data-en="Contact Us">Contato</a></p>
+      <p><a href="changelog.html" data-pt="Histórico de Atualizações" data-en="Update History">Histórico de Atualizações</a></p>
       <p><a href="https://top.gg/bot/1107120892472983603/vote" target="_blank" rel="noopener noreferrer" data-pt="Votar no Top.gg" data-en="Vote on Top.gg">Votar no Top.gg</a></p>
     </div>
     <div>
       <h4>Legal</h4>
-      <p><a href="licenca.html" data-pt="Termos de Uso" data-en="Terms of Service">Termos de Uso</a></p>
-      <p><a href="licenca-ia.html" data-pt="Licença de Uso da IA" data-en="AI Use License">Licença de Uso da IA</a></p>
-      <p><a href="privacidade.html" data-pt="Política de Privacidade" data-en="Privacy Policy">Política de Privacidade</a></p>
+      <p><a href="legal.html#termos" data-pt="Termos de Uso" data-en="Terms of Service">Termos de Uso</a></p>
+      <p><a href="legal.html#ia" data-pt="Licença de Uso da IA" data-en="AI Use License">Licença de Uso da IA</a></p>
+      <p><a href="legal.html#privacidade" data-pt="Política de Privacidade" data-en="Privacy Policy">Política de Privacidade</a></p>
     </div>
   </div>
   <div class="copy">&copy; 2026 ASTM Software. All rights reserved.</div>
@@ -334,7 +375,7 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
   <div class="nw-h"><span class="nw-hi"><i class="fas fa-wand-magic-sparkles"></i></span><div class="nw-ht"><b id="nwTitle">Novidades</b><small id="nwSub">Tudo o que mudou no Azul Groove</small></div><button id="nwClose" aria-label="Fechar">&times;</button></div>
   <div class="nw-tabs" id="nwTabs"></div>
   <div class="nw-list" id="nwList"></div>
-  <div class="nw-f"><a href="blog.html" id="nwBlog">Ver todas no blog</a><span>·</span><a href="docs.html" id="nwDocs">Documentação</a></div>
+  <div class="nw-f"><a href="blog.html" id="nwBlog">Ver todas no blog</a><span>·</span><a href="changelog.html" id="nwLog">Histórico</a><span>·</span><a href="docs.html" id="nwDocs">Documentação</a></div>
 </div>
 
 <script>
@@ -347,15 +388,19 @@ function applyLanguage() {
 }
 
 // ===== Novidades: edite só esta lista (a mais nova primeiro) =====
-const NEWS_VER = '2026-10-17';
+const NEWS_VER = '2026-10-18';
 const NEWS = [
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-life-ring', pt: ['Central de Ajuda', 'Nova página com respostas rápidas para as dúvidas mais comuns, com busca e perguntas organizadas por assunto.'], en: ['Help Center', 'A new page with quick answers to the most common questions, with search and questions organized by topic.'], link: ['ajuda.html', 'Abrir a Central de Ajuda', 'Open the Help Center'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-clock-rotate-left', pt: ['Histórico de atualizações', 'Agora o site tem uma página de changelog com tudo o que mudou, da mais nova para a mais antiga, com filtros e busca.'], en: ['Update history', 'The site now has a changelog page with everything that changed, newest first, with filters and search.'], link: ['changelog.html', 'Abrir o histórico', 'Open the history'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Documentos legais em um só lugar', 'Termos de Uso, Privacidade e Licença da IA agora ficam em uma única página, com abas e tradução.'], en: ['Legal documents in one place', 'Terms of Use, Privacy and AI License now live on a single page, with tabs and translation.'], link: ['legal.html', 'Abrir os documentos', 'Open the documents'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-palette', pt: ['Novo menu e logo', 'O menu do topo virou uma barra flutuante de vidro, com a seção atual em destaque, menu próprio para celular e a nova logo da flor de lótus. O link Suporte agora abre a Central de Ajuda.'], en: ['New menu and logo', 'The top menu is now a floating glass bar, with the current section highlighted, its own mobile menu and the new lotus flower logo. The Support link now opens the Help Center.'] },
   { iso: '2026-10-17', d: '17 Out 2026', t: 'new', i: 'fa-ghost', pt: ['Tema de Halloween', 'O site ganhou visual de Halloween até 07 de novembro, com cores laranja e roxo e abóboras e morcegos caindo. No chat, só o fundo muda. Depois da data, tudo volta ao normal sozinho.'], en: ['Halloween theme', 'The site has a Halloween look until November 7, with orange and purple colors and falling pumpkins and bats. In the chat, only the background changes. After that date, everything goes back to normal on its own.'] },
   { iso: '2026-10-07', d: '07 Out 2026', t: 'new', i: 'fa-screwdriver-wrench', pt: ['Assistente de instalação', 'Baixe o Assistente e ele instala sozinho a versão mais recente do app para Windows. Também repara a instalação e deixa escolher outra versão.'], en: ['Install Assistant', 'Download the Assistant and it installs the latest Windows app version for you. It also repairs the install and lets you pick another version.'], link: ['ia.html#baixar', 'Baixar o Assistente', 'Download the Assistant'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-sliders', pt: ['Novo menu de configurações', 'Abas laterais com ícones, interruptores no lugar das caixinhas e visual de vidro, no chat.'], en: ['New settings menu', 'Side tabs with icons, toggle switches instead of checkboxes and a glass look, in the chat.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-arrows-rotate', pt: ['Sincronização entre aparelhos', 'Gere um código no aparelho A e digite no B para passar as conversas pela internet. O código vale 5 minutos.'], en: ['Sync between devices', 'Generate a code on device A and type it on B to move your chats over the internet. The code lasts 5 minutes.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-wand-magic-sparkles', pt: ['Escolha a IA ao lado do enviar', 'Novo menu com busca, ícones por marca (Google, Meta e outras), selo de modelos grátis e tela de limites da API.'], en: ['Pick the AI next to send', 'New menu with search, brand icons (Google, Meta and more), a free-model badge and an API limits screen.'], link: ['chat.html', 'Experimentar', 'Try it'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-robot', pt: ['Site da Azul Groove IA', 'Uma página para conhecer a IA, ver como ela funciona e baixar o app para Windows.'], en: ['Azul Groove AI site', 'A page to meet the AI, see how it works and download the Windows app.'], link: ['ia.html', 'Conhecer a IA', 'Meet the AI'] },
-  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Licença de Uso da IA', 'Explica que não coletamos seus dados, que tudo fica no seu navegador e que as respostas vêm de serviços de terceiros.'], en: ['AI Use License', 'Explains that we do not collect your data, that everything stays in your browser and that replies come from third-party services.'], link: ['licenca-ia.html', 'Ler a licença', 'Read the license'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Licença de Uso da IA', 'Explica que não coletamos seus dados, que tudo fica no seu navegador e que as respostas vêm de serviços de terceiros.'], en: ['AI Use License', 'Explains that we do not collect your data, that everything stays in your browser and that replies come from third-party services.'], link: ['legal.html#ia', 'Ler a licença', 'Read the license'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-book', pt: ['Docs: pesquisa na internet e limites', 'Nova página sobre a pesquisa na internet e links diretos para IA local e limites das APIs, dentro do chat.'], en: ['Docs: internet search and limits', 'New page about internet search and direct links to local AI and API limits from the chat.'], link: ['docs.html#/pesquisa-web', 'Ler no Docs', 'Read in Docs'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-chart-simple', pt: ['Estatísticas de uso', 'Em Configurações > Conta: perguntas por dia, tempo médio de resposta e modelos mais usados.'], en: ['Usage stats', 'In Settings > Account: questions per day, average reply time and most used models.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
   { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-palette', pt: ['Novo visual do site', 'Início, blog, privacidade, licenças e o assistente ganharam um design novo, com fundo animado e digitação.'], en: ['New site design', 'Home, blog, privacy, licenses and the assistant got a fresh look, with an animated background and typing effect.'] },
@@ -379,6 +424,7 @@ function renderNews() {
   document.getElementById('nwTitle').textContent = en ? "What's new" : 'Novidades';
   document.getElementById('nwSub').textContent = en ? 'Everything that changed in Azul Groove' : 'Tudo o que mudou no Azul Groove';
   document.getElementById('nwBlog').textContent = en ? 'See all on the blog' : 'Ver todas no blog';
+  document.getElementById('nwLog').textContent = en ? 'History' : 'Histórico';
   document.getElementById('nwDocs').textContent = en ? 'Documentation' : 'Documentação';
 }
 (function () {
@@ -422,6 +468,15 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
   // nav com sombra ao rolar
   const nv = document.querySelector('nav'); const onS = () => nv.classList.toggle('sc', scrollY > 10); addEventListener('scroll', onS, { passive: true }); onS();
+  // link ativo conforme a seção + menu mobile
+  const lk = [...document.querySelectorAll('#navLinks a[href^="#"]')], secs = lk.map(a => document.querySelector(a.getAttribute('href')));
+  const spy = () => { let cur = -1; const y = innerHeight * .35; secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= y) cur = i; }); lk.forEach((a, i) => a.classList.toggle('act', i === cur)); };
+  addEventListener('scroll', spy, { passive: true }); spy();
+  const bg = document.getElementById('navBurger'), nl = document.getElementById('navLinks');
+  const cl = o => { nl.classList.toggle('open', o); bg.setAttribute('aria-expanded', o); };
+  bg.onclick = e => { e.stopPropagation(); cl(!nl.classList.contains('open')); };
+  nl.addEventListener('click', e => { if (e.target.closest('a')) cl(false); });
+  document.addEventListener('click', e => { if (!e.target.closest('.bar')) cl(false); });
   // brilho que segue o mouse nos cards
   document.querySelectorAll('.card,.banner').forEach(c => c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); }));
   // contadores

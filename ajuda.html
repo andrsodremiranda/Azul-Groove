@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Ajuda - Azul Groove</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.glow{position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 15% 0,rgba(88,101,242,.26),transparent),radial-gradient(500px 400px at 95% 10%,rgba(31,182,255,.15),transparent);animation:hue 22s ease-in-out infinite alternate}
+@keyframes hue{from{filter:hue-rotate(-25deg)}to{filter:hue-rotate(75deg)}}
+
+/* ===== menu (barra flutuante) ===== */
+nav{position:sticky;top:0;z-index:10;padding:14px 0 0}
+.bar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px;padding:0 10px 0 12px;border-radius:99px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(20,25,64,.62),rgba(10,13,38,.62));backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.07);transition:background .3s,border-color .3s,box-shadow .3s}
+nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-shadow:0 14px 44px rgba(0,0,0,.55),0 0 0 1px rgba(88,101,242,.12)}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.3px;font-size:1.12rem}
+.logo .lg{display:grid;place-items:center;filter:drop-shadow(0 4px 12px rgba(176,109,255,.55));transition:transform .3s}
+.logo .lg svg{height:36px;width:auto;display:block}
+.logo:hover .lg{transform:translateY(-2px) scale(1.08)}
+.logo .lt{background:linear-gradient(120deg,#fff,#c9d2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:4px;padding:5px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);font-size:.9rem}
+.links a{padding:8px 16px;border-radius:99px;font-weight:600;color:var(--mut);transition:color .2s,background .2s}
+.links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.right{display:flex;gap:8px;align-items:center}
+.btn{--g1:#5865f2;--g2:#7a5cff;--gl:rgba(88,101,242,.5);position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;font-weight:600;font-size:.85rem;border:1px solid transparent;background:linear-gradient(135deg,var(--g1),var(--g2));background-size:200% 100%;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 5px 16px var(--gl);transition:.25s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn:hover{transform:translateY(-2px);background-position:100% 0}.btn:hover::after{transform:translateX(120%)}
+.btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);box-shadow:none}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0}
+.burger span{width:18px;height:2px;border-radius:2px;background:#fff;transition:transform .25s,opacity .25s}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.97)}}
+@media(max-width:820px){
+  .burger{display:flex}
+  .links{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;gap:2px;padding:10px;border-radius:24px;background:rgba(9,12,34,.96);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .links.open{display:flex;animation:pop .25s}
+  .links a{padding:13px 16px;border-radius:14px;font-size:.98rem}
+}
+@media(max-width:480px){.logo .lt{display:none}}
+
+/* ===== página ===== */
+.page{max-width:860px;margin:0 auto;padding:34px 20px 70px}
+.head{position:relative;text-align:center;margin-bottom:26px;padding-top:6px}
+.head h1{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;letter-spacing:-.5px;background:linear-gradient(110deg,#fff 20%,var(--ac2) 45%,#ff6fff 60%,#fff 80%);background-size:250% 100%;animation:shine 6s linear infinite,rise .8s both;-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--mut);margin-top:6px}
+.sb{position:relative;max-width:520px;margin:0 auto 18px}
+.sb i{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--mut)}
+.sb input{width:100%;padding:15px 20px 15px 46px;border-radius:99px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--tx);font:inherit;outline:none;transition:.2s}
+.sb input:focus{border-color:var(--ac);background:rgba(88,101,242,.1);box-shadow:0 0 0 4px rgba(88,101,242,.15)}
+.tabs{display:flex;gap:6px;padding:6px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);width:fit-content;max-width:100%;flex-wrap:wrap;justify-content:center;margin:0 auto 26px}
+.tabs button{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:0;border-radius:99px;background:none;color:var(--mut);font-weight:600;font-size:.88rem;font-family:inherit;cursor:pointer;white-space:nowrap;transition:.2s}
+.tabs button:hover{color:#fff;background:rgba(255,255,255,.07)}
+.tabs button.on{color:#fff;background:linear-gradient(135deg,var(--ac),#7a5cff);box-shadow:0 6px 18px rgba(88,101,242,.5)}
+.cat{font-size:.8rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--ac2);margin:26px 0 10px}
+details{border:1px solid var(--line);background:var(--card);border-radius:16px;margin-bottom:10px;animation:pop .35s both;transition:border-color .2s}
+details:hover,details[open]{border-color:var(--ac)}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px 18px;font-weight:700}
+summary::-webkit-details-marker{display:none}
+summary .ic{flex:0 0 36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-size:.9rem;background:linear-gradient(135deg,#5865f2,#7a5cff)}
+summary span.q{flex:1}
+summary .ch{color:var(--mut);transition:transform .25s}
+details[open] .ch{transform:rotate(180deg)}
+.an{padding:0 18px 18px 68px;color:var(--mut);font-size:.94rem;line-height:1.7}
+.empty{text-align:center;color:var(--mut);padding:40px 10px}
+.cta{margin-top:40px;text-align:center;padding:30px 22px;border-radius:24px;border:1px solid rgba(88,101,242,.4);background:linear-gradient(135deg,rgba(88,101,242,.18),rgba(31,182,255,.08))}
+.cta h2{font-size:1.3rem;margin-bottom:6px}
+.cta p{color:var(--mut);margin-bottom:18px}
+.cta .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.copy{text-align:center;color:var(--mut);font-size:.85rem;margin-top:30px}
+
+/* ===== animações ===== */
+@keyframes shine{to{background-position:-250% 0}}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+@keyframes ring{0%{transform:scale(.8);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+@keyframes note{0%{transform:translateY(40px) rotate(0);opacity:0}15%{opacity:.7}100%{transform:translateY(-150px) rotate(25deg);opacity:0}}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(24px,18px) scale(1.15)}}
+@keyframes slide{from{opacity:0;transform:translateY(-8px)}}
+@keyframes edge{to{background-position:200% 0}}
+@keyframes beat{0%,100%{box-shadow:0 0 0 0 rgba(88,101,242,.6)}50%{box-shadow:0 0 0 12px rgba(88,101,242,0)}}
+.head::before,.head::after{content:"";position:absolute;z-index:-1;border-radius:50%;filter:blur(50px);pointer-events:none;animation:drift 9s ease-in-out infinite}
+.head::before{width:200px;height:200px;left:6%;top:-20px;background:rgba(88,101,242,.35)}
+.head::after{width:170px;height:170px;right:8%;top:30px;background:rgba(255,111,255,.22);animation-delay:-4s}
+.hero{position:relative;width:78px;height:78px;margin:0 auto 14px;display:grid;place-items:center;font-size:1.9rem;color:#fff;border-radius:24px;background:linear-gradient(135deg,#5865f2,#b06dff 60%,#ff6fff);box-shadow:0 14px 40px rgba(130,90,255,.55);animation:floaty 5s ease-in-out infinite,rise .7s both}
+.hero::before{content:"";position:absolute;inset:0;border-radius:24px;border:2px solid #b06dff;animation:ring 2.6s ease-out infinite}
+.notes{position:absolute;left:0;right:0;top:20px;height:90px;pointer-events:none;z-index:-1}
+.notes i{position:absolute;bottom:0;color:#9aa8ff;font-size:1rem;opacity:0;animation:note 5s ease-in infinite}
+.notes i:nth-child(1){left:36%;animation-delay:0s}.notes i:nth-child(2){left:44%;animation-delay:1.1s;font-size:1.3rem}
+.notes i:nth-child(3){left:56%;animation-delay:2.2s}.notes i:nth-child(4){left:63%;animation-delay:3.1s;font-size:1.2rem}.notes i:nth-child(5){left:30%;animation-delay:4s}
+.head p{animation:rise .8s .15s both}
+.sb{animation:rise .8s .25s both}.tabs{animation:rise .8s .35s both}
+.sb input:focus{animation:beat 1.6s ease-out infinite}
+@keyframes fadeIn{from{opacity:.4}}
+.tabs{overflow:visible}
+.tabs button.on{animation:fadeIn .25s both}
+.cat{display:flex;align-items:center;gap:12px}
+.cat::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(88,101,242,.6),transparent);transform-origin:left;animation:grow 1s both}
+@keyframes grow{from{transform:scaleX(0)}}
+details:hover{transform:translateX(4px)}
+details{transition:border-color .2s,transform .2s,box-shadow .3s}
+details[open]{box-shadow:0 12px 36px rgba(88,101,242,.25)}
+summary .ic{transition:transform .3s}
+details:hover summary .ic{transform:rotate(-8deg) scale(1.1)}
+details[open] summary .ic{transform:scale(1.1);background:linear-gradient(135deg,#1fb6ff,#b06dff)}
+details[open] .an{animation:slide .35s both}
+.cta{position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.1) 50%,transparent 70%);background-size:250% 100%;animation:edge 5s linear infinite;pointer-events:none}
+.cta .btn:not(.ghost){animation:beat 2.2s ease-out infinite}
+@media(max-width:560px){.an{padding-left:18px}.notes{display:none}.tabs{border-radius:24px}.tabs button{padding:8px 13px;font-size:.84rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<script src="halloween.js" defer></script>
+</head>
+<body>
+<div class="glow"></div>
+
+<nav id="topnav"><div class="wrap"><div class="bar">
+  <a class="logo" href="index.html"><span class="lg"><svg viewBox="40 140 940 710" aria-hidden="true"><defs><linearGradient id="lotG" gradientUnits="userSpaceOnUse" x1="200" y1="820" x2="820" y2="240"><stop offset="0" stop-color="#6b8cff"/><stop offset=".5" stop-color="#b06dff"/><stop offset="1" stop-color="#ff6fff"/></linearGradient></defs><g fill="url(#lotG)"><path d="M512,148C455,203 413,262 388,327C455,392 497,480 512,588C527,480 569,392 636,327C611,262 569,203 512,148Z"/><path d="M379,358C350,420 360,520 413,605C455,668 490,745 503,812C503,720 497,640 485,570C470,480 430,410 379,358Z"/><path d="M645,358C674,420 664,520 611,605C569,668 534,745 521,812C521,720 527,640 539,570C554,480 594,410 645,358Z"/><path d="M216,264C275,280 325,308 360,341C340,400 340,470 354,525C310,484 262,458 214,445C200,380 204,320 216,264Z"/><path d="M808,264C749,280 699,308 664,341C684,400 684,470 670,525C714,484 762,458 810,445C824,380 820,320 808,264Z"/><path d="M52,452C170,445 270,470 345,545C415,620 465,720 489,831C300,845 100,740 52,452Z"/><path d="M972,452C854,445 754,470 679,545C609,620 559,720 535,831C724,845 924,740 972,452Z"/></g></svg></span><span class="lt">Azul Groove</span></a>
+  <div class="links" id="navLinks">
+    <a href="index.html#home" data-pt="Início" data-en="Home">Início</a>
+    <a href="index.html#features" data-pt="Recursos" data-en="Features">Recursos</a>
+    <a href="index.html#commands" data-pt="Comandos" data-en="Commands">Comandos</a>
+    <a href="blog.html">Blog</a>
+    <a href="ajuda.html" data-pt="Suporte" data-en="Support">Suporte</a>
+  </div>
+  <div class="right">
+    <button class="btn ghost" onclick="toggleLang()" id="langBtn">🇧🇷 PT</button>
+    <a class="btn" href="index.html"><i class="fas fa-arrow-left"></i> <span data-pt="Início" data-en="Home">Início</span></a>
+    <button class="burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  </div>
+</div></div></nav>
+
+<main class="page">
+  <div class="head">
+    <div class="notes" aria-hidden="true"><i class="fas fa-music"></i><i class="fas fa-music"></i><i class="fas fa-music"></i><i class="fas fa-music"></i><i class="fas fa-music"></i></div>
+    <div class="hero" aria-hidden="true"><i class="fas fa-life-ring"></i></div>
+    <h1 data-pt="Central de Ajuda" data-en="Help Center">Central de Ajuda</h1>
+    <p data-pt="Respostas rápidas para as dúvidas mais comuns sobre o Azul Groove." data-en="Quick answers to the most common questions about Azul Groove.">Respostas rápidas para as dúvidas mais comuns sobre o Azul Groove.</p>
+  </div>
+  <label class="sb"><i class="fas fa-magnifying-glass"></i><input type="search" id="q" autocomplete="off" placeholder="Busque sua dúvida..."></label>
+  <div class="tabs" id="tabs"></div>
+  <div id="faq"></div>
+  <div class="cta">
+    <h2 data-pt="Ainda precisa de ajuda?" data-en="Still need help?">Ainda precisa de ajuda?</h2>
+    <p data-pt="Nossa comunidade e a equipe respondem no Discord." data-en="Our community and team answer on Discord.">Nossa comunidade e a equipe respondem no Discord.</p>
+    <div class="row">
+      <a class="btn" href="https://discord.gg/g4cW4zRvjf" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i> <span data-pt="Entrar no suporte" data-en="Join support">Entrar no suporte</span></a>
+      <a class="btn ghost" href="blog.html"><i class="fas fa-newspaper"></i> Blog</a>
+    </div>
+  </div>
+  <p class="copy">&copy; 2026 ASTM Software.</p>
+</main>
+
+<script>
+let en = (() => { try { const s = localStorage.getItem('site_lang'); return s === 'en' || (!s && (navigator.language || '').startsWith('en')); } catch (e) { return false; } })();
+
+// ===== Perguntas: edite só esta lista (c = categoria, i = ícone Font Awesome) =====
+const FAQ = [
+ {
+  "c": "start",
+  "i": "fa-plus",
+  "q": "Como adiciono o bot ao meu servidor?",
+  "a": "Use o botão de adicionar aqui no site (página Início). Ao adicionar, o bot mostra um texto de boas-vindas com a Licença de Uso. Você precisa de permissão de gerenciar o servidor para convidá-lo."
+ },
+ {
+  "c": "start",
+  "i": "fa-music",
+  "q": "Como peço uma música?",
+  "a": "Use o comando /play com o nome da música ou um link. Um menu deixa você escolher a plataforma (YouTube, Spotify, Deezer, SoundCloud…). Também dá para pedir pelo modal de pedir música, que já traz seus favoritos e integrações, ou mencionando o bot, quando essa opção está ativada no servidor."
+ },
+ {
+  "c": "start",
+  "i": "fa-gift",
+  "q": "O Azul Groove é gratuito?",
+  "a": "Sim, o projeto é 100% gratuito. Quem quiser apoiar o desenvolvimento pode doar pelo Pix/LivePix, mas isso é opcional."
+ },
+ {
+  "c": "start",
+  "i": "fa-circle-info",
+  "q": "Como sei qual versão do bot estou usando?",
+  "a": "Use o comando /about. Ele mostra as versões do ASTM HyperCore e do ASTM OS, o link da Licença de Uso e o link de apoio."
+ },
+ {
+  "c": "problems",
+  "i": "fa-volume-xmark",
+  "q": "A música não toca ou deu erro. E agora?",
+  "a": "Quase sempre é um serviço externo instável, como o YouTube ou o servidor de áudio (Lavalink/NodeLink). O bot já tenta outras plataformas automaticamente quando uma música falha. Tente pedir de novo escolhendo outra plataforma no menu do /play. Se continuar, chame o suporte no Discord."
+ },
+ {
+  "c": "problems",
+  "i": "fa-hashtag",
+  "q": "Apareceu um código de erro na mensagem",
+  "a": "As mensagens de erro do bot trazem um código único, que ajuda muito o suporte. Copie o código, diga o que você estava fazendo e mande no Discord de suporte."
+ },
+ {
+  "c": "problems",
+  "i": "fa-power-off",
+  "q": "O bot está offline ou não responde",
+  "a": "Pode ser uma manutenção ou uma atualização em andamento. Espere alguns minutos e tente de novo. Se passar disso, avise no Discord de suporte com o nome do servidor."
+ },
+ {
+  "c": "problems",
+  "i": "fa-wrench",
+  "q": "Atualizaram o bot e o problema continua. Por quê?",
+  "a": "Uma atualização corrige falhas do próprio bot, mas não resolve serviços de terceiros fora do ar (APIs, NodeLink, Lavalink offline), problemas de hardware ou de configuração do usuário, nem limitações impostas por plataformas externas."
+ },
+ {
+  "c": "problems",
+  "i": "fa-volume-off",
+  "q": "O bot entra no canal, mas fica mudo",
+  "a": "Esse problema já foi corrigido em atualizações anteriores. Se voltar a acontecer, avise no suporte dizendo qual música e qual plataforma você usou."
+ },
+ {
+  "c": "features",
+  "i": "fa-palette",
+  "q": "O que é o /custom_skin?",
+  "a": "Permite usar skins feitas pela comunidade no player do bot, para mudar o visual. O comando foi reformulado no ASTM OS 15.0, com novo design e melhor usabilidade."
+ },
+ {
+  "c": "features",
+  "i": "fa-closed-captioning",
+  "q": "Como vejo a letra da música ao vivo?",
+  "a": "Use o comando /live_lyrics. A letra acompanha a música enquanto ela toca."
+ },
+ {
+  "c": "features",
+  "i": "fa-gamepad",
+  "q": "O que é o Azul Groove RPC (Rich Presence)?",
+  "a": "É o aplicativo que mostra no seu perfil do Discord o que você está ouvindo. Funciona no Windows (com instalador) e no Linux, e se integra ao bot pelo comando /rich_presence."
+ },
+ {
+  "c": "features",
+  "i": "fa-heart",
+  "q": "Como uso os favoritos?",
+  "a": "Pelo modal de pedir música você acessa seus favoritos e integrações na hora de adicionar uma faixa, e o comando fav_manager serve para gerenciá-los."
+ },
+ {
+  "c": "features",
+  "i": "fa-sliders",
+  "q": "O que são os modos DJ, 24/7 e Restrito?",
+  "a": "São modos que controlam quem pode usar o bot e se ele fica no canal de voz o tempo todo. O dono do bot sempre tem permissão para usar o 24/7."
+ },
+ {
+  "c": "features",
+  "i": "fa-box-archive",
+  "q": "O que foi o Groove Ads?",
+  "a": "Era um sistema de mensagens de apoio e divulgação exibidas nas skins do bot. Foi oficialmente descontinuado a partir do ASTM OS 14.0 — Build 25000.0008 e não recebe mais suporte nem atualizações da ASTM Software. Fica aqui apenas como registro histórico do projeto."
+ }
+];
+const CATS = {"all": ["Tudo", "All"], "start": ["Primeiros passos", "Getting started"], "problems": ["Problemas comuns", "Common issues"], "features": ["Recursos", "Features"]};
+
+let cat = 'all', query = '';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+function render() {
+  const L = en ? 1 : 0;
+  document.getElementById('tabs').innerHTML = Object.keys(CATS).map(k => `<button class="${cat === k ? 'on' : ''}" data-c="${k}">${CATS[k][L]}</button>`).join('');
+  document.getElementById('q').placeholder = en ? 'Search your question...' : 'Busque sua dúvida...';
+  const q = norm(query.trim());
+  const items = FAQ.filter(x => (cat === 'all' || x.c === cat) && (!q || norm(x.q + ' ' + x.a).includes(q)));
+  let html = '', last = '', k = 0;
+  items.forEach(x => {
+    if (cat === 'all' && x.c !== last) { html += `<div class="cat">${CATS[x.c][L]}</div>`; last = x.c; }
+    html += `<details style="animation-delay:${(k++) * 35}ms"><summary><span class="ic"><i class="fas ${x.i}"></i></span><span class="q">${esc(x.q)}</span><i class="fas fa-chevron-down ch"></i></summary><div class="an">${esc(x.a)}</div></details>`;
+  });
+  document.getElementById('faq').innerHTML = html || `<div class="empty">${en ? 'Nothing found. Try another word or ask on Discord.' : 'Nada encontrado. Tente outra palavra ou pergunte no Discord.'}</div>`;
+}
+
+function applyLang() {
+  document.documentElement.lang = en ? 'en' : 'pt-BR';
+  document.getElementById('langBtn').textContent = en ? '🇺🇸 EN' : '🇧🇷 PT';
+  document.title = (en ? 'Help Center' : 'Central de Ajuda') + ' - Azul Groove';
+  document.querySelectorAll('[data-pt]').forEach(el => { el.textContent = el.getAttribute(en ? 'data-en' : 'data-pt'); });
+  render();
+}
+function toggleLang() { en = !en; try { localStorage.setItem('site_lang', en ? 'en' : 'pt'); } catch (e) {} applyLang(); }
+
+document.getElementById('tabs').onclick = e => { const b = e.target.closest('button'); if (b) { cat = b.dataset.c; render(); } };
+document.getElementById('q').oninput = e => { query = e.target.value; render(); };
+applyLang();
+
+// sombra do menu ao rolar + menu mobile
+const nv = document.getElementById('topnav');
+const onS = () => nv.classList.toggle('sc', scrollY > 10);
+addEventListener('scroll', onS, { passive: true }); onS();
+const bg = document.getElementById('navBurger'), nl = document.getElementById('navLinks');
+const cl = o => { nl.classList.toggle('open', o); bg.setAttribute('aria-expanded', o); };
+bg.onclick = e => { e.stopPropagation(); cl(!nl.classList.contains('open')); };
+nl.addEventListener('click', e => { if (e.target.closest('a')) cl(false); });
+document.addEventListener('click', e => { if (!e.target.closest('.bar')) cl(false); });
+</script>
+</body>
+</html>

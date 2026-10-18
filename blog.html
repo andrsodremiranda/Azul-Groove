@@ -1,175 +1,151 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Blog & Novidades - ASTM Software</title>
-    <link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png" />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <style>
-:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog &amp; Novidades - ASTM Software</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--r:18px}
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-.glow{position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 15% 0,rgba(88,101,242,.22),transparent),radial-gradient(500px 400px at 95% 10%,rgba(31,182,255,.13),transparent)}
-nav{position:sticky;top:0;z-index:10;background:rgba(7,9,26,.88);border-bottom:1px solid var(--line)}
-nav .wrap{max-width:1100px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px}
-.logo{font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:8px}
-.logo i{color:var(--ac)}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:12px;font-weight:600;font-size:.9rem;border:1px solid var(--line);background:var(--card);color:var(--tx);cursor:pointer;font-family:inherit}
-.btn:hover{border-color:var(--ac)}
-.license-page-container,.privacy-page-container,.blog-container,.page{max-width:900px;margin:0 auto;padding:32px 20px 60px}
-.blog-container{max-width:1000px}
-.header-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;flex-wrap:wrap;gap:14px}
-.back-button{display:inline-flex;align-items:center;color:var(--ac2);font-weight:600}
-.back-button:hover{color:#fff}
-.lang-btn{background:var(--card);border:1px solid var(--line);color:var(--tx);padding:8px 16px;border-radius:99px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;gap:8px;font-weight:600;font-family:inherit}
-.lang-btn:hover{border-color:var(--ac)}
-.license-page-content,.privacy-card,.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:44px}
-.license-page-content h1,.privacy-card h1,.card h1{color:#fff;font-size:clamp(1.5rem,4vw,2rem);line-height:1.25;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
-.license-page-content h2,.license-page-content h3,.privacy-card h3,.card h3{color:var(--ac2);margin:30px 0 10px;font-size:1.2rem}
-.license-page-content p,.license-page-content li,.privacy-card p,.privacy-card li,.card p,.card li{color:var(--mut);line-height:1.75;margin-bottom:12px;font-size:1rem}
-.license-page-content strong,.privacy-card strong,.card strong{color:var(--tx)}
-.license-page-content ul,.privacy-card ul,.card ul{padding-left:22px;margin-bottom:18px}
-.license-page-content a,.privacy-card a,.card a{color:#8ea1ff}
-.license-page-content a:hover,.privacy-card a:hover,.card a:hover{text-decoration:underline}
-.update-info{font-size:.9rem;color:var(--mut);margin-bottom:30px}
-.summary{background:rgba(88,101,242,.1);border-left:3px solid var(--ac);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:10px}
-.summary p{margin:0 0 8px}.summary p:last-child{margin-bottom:0}
-.foot{margin-top:40px;font-size:.88rem;color:var(--mut);border-top:1px solid var(--line);padding-top:18px}
-#en-content{display:none}
-.blog-header{text-align:center;margin-bottom:34px}
-.blog-header h1{color:#fff;font-size:clamp(1.7rem,5vw,2.3rem);margin-bottom:8px}
-.blog-header p{color:var(--mut)}
-.posts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
-.post-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column;justify-content:space-between}
-.post-card:hover{border-color:var(--ac)}
-.post-date{font-size:.78rem;color:var(--ac2);font-weight:700;margin-bottom:8px;text-transform:uppercase}
-.post-title{color:#fff;font-size:1.2rem;margin-bottom:10px;font-weight:700;line-height:1.4}
-.post-snippet{color:var(--mut);font-size:.94rem;margin-bottom:18px;flex-grow:1}
-.post-link{display:inline-flex;align-items:center;gap:8px;color:#fff;background:linear-gradient(135deg,var(--ac),#7a5cff);padding:10px 16px;border-radius:12px;font-weight:600;font-size:.88rem;width:fit-content}
-.loading-spinner{text-align:center;padding:50px;color:var(--ac2);font-size:1.3rem;grid-column:1/-1}
-@media(max-width:768px){.license-page-content,.privacy-card,.card{padding:28px 18px}}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.glow{position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 15% 0,rgba(88,101,242,.26),transparent),radial-gradient(500px 400px at 95% 10%,rgba(31,182,255,.15),transparent);animation:hue 22s ease-in-out infinite alternate}
+@keyframes hue{from{filter:hue-rotate(-25deg)}to{filter:hue-rotate(75deg)}}
+
+/* ===== menu (barra flutuante) ===== */
+nav{position:sticky;top:0;z-index:10;padding:14px 0 0}
+.bar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px;padding:0 10px 0 12px;border-radius:99px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(20,25,64,.62),rgba(10,13,38,.62));backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.07);transition:background .3s,border-color .3s,box-shadow .3s}
+nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-shadow:0 14px 44px rgba(0,0,0,.55),0 0 0 1px rgba(88,101,242,.12)}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.3px;font-size:1.12rem}
+.logo .lg{display:grid;place-items:center;filter:drop-shadow(0 4px 12px rgba(176,109,255,.55));transition:transform .3s}
+.logo .lg svg{height:36px;width:auto;display:block}
+.logo:hover .lg{transform:translateY(-2px) scale(1.08)}
+.logo .lt{background:linear-gradient(120deg,#fff,#c9d2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:4px;padding:5px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);font-size:.9rem}
+.links a{padding:8px 16px;border-radius:99px;font-weight:600;color:var(--mut);transition:color .2s,background .2s}
+.links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.right{display:flex;gap:8px;align-items:center}
+.btn{--g1:#5865f2;--g2:#7a5cff;--gl:rgba(88,101,242,.5);position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;font-weight:600;font-size:.85rem;border:1px solid transparent;background:linear-gradient(135deg,var(--g1),var(--g2));background-size:200% 100%;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 5px 16px var(--gl);transition:.25s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn:hover{transform:translateY(-2px);background-position:100% 0}.btn:hover::after{transform:translateX(120%)}
+.btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);box-shadow:none}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0}
+.burger span{width:18px;height:2px;border-radius:2px;background:#fff;transition:transform .25s,opacity .25s}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.97)}}
+@media(max-width:820px){
+  .burger{display:flex}
+  .links{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;gap:2px;padding:10px;border-radius:24px;background:rgba(9,12,34,.96);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .links.open{display:flex;animation:pop .25s}
+  .links a{padding:13px 16px;border-radius:14px;font-size:.98rem}
+}
+@media(max-width:480px){.logo .lt{display:none}}
+
+/* ===== página ===== */
+.page{max-width:1000px;margin:0 auto;padding:34px 20px 70px}
+.head{text-align:center;margin-bottom:30px}
+.head h1{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;letter-spacing:-.5px;background:linear-gradient(120deg,#fff 30%,var(--ac2) 70%,var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--mut);margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.pc{display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:22px;border-radius:var(--r);border:1px solid var(--line);background:var(--card);animation:pop .4s both;transition:border-color .2s,transform .2s}
+.pc:hover{border-color:var(--ac);transform:translateY(-3px)}
+.pd{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 10px;border-radius:99px;margin-bottom:10px;background:rgba(88,101,242,.22);color:#aab4ff}
+.pt{font-size:1.1rem;font-weight:700;line-height:1.4;margin-bottom:8px}
+.ps{color:var(--mut);font-size:.92rem;line-height:1.6}
+.pl{display:inline-flex;gap:8px;align-items:center;width:fit-content;padding:9px 16px;border-radius:99px;background:linear-gradient(135deg,var(--ac),#7a5cff);color:#fff;font-size:.85rem;font-weight:700;transition:.2s}
+.pl:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(88,101,242,.5)}
+.msg{grid-column:1/-1;text-align:center;color:var(--mut);padding:40px 10px}
+.msg i{color:var(--ac2)}
+.copy{text-align:center;color:var(--mut);font-size:.85rem;margin-top:30px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 <script src="halloween.js" defer></script>
 </head>
 <body>
-    <div class="glow"></div>
+<div class="glow"></div>
 
-    <nav><div class="wrap"><a class="logo" href="index.html"><i class="fab fa-discord"></i> Azul Groove</a><a class="btn" href="index.html">Voltar / Back</a></div></nav>
+<nav id="topnav"><div class="wrap"><div class="bar">
+  <a class="logo" href="index.html"><span class="lg"><svg viewBox="40 140 940 710" aria-hidden="true"><defs><linearGradient id="lotG" gradientUnits="userSpaceOnUse" x1="200" y1="820" x2="820" y2="240"><stop offset="0" stop-color="#6b8cff"/><stop offset=".5" stop-color="#b06dff"/><stop offset="1" stop-color="#ff6fff"/></linearGradient></defs><g fill="url(#lotG)"><path d="M512,148C455,203 413,262 388,327C455,392 497,480 512,588C527,480 569,392 636,327C611,262 569,203 512,148Z"/><path d="M379,358C350,420 360,520 413,605C455,668 490,745 503,812C503,720 497,640 485,570C470,480 430,410 379,358Z"/><path d="M645,358C674,420 664,520 611,605C569,668 534,745 521,812C521,720 527,640 539,570C554,480 594,410 645,358Z"/><path d="M216,264C275,280 325,308 360,341C340,400 340,470 354,525C310,484 262,458 214,445C200,380 204,320 216,264Z"/><path d="M808,264C749,280 699,308 664,341C684,400 684,470 670,525C714,484 762,458 810,445C824,380 820,320 808,264Z"/><path d="M52,452C170,445 270,470 345,545C415,620 465,720 489,831C300,845 100,740 52,452Z"/><path d="M972,452C854,445 754,470 679,545C609,620 559,720 535,831C724,845 924,740 972,452Z"/></g></svg></span><span class="lt">Azul Groove</span></a>
+  <div class="links" id="navLinks">
+    <a href="index.html#home" data-pt="Início" data-en="Home">Início</a>
+    <a href="index.html#features" data-pt="Recursos" data-en="Features">Recursos</a>
+    <a href="index.html#commands" data-pt="Comandos" data-en="Commands">Comandos</a>
+    <a href="blog.html">Blog</a>
+    <a href="ajuda.html" data-pt="Suporte" data-en="Support">Suporte</a>
+  </div>
+  <div class="right">
+    <button class="btn ghost" onclick="toggleLang()" id="langBtn">🇧🇷 PT</button>
+    <a class="btn" href="index.html"><i class="fas fa-arrow-left"></i> <span data-pt="Início" data-en="Home">Início</span></a>
+    <button class="burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  </div>
+</div></div></nav>
 
-    <div class="blog-container">
-        
-        <div class="header-actions">
-            <a href="index.html" class="back-button" id="backBtn">
-                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Voltar para o Início
-            </a>
-            
-            <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">
-                🇺🇸 English
-            </button>
-        </div>
+<main class="page">
+  <div class="head">
+    <h1 data-pt="Notícias e Atualizações" data-en="News &amp; Updates">Notícias e Atualizações</h1>
+    <p data-pt="Acompanhe as últimas postagens oficiais da ASTM Software" data-en="Follow official posts from ASTM Software">Acompanhe as últimas postagens oficiais da ASTM Software</p>
+  </div>
+  <div class="grid" id="posts"><div class="msg"><i class="fas fa-spinner fa-spin"></i> <span data-pt="Carregando postagens..." data-en="Loading posts...">Carregando postagens...</span></div></div>
+  <p class="copy">&copy; 2026 ASTM Software.</p>
+</main>
 
-        <div class="blog-header">
-            <h1 data-pt="Notícias e Atualizações" data-en="News & Updates">Notícias e Atualizações</h1>
-            <p data-pt="Acompanhe as últimas postagens oficiais da ASTM Software" data-en="Follow official posts from ASTM Software">
-                Acompanhe as últimas postagens oficiais da ASTM Software
-            </p>
-        </div>
+<script>
+let en = (() => { try { const s = localStorage.getItem('site_lang'); return s === 'en' || (!s && (navigator.language || '').startsWith('en')); } catch (e) { return false; } })();
+let POSTS = null, failed = false;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-        <div class="posts-grid" id="blog-posts">
-            <div class="loading-spinner">
-                <i class="fas fa-spinner fa-spin"></i> <span data-pt="Carregando postagens..." data-en="Loading posts...">Carregando postagens...</span>
-            </div>
-        </div>
+function renderPosts(data) {
+  const entries = (data && data.feed && data.feed.entry) || [];
+  POSTS = entries.map(e => {
+    const d = document.createElement('div');
+    d.innerHTML = e.summary ? e.summary.$t : (e.content ? e.content.$t : '');
+    let t = (d.textContent || '').trim();
+    if (t.length > 150) t = t.slice(0, 150) + '...';
+    const a = e.link.find(l => l.rel === 'alternate');
+    return { title: e.title.$t, date: new Date(e.published.$t), snip: t, url: a ? a.href : '#' };
+  });
+  render();
+}
 
-    </div>
+function render() {
+  const g = document.getElementById('posts');
+  if (failed) { g.innerHTML = `<div class="msg">${en ? 'Could not load the posts right now.' : 'Não foi possível carregar as postagens agora.'}</div>`; return; }
+  if (!POSTS) return;
+  if (!POSTS.length) { g.innerHTML = `<div class="msg">${en ? 'No posts found.' : 'Nenhuma postagem encontrada.'}</div>`; return; }
+  g.innerHTML = POSTS.map((p, i) => `<article class="pc" style="animation-delay:${i * 40}ms"><div><span class="pd">${esc(p.date.toLocaleDateString(en ? 'en-US' : 'pt-BR', { year: 'numeric', month: 'short', day: 'numeric' }))}</span><h3 class="pt">${esc(p.title)}</h3><p class="ps">${esc(p.snip)}</p></div><a class="pl" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${en ? 'Read full post' : 'Ler post completo'} <i class="fas fa-external-link-alt"></i></a></article>`).join('');
+}
 
-    <script>
-        const savedLang = localStorage.getItem('site_lang');
-        const browserLang = navigator.language || navigator.userLanguage;
-        let isEnglish = savedLang === 'en' || (!savedLang && browserLang.startsWith('en'));
+function applyLang() {
+  document.documentElement.lang = en ? 'en' : 'pt-BR';
+  document.getElementById('langBtn').textContent = en ? '🇺🇸 EN' : '🇧🇷 PT';
+  document.title = 'Blog & ' + (en ? 'News' : 'Novidades') + ' - ASTM Software';
+  document.querySelectorAll('[data-pt]').forEach(el => { el.textContent = el.getAttribute(en ? 'data-en' : 'data-pt'); });
+  render();
+}
+function toggleLang() { en = !en; try { localStorage.setItem('site_lang', en ? 'en' : 'pt'); } catch (e) {} applyLang(); }
 
-        function applyPageLang() {
-            const btn = document.getElementById('langToggleBtn');
-            const backBtn = document.getElementById('backBtn');
+// busca as postagens do Blogger (feed JSON)
+const sc = document.createElement('script');
+sc.src = 'https://astmsoft.blogspot.com/feeds/posts/default?alt=json-in-script&callback=renderPosts';
+sc.onerror = () => { failed = true; render(); };
+document.body.appendChild(sc);
+applyLang();
 
-            if (btn) btn.innerHTML = isEnglish ? '🇧🇷 Português' : '🇺🇸 English';
-            if (backBtn) {
-                backBtn.innerHTML = isEnglish 
-                    ? '<i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Back to Home' 
-                    : '<i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Voltar para o Início';
-            }
-
-            document.querySelectorAll('[data-pt]').forEach(el => {
-                el.innerText = isEnglish ? el.getAttribute('data-en') : el.getAttribute('data-pt');
-            });
-        }
-
-        function toggleLanguage() {
-            isEnglish = !isEnglish;
-            localStorage.setItem('site_lang', isEnglish ? 'en' : 'pt');
-            applyPageLang();
-        }
-
-        // Função que busca as postagens diretamente do seu Blogger via Feed JSON
-        function loadBloggerPosts() {
-            const blogUrl = 'https://astmsoft.blogspot.com/feeds/posts/default?alt=json-in-script&callback=renderPosts';
-            const script = document.createElement('script');
-            script.src = blogUrl;
-            document.body.appendChild(script);
-        }
-
-        function renderPosts(data) {
-            const container = document.getElementById('blog-posts');
-            container.innerHTML = '';
-
-            if (!data.feed.entry || data.feed.entry.length === 0) {
-                container.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Nenhuma postagem encontrada.</p>';
-                return;
-            }
-
-            data.feed.entry.forEach(entry => {
-                const title = entry.title.$t;
-                const published = new Date(entry.published.$t).toLocaleDateString(isEnglish ? 'en-US' : 'pt-BR', {
-                    year: 'numeric', month: 'short', day: 'numeric'
-                });
-
-                // Extrai o link original do post
-                const postLink = entry.link.find(l => l.rel === 'alternate').href;
-
-                // Limpa as tags HTML do conteúdo para gerar um resumo
-                let contentSnippet = entry.summary ? entry.summary.$t : (entry.content ? entry.content.$t : '');
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = contentSnippet;
-                contentSnippet = tempDiv.textContent || tempDiv.innerText || '';
-                if (contentSnippet.length > 150) {
-                    contentSnippet = contentSnippet.substring(0, 150) + '...';
-                }
-
-                const card = document.createElement('div');
-                card.className = 'post-card';
-                card.innerHTML = `
-                    <div>
-                        <div class="post-date">${published}</div>
-                        <div class="post-title">${title}</div>
-                        <div class="post-snippet">${contentSnippet}</div>
-                    </div>
-                    <a href="${postLink}" target="_blank" rel="noopener noreferrer" class="post-link">
-                        ${isEnglish ? 'Read Full Post' : 'Ler Post Completo'} <i class="fas fa-external-link-alt"></i>
-                    </a>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            applyPageLang();
-            loadBloggerPosts();
-        });
-    </script>
+// sombra do menu ao rolar + menu mobile
+const nv = document.getElementById('topnav');
+const onS = () => nv.classList.toggle('sc', scrollY > 10);
+addEventListener('scroll', onS, { passive: true }); onS();
+const bg = document.getElementById('navBurger'), nl = document.getElementById('navLinks');
+const cl = o => { nl.classList.toggle('open', o); bg.setAttribute('aria-expanded', o); };
+bg.onclick = e => { e.stopPropagation(); cl(!nl.classList.contains('open')); };
+nl.addEventListener('click', e => { if (e.target.closest('a')) cl(false); });
+document.addEventListener('click', e => { if (!e.target.closest('.bar')) cl(false); });
+</script>
 </body>
 </html>

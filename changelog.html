@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atualizações - Azul Groove</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.glow{position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 15% 0,rgba(88,101,242,.26),transparent),radial-gradient(500px 400px at 95% 10%,rgba(31,182,255,.15),transparent);animation:hue 22s ease-in-out infinite alternate}
+@keyframes hue{from{filter:hue-rotate(-25deg)}to{filter:hue-rotate(75deg)}}
+
+/* ===== menu (barra flutuante) ===== */
+nav{position:sticky;top:0;z-index:10;padding:14px 0 0}
+.bar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px;padding:0 10px 0 12px;border-radius:99px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(20,25,64,.62),rgba(10,13,38,.62));backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.07);transition:background .3s,border-color .3s,box-shadow .3s}
+nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-shadow:0 14px 44px rgba(0,0,0,.55),0 0 0 1px rgba(88,101,242,.12)}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.3px;font-size:1.12rem}
+.logo .lg{display:grid;place-items:center;filter:drop-shadow(0 4px 12px rgba(176,109,255,.55));transition:transform .3s}
+.logo .lg svg{height:36px;width:auto;display:block}
+.logo:hover .lg{transform:translateY(-2px) scale(1.08)}
+.logo .lt{background:linear-gradient(120deg,#fff,#c9d2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:4px;padding:5px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);font-size:.9rem}
+.links a{padding:8px 16px;border-radius:99px;font-weight:600;color:var(--mut);transition:color .2s,background .2s}
+.links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.right{display:flex;gap:8px;align-items:center}
+.btn{--g1:#5865f2;--g2:#7a5cff;--gl:rgba(88,101,242,.5);position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;font-weight:600;font-size:.85rem;border:1px solid transparent;background:linear-gradient(135deg,var(--g1),var(--g2));background-size:200% 100%;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 5px 16px var(--gl);transition:.25s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn:hover{transform:translateY(-2px);background-position:100% 0}.btn:hover::after{transform:translateX(120%)}
+.btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);box-shadow:none}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0}
+.burger span{width:18px;height:2px;border-radius:2px;background:#fff;transition:transform .25s,opacity .25s}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.97)}}
+@media(max-width:820px){
+  .burger{display:flex}
+  .links{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;gap:2px;padding:10px;border-radius:24px;background:rgba(9,12,34,.96);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .links.open{display:flex;animation:pop .25s}
+  .links a{padding:13px 16px;border-radius:14px;font-size:.98rem}
+}
+@media(max-width:480px){.logo .lt{display:none}}
+
+/* ===== página ===== */
+.page{max-width:860px;margin:0 auto;padding:34px 20px 70px}
+.head{text-align:center;margin-bottom:26px}
+.head h1{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;letter-spacing:-.5px;background:linear-gradient(120deg,#fff 30%,var(--ac2) 70%,var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--mut);margin-top:6px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin-bottom:30px}
+.tabs{display:flex;gap:6px;padding:6px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.tabs button{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:0;border-radius:99px;background:none;color:var(--mut);font-weight:600;font-size:.88rem;font-family:inherit;cursor:pointer;transition:.2s}
+.tabs button b{font-size:.72rem;opacity:.8}
+.tabs button:hover{color:#fff;background:rgba(255,255,255,.07)}
+.tabs button.on{color:#fff;background:linear-gradient(135deg,var(--ac),#7a5cff);box-shadow:0 6px 18px rgba(88,101,242,.5)}
+.search{position:relative;flex:1 1 220px;max-width:300px}
+.search i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:.85rem}
+.search input{width:100%;padding:11px 16px 11px 38px;border-radius:99px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--tx);font:inherit;font-size:.9rem;outline:none;transition:.2s}
+.search input:focus{border-color:var(--ac);background:rgba(88,101,242,.1)}
+
+.tl{position:relative;padding-left:34px}
+.tl::before{content:"";position:absolute;left:8px;top:8px;bottom:0;width:2px;border-radius:2px;background:linear-gradient(var(--ac),rgba(88,101,242,.05))}
+.day{position:relative;margin-bottom:34px}
+.day::before{content:"";position:absolute;left:-34px;top:3px;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 0 0 5px var(--bg),0 0 18px rgba(88,101,242,.7)}
+.day h2{font-size:1.02rem;font-weight:800;color:var(--ac2);margin-bottom:12px;letter-spacing:.2px;text-transform:capitalize}
+.it{display:flex;gap:14px;padding:16px;border-radius:18px;margin-bottom:10px;border:1px solid var(--line);background:var(--card);animation:pop .4s both;transition:border-color .2s,transform .2s}
+.it:hover{border-color:var(--ac);transform:translateX(3px)}
+.ic{flex:0 0 42px;height:42px;border-radius:13px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#5865f2,#7a5cff);font-size:1rem}
+.it.up .ic{background:linear-gradient(135deg,#1fb6ff,#3ddc97)}
+.bd{min-width:0;flex:1}
+.tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.6px;padding:2px 9px;border-radius:99px;margin-bottom:6px;background:rgba(88,101,242,.22);color:#aab4ff}
+.it.up .tag{background:rgba(31,182,255,.14);color:var(--ac2)}
+.bd h3{font-size:1.02rem;margin-bottom:3px}
+.bd p{color:var(--mut);font-size:.92rem;line-height:1.6}
+.bd a{display:inline-flex;gap:6px;align-items:center;margin-top:10px;padding:6px 14px;border-radius:99px;background:rgba(88,101,242,.18);color:#bcc6ff;font-size:.82rem;font-weight:700;transition:.15s}
+.bd a:hover{background:var(--ac);color:#fff}
+.empty{text-align:center;color:var(--mut);padding:40px 10px}
+.copy{text-align:center;color:var(--mut);font-size:.85rem;margin-top:30px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<script src="halloween.js" defer></script>
+</head>
+<body>
+<div class="glow"></div>
+
+<nav id="topnav"><div class="wrap"><div class="bar">
+  <a class="logo" href="index.html"><span class="lg"><svg viewBox="40 140 940 710" aria-hidden="true"><defs><linearGradient id="lotG" gradientUnits="userSpaceOnUse" x1="200" y1="820" x2="820" y2="240"><stop offset="0" stop-color="#6b8cff"/><stop offset=".5" stop-color="#b06dff"/><stop offset="1" stop-color="#ff6fff"/></linearGradient></defs><g fill="url(#lotG)"><path d="M512,148C455,203 413,262 388,327C455,392 497,480 512,588C527,480 569,392 636,327C611,262 569,203 512,148Z"/><path d="M379,358C350,420 360,520 413,605C455,668 490,745 503,812C503,720 497,640 485,570C470,480 430,410 379,358Z"/><path d="M645,358C674,420 664,520 611,605C569,668 534,745 521,812C521,720 527,640 539,570C554,480 594,410 645,358Z"/><path d="M216,264C275,280 325,308 360,341C340,400 340,470 354,525C310,484 262,458 214,445C200,380 204,320 216,264Z"/><path d="M808,264C749,280 699,308 664,341C684,400 684,470 670,525C714,484 762,458 810,445C824,380 820,320 808,264Z"/><path d="M52,452C170,445 270,470 345,545C415,620 465,720 489,831C300,845 100,740 52,452Z"/><path d="M972,452C854,445 754,470 679,545C609,620 559,720 535,831C724,845 924,740 972,452Z"/></g></svg></span><span class="lt">Azul Groove</span></a>
+  <div class="links" id="navLinks">
+    <a href="index.html#home" data-pt="Início" data-en="Home">Início</a>
+    <a href="index.html#features" data-pt="Recursos" data-en="Features">Recursos</a>
+    <a href="index.html#commands" data-pt="Comandos" data-en="Commands">Comandos</a>
+    <a href="blog.html">Blog</a>
+    <a href="ajuda.html" data-pt="Suporte" data-en="Support">Suporte</a>
+  </div>
+  <div class="right">
+    <button class="btn ghost" onclick="toggleLang()" id="langBtn">🇧🇷 PT</button>
+    <a class="btn" href="index.html"><i class="fas fa-arrow-left"></i> <span data-pt="Início" data-en="Home">Início</span></a>
+    <button class="burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  </div>
+</div></div></nav>
+
+<main class="page">
+  <div class="head">
+    <h1 data-pt="Histórico de Atualizações" data-en="Update History">Histórico de Atualizações</h1>
+    <p data-pt="Tudo o que mudou no site da Azul Groove, da mais nova para a mais antiga." data-en="Everything that changed on the Azul Groove website, newest first.">Tudo o que mudou no site da Azul Groove, da mais nova para a mais antiga.</p>
+  </div>
+
+  <div class="tools">
+    <div class="tabs" id="tabs"></div>
+    <label class="search"><i class="fas fa-magnifying-glass"></i><input type="search" id="q" autocomplete="off" placeholder="Buscar..."></label>
+  </div>
+
+  <div class="tl" id="tl"></div>
+
+  <p class="copy">&copy; 2026 ASTM Software.</p>
+</main>
+
+<script>
+let en = (() => { try { const s = localStorage.getItem('site_lang'); return s === 'en' || (!s && (navigator.language || '').startsWith('en')); } catch (e) { return false; } })();
+
+// ===== Atualizações: edite só esta lista (a mais nova primeiro) =====
+// d = data (AAAA-MM-DD), t = 'new' (novo) ou 'up' (melhoria), i = ícone Font Awesome
+const LOG = [
+  { d: '2026-10-18', t: 'new', i: 'fa-life-ring', pt: ['Central de Ajuda', 'Nova página com respostas rápidas para as dúvidas mais comuns, com busca e perguntas organizadas por assunto.'], en: ['Help Center', 'A new page with quick answers to the most common questions, with search and questions organized by topic.'], link: ['ajuda.html', 'Abrir a Central de Ajuda', 'Open the Help Center'] },
+  { d: '2026-10-18', t: 'new', i: 'fa-clock-rotate-left', pt: ['Histórico de atualizações', 'Agora o site tem uma página de changelog com tudo o que mudou, da mais nova para a mais antiga, com filtros e busca.'], en: ['Update history', 'The site now has a changelog page with everything that changed, newest first, with filters and search.'], link: ['changelog.html', 'Abrir o histórico', 'Open the history'] },
+  { d: '2026-10-18', t: 'new', i: 'fa-file-contract', pt: ['Documentos legais em um só lugar', 'Termos de Uso, Privacidade e Licença da IA agora ficam em uma única página, com abas e tradução.'], en: ['Legal documents in one place', 'Terms of Use, Privacy and AI License now live on a single page, with tabs and translation.'], link: ['legal.html', 'Abrir os documentos', 'Open the documents'] },
+  { d: '2026-10-18', t: 'new', i: 'fa-palette', pt: ['Novo menu e logo', 'O menu do topo virou uma barra flutuante de vidro, com a seção atual em destaque, menu próprio para celular e a nova logo da flor de lótus. O link Suporte agora abre a Central de Ajuda.'], en: ['New menu and logo', 'The top menu is now a floating glass bar, with the current section highlighted, its own mobile menu and the new lotus flower logo. The Support link now opens the Help Center.'] },
+  { d: '2026-10-17', t: 'new', i: 'fa-ghost', pt: ['Tema de Halloween', 'O site ganhou visual de Halloween até 07 de novembro, com cores laranja e roxo e abóboras e morcegos caindo. No chat, só o fundo muda. Depois da data, tudo volta ao normal sozinho.'], en: ['Halloween theme', 'The site has a Halloween look until November 7, with orange and purple colors and falling pumpkins and bats. In the chat, only the background changes. After that date, everything goes back to normal on its own.'] },
+  { d: '2026-10-07', t: 'new', i: 'fa-screwdriver-wrench', pt: ['Assistente de instalação', 'Baixe o Assistente e ele instala sozinho a versão mais recente do app para Windows. Também repara a instalação e deixa escolher outra versão.'], en: ['Install Assistant', 'Download the Assistant and it installs the latest Windows app version for you. It also repairs the install and lets you pick another version.'], link: ['ia.html#baixar', 'Baixar o Assistente', 'Download the Assistant'] },
+  { d: '2026-10-06', t: 'new', i: 'fa-sliders', pt: ['Novo menu de configurações', 'Abas laterais com ícones, interruptores no lugar das caixinhas e visual de vidro, no chat.'], en: ['New settings menu', 'Side tabs with icons, toggle switches instead of checkboxes and a glass look, in the chat.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { d: '2026-10-06', t: 'new', i: 'fa-arrows-rotate', pt: ['Sincronização entre aparelhos', 'Gere um código no aparelho A e digite no B para passar as conversas pela internet. O código vale 5 minutos.'], en: ['Sync between devices', 'Generate a code on device A and type it on B to move your chats over the internet. The code lasts 5 minutes.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { d: '2026-10-06', t: 'new', i: 'fa-wand-magic-sparkles', pt: ['Escolha a IA ao lado do enviar', 'Novo menu com busca, ícones por marca (Google, Meta e outras), selo de modelos grátis e tela de limites da API.'], en: ['Pick the AI next to send', 'New menu with search, brand icons (Google, Meta and more), a free-model badge and an API limits screen.'], link: ['chat.html', 'Experimentar', 'Try it'] },
+  { d: '2026-10-06', t: 'new', i: 'fa-robot', pt: ['Site da Azul Groove IA', 'Uma página para conhecer a IA, ver como ela funciona e baixar o app para Windows.'], en: ['Azul Groove AI site', 'A page to meet the AI, see how it works and download the Windows app.'], link: ['ia.html', 'Conhecer a IA', 'Meet the AI'] },
+  { d: '2026-10-06', t: 'new', i: 'fa-file-contract', pt: ['Licença de Uso da IA', 'Explica que não coletamos seus dados, que tudo fica no seu navegador e que as respostas vêm de serviços de terceiros.'], en: ['AI Use License', 'Explains that we do not collect your data, that everything stays in your browser and that replies come from third-party services.'], link: ['legal.html#ia', 'Ler a licença', 'Read the license'] },
+  { d: '2026-10-06', t: 'up', i: 'fa-book', pt: ['Docs: pesquisa na internet e limites', 'Nova página sobre a pesquisa na internet e links diretos para IA local e limites das APIs, dentro do chat.'], en: ['Docs: internet search and limits', 'New page about internet search and direct links to local AI and API limits from the chat.'], link: ['docs.html#/pesquisa-web', 'Ler no Docs', 'Read in Docs'] },
+  { d: '2026-10-06', t: 'up', i: 'fa-chart-simple', pt: ['Estatísticas de uso', 'Em Configurações > Conta: perguntas por dia, tempo médio de resposta e modelos mais usados.'], en: ['Usage stats', 'In Settings > Account: questions per day, average reply time and most used models.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { d: '2026-10-05', t: 'new', i: 'fa-palette', pt: ['Novo visual do site', 'Início, blog, privacidade, licenças e o assistente ganharam um design novo, com fundo animado e digitação.'], en: ['New site design', 'Home, blog, privacy, licenses and the assistant got a fresh look, with an animated background and typing effect.'] },
+  { d: '2026-10-05', t: 'up', i: 'fa-comments', pt: ['Assistente sem limite de mensagens', 'O modo visitante não tem mais o limite de 5 mensagens por minuto. Faça login quando quiser o chat completo.'], en: ['Assistant with no message limit', 'Visitor mode no longer has the 5 messages per minute limit. Sign in whenever you want the full chat.'], link: ['assistente.html', 'Abrir o assistente', 'Open the assistant'] },
+  { d: '2026-10-05', t: 'new', i: 'fa-globe', pt: ['Pesquisa na internet com 16 buscadores', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow e mais. No chat completo com login você controla quais usar.'], en: ['Internet search with 16 engines', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow and more. In the full chat you choose which ones to use.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { d: '2026-10-05', t: 'new', i: 'fa-desktop', pt: ['Guia de IA local', 'Como usar Ollama, LM Studio ou Jan no seu PC e liberar o CORS para evitar o erro de conexão.'], en: ['Local AI guide', 'How to use Ollama, LM Studio or Jan on your PC and enable CORS to avoid the connection error.'], link: ['docs.html#/ia-local', 'Ler o guia', 'Read the guide'] },
+  { d: '0', t: 'up', i: 'fa-right-to-bracket', pt: ['Login com Google e GitHub', 'Além do Discord, agora dá para entrar com Google ou GitHub.'], en: ['Google and GitHub sign-in', 'Besides Discord, you can now sign in with Google or GitHub.'], link: ['chat.html', 'Entrar', 'Sign in'] }
+];
+
+let filter = 'all', query = '';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const dayLabel = d => {
+  if (d === '0') return en ? 'Earlier' : 'Anteriormente';
+  const [y, m, dd] = d.split('-').map(Number);
+  return new Date(y, m - 1, dd).toLocaleDateString(en ? 'en-US' : 'pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+};
+
+function render() {
+  const cnt = { all: LOG.length, new: LOG.filter(x => x.t === 'new').length, up: LOG.filter(x => x.t === 'up').length };
+  const lab = { all: en ? 'All' : 'Tudo', new: en ? 'New' : 'Novos', up: en ? 'Improvements' : 'Melhorias' };
+  document.getElementById('tabs').innerHTML = Object.keys(lab).map(k => `<button class="${filter === k ? 'on' : ''}" data-f="${k}">${lab[k]} <b>${cnt[k]}</b></button>`).join('');
+  document.getElementById('q').placeholder = en ? 'Search...' : 'Buscar...';
+
+  const q = norm(query.trim());
+  const items = LOG.filter(x => (filter === 'all' || x.t === filter) && (!q || norm(x[en ? 'en' : 'pt'].join(' ')).includes(q)));
+  const days = [...new Set(items.map(x => x.d))];
+  let k = 0;
+  document.getElementById('tl').innerHTML = days.map(d => `<section class="day"><h2>${esc(dayLabel(d))}</h2>${items.filter(x => x.d === d).map(x => {
+    const c = x[en ? 'en' : 'pt'];
+    return `<article class="it ${x.t}" style="animation-delay:${(k++) * 40}ms"><span class="ic"><i class="fas ${x.i}"></i></span><div class="bd"><span class="tag">${x.t === 'new' ? (en ? 'NEW' : 'NOVO') : (en ? 'IMPROVEMENT' : 'MELHORIA')}</span><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p>${x.link ? `<a href="${x.link[0]}">${esc(x.link[en ? 2 : 1])} <i class="fas fa-arrow-right"></i></a>` : ''}</div></article>`;
+  }).join('')}</section>`).join('') || `<div class="empty">${en ? 'Nothing found.' : 'Nada encontrado.'}</div>`;
+}
+
+function applyLang() {
+  document.documentElement.lang = en ? 'en' : 'pt-BR';
+  document.getElementById('langBtn').textContent = en ? '🇺🇸 EN' : '🇧🇷 PT';
+  document.title = (en ? 'Updates' : 'Atualizações') + ' - Azul Groove';
+  document.querySelectorAll('[data-pt]').forEach(el => { el.textContent = el.getAttribute(en ? 'data-en' : 'data-pt'); });
+  render();
+}
+function toggleLang() { en = !en; try { localStorage.setItem('site_lang', en ? 'en' : 'pt'); } catch (e) {} applyLang(); }
+
+document.getElementById('tabs').onclick = e => { const b = e.target.closest('button'); if (b) { filter = b.dataset.f; render(); } };
+document.getElementById('q').oninput = e => { query = e.target.value; render(); };
+applyLang();
+
+// sombra do menu ao rolar + menu mobile
+const nv = document.getElementById('topnav');
+const onS = () => nv.classList.toggle('sc', scrollY > 10);
+addEventListener('scroll', onS, { passive: true }); onS();
+const bg = document.getElementById('navBurger'), nl = document.getElementById('navLinks');
+const cl = o => { nl.classList.toggle('open', o); bg.setAttribute('aria-expanded', o); };
+bg.onclick = e => { e.stopPropagation(); cl(!nl.classList.contains('open')); };
+nl.addEventListener('click', e => { if (e.target.closest('a')) cl(false); });
+document.addEventListener('click', e => { if (!e.target.closest('.bar')) cl(false); });
+</script>
+</body>
+</html>
