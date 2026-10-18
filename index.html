@@ -191,6 +191,7 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 @media(max-width:820px){.links{display:none}.hero{padding:70px 0 50px}.right .btn.pri{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.notes{display:none}.rv,.hero .pill,.hero h1,.hero p,.hero .cta,.hero .eq{opacity:1;transform:none}#fx{display:none}}
 </style>
+<script src="halloween.js" defer></script>
 </head>
 <body>
 <div class="glow"></div>
@@ -340,8 +341,9 @@ function applyLanguage() {
 }
 
 // ===== Novidades: edite só esta lista (a mais nova primeiro) =====
-const NEWS_VER = '2026-10-07';
+const NEWS_VER = '2026-10-17';
 const NEWS = [
+  { iso: '2026-10-17', d: '17 Out 2026', t: 'new', i: 'fa-ghost', pt: ['Tema de Halloween', 'O site ganhou visual de Halloween até 07 de novembro, com cores laranja e roxo e abóboras e morcegos caindo. No chat, só o fundo muda. Depois da data, tudo volta ao normal sozinho.'], en: ['Halloween theme', 'The site has a Halloween look until November 7, with orange and purple colors and falling pumpkins and bats. In the chat, only the background changes. After that date, everything goes back to normal on its own.'] },
   { iso: '2026-10-07', d: '07 Out 2026', t: 'new', i: 'fa-screwdriver-wrench', pt: ['Assistente de instalação', 'Baixe o Assistente e ele instala sozinho a versão mais recente do app para Windows. Também repara a instalação e deixa escolher outra versão.'], en: ['Install Assistant', 'Download the Assistant and it installs the latest Windows app version for you. It also repairs the install and lets you pick another version.'], link: ['ia.html#baixar', 'Baixar o Assistente', 'Download the Assistant'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-sliders', pt: ['Novo menu de configurações', 'Abas laterais com ícones, interruptores no lugar das caixinhas e visual de vidro, no chat.'], en: ['New settings menu', 'Side tabs with icons, toggle switches instead of checkboxes and a glass look, in the chat.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
   { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-arrows-rotate', pt: ['Sincronização entre aparelhos', 'Gere um código no aparelho A e digite no B para passar as conversas pela internet. O código vale 5 minutos.'], en: ['Sync between devices', 'Generate a code on device A and type it on B to move your chats over the internet. The code lasts 5 minutes.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
