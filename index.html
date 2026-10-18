@@ -138,6 +138,12 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 .nw-tabs button.on{background:linear-gradient(135deg,var(--ac),#7a5cff);color:#fff;box-shadow:0 6px 16px rgba(88,101,242,.45)}
 .nw-h,.nw-tabs,.nw-f{flex-shrink:0}
 .nw-list{overflow-y:auto;padding:14px 14px 6px;flex:1 1 auto;min-height:0}
+/* barra de rolagem fina no padrão do site (painel de Novidades e página) */
+.nw-list,html{scrollbar-width:thin;scrollbar-color:#5865f2 rgba(255,255,255,.05)}
+.nw-list::-webkit-scrollbar,html::-webkit-scrollbar{width:8px;height:8px}
+.nw-list::-webkit-scrollbar-track,html::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:99px}
+.nw-list::-webkit-scrollbar-thumb,html::-webkit-scrollbar-thumb{background:linear-gradient(#5865f2,#7a5cff);border-radius:99px}
+.nw-list::-webkit-scrollbar-button,html::-webkit-scrollbar-button{display:none;width:0;height:0}
 .nw-it{display:flex;gap:12px;padding:14px;border-radius:18px;margin-bottom:8px;border:1px solid transparent;background:rgba(255,255,255,.03);animation:nwItIn .4s both;animation-delay:calc(var(--k)*45ms);transition:background .15s,transform .15s}
 @keyframes nwItIn{from{opacity:0;transform:translateY(10px)}}
 .nw-it:hover{background:rgba(88,101,242,.1);transform:translateX(3px)}

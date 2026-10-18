@@ -39,6 +39,27 @@
     '.hw-chat .main.empty .box{box-shadow:0 10px 30px rgba(155,92,246,.2)!important}' +
     /* botões: degradê de uma cor só (laranja), sem misturar com roxo */
     '.halloween:not(.hw-chat) .btn,.halloween:not(.hw-chat) .btn.pri{--g1:#ff8a2a;--g2:#e0630a;--gl:rgba(255,122,26,.4)}' +
+    /* painel de Novidades: tudo em laranja e roxo, sem sobras de azul */
+    '.halloween .nw-btn:hover{box-shadow:0 14px 40px rgba(255,122,26,.5)}' +
+    '.halloween .nw-h{background:linear-gradient(120deg,rgba(255,122,26,.32),rgba(168,85,247,.16) 60%,transparent)}' +
+    '.halloween .nw-hi{background:linear-gradient(135deg,#ff8a2a,#e0630a);box-shadow:0 8px 22px rgba(255,122,26,.5)}' +
+    '.halloween .nw-h button:hover{background:rgba(255,122,26,.3)}' +
+    '.halloween .nw-tabs button.on{background:linear-gradient(135deg,#ff8a2a,#e0630a);box-shadow:0 6px 16px rgba(255,122,26,.4)}' +
+    '.halloween .nw-it:hover{background:rgba(255,122,26,.08)}' +
+    '.halloween .nw-it.fresh{border-color:rgba(255,122,26,.55);background:linear-gradient(135deg,rgba(255,122,26,.14),rgba(168,85,247,.06))}' +
+    '.halloween .nw-ic{background:linear-gradient(135deg,#ff8a2a,#e0630a)}' +
+    '.halloween .nw-it.up .nw-ic{background:linear-gradient(135deg,#a855f7,#7c3aed)}' +
+    '.halloween .nw-tag{background:rgba(168,85,247,.2);color:#d8b4fe}' +
+    '.halloween .nw-tag.new{background:rgba(255,122,26,.22);color:#ffc078}' +
+    '.halloween .nw-it a{background:rgba(255,122,26,.16);color:#ffd2a1}' +
+    '.halloween .nw-it a:hover{background:#ff7a1a;color:#fff}' +
+    '.halloween .nw-f a{color:#ffb347}' +
+    /* barras de rolagem (painel de Novidades e página): finas, laranja e roxo, sem o branco com setas */
+    '.halloween .nw-list,.halloween:not(.hw-chat){scrollbar-width:thin;scrollbar-color:#ff7a1a rgba(255,255,255,.05)}' +
+    '.halloween .nw-list::-webkit-scrollbar,.halloween:not(.hw-chat)::-webkit-scrollbar{width:8px;height:8px}' +
+    '.halloween .nw-list::-webkit-scrollbar-track,.halloween:not(.hw-chat)::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:99px}' +
+    '.halloween .nw-list::-webkit-scrollbar-thumb,.halloween:not(.hw-chat)::-webkit-scrollbar-thumb{background:linear-gradient(#ff8a2a,#a855f7);border-radius:99px}' +
+    '.halloween .nw-list::-webkit-scrollbar-button,.halloween:not(.hw-chat)::-webkit-scrollbar-button{display:none;width:0;height:0}' +
     /* decoração */
     '#hw-layer{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}' +
     '#hw-layer .hw-i{position:absolute;top:-40px;font-size:22px;opacity:.75;animation:hwfall linear infinite;will-change:transform}' +
