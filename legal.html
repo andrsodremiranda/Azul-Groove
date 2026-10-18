@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentos Legais - Azul Groove</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.glow{position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 15% 0,rgba(88,101,242,.26),transparent),radial-gradient(500px 400px at 95% 10%,rgba(31,182,255,.15),transparent);animation:hue 22s ease-in-out infinite alternate}
+@keyframes hue{from{filter:hue-rotate(-25deg)}to{filter:hue-rotate(75deg)}}
+
+/* ===== menu (barra flutuante) ===== */
+nav{position:sticky;top:0;z-index:10;padding:14px 0 0}
+.bar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px;padding:0 10px 0 12px;border-radius:99px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(20,25,64,.62),rgba(10,13,38,.62));backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.07);transition:background .3s,border-color .3s,box-shadow .3s}
+nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-shadow:0 14px 44px rgba(0,0,0,.55),0 0 0 1px rgba(88,101,242,.12)}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.3px;font-size:1.12rem}
+.logo .lg{display:grid;place-items:center;filter:drop-shadow(0 4px 12px rgba(176,109,255,.55));transition:transform .3s}
+.logo .lg svg{height:36px;width:auto;display:block}
+.logo:hover .lg{transform:translateY(-2px) scale(1.08)}
+.logo .lt{background:linear-gradient(120deg,#fff,#c9d2ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:4px;padding:5px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);font-size:.9rem}
+.links a{padding:8px 16px;border-radius:99px;font-weight:600;color:var(--mut);transition:color .2s,background .2s}
+.links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.right{display:flex;gap:8px;align-items:center}
+.btn{--g1:#5865f2;--g2:#7a5cff;--gl:rgba(88,101,242,.5);position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;font-weight:600;font-size:.85rem;border:1px solid transparent;background:linear-gradient(135deg,var(--g1),var(--g2));background-size:200% 100%;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 5px 16px var(--gl);transition:.25s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn:hover{transform:translateY(-2px);background-position:100% 0}.btn:hover::after{transform:translateX(120%)}
+.btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);box-shadow:none}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0}
+.burger span{width:18px;height:2px;border-radius:2px;background:#fff;transition:transform .25s,opacity .25s}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.97)}}
+@media(max-width:820px){
+  .burger{display:flex}
+  .links{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;gap:2px;padding:10px;border-radius:24px;background:rgba(9,12,34,.96);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .links.open{display:flex;animation:pop .25s}
+  .links a{padding:13px 16px;border-radius:14px;font-size:.98rem}
+}
+@media(max-width:480px){.logo .lt{display:none}}
+
+/* ===== página ===== */
+.page{max-width:920px;margin:0 auto;padding:34px 20px 60px}
+.head{text-align:center;margin-bottom:26px}
+.head h1{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;letter-spacing:-.5px;background:linear-gradient(120deg,#fff 30%,var(--ac2) 70%,var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--mut);margin-top:6px}
+.tabs{display:flex;gap:6px;padding:6px;margin:0 auto 22px;width:fit-content;max-width:100%;overflow-x:auto;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.tabs a{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:99px;font-weight:600;font-size:.92rem;color:var(--mut);white-space:nowrap;transition:.2s}
+.tabs a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.tabs a.on{color:#fff;background:linear-gradient(135deg,var(--ac),#7a5cff);box-shadow:0 6px 18px rgba(88,101,242,.5)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:44px;animation:pop .35s both}
+.doc[hidden]{display:none}
+body:not(.en) .en{display:none}
+body.en .pt{display:none}
+.doc h2{color:#fff;font-size:clamp(1.4rem,4vw,1.9rem);line-height:1.25;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.doc h2 i{color:var(--ac2)}
+.doc h3{color:var(--ac2);margin:28px 0 10px;font-size:1.15rem}
+.doc p,.doc li{color:var(--mut);line-height:1.75;margin-bottom:12px;font-size:1rem}
+.doc strong{color:var(--tx)}
+.doc ul{padding-left:22px;margin-bottom:18px}
+.doc a{color:#8ea1ff}.doc a:hover{text-decoration:underline}
+.upd{font-size:.9rem;color:var(--mut);margin-bottom:24px}
+.summary{background:rgba(88,101,242,.1);border-left:3px solid var(--ac);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:10px}
+.summary p{margin:0 0 8px}.summary p:last-child{margin-bottom:0}
+.foot{margin-top:36px;font-size:.88rem;color:var(--mut);border-top:1px solid var(--line);padding-top:18px}
+.others{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.copy{text-align:center;color:var(--mut);font-size:.85rem;margin-top:34px}
+@media(max-width:768px){.doc{padding:28px 18px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<script src="halloween.js" defer></script>
+</head>
+<body>
+<div class="glow"></div>
+
+<nav id="topnav"><div class="wrap"><div class="bar">
+  <a class="logo" href="index.html"><span class="lg"><svg viewBox="40 140 940 710" aria-hidden="true"><defs><linearGradient id="lotG" gradientUnits="userSpaceOnUse" x1="200" y1="820" x2="820" y2="240"><stop offset="0" stop-color="#6b8cff"/><stop offset=".5" stop-color="#b06dff"/><stop offset="1" stop-color="#ff6fff"/></linearGradient></defs><g fill="url(#lotG)"><path d="M512,148C455,203 413,262 388,327C455,392 497,480 512,588C527,480 569,392 636,327C611,262 569,203 512,148Z"/><path d="M379,358C350,420 360,520 413,605C455,668 490,745 503,812C503,720 497,640 485,570C470,480 430,410 379,358Z"/><path d="M645,358C674,420 664,520 611,605C569,668 534,745 521,812C521,720 527,640 539,570C554,480 594,410 645,358Z"/><path d="M216,264C275,280 325,308 360,341C340,400 340,470 354,525C310,484 262,458 214,445C200,380 204,320 216,264Z"/><path d="M808,264C749,280 699,308 664,341C684,400 684,470 670,525C714,484 762,458 810,445C824,380 820,320 808,264Z"/><path d="M52,452C170,445 270,470 345,545C415,620 465,720 489,831C300,845 100,740 52,452Z"/><path d="M972,452C854,445 754,470 679,545C609,620 559,720 535,831C724,845 924,740 972,452Z"/></g></svg></span><span class="lt">Azul Groove</span></a>
+  <div class="links" id="navLinks">
+    <a href="index.html#home" data-pt="Início" data-en="Home">Início</a>
+    <a href="index.html#features" data-pt="Recursos" data-en="Features">Recursos</a>
+    <a href="index.html#commands" data-pt="Comandos" data-en="Commands">Comandos</a>
+    <a href="blog.html">Blog</a>
+    <a href="https://discord.com/invite/g4cW4zRvjf" target="_blank" rel="noopener noreferrer" data-pt="Suporte" data-en="Support">Suporte</a>
+  </div>
+  <div class="right">
+    <button class="btn ghost" onclick="toggleLang()" id="langBtn">🇧🇷 PT</button>
+    <a class="btn" href="index.html"><i class="fas fa-arrow-left"></i> <span data-pt="Início" data-en="Home">Início</span></a>
+    <button class="burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  </div>
+</div></div></nav>
+
+<main class="page">
+  <div class="head">
+    <h1 data-pt="Documentos Legais" data-en="Legal Documents">Documentos Legais</h1>
+    <p data-pt="Termos de Uso, Privacidade e Licença da IA em um só lugar." data-en="Terms of Use, Privacy and AI License in one place.">Termos de Uso, Privacidade e Licença da IA em um só lugar.</p>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <a href="#termos" data-tab="termos"><i class="fas fa-file-contract"></i> <span data-pt="Termos de Uso" data-en="Terms of Use">Termos de Uso</span></a>
+    <a href="#privacidade" data-tab="privacidade"><i class="fas fa-user-shield"></i> <span data-pt="Privacidade" data-en="Privacy">Privacidade</span></a>
+    <a href="#ia" data-tab="ia"><i class="fas fa-robot"></i> <span data-pt="Licença da IA" data-en="AI License">Licença da IA</span></a>
+  </div>
+
+  <!-- ================= TERMOS DE USO ================= -->
+  <article class="doc" id="d-termos">
+    <div class="pt">
+      <h2><i class="fas fa-file-contract"></i> Licença de Uso do Bot Azul Groove</h2>
+      <p class="upd">© 2019–2026 ASTM Software. Todos os direitos reservados.<br>Última atualização: 26 de fevereiro de 2026</p>
+
+      <h3>Aceitação dos Termos</h3>
+      <p>Ao utilizar o bot Azul Groove, você concorda integralmente com os termos e condições descritos neste documento. Caso não concorde com qualquer parte desta licença, recomendamos que não utilize o serviço.</p>
+
+      <h3>1. Concessão de Licença</h3>
+      <p>A ASTM Software concede ao usuário uma licença limitada, não exclusiva e intransferível para utilizar o Bot Azul Groove.</p>
+      <p>O uso é permitido exclusivamente para fins pessoais e não comerciais.</p>
+
+      <h3>2. Uso Permitido</h3>
+      <p>O usuário poderá utilizar o Bot para:</p>
+      <ul>
+        <li>Execução de comandos de música</li>
+        <li>Interação com funcionalidades oficiais</li>
+        <li>Uso de recursos disponibilizados pelo sistema</li>
+      </ul>
+
+      <h3>3. Restrições de Uso</h3>
+      <p>É expressamente proibido:</p>
+      <ul>
+        <li>Utilizar o Bot para fins ilegais</li>
+        <li>Realizar engenharia reversa, modificar ou tentar acessar o código-fonte</li>
+        <li>Distribuir versões não autorizadas</li>
+        <li>Explorar falhas ou vulnerabilidades</li>
+        <li>Utilizar o Bot para spam, abuso ou interferência no funcionamento do serviço</li>
+      </ul>
+
+      <h3>4. Propriedade Intelectual</h3>
+      <p>Todo o código-fonte, identidade visual, comandos, estrutura e funcionalidades do Azul Groove são de propriedade exclusiva da ASTM Software.</p>
+      <p>É proibida qualquer cópia, modificação ou redistribuição sem autorização formal.</p>
+
+      <h3>5. Limitação de Responsabilidade</h3>
+      <p>O Bot é fornecido “no estado em que se encontra”, sem garantias de funcionamento contínuo ou ausência de erros.</p>
+      <p>A ASTM Software não se responsabiliza por:</p>
+      <ul>
+        <li>Perda de dados</li>
+        <li>Interrupções temporárias</li>
+        <li>Falhas em serviços de terceiros, incluindo servidores Lavalink</li>
+        <li>Eventos fora de seu controle razoável</li>
+      </ul>
+
+      <h3>6. Atualizações e Continuidade do Serviço</h3>
+      <p>A ASTM Software poderá modificar, pausar ou descontinuar funcionalidades do Bot a qualquer momento.</p>
+      <p>A continuidade do funcionamento não implica obrigação de lançamento de novas atualizações ou recursos.</p>
+
+      <h3>7. Coleta de Dados Funcionais</h3>
+      <p>O Bot armazena temporariamente dados necessários ao funcionamento, incluindo:</p>
+      <ul>
+        <li>Histórico recente de músicas</li>
+        <li>Favoritos</li>
+        <li>Preferências de personalização</li>
+      </ul>
+      <p>Esses dados são utilizados exclusivamente para melhorar a experiência do usuário. Nenhum hábito musical é armazenado permanentemente.</p>
+
+      <h3>8. Diagnóstico de Erros e Uso de Inteligência Artificial</h3>
+      <p>Em caso de falhas técnicas, poderão ser coletados logs técnicos e dados de uso no momento do erro.</p>
+      <p>Essas informações podem ser processadas por sistemas internos de Inteligência Artificial da ASTM Software, exclusivamente para diagnóstico, correção de falhas e aprimoramento do desempenho.</p>
+      <p>Nenhum dado pessoal sensível é coletado. O processamento ocorre de forma anônima e segura.</p>
+
+      <h3>9. Bibliotecas de Terceiros</h3>
+      <p>O Bot utiliza tecnologias como Python, Lavalink e Disnake, que operam sob suas próprias licenças.</p>
+      <p>A ASTM Software não oferece suporte para falhas exclusivas dessas bibliotecas.</p>
+
+      <h3>10. Alterações na Licença</h3>
+      <p>Esta licença pode ser atualizada a qualquer momento.</p>
+      <p>O uso contínuo do Bot implica na aceitação da versão mais recente.</p>
+
+      <h3>11. Legislação Aplicável</h3>
+      <p>Este documento é regido pelas leis da República Federativa do Brasil.</p>
+
+      <h3>12. Contato</h3>
+      <p>Para dúvidas ou solicitações:<br><a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+    </div>
+
+    <div class="en">
+      <h2><i class="fas fa-file-contract"></i> Azul Groove Bot License Agreement</h2>
+      <p class="upd">© 2019–2026 ASTM Software. All rights reserved.<br>Last updated: February 26, 2026</p>
+
+      <h3>Acceptance of Terms</h3>
+      <p>By using the Azul Groove bot, you fully agree to the terms and conditions described in this document. If you do not agree with any part of this license, we recommend that you do not use the service.</p>
+
+      <h3>1. License Grant</h3>
+      <p>ASTM Software grants the user a limited, non-exclusive, and non-transferable license to use the Azul Groove Bot.</p>
+      <p>Use is strictly permitted for personal, non-commercial purposes.</p>
+
+      <h3>2. Permitted Use</h3>
+      <p>The user may use the Bot for:</p>
+      <ul>
+        <li>Executing music commands</li>
+        <li>Interacting with official features</li>
+        <li>Using resources provided by the system</li>
+      </ul>
+
+      <h3>3. Use Restrictions</h3>
+      <p>It is expressly prohibited to:</p>
+      <ul>
+        <li>Use the Bot for illegal purposes</li>
+        <li>Reverse engineer, modify, or attempt to access the source code</li>
+        <li>Distribute unauthorized versions</li>
+        <li>Exploit flaws or vulnerabilities</li>
+        <li>Use the Bot for spam, abuse, or interference with the service's operation</li>
+      </ul>
+
+      <h3>4. Intellectual Property</h3>
+      <p>All source code, visual identity, commands, structure, and features of Azul Groove are the exclusive property of ASTM Software.</p>
+      <p>Any copying, modification, or redistribution without formal authorization is prohibited.</p>
+
+      <h3>5. Limitation of Liability</h3>
+      <p>The Bot is provided "as is", without warranties of uninterrupted operation or absence of errors.</p>
+      <p>ASTM Software is not responsible for:</p>
+      <ul>
+        <li>Data loss</li>
+        <li>Temporary interruptions</li>
+        <li>Failures in third-party services, including Lavalink servers</li>
+        <li>Events beyond its reasonable control</li>
+      </ul>
+
+      <h3>6. Updates and Service Continuity</h3>
+      <p>ASTM Software may modify, pause, or discontinue Bot features at any time.</p>
+      <p>The continuity of operation does not imply an obligation to release new updates or features.</p>
+
+      <h3>7. Functional Data Collection</h3>
+      <p>The Bot temporarily stores data necessary for operation, including:</p>
+      <ul>
+        <li>Recent music history</li>
+        <li>Favorites</li>
+        <li>Customization preferences</li>
+      </ul>
+      <p>This data is used exclusively to improve the user experience. No musical habits are stored permanently.</p>
+
+      <h3>8. Error Diagnosis and Artificial Intelligence Use</h3>
+      <p>In the event of technical failures, technical logs and usage data at the time of the error may be collected.</p>
+      <p>This information may be processed by ASTM Software's internal Artificial Intelligence systems, exclusively for diagnosis, error correction, and performance improvement.</p>
+      <p>No sensitive personal data is collected. Processing occurs anonymously and securely.</p>
+
+      <h3>9. Third-Party Libraries</h3>
+      <p>The Bot uses technologies such as Python, Lavalink, and Disnake, which operate under their own licenses.</p>
+      <p>ASTM Software does not offer support for failures exclusive to these libraries.</p>
+
+      <h3>10. License Changes</h3>
+      <p>This license may be updated at any time.</p>
+      <p>Continued use of the Bot implies acceptance of the latest version.</p>
+
+      <h3>11. Applicable Law</h3>
+      <p>This document is governed by the laws of the Federative Republic of Brazil.</p>
+
+      <h3>12. Contact</h3>
+      <p>For questions or requests:<br><a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+    </div>
+  </article>
+
+  <!-- ================= PRIVACIDADE ================= -->
+  <article class="doc" id="d-privacidade" hidden>
+    <div class="pt">
+      <h2><i class="fas fa-user-shield"></i> POLÍTICA DE PRIVACIDADE – ASTM Software</h2>
+
+      <h3>1. Coleta de Dados</h3>
+      <p>Durante o uso do bot e de nossos serviços, podem ser coletadas as seguintes informações:</p>
+      <p><strong>Dados de Uso:</strong></p>
+      <ul>
+        <li>Músicas tocadas;</li>
+        <li>Comandos utilizados;</li>
+        <li>Interações realizadas com o bot.</li>
+      </ul>
+      <p><strong>Dados Técnicos:</strong></p>
+      <ul>
+        <li>Logs de erro;</li>
+        <li>IDs de servidores e canais;</li>
+        <li>Nome do servidor;</li>
+        <li>Informações técnicas relacionadas ao funcionamento do sistema.</li>
+      </ul>
+      <p><strong>Rich Presence:</strong></p>
+      <p>Informações de erro relacionadas ao Rich Presence podem ser registradas localmente para fins de diagnóstico. Esses dados não são enviados automaticamente à ASTM Software.</p>
+
+      <h3>2. Finalidade da Coleta</h3>
+      <p>Os dados são utilizados exclusivamente para:</p>
+      <ul>
+        <li>Melhorar o desempenho do serviço;</li>
+        <li>Corrigir falhas técnicas;</li>
+        <li>Desenvolver novos recursos;</li>
+        <li>Prevenir atividades maliciosas;</li>
+        <li>Oferecer uma melhor experiência ao usuário.</li>
+      </ul>
+
+      <h3>3. Armazenamento e Segurança</h3>
+      <p>A ASTM Software adota rigorosas medidas técnicas para proteger os dados coletados, incluindo:</p>
+      <ul>
+        <li>Criptografia durante a transmissão e armazenamento;</li>
+        <li>Controle restrito de acesso;</li>
+        <li>Monitoramento e proteção contra invasões;</li>
+        <li>Revisões periódicas de segurança.</li>
+      </ul>
+
+      <h3>4. Compartilhamento de Dados</h3>
+      <p>A ASTM Software não vende, aluga ou compartilha dados com terceiros, exceto:</p>
+      <ul>
+        <li>Quando exigido por lei ou ordem judicial;</li>
+        <li>Mediante consentimento explícito do usuário.</li>
+      </ul>
+
+      <h3>5. Direitos do Usuário</h3>
+      <p>O usuário pode solicitar a qualquer momento:</p>
+      <ul>
+        <li>Acesso aos dados armazenados;</li>
+        <li>Correção de informações incorretas;</li>
+        <li>Exclusão permanente de dados (respeitando limitações legais e técnicas).</li>
+      </ul>
+      <p>Solicitações devem ser feitas diretamente pelo e-mail:<br>📧 <a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+
+      <h3>6. Atualizações da Política</h3>
+      <p>Esta Política pode ser atualizada periodicamente para refletir melhorias no sistema. Mudanças relevantes serão publicadas nos canais oficiais da ASTM Software.</p>
+    </div>
+
+    <div class="en">
+      <h2><i class="fas fa-user-shield"></i> PRIVACY POLICY – ASTM Software</h2>
+
+      <h3>1. Data Collection</h3>
+      <p>During the use of the bot and our services, the following information may be collected:</p>
+      <p><strong>Usage Data:</strong></p>
+      <ul>
+        <li>Songs played;</li>
+        <li>Commands used;</li>
+        <li>Interactions with the bot.</li>
+      </ul>
+      <p><strong>Technical Data:</strong></p>
+      <ul>
+        <li>Error logs;</li>
+        <li>Server and channel IDs;</li>
+        <li>Server name;</li>
+        <li>Technical information related to system operation.</li>
+      </ul>
+      <p><strong>Rich Presence:</strong></p>
+      <p>Error details regarding Rich Presence may be stored locally for diagnostics. This data is not automatically sent to ASTM Software.</p>
+
+      <h3>2. Purpose of Collection</h3>
+      <p>Data is collected exclusively to:</p>
+      <ul>
+        <li>Improve service performance;</li>
+        <li>Fix technical bugs;</li>
+        <li>Develop new features;</li>
+        <li>Prevent malicious activities;</li>
+        <li>Provide a better user experience.</li>
+      </ul>
+
+      <h3>3. Storage and Security</h3>
+      <p>ASTM Software adopts strict technical measures to protect collected data, including:</p>
+      <ul>
+        <li>Encryption in transmission and storage;</li>
+        <li>Strict access controls;</li>
+        <li>Monitoring and intrusion protection;</li>
+        <li>Periodic security reviews.</li>
+      </ul>
+
+      <h3>4. Data Sharing</h3>
+      <p>ASTM Software does not sell, rent, or share data with third parties, except:</p>
+      <ul>
+        <li>When required by law or court order;</li>
+        <li>With explicit user consent.</li>
+      </ul>
+
+      <h3>5. User Rights</h3>
+      <p>Users may request at any time:</p>
+      <ul>
+        <li>Access to stored data;</li>
+        <li>Correction of inaccurate information;</li>
+        <li>Permanent data deletion (respecting legal and technical limitations).</li>
+      </ul>
+      <p>Requests must be sent via email:<br>📧 <a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+
+      <h3>6. Policy Updates</h3>
+      <p>This Policy may be updated periodically to reflect system improvements. Significant changes will be posted on official ASTM Software channels.</p>
+    </div>
+  </article>
+
+  <!-- ================= LICENÇA DA IA ================= -->
+  <article class="doc" id="d-ia" hidden>
+    <div class="pt">
+      <h2><i class="fas fa-robot"></i> LICENÇA DE USO DA IA – ASTM Software</h2>
+
+      <div class="summary">
+        <p><strong>Em resumo:</strong></p>
+        <p>• A Azul Groove IA não coleta seus dados. Não temos servidor que receba suas mensagens, conversas ou chaves.</p>
+        <p>• Tudo o que fica salvo (conversas, configurações, tema) fica no seu navegador, no seu aparelho.</p>
+        <p>• Para responder, a IA usa o serviço de um terceiro, e é ele quem recebe o que você escreve.</p>
+      </div>
+
+      <h3>1. O que é a Azul Groove IA</h3>
+      <p>A Azul Groove IA é uma interface de chat da ASTM Software. Ela <strong>não é um modelo de inteligência artificial próprio</strong>: ela envia a sua mensagem para o servidor de um serviço de terceiros e mostra a resposta que ele devolve.</p>
+
+      <h3>2. Licença concedida</h3>
+      <p>A ASTM Software concede a você uma licença gratuita, pessoal, não exclusiva, intransferível e revogável para usar a Azul Groove IA pelo site, de acordo com estes termos. Ao marcar que concorda e usar o chat, você aceita esta licença.</p>
+
+      <h3>3. Não coletamos dados</h3>
+      <p>A ASTM Software não coleta, não recebe e não armazena em servidores próprios:</p>
+      <ul>
+        <li>as mensagens que você escreve para a IA;</li>
+        <li>as respostas geradas;</li>
+        <li>as suas conversas e o seu histórico;</li>
+        <li>as suas chaves de API.</li>
+      </ul>
+      <p>Também não vendemos, alugamos ou compartilhamos dados seus, porque não temos esses dados.</p>
+
+      <h3>4. O que fica salvo no seu navegador</h3>
+      <p>Para o chat funcionar, o seu navegador guarda localmente (armazenamento local e cookies):</p>
+      <ul>
+        <li>suas conversas e lembranças, se você as usar;</li>
+        <li>as configurações do chat, como serviço de IA, modelo, tema e fundo;</li>
+        <li>a sua chave de API, somente se você marcar a opção de lembrar;</li>
+        <li>os dados básicos do login com o Discord (identificador, nome e avatar) e o aceite dos termos;</li>
+        <li>o contador do limite do Modo Visitante.</li>
+      </ul>
+      <p>Esses dados ficam no seu aparelho e podem ser apagados a qualquer momento, saindo da conta ou limpando os dados do site no navegador. Se você limpar, as conversas salvas serão perdidas.</p>
+
+      <h3>5. Serviços de terceiros</h3>
+      <p>Para gerar respostas, a Azul Groove IA depende de serviços que não são da ASTM Software:</p>
+      <ul>
+        <li><strong>Serviço de IA escolhido por você</strong> (por exemplo OpenRouter, OpenAI, Groq, Google Gemini ou Together AI): ele recebe o texto que você envia e a sua chave, e trata esses dados conforme as próprias regras. Se você usar um modelo no seu computador (como Ollama ou LM Studio), a mensagem não sai do seu aparelho.</li>
+        <li><strong>Pesquisa na internet</strong>, se você ativar: o assunto da sua pergunta pode ser enviado a fontes de consulta públicas para buscar informações atuais.</li>
+        <li><strong>Discord</strong>, para o login.</li>
+        <li><strong>Sincronização entre aparelhos</strong>, se você usar: as conversas vão direto de um aparelho para o outro (conexão WebRTC). Um serviço público de conexão (PeerJS) e servidores STUN do Google ajudam os dois aparelhos a se encontrarem e podem ver o endereço de IP, mas as conversas não passam por servidor da ASTM Software.</li>
+      </ul>
+      <p>Não controlamos esses serviços. Recomendamos ler os termos e as políticas de privacidade de cada um e <strong>não enviar senhas, documentos ou outras informações sensíveis</strong> no chat.</p>
+
+      <h3>6. Sua chave de API</h3>
+      <p>A chave de API é sua. Você é responsável por guardá-la, por não compartilhá-la e por qualquer custo ou limite cobrado pelo serviço de IA que escolher. Não use o chat em computadores compartilhados com a chave salva.</p>
+
+      <h3>7. Modo Visitante</h3>
+      <p>Quem não entra com o Discord pode usar uma versão de teste, limitada a <strong>5 mensagens por minuto</strong>. Tentar burlar esse limite não é permitido.</p>
+
+      <h3>8. Uso aceitável</h3>
+      <p>Você concorda em não usar a Azul Groove IA para:</p>
+      <ul>
+        <li>atividades ilegais ou que violem direitos de outras pessoas;</li>
+        <li>gerar ou espalhar conteúdo de ódio, assédio, golpes ou desinformação;</li>
+        <li>criar malware ou tentar invadir sistemas;</li>
+        <li>sobrecarregar, copiar ou tentar explorar falhas do site;</li>
+        <li>qualquer uso que viole as regras do serviço de IA escolhido.</li>
+      </ul>
+
+      <h3>9. Sobre as respostas da IA</h3>
+      <p>As respostas vêm de um serviço de terceiros e podem conter erros, estar desatualizadas ou ser imprecisas. Elas não substituem orientação profissional (médica, jurídica, financeira ou outra). Confira as informações importantes antes de agir com base nelas.</p>
+
+      <h3>10. Isenção de garantia e responsabilidade</h3>
+      <p>A Azul Groove IA é oferecida "como está", sem garantia de disponibilidade, exatidão ou adequação a um fim específico. Na extensão permitida por lei, a ASTM Software não se responsabiliza por danos decorrentes do uso da IA, das respostas recebidas, da indisponibilidade de serviços de terceiros ou da perda de dados salvos no seu navegador.</p>
+
+      <h3>11. Propriedade intelectual</h3>
+      <p>O site, a marca Azul Groove e a interface pertencem à ASTM Software. O conteúdo gerado pela IA segue os termos do serviço de terceiros utilizado. Você é responsável pelo uso que fizer do que receber.</p>
+
+      <h3>12. Alterações e contato</h3>
+      <p>Esta Licença pode ser atualizada. Mudanças relevantes serão publicadas nos canais oficiais da ASTM Software. Dúvidas ou pedidos podem ser enviados para:<br>📧 <a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+      <p>Veja também a <a href="#privacidade">Política de Privacidade</a> e os <a href="#termos">Termos de Uso</a> do Azul Groove.</p>
+    </div>
+
+    <div class="en">
+      <h2><i class="fas fa-robot"></i> AI USE LICENSE – ASTM Software</h2>
+
+      <div class="summary">
+        <p><strong>In short:</strong></p>
+        <p>• Azul Groove AI does not collect your data. We have no server that receives your messages, chats or keys.</p>
+        <p>• Everything that is saved (chats, settings, theme) stays in your browser, on your device.</p>
+        <p>• To answer, the AI uses a third-party service, and that service receives what you write.</p>
+      </div>
+
+      <h3>1. What Azul Groove AI is</h3>
+      <p>Azul Groove AI is a chat interface by ASTM Software. It is <strong>not an artificial intelligence model of our own</strong>: it sends your message to a third-party service's server and shows the reply that server returns.</p>
+
+      <h3>2. License granted</h3>
+      <p>ASTM Software grants you a free, personal, non-exclusive, non-transferable and revocable license to use Azul Groove AI through the website, under these terms. By ticking that you agree and using the chat, you accept this license.</p>
+
+      <h3>3. We do not collect data</h3>
+      <p>ASTM Software does not collect, receive or store on its own servers:</p>
+      <ul>
+        <li>the messages you write to the AI;</li>
+        <li>the replies generated;</li>
+        <li>your chats and history;</li>
+        <li>your API keys.</li>
+      </ul>
+      <p>We also do not sell, rent or share your data, because we do not have it.</p>
+
+      <h3>4. What is saved in your browser</h3>
+      <p>For the chat to work, your browser stores locally (local storage and cookies):</p>
+      <ul>
+        <li>your chats and memories, if you use them;</li>
+        <li>chat settings, such as AI service, model, theme and wallpaper;</li>
+        <li>your API key, only if you tick the remember option;</li>
+        <li>basic Discord login data (ID, name and avatar) and your acceptance of the terms;</li>
+        <li>the Visitor Mode limit counter.</li>
+      </ul>
+      <p>This data stays on your device and can be deleted at any time by signing out or clearing the site's data in your browser. If you clear it, saved chats will be lost.</p>
+
+      <h3>5. Third-party services</h3>
+      <p>To generate replies, Azul Groove AI depends on services that do not belong to ASTM Software:</p>
+      <ul>
+        <li><strong>The AI service you choose</strong> (for example OpenRouter, OpenAI, Groq, Google Gemini or Together AI): it receives the text you send and your key, and handles them under its own rules. If you use a model on your own computer (such as Ollama or LM Studio), the message does not leave your device.</li>
+        <li><strong>Web search</strong>, if you turn it on: the topic of your question may be sent to public lookup sources to fetch current information.</li>
+        <li><strong>Discord</strong>, for login.</li>
+        <li><strong>Device sync</strong>, if you use it: chats go straight from one device to the other (WebRTC connection). A public connection service (PeerJS) and Google STUN servers help the two devices find each other and may see the IP address, but chats do not pass through an ASTM Software server.</li>
+      </ul>
+      <p>We do not control these services. We recommend reading each one's terms and privacy policy and <strong>not sending passwords, documents or other sensitive information</strong> in the chat.</p>
+
+      <h3>6. Your API key</h3>
+      <p>The API key is yours. You are responsible for keeping it safe, not sharing it, and for any cost or limit charged by the AI service you choose. Do not use the chat on shared computers with the key saved.</p>
+
+      <h3>7. Visitor Mode</h3>
+      <p>People who do not sign in with Discord can use a trial version, limited to <strong>5 messages per minute</strong>. Trying to bypass this limit is not allowed.</p>
+
+      <h3>8. Acceptable use</h3>
+      <p>You agree not to use Azul Groove AI to:</p>
+      <ul>
+        <li>carry out illegal activities or violate the rights of others;</li>
+        <li>generate or spread hate speech, harassment, scams or disinformation;</li>
+        <li>create malware or try to break into systems;</li>
+        <li>overload, copy or try to exploit flaws in the site;</li>
+        <li>make any use that violates the rules of the AI service you chose.</li>
+      </ul>
+
+      <h3>9. About AI replies</h3>
+      <p>Replies come from a third-party service and may contain errors, be outdated or inaccurate. They do not replace professional advice (medical, legal, financial or other). Check important information before acting on it.</p>
+
+      <h3>10. Disclaimer and liability</h3>
+      <p>Azul Groove AI is provided "as is", with no guarantee of availability, accuracy or fitness for a particular purpose. To the extent permitted by law, ASTM Software is not liable for damages arising from the use of the AI, the replies received, the unavailability of third-party services or the loss of data saved in your browser.</p>
+
+      <h3>11. Intellectual property</h3>
+      <p>The website, the Azul Groove brand and the interface belong to ASTM Software. Content generated by the AI follows the terms of the third-party service used. You are responsible for how you use what you receive.</p>
+
+      <h3>12. Changes and contact</h3>
+      <p>This License may be updated. Significant changes will be posted on ASTM Software's official channels. Questions or requests can be sent to:<br>📧 <a href="mailto:corporationastm@gmail.com">corporationastm@gmail.com</a></p>
+      <p>See also the Azul Groove <a href="#privacidade">Privacy Policy</a> and <a href="#termos">Terms of Use</a>.</p>
+    </div>
+  </article>
+
+  <p class="copy">&copy; 2026 ASTM Software. <span class="pt">Todos os direitos reservados.</span><span class="en">All rights reserved.</span></p>
+</main>
+
+<script>
+let en = (() => { try { const s = localStorage.getItem('site_lang'); return s === 'en' || (!s && (navigator.language || '').startsWith('en')); } catch (e) { return false; } })();
+const DOCS = ['termos', 'privacidade', 'ia'];
+
+function show() {
+  let h = (location.hash || '').replace('#', '');
+  if (!DOCS.includes(h)) h = 'termos';
+  DOCS.forEach(d => {
+    document.getElementById('d-' + d).hidden = d !== h;
+    document.querySelector('[data-tab="' + d + '"]').classList.toggle('on', d === h);
+  });
+  const t = document.querySelector('[data-tab="' + h + '"] span').textContent;
+  document.title = t + ' - Azul Groove';
+}
+
+function applyLang() {
+  document.body.classList.toggle('en', en);
+  document.documentElement.lang = en ? 'en' : 'pt-BR';
+  document.getElementById('langBtn').textContent = en ? '🇺🇸 EN' : '🇧🇷 PT';
+  document.querySelectorAll('[data-pt]').forEach(el => { el.textContent = el.getAttribute(en ? 'data-en' : 'data-pt'); });
+  show();
+}
+
+function toggleLang() {
+  en = !en;
+  try { localStorage.setItem('site_lang', en ? 'en' : 'pt'); } catch (e) {}
+  applyLang();
+}
+
+addEventListener('hashchange', () => { show(); scrollTo({ top: 0 }); });
+applyLang();
+if (location.hash) scrollTo({ top: 0 });
+
+// sombra do menu ao rolar + menu mobile
+const nv = document.getElementById('topnav');
+const onS = () => nv.classList.toggle('sc', scrollY > 10);
+addEventListener('scroll', onS, { passive: true }); onS();
+const bg = document.getElementById('navBurger'), nl = document.getElementById('navLinks');
+const cl = o => { nl.classList.toggle('open', o); bg.setAttribute('aria-expanded', o); };
+bg.onclick = e => { e.stopPropagation(); cl(!nl.classList.contains('open')); };
+nl.addEventListener('click', e => { if (e.target.closest('a')) cl(false); });
+document.addEventListener('click', e => { if (!e.target.closest('.bar')) cl(false); });
+</script>
+</body>
+</html>
