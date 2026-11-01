@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Azul Groove - Chat</title>
 <link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="aumentar-o-tamanho-d.png">
+<meta name="theme-color" content="#5865F2">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 :root{color-scheme:dark;--tx:#fff;--inp:#1e1f22;--soft:rgba(255,255,255,.06);--hi:#e8eaed;--bg:#0f1117;--side:#12141a;--card:#1c1f26;--line:rgba(255,255,255,.08);--p:#5865F2;--t:#dbdee1;--m:#949ba4}
@@ -332,6 +335,30 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
 .nw-f a{color:#8ea1ff;font-weight:600;text-decoration:none}.nw-f a:hover{text-decoration:underline}
 @media(max-width:560px){.nw-pn{left:10px;right:10px;width:auto;top:56px;max-height:80vh}}
 @media(prefers-reduced-motion:reduce){.nw-pn.open,.nw-it{animation:none!important}}
+/* ===== v3: visitante + ajustes do chat ===== */
+html[data-fs=s] .m{font-size:.85rem}html[data-fs=l] .m{font-size:1.08rem}
+html[data-ts=off] .m time{display:none}
+html[data-cp=on] .m{padding:8px 13px;line-height:1.4}html[data-cp=on] .msgs{gap:8px}
+.meter{height:8px;border-radius:99px;background:var(--soft);margin:8px 0 2px;overflow:hidden}.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--p),#1fb6ff);border-radius:99px}
+.gbn{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:12px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);font-size:.78rem;line-height:1.4;color:var(--t)}
+.gbn[hidden]{display:none}.gbn b{color:var(--tx)}.gbn button{align-self:flex-start;border:0;border-radius:8px;padding:5px 10px;font-weight:600;font-size:.78rem;background:var(--p);color:#fff}
+.gate .btn.gv{background:transparent;border:1px solid var(--line);color:var(--tx)}.gate .btn.gv:hover{border-color:var(--p)}
+.fbs{display:flex;gap:6px}.fbs button{flex:none;width:42px;height:42px;border:0;border-radius:12px;background:var(--soft);color:var(--m);font-size:1.25rem;line-height:1}
+.fbs button.on{color:#fbbf24;background:rgba(251,191,36,.14)}#fbk{z-index:25}
+/* ===== v4: menu de configurações ===== */
+#cfg .ch .srch{position:relative;flex:1;max-width:260px;margin-left:auto}
+#cfg .ch .srch i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--m);font-size:.8rem;pointer-events:none}
+#cfg .ch .srch input{padding:8px 12px 8px 32px!important;font-size:.85rem}
+#cfg .tabs button.dim{opacity:.35}#cfg .tabs button.has::after{content:'';width:7px;height:7px;border-radius:50%;background:#fbbf24;margin-left:auto}
+.hit{animation:hit 1.8s ease-out}@keyframes hit{0%,55%{background:rgba(251,191,36,.25);box-shadow:0 0 0 6px rgba(251,191,36,.25);border-radius:8px}}
+.cfgsum{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--p) 16%,transparent),var(--soft));border:1px solid var(--line);font-size:.86rem;line-height:1.5;color:var(--t)}
+.cfgsum b{color:var(--tx)}.cfgsum .dotk{width:10px;height:10px;border-radius:50%;flex:none;background:#3ddc97}.cfgsum .dotk.no{background:#fbbf24}
+#saveBtn.dirty{box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 35%,transparent)}
+.abl{display:flex;flex-direction:column;gap:8px}.abl a{color:var(--p);text-decoration:none;font-size:.9rem}.abl a:hover{text-decoration:underline}
+.kbd{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:.84rem;color:var(--t);align-items:center}
+.kbd kbd{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:1px 7px;font:600 .78rem system-ui;color:var(--tx)}
+@media(max-width:760px){#cfg .ch .srch{max-width:none}#cfg .chh small{display:none}}
+#dlgP{white-space:pre-line}
 </style>
 <script src="halloween.js" defer></script>
 </head>
@@ -352,15 +379,18 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
     <button class="btn" onclick="loginDiscord()"><i class="fab fa-discord"></i> Entrar com o Discord</button>
     <button class="btn gg" onclick="loginFirebase('google')"><i class="fab fa-google" style="color:#ea4335"></i> Entrar com o Google</button>
     <button class="btn gh" onclick="loginFirebase('github')"><i class="fab fa-github"></i> Entrar com o GitHub</button>
+    <button class="btn gv" onclick="enterGuest()"><i class="fas fa-user-clock"></i> Continuar como visitante</button>
   </div>
   <small>🔒 O login com Google e GitHub é processado pelo Firebase. A ASTM Software não salva suas conversas nem seus dados: ficam só no seu navegador. (O Firebase pode manter o registro da conta, como nome e e-mail, para o login funcionar.)</small>
-  <small><a href="assistente.html" style="color:#8ea1ff">Só quer testar? Use o assistente como visitante</a></small>
+  <small>👤 Visitante entra sem conta: as conversas são temporárias e somem ao sair ou fechar o navegador.</small>
 </div>
 <aside class="side" id="side">
   <div class="brand" onclick="goHome()" title="Voltar ao início" style="cursor:pointer"><img class="logo" src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"> Azul Groove</div>
   <button class="new" onclick="newConv()"><i class="fas fa-plus"></i> Nova conversa</button>
   <div class="list" id="list"></div>
+  <button class="new" style="background:var(--soft);border:1px solid var(--line);color:var(--tx)" onclick="openFb()" title="Enviar comentário, sugestão ou relatar um problema">💬 Enviar feedback</button>
   <button class="new" style="background:rgba(88,101,242,.16);border:1px solid rgba(88,101,242,.5)" onclick="apoio()" title="Apoiar o projeto pela LivePix">💙 Apoiar o projeto</button>
+  <div class="gbn" id="gbn" hidden><span><b>Modo visitante.</b> Suas conversas somem ao sair.</span><button onclick="switchAccount()">Entrar com uma conta</button></div>
   <div class="me">
     <img id="av" src="" alt="">
     <div id="nm"></div>
@@ -407,12 +437,13 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
   </div>
 </main>
 <div class="pop" id="mdlPop"></div>
-<div class="modal" id="cfg" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeCfg();this.dn=false">
+<div class="modal" id="cfg" role="dialog" aria-modal="true" aria-label="Configurações" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeCfg();this.dn=false">
   <div class="card">
-    <div class="ch"><div class="chh"><span class="chi"><i class="fas fa-sliders"></i></span><div><h3>Configurações</h3><small>Ajuste a IA, o visual e os seus dados</small></div></div><button class="ib" onclick="closeCfg()" title="Fechar"><i class="fas fa-xmark"></i></button></div>
-    <div class="tabs"><button data-t="ia" onclick="tab('ia')"><i class="fas fa-robot"></i><span>IA</span></button><button data-t="ap" onclick="tab('ap')"><i class="fas fa-palette"></i><span>Aparência</span></button><button data-t="es" onclick="tab('es')"><i class="fas fa-wand-magic-sparkles"></i><span>Estilo</span></button><button data-t="da" onclick="tab('da')"><i class="fas fa-database"></i><span>Dados</span></button><button data-t="sy" onclick="tab('sy')"><i class="fas fa-arrows-rotate"></i><span>Sync</span></button><button data-t="co" onclick="tab('co')"><i class="fas fa-user"></i><span>Conta</span></button></div>
+    <div class="ch"><div class="chh"><span class="chi"><i class="fas fa-sliders"></i></span><div><h3>Configurações</h3><small>Ajuste a IA, o visual e os seus dados</small></div></div><div class="srch"><i class="fas fa-magnifying-glass"></i><input type="text" id="cfgSearch" placeholder="Buscar nas configurações" autocomplete="off" oninput="cfgSearch(this.value)" aria-label="Buscar nas configurações"></div><button class="ib" onclick="closeCfg()" title="Fechar"><i class="fas fa-xmark"></i></button></div>
+    <div class="tabs"><button data-t="ia" onclick="tab('ia')"><i class="fas fa-robot"></i><span>IA</span></button><button data-t="ap" onclick="tab('ap')"><i class="fas fa-palette"></i><span>Aparência</span></button><button data-t="ch" onclick="tab('ch')"><i class="fas fa-comments"></i><span>Chat</span></button><button data-t="es" onclick="tab('es')"><i class="fas fa-wand-magic-sparkles"></i><span>Estilo</span></button><button data-t="da" onclick="tab('da')"><i class="fas fa-database"></i><span>Dados</span></button><button data-t="sy" onclick="tab('sy')"><i class="fas fa-arrows-rotate"></i><span>Sync</span></button><button data-t="co" onclick="tab('co')"><i class="fas fa-user"></i><span>Conta</span></button><button data-t="ab" onclick="tab('ab')"><i class="fas fa-circle-info"></i><span>Sobre</span></button></div>
     <div class="pane" id="p_ia">
       <small>Funciona com qualquer serviço compatível com o protocolo OpenAI Chat. Tudo fica só neste navegador.</small>
+      <div class="cfgsum" id="cfgSum"></div>
       <div class="sec"><i class="fas fa-plug"></i> Conexão</div>
       <label>Provedor<select id="cfgProv" onchange="provChange()"></select></label>
       <label>URL base da API<input type="text" id="cfgBase" placeholder="https://.../v1" autocomplete="off"></label>
@@ -450,6 +481,18 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
       <div class="row" style="justify-content:flex-start"><button class="btn2 dng" onclick="resetLook()"><i class="fas fa-rotate-left"></i> Restaurar padrão</button></div>
       <small>Volta tema, fundo, escurecimento, efeitos e animações ao original.</small>
     </div>
+    <div class="pane" id="p_ch" hidden>
+      <small>Ajustes de leitura e de envio. Valem na hora e ficam só neste navegador.</small>
+      <div class="sec"><i class="fas fa-text-height"></i> Leitura</div>
+      <label>Tamanho do texto</label>
+      <div class="seg" id="fsSeg"><button data-v="s" onclick="setUi({fs:'s'})">Pequeno</button><button data-v="m" onclick="setUi({fs:'m'})">Médio</button><button data-v="l" onclick="setUi({fs:'l'})">Grande</button></div>
+      <label class="chk2"><input type="checkbox" id="uiCp" onchange="setUi({cp:this.checked})"> Mensagens compactas</label>
+      <label class="chk2"><input type="checkbox" id="uiTs" onchange="setUi({ts:this.checked})"> Mostrar o horário nas mensagens</label>
+      <div class="sec"><i class="fas fa-keyboard"></i> Envio</div>
+      <label class="chk2"><input type="checkbox" id="uiCtrl" onchange="setUi({ctrl:this.checked})"> Enviar só com Ctrl+Enter (Enter quebra a linha)</label>
+      <small>Atalhos: Esc fecha as configurações e Ctrl+, abre.</small>
+      <div class="row" style="justify-content:flex-start"><button class="btn2 dng" onclick="setUi({fs:'m',ts:true,cp:false,ctrl:false})"><i class="fas fa-rotate-left"></i> Restaurar padrão</button></div>
+    </div>
     <div class="pane" id="p_es" hidden>
       <small>Tudo aqui vale na hora e fica só neste navegador.</small>
       <label>Tom das respostas</label>
@@ -477,11 +520,22 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
       <small>O código vale 5 minutos e conecta um aparelho só. A chave de API não é enviada. Ao desconectar, o outro aparelho recebe um aviso e você pode salvar uma cópia.</small>
       <div class="row" style="justify-content:flex-start"><button class="btn2" onclick="backup('txt')">Salvar .txt</button><button class="btn2" onclick="backup('json')">Salvar .json</button><button class="btn2" onclick="$('impF').click()">Importar backup</button><input type="file" id="impF" accept=".json,application/json" hidden onchange="impBackup(this)"></div>
     </div>
+    <div class="pane" id="p_ab" hidden>
+      <div class="acct"><div><b style="color:var(--tx);font-size:1.05rem">Azul Groove</b><br><small id="abVer"></small></div><img src="aumentar-o-tamanho-d.png" alt="" onerror="this.style.display='none'"></div>
+      <div class="sec"><i class="fas fa-link"></i> Links</div>
+      <div class="abl"><a href="docs.html" target="_blank" rel="noopener">Documentação</a><a href="blog.html" target="_blank" rel="noopener">Blog</a><a href="changelog.html" target="_blank" rel="noopener">Histórico de mudanças</a><a href="legal.html#termos" target="_blank" rel="noopener">Termos de Uso e Licença</a><a href="legal.html#ia" target="_blank" rel="noopener">Licença de Uso da IA</a></div>
+      <div class="row" style="justify-content:flex-start"><button class="btn2" onclick="closeCfg();news()"><i class="fas fa-wand-magic-sparkles"></i> Novidades</button><button class="btn2" onclick="closeCfg();openFb()">💬 Feedback</button><button class="btn2" onclick="closeCfg();apoio()">💙 Apoiar</button></div>
+      <div class="sec"><i class="fas fa-download"></i> Aplicativo</div>
+      <small id="pwaInfo"></small>
+      <div class="row" style="justify-content:flex-start"><button class="btn2 ok" id="pwaBtn" onclick="pwaInstall()"><i class="fas fa-download"></i> Instalar o app</button></div>
+      <div class="sec"><i class="fas fa-keyboard"></i> Atalhos</div>
+      <div class="kbd"><span><kbd>Enter</kbd></span><span>Envia a mensagem (<kbd>Shift</kbd> + <kbd>Enter</kbd> quebra a linha)</span><span><kbd>Ctrl</kbd> + <kbd>,</kbd></span><span>Abre as configurações</span><span><kbd>Ctrl</kbd> + <kbd>S</kbd></span><span>Salva a IA (na aba IA)</span><span><kbd>Esc</kbd></span><span>Fecha janelas</span><span><kbd>↑</kbd> <kbd>↓</kbd></span><span>Troca de aba no menu</span></div>
+    </div>
     <div class="pane" id="p_co" hidden>
       <div class="acct"><img id="coAv" alt=""><div><b id="coNm"></b><br><small id="coPr"></small></div></div>
       <div id="coLogins" class="pane"></div>
       <small>🔒 O login com Google e GitHub é processado pelo Firebase. A ASTM Software não salva suas conversas nem seus dados: ficam só no seu navegador. (O Firebase pode manter o registro da conta, como nome e e-mail, para o login funcionar.)</small>
-      <div class="row" style="justify-content:flex-start"><button class="btn2 ok" onclick="switchAccount()"><i class="fas fa-user-group"></i> Entrar com outra conta</button><button class="btn2 dng" onclick="logout()"><i class="fas fa-right-from-bracket"></i> Sair da conta</button></div>
+      <div class="row" style="justify-content:flex-start"><button class="btn2 ok" id="swBtn" onclick="switchAccount()"><i class="fas fa-user-group"></i> Entrar com outra conta</button><button class="btn2 dng" id="outBtn" onclick="logout()"><i class="fas fa-right-from-bracket"></i> Sair da conta</button></div>
       <h4 style="color:var(--tx)">Estatísticas</h4>
       <div class="st" id="stGrid"></div>
       <div class="bars" id="stBars"></div>
@@ -489,11 +543,37 @@ html[data-anim=off] *,html[data-anim=off] *::before,html[data-anim=off] *::after
       <div class="row" style="justify-content:flex-start"><button class="btn2 dng" onclick="stReset()">Zerar estatísticas</button></div>
     </div>
     <div class="pane" id="p_da" hidden>
+      <div class="sec"><i class="fas fa-satellite-dish"></i> Telemetria</div>
+      <label class="chk2"><input type="checkbox" id="telErr" onchange="setTel({on:this.checked})"> Enviar relatórios de erros (anônimos)</label>
+      <label class="chk2"><input type="checkbox" id="telExtra" onchange="setTel({extra:this.checked})"> Enviar também estatísticas de uso (opcional)</label>
+      <small>Erros: só a mensagem técnica do erro, o aparelho (celular ou desktop) e um código aleatório, sem ligação com a sua conta. Estatísticas de uso (desligadas por padrão): só contagens, como sessão iniciada, mensagem enviada, provedor e tema. Nunca enviamos suas conversas, chaves, nome ou e-mail. Desmarque as duas para desativar tudo.</small>
+      <div class="row" style="justify-content:flex-start"><button class="btn2 ok" onclick="closeCfg();openFb()"><i class="fas fa-comment-dots"></i> Enviar feedback</button></div>
+      <div class="sec"><i class="fas fa-hard-drive"></i> Armazenamento</div>
+      <small id="dsInfo"></small>
+      <div class="sec"><i class="fas fa-box-archive"></i> Backup</div>
       <button class="btn2" onclick="exportAll()"><i class="fas fa-download"></i> Salvar todas as conversas (.json)</button>
+      <button class="btn2" onclick="backup('txt')"><i class="fas fa-file-lines"></i> Salvar em texto (.txt)</button>
+      <button class="btn2" onclick="$('impF').click()"><i class="fas fa-upload"></i> Importar backup</button>
+      <div class="sec"><i class="fas fa-triangle-exclamation"></i> Zona de risco</div>
       <button class="btn2 dng" onclick="delAll()"><i class="fas fa-trash-can"></i> Apagar todas as conversas</button>
       <button class="btn2 dng" onclick="clearCfg()"><i class="fas fa-key"></i> Remover chave e configurações da IA</button>
+      <button class="btn2 dng" onclick="resetAll()"><i class="fas fa-bomb"></i> Redefinir tudo neste navegador</button>
     </div>
     <div class="row"><button class="btn2" onclick="closeCfg()">Fechar</button><button class="btn2 ok" id="saveBtn" onclick="saveCfg()">Salvar IA</button></div>
+  </div>
+</div>
+<div class="modal" id="fbk" role="dialog" aria-modal="true" aria-labelledby="fbT" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeFb();this.dn=false">
+  <div class="card sm">
+    <div class="ch"><h3 id="fbT">💬 Enviar feedback</h3><button class="ib" onclick="closeFb()" title="Fechar"><i class="fas fa-xmark"></i></button></div>
+    <small>Conte como está sendo usar o Azul Groove: o que gostou, o que não funcionou ou o que poderia melhorar. Só é enviado quando você clica em Enviar, mesmo com a telemetria desligada.</small>
+    <label>Tipo</label>
+    <div class="seg" id="fbCat"><button data-c="Sugestão" onclick="setFb({c:'Sugestão'})">Sugestão</button><button data-c="Problema" onclick="setFb({c:'Problema'})">Problema</button><button data-c="Elogio" onclick="setFb({c:'Elogio'})">Elogio</button><button data-c="Outro" onclick="setFb({c:'Outro'})">Outro</button></div>
+    <label>Como está a sua experiência? (opcional)</label>
+    <div class="fbs" id="fbStars"><button data-s="1" onclick="setFb({s:fbStar===1?0:1})" aria-label="1 estrela">★</button><button data-s="2" onclick="setFb({s:2})" aria-label="2 estrelas">★</button><button data-s="3" onclick="setFb({s:3})" aria-label="3 estrelas">★</button><button data-s="4" onclick="setFb({s:4})" aria-label="4 estrelas">★</button><button data-s="5" onclick="setFb({s:5})" aria-label="5 estrelas">★</button></div>
+    <label>Seu comentário<textarea id="fbTx" maxlength="800" rows="4" placeholder="Escreva aqui..."></textarea></label>
+    <label>Contato (opcional, se quiser resposta)<input type="text" id="fbCt" maxlength="80" placeholder="Discord, e-mail ou outro" autocomplete="off"></label>
+    <small>Vão junto: tipo de aparelho, versão e um código aleatório. Suas conversas, chaves e dados da conta não vão.</small>
+    <div class="row"><button class="btn2" onclick="closeFb()">Cancelar</button><button class="btn2 ok" id="fbSend" onclick="sendFb()"><i class="fas fa-paper-plane"></i> Enviar</button></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -535,6 +615,8 @@ const rand = a => a[Math.floor(Math.random() * a.length)];
 const uid = ck('azul_user_id'), name = ck('azul_user_name') || '';
 const first = name.split(' ')[0];
 const KEY = 'azul_convs_' + uid;
+const isGuest = ck('azul_session_type') === 'guest';
+const GUEST_AV = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#5865F2"/><circle cx="32" cy="25" r="11" fill="#fff"/><path d="M10 58c2-13 12-19 22-19s20 6 22 19z" fill="#fff"/></svg>');
 let convs = [], cur = null, busy = false;
 
 // Saudações: com nome, por horário (relógio ao vivo) e curiosidades
@@ -644,7 +726,7 @@ const bubble = (m, i) => `<div class="m ${m.r}">${m.r === 'user' ? esc(m.c) : fm
 function fit() { const t = $('inp'); t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 140) + 'px'; t.style.overflowY = t.scrollHeight > 140 ? 'auto' : 'hidden'; }
 
 function init() {
-  $('av').src = ck('azul_user_avatar') || 'https://cdn.discordapp.com/embed/avatars/0.png';
+  $('av').src = ck('azul_user_avatar') || (isGuest ? GUEST_AV : 'https://cdn.discordapp.com/embed/avatars/0.png');
   $('nm').textContent = name || 'Conta';
   try { convs = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
   if (!convs.length) { // importa o histórico antigo do assistente
@@ -656,7 +738,7 @@ function init() {
   cur = convs.length ? convs[0].id : null;
   cur ? render() : newConv();
   $('inp').addEventListener('input', fit);
-  $('inp').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
+  $('inp').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing && (getUi().ctrl ? (e.ctrlKey || e.metaKey) : !e.shiftKey)) { e.preventDefault(); send(); } });
 }
 
 function newConv() {
@@ -913,7 +995,7 @@ async function refreshSrc(force) { // em segundo plano (a cada 6 h): alimenta o 
   if (!force && c && c.base === cfg.base && Date.now() - c.ts < 6 * 3600e3) return;
   try { mcSave(cfg.base, await listModels(cfg.base, cfg.key)); } catch (e) {}
 }
-function tab(t) { document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === t)); ['ia', 'ap', 'es', 'da', 'sy', 'co'].forEach(k => $('p_' + k).hidden = k !== t); $('saveBtn').style.display = t === 'ia' ? '' : 'none'; if (t === 'co') paintAcct(); }
+function tab(t) { document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === t)); ['ia', 'ap', 'ch', 'es', 'da', 'sy', 'co', 'ab'].forEach(k => $('p_' + k).hidden = k !== t); $('saveBtn').style.display = t === 'ia' ? '' : 'none'; if (t === 'co') paintAcct(); }
 function openCfg(t) {
   const g = getCfg();
   $('cfgProv').innerHTML = Object.entries(PRESETS).map(([id, p]) => `<option value="${id}">${p.n}</option>`).join('');
@@ -1165,7 +1247,7 @@ Use os dados acima só quando forem relevantes para a pergunta; em conversa casu
       if (r.ok && t) { askAI.model = model; return renderReply({ reply: t, sources: results.slice(0, deep ? 8 : 3) }); }
       last = `[${r.status}] ${model}: ${(typeof d.error === 'string' ? d.error : d.error?.message) || 'resposta vazia'}` +
         (r.status === 401 || r.status === 403 ? ' (chave recusada: confira no ⚙️)' : r.status === 404 ? ' (modelo ou URL não encontrados)' : r.status === 402 ? ' (sem créditos)' : r.status === 429 ? ' (limite atingido)' : '');
-    } catch (e) { last = `${model}: ` + (e.name === 'TimeoutError' || e.name === 'AbortError' ? 'demorou demais para responder. Modelos grandes levam tempo para carregar na primeira vez; tente de novo.' : netHint(base)); }
+    } catch (e) { telError('API: ' + (e.name || 'erro') + ' ' + (e.message || ''), 'askAI'); last = `${model}: ` + (e.name === 'TimeoutError' || e.name === 'AbortError' ? 'demorou demais para responder. Modelos grandes levam tempo para carregar na primeira vez; tente de novo.' : netHint(base)); }
   }
   const er = new Error('Erro na IA ' + last); er.local = local; throw er;
 }
@@ -1232,7 +1314,7 @@ function showWelcome() {
   if (!go) return;
   const prov = { discord: 'o Discord', google: 'o Google', github: 'o GitHub' }[ck('azul_session_type')] || 'sua conta';
   $('wlT').textContent = 'Bem-vindo(a)' + (name ? ', ' + name : '') + '! 👋';
-  $('wlP').textContent = 'Você entrou com ' + prov + '. Aqui você conversa com IAs, pesquisa na internet e guarda tudo só neste navegador. Se curtir o projeto, dá para apoiar a ASTM Software pelo botão 💙 na barra lateral.';
+  $('wlP').textContent = (isGuest ? 'Você está no modo visitante: as conversas são temporárias e somem ao sair. ' : 'Você entrou com ' + prov + '. ') + 'Aqui você conversa com IAs, pesquisa na internet e guarda tudo só neste navegador. Se curtir o projeto, dá para apoiar a ASTM Software pelo botão 💙 na barra lateral.';
   $('welcome').style.display = 'flex';
 }
 const setCk = (n, v, d) => { document.cookie = n + '=' + encodeURIComponent(v || '') + '; max-age=' + d * 86400 + '; path=/; SameSite=Lax'; };
@@ -1283,9 +1365,10 @@ function acceptLic() {
   boot();
 }
 function boot() {
+  if (!isGuest) { try { localStorage.removeItem('azul_convs_guest'); } catch (e) {} } // visitante: sessão acabou, some tudo
   if (discordCallback()) return;
   if (ck('azul_terms_accepted') !== 'true') { $('gateLic').style.display = 'flex'; return; }
-  if (!['discord', 'google', 'github'].includes(ck('azul_session_type')) || !uid) { $('gateLogin').style.display = 'flex'; return; }
+  if (!['discord', 'google', 'github', 'guest'].includes(ck('azul_session_type')) || !uid) { $('gateLogin').style.display = 'flex'; return; }
   init();
   showWelcome();
 }
@@ -1435,9 +1518,183 @@ function syGot(m) {
 function syPush() { if (!SY || !SY.conn || !SY.conn.open) return; clearTimeout(syT); syT = setTimeout(() => { const c = get(); try { if (c && SY && SY.conn.open) SY.conn.send({ t: 'conv', d: c }); } catch (e) {} }, 600); }
 addEventListener('beforeunload', () => { try { SY && SY.conn && SY.conn.send({ t: 'bye' }); } catch (e) {} });
 
+// ----- ajustes do chat (aba Chat) -----
+const UI_KEY = 'azul_ui', TABS = ['ia', 'ap', 'ch', 'es', 'da', 'sy', 'co', 'ab'];
+const getUi = () => { let u = {}; try { u = JSON.parse(localStorage.getItem(UI_KEY) || '{}'); } catch (e) {} return { fs: ['s', 'm', 'l'].includes(u.fs) ? u.fs : 'm', ts: u.ts !== false, cp: u.cp === true, ctrl: u.ctrl === true }; };
+const setUi = p => { try { localStorage.setItem(UI_KEY, JSON.stringify({ ...getUi(), ...p })); } catch (e) {} applyUi(); paintUi(); };
+function applyUi() {
+  const u = getUi(), h = document.documentElement; h.dataset.fs = u.fs; h.dataset.ts = u.ts ? 'on' : 'off'; h.dataset.cp = u.cp ? 'on' : 'off';
+  const sy = document.querySelector('.tabs [data-t=sy]'); if (sy) sy.style.display = isGuest ? 'none' : '';
+  $('gbn').hidden = !isGuest;
+  $('inp').placeholder = u.ctrl ? 'Pergunte ao Azul Groove… (Ctrl+Enter envia)' : 'Pergunte ao Azul Groove...';
+}
+function paintUi() { const u = getUi(); document.querySelectorAll('#fsSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === u.fs)); $('uiTs').checked = u.ts; $('uiCp').checked = u.cp; $('uiCtrl').checked = u.ctrl; }
+function paintStorage() {
+  let b = 0; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith('azul')) b += (k.length + (localStorage.getItem(k) || '').length) * 2; } } catch (e) {}
+  const m = convs.reduce((n, c) => n + c.msgs.length, 0), kb = b / 1024, pct = Math.min(100, b / (5 * 1048576) * 100);
+  $('dsInfo').innerHTML = `<b>${convs.length}</b> conversa(s) · <b>${m}</b> mensagem(ns) · ${kb < 1024 ? kb.toFixed(0) + ' KB' : (kb / 1024).toFixed(1) + ' MB'} de cerca de 5 MB do navegador<div class="meter"><i style="width:${pct.toFixed(1)}%"></i></div>` + (isGuest ? 'Como visitante, tudo isso some ao sair.' : '');
+}
+async function resetAll() {
+  if (!await dlg({ title: 'Redefinir tudo?', text: 'Apaga conversas, chave, preferências, aparência e estatísticas deste navegador. Não dá para desfazer.', ok: 'Redefinir tudo', danger: true })) return;
+  try { Object.keys(localStorage).filter(k => k.startsWith('azul')).forEach(k => localStorage.removeItem(k)); sessionStorage.clear(); } catch (e) {}
+  location.reload();
+}
+const _tab = tab; tab = function (t) { if (isGuest && t === 'sy') t = 'ia'; _tab(t); try { localStorage.setItem('azul_cfg_tab', t); } catch (e) {} };
+const _openCfg = openCfg; openCfg = function (t) { let l = 'ia'; try { l = localStorage.getItem('azul_cfg_tab') || 'ia'; } catch (e) {} _openCfg(t || (TABS.includes(l) ? l : 'ia')); paintUi(); paintStorage(); paintTel(); $('cfgSearch').value = ''; cfgSearch(''); markDirty(false); paintSum(); $('abVer').textContent = 'Versão ' + TEL_VER; paintPwa(); };
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && $('cfg').style.display === 'flex' && $('dlg').style.display !== 'flex') closeCfg();
+  if ((e.ctrlKey || e.metaKey) && e.key === ',') { e.preventDefault(); openCfg(); }
+});
+// ----- modo visitante -----
+const GUEST_CK = ['azul_session_type', 'azul_user_id', 'azul_user_name', 'azul_user_avatar', 'azul_visitor_count'];
+function enterGuest() { // cookies de sessão (sem max-age): somem quando o navegador fecha
+  document.cookie = 'azul_terms_accepted=true; max-age=' + 7 * 86400 + '; path=/; SameSite=Lax';
+  [['azul_session_type', 'guest'], ['azul_user_id', 'guest'], ['azul_user_name', 'Visitante'], ['azul_user_avatar', '']].forEach(([n, v]) => document.cookie = n + '=' + encodeURIComponent(v) + '; path=/; SameSite=Lax');
+  try { localStorage.removeItem('azul_convs_guest'); localStorage.removeItem('azul_profile'); sessionStorage.setItem('azul_welcome', '1'); } catch (e) {}
+  location.replace(location.pathname);
+}
+function guestWipe() { GUEST_CK.forEach(n => document.cookie = n + '=; Max-Age=0; path=/'); try { localStorage.removeItem('azul_convs_guest'); localStorage.removeItem('azul_profile'); } catch (e) {} }
+const _logout = logout; logout = async function () {
+  if (!isGuest) return _logout();
+  if (!await dlg({ title: 'Sair do modo visitante?', text: 'As conversas desta sessão serão apagadas e não dá para recuperar.', ok: 'Sair', danger: true })) return;
+  guestWipe(); location.href = 'chat.html';
+};
+const _switch = switchAccount; switchAccount = async function () {
+  if (!isGuest) return _switch();
+  if (!await dlg({ title: 'Entrar com uma conta?', text: 'As conversas do visitante não passam para a conta. Se quiser guardá-las, salve um backup na aba Dados antes.', ok: 'Continuar' })) return;
+  guestWipe(); location.href = 'chat.html';
+};
+const _paintAcct = paintAcct; paintAcct = function () {
+  _paintAcct(); if (!isGuest) return;
+  $('coAv').src = GUEST_AV; $('coPr').textContent = 'Modo visitante · conversas temporárias';
+  $('coLogins').innerHTML = '<div class="acct"><span><i class="fas fa-user-clock"></i> Visitante</span><small>✅ ativo</small></div><small>Entre com Discord, Google ou GitHub para ter uma conta. Os dados continuam só no seu navegador.</small>';
+  $('swBtn').innerHTML = '<i class="fas fa-right-to-bracket"></i> Entrar com uma conta'; $('outBtn').innerHTML = '<i class="fas fa-door-open"></i> Sair do modo visitante';
+};
+// ----- telemetria (Discord) -----
+const TEL_URL = 'https://discord.com/api/webhooks/1561516932090306560/bDnoYJa-hbtXLTjMqiU5gGtZEXKwGDwGt-2oDrvdlSNFRZ_c70MVPlIL5bzjLvKyguwJ', TEL_KEY = 'azul_tel', TEL_VER = 'v3';
+const getTel = () => { let t = {}; try { t = JSON.parse(localStorage.getItem(TEL_KEY) || '{}'); } catch (e) {} return { on: t.on !== false, extra: t.extra === true }; };
+const setTel = p => { try { localStorage.setItem(TEL_KEY, JSON.stringify({ ...getTel(), ...p })); } catch (e) {} paintTel(); };
+function paintTel() { const t = getTel(); $('telErr').checked = t.on; $('telExtra').checked = t.extra; }
+const telId = () => { try { let i = localStorage.getItem('azul_tid'); if (!i) { i = Math.random().toString(36).slice(2, 10); localStorage.setItem('azul_tid', i); } return i; } catch (e) { return 'anon'; } };
+const telClean = (s, n = 400) => String(s == null ? '' : s).replace(/(sk-|gsk_|AIza|ghp_|xox)[\w-]{8,}/g, '[chave]').replace(/https?:\/\/\S+/g, '[url]').replace(/`/g, "'").replace(/@/g, '@\u200b').slice(0, n);
+let telN = 0, telLast = 0; const telSeen = new Set();
+function telPost(title, color, fields, desc) {
+  const dev = /Mobi|Android/i.test(navigator.userAgent) ? 'celular' : 'desktop';
+  const e = { title, color, fields: [...fields, { name: 'Aparelho', value: dev, inline: true }, { name: 'Versão', value: TEL_VER, inline: true }, { name: 'ID anônimo', value: telId(), inline: true }], timestamp: new Date().toISOString() };
+  if (desc) e.description = '```\n' + desc + '\n```';
+  return fetch(TEL_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'Azul Groove · Telemetria', allowed_mentions: { parse: [] }, embeds: [e] }), keepalive: true });
+}
+function telSend(title, color, fields, desc) { // limite: 1 envio a cada 1,5 s e no máximo 25 por sessão
+  if (telN >= 25 || Date.now() - telLast < 1500) return; telN++; telLast = Date.now();
+  try { telPost(title, color, fields, desc).catch(() => {}); } catch (e) {}
+}
+function telError(msg, where) {
+  if (!getTel().on) return; msg = telClean(msg); if (!msg || msg === 'Script error.') return;
+  const k = msg + where; if (telSeen.has(k)) return; telSeen.add(k);
+  telSend('⚠️ Erro no chat', 0xed4245, [{ name: 'Onde', value: telClean(where, 100) || '—' }], msg);
+}
+function telEvent(name, fields) { if (getTel().extra) telSend('📊 ' + name, 0x5865f2, fields || [{ name: 'Evento', value: name }]); }
+let telFbAt = 0;
+async function telFeedback() {
+  const t = $('telFb').value.trim(); if (!t) return toast('Escreva algo antes de enviar');
+  if (Date.now() - telFbAt < 10000) return toast('Aguarde um instante para enviar de novo'); telFbAt = Date.now();
+  try { const r = await telPost('💬 Crítica ou sugestão', 0xfbbf24, [{ name: 'Conta', value: isGuest ? 'visitante' : (ck('azul_session_type') || '—'), inline: true }], telClean(t, 500)); if (!r.ok) throw 0; $('telFb').value = ''; toast('✅ Obrigado pelo retorno!'); } catch (e) { toast('⚠️ Não foi possível enviar agora'); }
+}
+addEventListener('error', e => telError(e.message, (e.filename || '').split('/').pop() + ':' + e.lineno));
+addEventListener('unhandledrejection', e => telError(e.reason && e.reason.message || e.reason, 'promise'));
+const _send = send; send = function (text, label) { if (text || ($('inp').value || '').trim()) telEvent('Mensagem enviada', [{ name: 'Provedor', value: String(getCfg().provider || '—'), inline: true }, { name: 'Modelo fixo', value: getPick() ? 'sim' : 'automático', inline: true }]); return _send.apply(this, arguments); };
+// ----- feedback -----
+let fbCat = 'Sugestão', fbStar = 0, fbAt = 0;
+function paintFb() { document.querySelectorAll('#fbCat button').forEach(b => b.classList.toggle('on', b.dataset.c === fbCat)); document.querySelectorAll('#fbStars button').forEach(b => b.classList.toggle('on', +b.dataset.s <= fbStar)); }
+function setFb(p) { if (p.c) fbCat = p.c; if (p.s != null) fbStar = p.s; paintFb(); }
+function openFb() { $('fbk').style.display = 'flex'; paintFb(); setTimeout(() => $('fbTx').focus(), 50); }
+function closeFb() { $('fbk').style.display = 'none'; }
+async function sendFb() {
+  const t = $('fbTx').value.trim(); if (!t) return toast('Escreva um comentário antes de enviar');
+  if (Date.now() - fbAt < 10000) return toast('Aguarde um instante para enviar de novo');
+  fbAt = Date.now(); const btn = $('fbSend'); btn.disabled = true;
+  const fields = [{ name: 'Tipo', value: fbCat, inline: true }, { name: 'Nota', value: fbStar ? '★'.repeat(fbStar) + '☆'.repeat(5 - fbStar) : 'sem nota', inline: true }, { name: 'Conta', value: isGuest ? 'visitante' : (ck('azul_session_type') || '—'), inline: true }];
+  const ct = telClean($('fbCt').value.trim(), 80); if (ct) fields.push({ name: 'Contato', value: ct });
+  try {
+    const r = await telPost('💬 Feedback: ' + fbCat, { 'Sugestão': 0x5865f2, 'Problema': 0xed4245, 'Elogio': 0x3ddc97, 'Outro': 0x949ba4 }[fbCat], fields, telClean(t, 800));
+    if (!r.ok) throw 0; $('fbTx').value = ''; $('fbCt').value = ''; fbStar = 0; closeFb(); toast('✅ Obrigado pelo feedback!');
+  } catch (e) { fbAt = 0; toast('⚠️ Não foi possível enviar agora. Tente de novo.'); }
+  btn.disabled = false;
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('fbk').style.display === 'flex') closeFb(); });
+// ----- menu de configurações v4 -----
+const nrm = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+function cfgSearch(q) {
+  q = nrm(q.trim()); const bs = [...document.querySelectorAll('#cfg .tabs button')];
+  document.querySelectorAll('#cfg .hit').forEach(x => x.classList.remove('hit')); bs.forEach(b => b.classList.remove('dim', 'has'));
+  if (q.length < 2) return;
+  const ok = bs.filter(b => b.style.display !== 'none' && nrm($('p_' + b.dataset.t).textContent).includes(q));
+  bs.forEach(b => b.classList.add(ok.includes(b) ? 'has' : 'dim')); if (!ok.length) return;
+  const cur = document.querySelector('#cfg .tabs button.on'), tgt = ok.includes(cur) ? cur : ok[0];
+  if (tgt !== cur) tab(tgt.dataset.t);
+  const el = [...$('p_' + tgt.dataset.t).querySelectorAll('.sec,label,small,h4')].find(x => nrm(x.textContent).includes(q));
+  if (el) { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); el.classList.add('hit'); }
+}
+let cfgDirty = false;
+function markDirty(v) { cfgDirty = v; $('saveBtn').classList.toggle('dirty', v); $('saveBtn').textContent = v ? 'Salvar alterações' : 'Salvar IA'; }
+function paintSum() {
+  const p = $('cfgProv'), m = ($('cfgModels').value.split(',')[0] || '').trim(), k = $('cfgKey').value.trim(), local = /localhost|127\.0\.0\.1/.test($('cfgBase').value), ok = k || local;
+  $('cfgSum').innerHTML = `<span class="dotk ${ok ? '' : 'no'}"></span><span><b>${esc(p.selectedIndex >= 0 ? p.options[p.selectedIndex].text : '—')}</b> · ${m ? esc(mShort(m)) : 'sem modelo'}<br>${ok ? (k ? '🔑 Chave definida' : '🖥️ IA local, sem chave') : '⚠️ Falta a chave da API'}${$('cfgWeb').checked ? ' · 🔎 pesquisa na internet' : ''}</span>`;
+}
+['input', 'change'].forEach(ev => $('p_ia').addEventListener(ev, e => { if (e.target.id === 'cfgFilter') return; markDirty(true); paintSum(); }));
+$('p_ia').addEventListener('click', e => { if (e.target.closest('#cfgList button, #engWrap .row button')) { markDirty(true); paintSum(); } });
+const _closeCfg = closeCfg; closeCfg = async function () {
+  if (cfgDirty && $('cfg').style.display === 'flex' && !await dlg({ title: 'Descartar alterações da IA?', text: 'Você mudou a configuração da IA e ainda não salvou.', ok: 'Descartar', danger: true })) return;
+  markDirty(false); _closeCfg();
+};
+const _saveCfg = saveCfg; saveCfg = function () { const was = cfgDirty; cfgDirty = false; _saveCfg(); if ($('cfg').style.display === 'flex') cfgDirty = was; else markDirty(false); };
+const _clearCfg = clearCfg; clearCfg = async function () { const was = cfgDirty; cfgDirty = false; await _clearCfg(); if ($('cfg').style.display === 'flex') cfgDirty = was; };
+document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's' && $('cfg').style.display === 'flex' && $('dlg').style.display !== 'flex') { e.preventDefault(); if ($('saveBtn').style.display !== 'none') saveCfg(); } });
+(() => {
+  const t = document.querySelector('#cfg .tabs'); t.setAttribute('role', 'tablist'); t.querySelectorAll('button').forEach(b => b.setAttribute('role', 'tab'));
+  t.addEventListener('keydown', e => {
+    if (!/^Arrow(Up|Down|Left|Right)$/.test(e.key)) return;
+    const bs = [...t.querySelectorAll('button')].filter(b => b.style.display !== 'none'); let i = bs.indexOf(document.activeElement); if (i < 0) return;
+    e.preventDefault(); i = (i + (/Down|Right/.test(e.key) ? 1 : -1) + bs.length) % bs.length; bs[i].focus(); tab(bs[i].dataset.t);
+  });
+})();
+const _tab2 = tab; tab = function (t) { _tab2(t); document.querySelectorAll('#cfg .tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.t === t)); const on = document.querySelector('#cfg .tabs button.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' }); };
+// ----- instalar como app (PWA) -----
+let pwaEv = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
+function paintPwa() {
+  const b = $('pwaBtn'), i = $('pwaInfo'); b.style.display = '';
+  if (isStandalone()) { b.style.display = 'none'; i.textContent = '✅ Você já está usando o app instalado.'; }
+  else if (pwaEv) i.textContent = 'Instale para abrir em uma janela própria, com ícone na tela inicial ou no menu Iniciar.';
+  else if (isIos()) { b.style.display = 'none'; i.textContent = 'No iPhone ou iPad: toque em Compartilhar e depois em "Adicionar à Tela de Início".'; }
+  else i.textContent = 'Instale para abrir em uma janela própria, com ícone na tela inicial ou no menu Iniciar.';
+}
+async function pwaDiag() {
+  const r = [], ua = navigator.userAgent;
+  if (/firefox/i.test(ua) && !/android|mobile/i.test(ua)) r.push('O Firefox no computador não instala sites como app. Use o Chrome ou o Edge. No Firefox para Android, use o menu ⋮ > Instalar.');
+  if (location.protocol === 'file:') r.push('A página foi aberta como arquivo (file://). Hospede o site e abra por https.');
+  else if (!window.isSecureContext) r.push('A página não está em https.');
+  try { const m = await fetch('manifest.webmanifest', { cache: 'no-store' }); if (!m.ok) r.push('O manifest.webmanifest não foi encontrado (erro ' + m.status + '). Envie-o para a mesma pasta do chat.html.'); } catch (e) { r.push('Não consegui carregar o manifest.webmanifest.'); }
+  try { if (!(await navigator.serviceWorker.getRegistration())) r.push('O sw.js não está registrado. Envie-o para a mesma pasta do chat.html e recarregue a página.'); } catch (e) { r.push('Este navegador não deixou registrar o service worker.'); }
+  const w = await new Promise(res => { const i = new Image(); i.onload = () => res([i.naturalWidth, i.naturalHeight]); i.onerror = () => res(null); i.src = 'aumentar-o-tamanho-d.png'; });
+  if (!w) r.push('O ícone aumentar-o-tamanho-d.png não carregou.');
+  else if (w[0] < 192 || w[0] !== w[1]) r.push('O ícone tem ' + w[0] + '×' + w[1] + '. O Chrome pede imagem quadrada de pelo menos 192×192 (ideal 512×512).');
+  return r;
+}
+async function pwaInstall() {
+  if (pwaEv) { const e = pwaEv; pwaEv = null; e.prompt(); try { await e.userChoice; } catch (x) {} paintPwa(); return; }
+  const pr = await pwaDiag();
+  await dlg({ title: 'Instalar o app', text: (pr.length ? 'O que impede a instalação:\n• ' + pr.join('\n• ') : 'Não achei problema no site. Se você já instalou ou recusou antes, o navegador pode esperar um tempo. Tente o ícone de instalar na barra de endereço ou o menu ⋮ > Instalar app.'), ok: 'Entendi' });
+}
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); pwaEv = e; paintPwa(); });
+addEventListener('appinstalled', () => { pwaEv = null; paintPwa(); toast('✅ App instalado!'); });
+if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('sw.js').catch(() => {});
+applyUi(); paintUi(); paintTel();
 applyTheme(); applyLook(); initSide(); paintPrefs(); paintMdl(); refreshSrc().then(paintMdl);
 $('cfgKey').addEventListener('input', () => autoLoad(700)); $('cfgBase').addEventListener('input', () => autoLoad(700));
 boot(); // por último, depois de todas as funções e constantes existirem
+if (uid && ck('azul_session_type')) telEvent('Sessão iniciada', [{ name: 'Conta', value: isGuest ? 'visitante' : ck('azul_session_type'), inline: true }, { name: 'Tema', value: document.documentElement.dataset.theme || 'auto', inline: true }]);
 checkNews(); setInterval(tick, 1000);
 </script>
 <script type="module">

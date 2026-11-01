@@ -162,6 +162,7 @@ const D = [
 <a class="card" href="#/limites"><b>📊 Limites</b>Mensagens por minuto, por dia e tokens.</a>
 <a class="card" href="#/pesquisa-web"><b>🔎 Pesquisar na internet</b>Como funciona e o que sai do seu PC.</a>
 <a class="card" href="#/erros"><b>⚠️ Erros comuns</b>401, 402, 404, 429, CORS e mais.</a>
+<a class="card" href="#/avaliacao-media"><b>⭐ Avaliação média</b>Como a nota do site é calculada. Anônima.</a>
 <a class="card" href="#/faq"><b>❓ Central de dúvidas</b>Perguntas frequentes por assunto.</a>
 </div>
 <h3>O Azul Groove em três partes</h3>
@@ -613,6 +614,16 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <h3>Documentos oficiais</h3>
 <p><a href="privacidade.html">Política de Privacidade</a> · <a href="licenca.html">Termos de Uso</a> · <a href="licenca-ia.html">Licença de Uso da IA</a></p>`},
 
+{id:'avaliacao-media',cat:'Referência',t:'Avaliação média',h:`
+<p class="lead">A nota que aparece no site (ex.: <b>4.98/5</b>) vem do feedback real de quem usa o Azul Groove, e é <b>anônima</b>.</p>
+<h3>Como é calculada</h3>
+<ul><li>Usamos os <b>formulários de feedback do ano</b> (por exemplo, 2025).</li><li>Analisamos <b>todas as respostas</b> recebidas nesse período e colocamos o resultado no site com base nelas.</li></ul>
+<h3>Anonimato</h3>
+<p>O feedback é <b>anônimo</b>. Por isso os comentários mostrados no site <b>não têm nome nem perfil</b> (como "Gamer" ou "Estudante"): só a nota e o texto.</p>
+<h3>Por que pode demorar para atualizar</h3>
+<p>A nota é baseada na análise dos formulários, e só depois dessa análise o resultado vai para o site. Por isso a atualização <b>pode demorar</b>.</p>
+<p>Dúvidas? Veja <a href="#/contato">Falar com a gente</a>.</p>`},
+
 {id:'glossario',cat:'Referência',t:'Glossário',h:`
 <div class="sc"><table><tr><th>Termo</th><th>O que é</th></tr>
 <tr><td><b>IA / modelo</b></td><td>O programa que gera as respostas. "Modelo" é cada versão específica (ex.: Llama 3.3 70B).</td></tr>
@@ -639,6 +650,7 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <details><summary>Preciso pagar para usar o chat?</summary><p>Não. Dá para usar modelos grátis do OpenRouter ou IA local. Qualquer custo vem do provedor que você escolher.</p></details>
 <details><summary>A IA é de vocês?</summary><p>Não. Não criamos nem treinamos um modelo próprio: o chat leva a sua mensagem ao serviço que você escolheu e mostra a resposta. Veja <a href="#/como-funciona">Como funciona</a>.</p></details>
 <details><summary>Funciona no celular?</summary><p>Sim, com provedores na nuvem. IA local não funciona, pois <code>127.0.0.1</code> seria o próprio celular.</p></details>
+<details><summary>Como funciona a avaliação média do site?</summary><p>Usamos os formulários de feedback do ano (ex.: 2025), analisamos todas as respostas e colocamos o resultado no site. É anônima e pode demorar para atualizar. Veja <a href="#/avaliacao-media">Avaliação média</a>.</p></details>
 <details><summary>Qual modelo escolher?</summary><p>Para conversar e pesquisar, modelos de 70B (Llama 3.3 70B) ou Gemini Flash. Em IA local, comece com <code>llama3.2</code> e suba se o PC aguentar. Veja <a href="#/modelos">Escolher o modelo</a>.</p></details>
 <h3>Privacidade e dados</h3>
 <details><summary>Minhas conversas ficam em algum servidor?</summary><p>Não passam pelo Azul Groove: vão do seu navegador direto ao provedor da IA, e valem as regras dele. Na IA local, nada sai do seu PC.</p></details>

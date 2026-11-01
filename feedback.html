@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Avalie o Azul Groove · ASTM Software</title>
+<meta name="description" content="Avalie o bot, o site, o app para Windows e a IA do Azul Groove, e o atendimento da ASTM Software.">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+ color-scheme:light;
+ --bg:#eef2fb;--surface:#fff;--surface2:#f6f8fd;--ink:#0d1630;--mut:#5b6685;--line:#e3e8f4;--line2:#cdd5e8;
+ --acc:#2457f5;--acc-d:#1a43c9;--acc-soft:#e8eeff;--acc-t:#fff;--star:#f5a216;
+ --ok:#12805a;--ok-soft:#e1f5ec;--warn:#b7791f;--warn-soft:#fdf2da;--bad:#c4302b;--bad-soft:#fde8e7;--inp:#fff;
+ --sh:0 1px 2px rgba(13,22,48,.05),0 8px 24px -12px rgba(13,22,48,.12);
+ --r:18px;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+ color-scheme:dark;--bg:#080c1a;--surface:#0f1529;--surface2:#131a33;--ink:#e9edfb;--mut:#97a2c4;--line:#1f2845;--line2:#2c3760;
+ --acc:#6f93ff;--acc-d:#8aa8ff;--acc-soft:#16214a;--acc-t:#08102a;--star:#ffb73a;
+ --ok:#3ccf91;--ok-soft:#10291f;--warn:#f0b955;--warn-soft:#2e2411;--bad:#ff7a75;--bad-soft:#35151a;--inp:#0b1022;
+ --sh:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6)}}
+:root[data-theme=dark]{
+ color-scheme:dark;--bg:#080c1a;--surface:#0f1529;--surface2:#131a33;--ink:#e9edfb;--mut:#97a2c4;--line:#1f2845;--line2:#2c3760;
+ --acc:#6f93ff;--acc-d:#8aa8ff;--acc-soft:#16214a;--acc-t:#08102a;--star:#ffb73a;
+ --ok:#3ccf91;--ok-soft:#10291f;--warn:#f0b955;--warn-soft:#2e2411;--bad:#ff7a75;--bad-soft:#35151a;--inp:#0b1022;
+ --sh:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6)}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:88px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
+a{color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:8px}
+svg{display:block}
+
+/* Header */
+.hdr{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.hdr .in{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px}
+.hdr img{width:32px;height:32px;border-radius:9px}
+.hdr b{font-weight:700;letter-spacing:-.01em}
+.hdr span{color:var(--mut);font-size:.88rem}
+.hdr a{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-size:.88rem;font-weight:600;text-decoration:none;padding:8px 14px;border:1px solid var(--line2);border-radius:999px;background:var(--surface);transition:border-color .15s,background .15s}
+.hdr a:hover{border-color:var(--acc);background:var(--acc-soft)}
+
+/* Layout */
+.page{max-width:1120px;margin:0 auto;padding:40px 24px 96px;display:grid;grid-template-columns:300px minmax(0,1fr);gap:40px;align-items:start}
+.side{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
+.intro{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--sh)}
+h1{font-size:1.6rem;font-weight:800;letter-spacing:-.025em;line-height:1.15;margin-bottom:10px}
+.intro p{color:var(--mut);font-size:.92rem}
+
+.meter{display:flex;align-items:center;gap:14px;margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.ring{position:relative;width:52px;height:52px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:var(--acc);stroke-linecap:round;stroke-dasharray:113.1;stroke-dashoffset:113.1;transition:stroke-dashoffset .4s ease}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:.9rem;font-weight:700}
+.meter strong{display:block;font-size:.95rem;font-weight:700;line-height:1.3}
+.meter small{color:var(--mut);font-size:.82rem}
+
+.prog{list-style:none;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.prog a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--mut);font-size:.9rem;font-weight:500;text-decoration:none;transition:background .15s,color .15s}
+.prog a:hover{background:var(--surface2);color:var(--ink)}
+.prog .ic{flex:none;width:30px;height:30px;border-radius:9px;background:var(--surface2);display:grid;place-items:center;color:var(--mut);transition:background .2s,color .2s}
+.prog .ic svg{width:16px;height:16px}
+.prog .tx{flex:1;min-width:0;line-height:1.25}
+.prog .sc{font-size:.76rem;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums}
+.prog li.on a{color:var(--ink)}
+.prog li.on .ic{background:var(--acc);color:var(--acc-t)}
+.prog li.on .sc{color:var(--acc)}
+.priv{display:flex;gap:10px;font-size:.8rem;color:var(--mut);line-height:1.5;padding:0 6px}
+.priv svg{flex:none;width:16px;height:16px;margin-top:2px;color:var(--ok)}
+
+
+
+
+/* Cards */
+#items{display:flex;flex-direction:column;gap:16px}
+.it{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--sh);transition:border-color .2s}
+.it.rated{border-color:color-mix(in srgb,var(--acc) 35%,var(--line))}
+.it-h{display:flex;align-items:center;gap:16px}
+.tile{flex:none;width:48px;height:48px;border-radius:14px;background:var(--acc-soft);color:var(--acc);display:grid;place-items:center}
+.tile svg{width:24px;height:24px}
+.it-t{flex:1;min-width:0}
+.it h2{font-size:1.08rem;font-weight:700;letter-spacing:-.015em;line-height:1.25}
+.it .d{color:var(--mut);font-size:.86rem;margin-top:2px}
+.badge{flex:none;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--surface2);color:var(--mut);white-space:nowrap;transition:background .2s,color .2s}
+.badge.on{background:var(--ok-soft);color:var(--ok)}
+.badge.mid{background:var(--warn-soft);color:var(--warn)}
+.badge.low{background:var(--bad-soft);color:var(--bad)}
+
+.rate{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;padding:12px 16px;background:var(--surface2);border:1px solid var(--line);border-radius:14px}
+.rate small{color:var(--mut);font-size:.82rem}
+.stars{display:flex;flex-direction:row-reverse;gap:2px}
+.stars button{border:0;background:none;padding:4px;border-radius:10px;color:var(--line2);transition:color .12s,transform .12s}
+.stars button svg{width:32px;height:32px;fill:currentColor}
+.stars button:active{transform:scale(.88)}
+.stars button.on{color:var(--star)}
+.stars:hover button{color:var(--line2)}
+.stars button:hover,.stars button:hover~button{color:var(--star)}
+
+.tg{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:none;border:0;padding:4px 0;color:var(--acc);font-size:.88rem;font-weight:600}
+.tg svg{width:16px;height:16px;transition:transform .25s}
+.tg:hover{color:var(--acc-d)}
+.it.open .tg svg{transform:rotate(180deg)}
+.det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.it.open .det{grid-template-rows:1fr}
+.det>div{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:14px}
+.it.open .det>div{padding-top:14px}
+.q{font-size:.86rem;color:var(--mut);font-weight:500}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:.84rem;font-weight:500;transition:border-color .15s,background .15s,color .15s}
+.tags button:hover{border-color:var(--acc)}
+.tags button.on{background:var(--acc-soft);border-color:var(--acc);color:var(--acc);font-weight:600}
+.tags button svg{width:14px;height:14px;display:none}
+.tags button.on svg{display:block}
+textarea,input[type=text]{width:100%;background:var(--inp);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;transition:border-color .15s,box-shadow .15s}
+textarea{min-height:92px;resize:vertical}
+textarea:focus,input[type=text]:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 18%,transparent)}
+::placeholder{color:var(--mut);opacity:.75}
+
+/* Final */
+.fin{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px 24px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:22px}
+.fin h2{font-size:1.2rem;font-weight:700;letter-spacing:-.015em}
+.f{display:flex;flex-direction:column;gap:8px;font-size:.88rem;color:var(--mut);font-weight:500}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:420px}
+.seg button{display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:var(--surface);border-radius:12px;padding:12px 10px;font-size:.92rem;font-weight:600;color:var(--ink);transition:border-color .15s,background .15s,color .15s}
+.seg button svg{width:18px;height:18px}
+.seg button:hover{border-color:var(--acc)}
+.seg button.on{background:var(--acc-soft);border-color:var(--acc);color:var(--acc)}
+.agree{display:flex;gap:12px;align-items:flex-start;font-size:.86rem;color:var(--mut);cursor:pointer;line-height:1.5;padding:14px 16px;background:var(--surface2);border:1px solid var(--line);border-radius:12px}
+.agree input{margin-top:3px;width:18px;height:18px;accent-color:var(--acc);flex:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.sub{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.st{font-size:.9rem;color:var(--mut);font-weight:500}.st.err{color:var(--bad)}
+.go{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:14px 28px;font-weight:700;font-size:.96rem;background:var(--acc);color:var(--acc-t);white-space:nowrap;box-shadow:0 8px 20px -8px color-mix(in srgb,var(--acc) 70%,transparent);transition:background .15s,transform .1s}
+.go svg{width:18px;height:18px}
+.go:hover{background:var(--acc-d)}.go:active{transform:translateY(1px)}
+.go:disabled{opacity:.6;cursor:wait}
+
+/* Thanks */
+.thanks{display:none;max-width:520px;margin:0 auto;padding:96px 24px;text-align:center}
+.thanks .ck{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;margin:0 auto 24px}
+.thanks h1{margin-bottom:10px}
+.thanks p{color:var(--mut);margin-bottom:28px}
+.thanks .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.b2{border:1px solid var(--line2);background:var(--surface);color:var(--ink);border-radius:12px;padding:12px 20px;text-decoration:none;font-size:.92rem;font-weight:600;display:inline-block;transition:border-color .15s}
+.b2:hover{border-color:var(--acc)}
+body.done .page{display:none}body.done .thanks{display:block}
+
+
+/* Animações */
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.4) rotate(-10deg)}100%{transform:scale(1)}}
+@keyframes bump{0%{transform:scale(.85);opacity:.4}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes zoom{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes burst{0%{transform:translate(0,0) scale(1) rotate(0);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(.6) rotate(var(--r));opacity:0}}
+.intro,.prog,.it,.fin{animation:rise .65s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*80ms)}
+.stars button.pop svg{animation:pop .42s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(var(--d,0)*45ms)}
+.badge.bump{animation:bump .35s ease-out}
+.tags button.on svg,.seg button.on svg{animation:pop .35s cubic-bezier(.3,1.4,.5,1)}
+.go svg{transition:transform .2s}.go:hover svg{transform:translateX(4px)}
+.thanks .ck{position:relative;animation:zoom .55s cubic-bezier(.3,1.4,.5,1) both}
+.thanks .ck path{stroke-dasharray:24;stroke-dashoffset:24;animation:draw .45s .3s ease-out forwards}
+.thanks h1,.thanks p,.thanks .row{animation:rise .6s .45s both}
+.thanks p{animation-delay:.55s}.thanks .row{animation-delay:.65s}
+.conf{position:absolute;left:50%;top:50%;width:8px;height:12px;border-radius:2px;animation:burst .9s cubic-bezier(.15,.7,.3,1) forwards}
+
+@media(max-width:900px){
+ .page{grid-template-columns:1fr;gap:20px;padding:24px 16px 72px}
+ .side{position:static}.prog{display:none}.priv{order:3}
+ .hdr .in{padding:10px 16px}.hdr span{display:none}
+ .it{padding:20px}
+ .rate{flex-direction:column;align-items:flex-start;gap:6px}
+ .it-h{align-items:flex-start}
+ .badge{display:none}
+ .sub{flex-direction:column-reverse;align-items:stretch}.go{width:100%}
+ .seg{max-width:none}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.intro,.prog,.it,.fin,.thanks .ck path{opacity:1}.thanks .ck path{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<header class="hdr"><div class="in"><img src="icon-192.png" alt="" onerror="this.style.display='none'"><b>Azul Groove</b><span>por ASTM Software</span><a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>Voltar ao início</a></div></header>
+
+<div class="page" id="page">
+  <aside class="side">
+    <div class="intro" style="--i:0">
+            <h1>Avalie o Azul Groove</h1>
+      <p>Escolha o que você já usou e dê uma nota de 1 a 5. Os comentários são opcionais e ajudam a equipe a decidir o que melhorar primeiro.</p>
+      <div class="meter">
+        <div class="ring"><svg width="52" height="52" viewBox="0 0 44 44"><circle class="bg" cx="22" cy="22" r="18"/><circle class="fg" id="ringfg" cx="22" cy="22" r="18"/></svg><b id="ringn">0</b></div>
+        <div><strong id="cnt">0 de 5 itens</strong><small>avaliados até agora</small></div>
+      </div>
+    </div>
+    <ul class="prog" id="prog" style="--i:1"></ul>
+    <p class="priv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.3 8.2-8 9-4.7-.8-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><span>A avaliação é enviada à equipe pelo Discord, sem nome, sem endereço de IP e sem cookies. Só chega o que você preencher aqui.</span></p>
+  </aside>
+  <main>
+    <div id="items"></div>
+    <section class="fin" id="fin" style="--i:6">
+      <h2>Considerações finais</h2>
+      <div class="f">Você recomendaria o Azul Groove a um amigo?
+        <div class="seg" id="rec" role="group" aria-label="Recomendação">
+          <button type="button" data-v="Sim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Sim</button>
+          <button type="button" data-v="Talvez"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg>Talvez</button>
+          <button type="button" data-v="Não"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>Não</button>
+        </div></div>
+      <label class="f">Quer acrescentar algo?<textarea id="gen" maxlength="800" placeholder="Ideias, elogios, críticas ou algo que você sentiu falta."></textarea></label>
+      <label class="f">Contato (opcional, se quiser uma resposta)<input type="text" id="ct" maxlength="80" placeholder="Discord ou e-mail" autocomplete="off"></label>
+      <input class="hp" type="text" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="agree"><input type="checkbox" id="ok"><span>Autorizo o envio desta avaliação para a equipe da ASTM Software.</span></label>
+      <div class="sub"><div class="st" id="st" role="status" aria-live="polite"></div><button class="go" id="go" type="button" onclick="send()">Enviar avaliação<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    </section>
+  </main>
+</div>
+
+<section class="thanks" id="thanks" aria-live="polite">
+  <div class="ck"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+  <h1>Avaliação enviada</h1>
+  <p>Obrigado por dedicar um tempo. A equipe da ASTM Software vai ler o seu retorno.</p>
+  <div class="row"><a class="b2" href="index.html">Voltar ao início</a><button class="b2" type="button" onclick="again()">Enviar outra</button></div>
+</section>
+
+<script>
+// Webhook do Discord que recebe as avaliações. Recomendado: trocar por um link novo e, se possível, usar um Cloudflare Worker na frente.
+const WEBHOOK = 'https://discord.com/api/webhooks/1561516932090306560/bDnoYJa-hbtXLTjMqiU5gGtZEXKwGDwGt-2oDrvdlSNFRZ_c70MVPlIL5bzjLvKyguwJ';
+try { const t = localStorage.getItem('azul_theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+const $ = id => document.getElementById(id);
+const LAB = ['', 'Ruim', 'Regular', 'Bom', 'Muito bom', 'Excelente'];
+const SVG = (d, extra = '') => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ${extra}>${d}</svg>`;
+const IC = {
+  bot: SVG('<rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4.5"/><circle cx="12" cy="3.8" r="1"/><circle cx="9" cy="13.5" r="1" fill="currentColor"/><circle cx="15" cy="13.5" r="1" fill="currentColor"/>'),
+  site: SVG('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 3.9 5.6 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.6-3.9-9S9.4 5.6 12 3z"/>'),
+  app: SVG('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>'),
+  ia: SVG('<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 16l.7 1.8L21.5 18.5l-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7L19 16z"/>'),
+  astm: SVG('<path d="M4 20V6l8-3 8 3v14"/><path d="M2 20h20"/><path d="M9 20v-5h6v5"/><path d="M9 9h.01M12 9h.01M15 9h.01M9 12h.01M12 12h.01M15 12h.01"/>')
+};
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9L12 2.6z"/></svg>';
+const CHK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+const P = [
+  { id: 'bot', e: '🤖', n: 'Bot do Azul Groove', d: 'Bot para Discord', t: ['Comandos', 'Música', 'Estabilidade', 'Facilidade de uso', 'Respostas', 'Novos recursos'] },
+  { id: 'site', e: '🌐', n: 'Site do Azul Groove', d: 'Site, blog e documentação', t: ['Visual', 'Velocidade', 'Navegação', 'Uso no celular', 'Conteúdo', 'Documentação'] },
+  { id: 'app', e: '🖥️', n: 'Azul Groove para Windows', d: 'Aplicativo para computador', t: ['Instalação', 'Desempenho', 'Visual', 'Recursos', 'Estabilidade', 'Atualizações'] },
+  { id: 'ia', e: '✨', n: 'IA e chat do Azul Groove', d: 'Assistente com inteligência artificial', t: ['Qualidade das respostas', 'Velocidade', 'Pesquisa na internet', 'Configurações', 'Privacidade', 'Modelos disponíveis'] },
+  { id: 'astm', e: '🏢', n: 'ASTM Software', d: 'Atendimento, comunicação e projetos', t: ['Atendimento', 'Comunicação', 'Transparência', 'Projetos', 'Confiança', 'Apoio ao projeto'] }
+];
+const S = {}; P.forEach(p => S[p.id] = { s: 0, tags: new Set() }); let rec = '';
+$('items').innerHTML = P.map(p => `<section class="it" id="i_${p.id}" style="--i:${P.indexOf(p) + 2}" aria-labelledby="h_${p.id}">
+  <div class="it-h"><div class="tile">${IC[p.id]}</div><div class="it-t"><h2 id="h_${p.id}">${p.n}</h2><div class="d">${p.d}</div></div><span class="badge" id="bd_${p.id}">Sem nota</span></div>
+  <div class="rate"><small>Toque nas estrelas para avaliar</small>
+    <div class="stars" role="group" aria-label="Nota para ${p.n}">${[5, 4, 3, 2, 1].map(n => `<button type="button" data-p="${p.id}" data-n="${n}" title="${n}: ${LAB[n]}" aria-label="${n} de 5, ${LAB[n]}" aria-pressed="false">${STAR}</button>`).join('')}</div></div>
+  <button class="tg" type="button" data-tg="${p.id}" aria-expanded="false"><span>Adicionar detalhes</span>${CHEV}</button>
+  <div class="det"><div><div class="q">O que mais pesou na sua nota? Marque quantos quiser.</div>
+    <div class="tags">${p.t.map(t => `<button type="button" data-p="${p.id}" data-t="${t}" aria-pressed="false">${CHK}${t}</button>`).join('')}</div>
+    <textarea id="c_${p.id}" maxlength="400" aria-label="Comentário sobre ${p.n}" placeholder="Comentário sobre ${p.n} (opcional)" oninput="upd()"></textarea></div></div>
+</section>`).join('');
+$('prog').innerHTML = P.map(p => `<li id="pg_${p.id}"><a href="#i_${p.id}"><span class="ic">${IC[p.id]}</span><span class="tx">${p.n}</span><span class="sc" id="sc_${p.id}"></span></a></li>`).join('');
+function open_(id, o) { const el = $('i_' + id); el.classList.toggle('open', o); const b = el.querySelector('.tg'); b.setAttribute('aria-expanded', o); b.querySelector('span').textContent = o ? 'Ocultar detalhes' : 'Adicionar detalhes'; }
+document.addEventListener('click', e => {
+  const s = e.target.closest('.stars button'), c = e.target.closest('.tags button'), r = e.target.closest('#rec button'), g = e.target.closest('.tg');
+  if (s) { const id = s.dataset.p, n = +s.dataset.n; S[id].s = S[id].s === n ? 0 : n; if (S[id].s) open_(id, true); paint(); if (S[id].s) wave(id, S[id].s); }
+  else if (c) { const t = S[c.dataset.p].tags; t.has(c.dataset.t) ? t.delete(c.dataset.t) : t.add(c.dataset.t); paint(); }
+  else if (r) { rec = rec === r.dataset.v ? '' : r.dataset.v; paint(); }
+  else if (g) open_(g.dataset.tg, !$('i_' + g.dataset.tg).classList.contains('open'));
+});
+function wave(id, n) {
+  $('i_' + id).querySelectorAll('.stars button').forEach(b => { const k = +b.dataset.n; if (k > n) return; b.style.setProperty('--d', k - 1); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); });
+}
+function paint() {
+  P.forEach(p => {
+    const s = S[p.id].s, el = $('i_' + p.id);
+    el.querySelectorAll('.stars button').forEach(b => { b.classList.toggle('on', +b.dataset.n <= s); b.setAttribute('aria-pressed', +b.dataset.n === s); });
+    el.querySelectorAll('.tags button').forEach(b => { const on = S[p.id].tags.has(b.dataset.t); b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+    const bd = $('bd_' + p.id), old = bd.textContent; bd.textContent = s ? `${s} de 5 · ${LAB[s]}` : 'Sem nota';
+    bd.className = 'badge' + (s >= 4 ? ' on' : s === 3 ? ' mid' : s ? ' low' : '') + (old !== bd.textContent && old ? ' bump' : '');
+    el.classList.toggle('rated', !!s);
+    $('sc_' + p.id).textContent = s ? s + '/5' : '';
+  });
+  document.querySelectorAll('#rec button').forEach(b => { const on = b.dataset.v === rec; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); }); upd();
+}
+const used = () => P.filter(p => S[p.id].s || $('c_' + p.id).value.trim());
+function upd() {
+  const u = used().map(p => p.id); P.forEach(p => $('pg_' + p.id).classList.toggle('on', u.includes(p.id)));
+  $('cnt').textContent = `${u.length} de ${P.length} itens`; $('ringn').textContent = u.length;
+  $('ringfg').style.strokeDashoffset = 113.1 * (1 - u.length / P.length);
+  if (!$('st').classList.contains('err')) $('st').textContent = '';
+}
+function msg(t, bad) { $('st').textContent = t; $('st').classList.toggle('err', !!bad); }
+const clean = (s, n) => String(s).replace(/https?:\/\/\S+/gi, '[link removido]').replace(/`/g, "'").replace(/@/g, '@\u200b').trim().slice(0, n);
+const stars = n => n ? '★'.repeat(n) + '☆'.repeat(5 - n) : 'sem nota';
+async function send() {
+  if ($('hp').value) return done();
+  const u = used(), g = $('gen').value.trim();
+  if (!u.length && !g) return msg('Avalie pelo menos um item ou escreva um comentário.', true);
+  if (!$('ok').checked) return msg('Marque a autorização para enviar.', true);
+  let last = 0; try { last = +localStorage.getItem('azul_fb_at') || 0; } catch (e) {}
+  if (Date.now() - last < 60000) return msg('Aguarde um minuto para enviar outra avaliação.', true);
+  const rated = u.filter(p => S[p.id].s), avg = rated.length ? rated.reduce((a, p) => a + S[p.id].s, 0) / rated.length : 0;
+  const fields = u.map(p => { const c = clean($('c_' + p.id).value, 400), tg = [...S[p.id].tags].join(', '); return { name: `${p.e} ${p.n} · ${stars(S[p.id].s)}`.slice(0, 256), value: (tg + (tg && c ? '\n' : '') + c) || '—' }; });
+  fields.push({ name: 'Recomendaria?', value: rec || '—', inline: true });
+  const ct = clean($('ct').value, 80); if (ct) fields.push({ name: 'Contato', value: ct, inline: true });
+  const embed = { title: '📝 Nova avaliação', color: !avg ? 0x949ba4 : avg >= 4 ? 0x3ddc97 : avg >= 3 ? 0x5865f2 : 0xed4245, fields, timestamp: new Date().toISOString(), footer: { text: 'feedback.html' + (rated.length ? ' · média ' + avg.toFixed(1) : '') } };
+  if (g) embed.description = clean(g, 800);
+  const b = $('go'); b.disabled = true; msg('Enviando…');
+  try {
+    const r = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'Azul Groove · Avaliações', allowed_mentions: { parse: [] }, embeds: [embed] }) });
+    if (!r.ok) throw new Error(r.status);
+    try { localStorage.setItem('azul_fb_at', Date.now()); } catch (e) {}
+    done();
+  } catch (e) { msg('Não foi possível enviar agora. Tente novamente em instantes.', true); }
+  b.disabled = false;
+}
+function done() {
+  document.body.classList.add('done'); scrollTo(0, 0);
+  const ck = document.querySelector('.thanks .ck'); ck.querySelectorAll('.conf').forEach(c => c.remove());
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const cols = ['var(--acc)', 'var(--star)', 'var(--ok)', 'var(--bad)'];
+  for (let i = 0; i < 18; i++) {
+    const a = Math.PI * 2 * i / 18 + Math.random() * .4, d = 70 + Math.random() * 60, c = document.createElement('i');
+    c.className = 'conf'; c.style.cssText = `background:${cols[i % 4]};--x:${Math.cos(a) * d}px;--y:${Math.sin(a) * d}px;--r:${Math.random() * 540 - 270}deg;animation-delay:${.25 + Math.random() * .15}s;opacity:0`;
+    ck.appendChild(c);
+  }
+}
+function again() {
+  P.forEach(p => { S[p.id] = { s: 0, tags: new Set() }; $('c_' + p.id).value = ''; open_(p.id, false); });
+  rec = ''; $('gen').value = ''; $('ct').value = ''; $('ok').checked = false; msg(''); document.body.classList.remove('done'); paint();
+}
+paint();
+</script>
+</body>
+</html>
