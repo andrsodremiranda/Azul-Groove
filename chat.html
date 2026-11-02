@@ -344,7 +344,7 @@ html[data-cp=on] .m{padding:8px 13px;line-height:1.4}html[data-cp=on] .msgs{gap:
 .gbn[hidden]{display:none}.gbn b{color:var(--tx)}.gbn button{align-self:flex-start;border:0;border-radius:8px;padding:5px 10px;font-weight:600;font-size:.78rem;background:var(--p);color:#fff}
 .gate .btn.gv{background:transparent;border:1px solid var(--line);color:var(--tx)}.gate .btn.gv:hover{border-color:var(--p)}
 .fbs{display:flex;gap:6px}.fbs button{flex:none;width:42px;height:42px;border:0;border-radius:12px;background:var(--soft);color:var(--m);font-size:1.25rem;line-height:1}
-.fbs button.on{color:#fbbf24;background:rgba(251,191,36,.14)}#fbk{z-index:25}
+.fbs button.on{color:#fbbf24;background:rgba(251,191,36,.14)}
 /* ===== v4: menu de configurações ===== */
 #cfg .ch .srch{position:relative;flex:1;max-width:260px;margin-left:auto}
 #cfg .ch .srch i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--m);font-size:.8rem;pointer-events:none}
@@ -543,10 +543,7 @@ html[data-cp=on] .m{padding:8px 13px;line-height:1.4}html[data-cp=on] .msgs{gap:
       <div class="row" style="justify-content:flex-start"><button class="btn2 dng" onclick="stReset()">Zerar estatísticas</button></div>
     </div>
     <div class="pane" id="p_da" hidden>
-      <div class="sec"><i class="fas fa-satellite-dish"></i> Telemetria</div>
-      <label class="chk2"><input type="checkbox" id="telErr" onchange="setTel({on:this.checked})"> Enviar relatórios de erros (anônimos)</label>
-      <label class="chk2"><input type="checkbox" id="telExtra" onchange="setTel({extra:this.checked})"> Enviar também estatísticas de uso (opcional)</label>
-      <small>Erros: só a mensagem técnica do erro, o aparelho (celular ou desktop) e um código aleatório, sem ligação com a sua conta. Estatísticas de uso (desligadas por padrão): só contagens, como sessão iniciada, mensagem enviada, provedor e tema. Nunca enviamos suas conversas, chaves, nome ou e-mail. Desmarque as duas para desativar tudo.</small>
+      <div class="sec"><i class="fas fa-comment-dots"></i> Feedback</div>
       <div class="row" style="justify-content:flex-start"><button class="btn2 ok" onclick="closeCfg();openFb()"><i class="fas fa-comment-dots"></i> Enviar feedback</button></div>
       <div class="sec"><i class="fas fa-hard-drive"></i> Armazenamento</div>
       <small id="dsInfo"></small>
@@ -560,20 +557,6 @@ html[data-cp=on] .m{padding:8px 13px;line-height:1.4}html[data-cp=on] .msgs{gap:
       <button class="btn2 dng" onclick="resetAll()"><i class="fas fa-bomb"></i> Redefinir tudo neste navegador</button>
     </div>
     <div class="row"><button class="btn2" onclick="closeCfg()">Fechar</button><button class="btn2 ok" id="saveBtn" onclick="saveCfg()">Salvar IA</button></div>
-  </div>
-</div>
-<div class="modal" id="fbk" role="dialog" aria-modal="true" aria-labelledby="fbT" onmousedown="this.dn=event.target===this" onmouseup="if(this.dn&&event.target===this)closeFb();this.dn=false">
-  <div class="card sm">
-    <div class="ch"><h3 id="fbT">💬 Enviar feedback</h3><button class="ib" onclick="closeFb()" title="Fechar"><i class="fas fa-xmark"></i></button></div>
-    <small>Conte como está sendo usar o Azul Groove: o que gostou, o que não funcionou ou o que poderia melhorar. Só é enviado quando você clica em Enviar, mesmo com a telemetria desligada.</small>
-    <label>Tipo</label>
-    <div class="seg" id="fbCat"><button data-c="Sugestão" onclick="setFb({c:'Sugestão'})">Sugestão</button><button data-c="Problema" onclick="setFb({c:'Problema'})">Problema</button><button data-c="Elogio" onclick="setFb({c:'Elogio'})">Elogio</button><button data-c="Outro" onclick="setFb({c:'Outro'})">Outro</button></div>
-    <label>Como está a sua experiência? (opcional)</label>
-    <div class="fbs" id="fbStars"><button data-s="1" onclick="setFb({s:fbStar===1?0:1})" aria-label="1 estrela">★</button><button data-s="2" onclick="setFb({s:2})" aria-label="2 estrelas">★</button><button data-s="3" onclick="setFb({s:3})" aria-label="3 estrelas">★</button><button data-s="4" onclick="setFb({s:4})" aria-label="4 estrelas">★</button><button data-s="5" onclick="setFb({s:5})" aria-label="5 estrelas">★</button></div>
-    <label>Seu comentário<textarea id="fbTx" maxlength="800" rows="4" placeholder="Escreva aqui..."></textarea></label>
-    <label>Contato (opcional, se quiser resposta)<input type="text" id="fbCt" maxlength="80" placeholder="Discord, e-mail ou outro" autocomplete="off"></label>
-    <small>Vão junto: tipo de aparelho, versão e um código aleatório. Suas conversas, chaves e dados da conta não vão.</small>
-    <div class="row"><button class="btn2" onclick="closeFb()">Cancelar</button><button class="btn2 ok" id="fbSend" onclick="sendFb()"><i class="fas fa-paper-plane"></i> Enviar</button></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -1247,7 +1230,7 @@ Use os dados acima só quando forem relevantes para a pergunta; em conversa casu
       if (r.ok && t) { askAI.model = model; return renderReply({ reply: t, sources: results.slice(0, deep ? 8 : 3) }); }
       last = `[${r.status}] ${model}: ${(typeof d.error === 'string' ? d.error : d.error?.message) || 'resposta vazia'}` +
         (r.status === 401 || r.status === 403 ? ' (chave recusada: confira no ⚙️)' : r.status === 404 ? ' (modelo ou URL não encontrados)' : r.status === 402 ? ' (sem créditos)' : r.status === 429 ? ' (limite atingido)' : '');
-    } catch (e) { telError('API: ' + (e.name || 'erro') + ' ' + (e.message || ''), 'askAI'); last = `${model}: ` + (e.name === 'TimeoutError' || e.name === 'AbortError' ? 'demorou demais para responder. Modelos grandes levam tempo para carregar na primeira vez; tente de novo.' : netHint(base)); }
+    } catch (e) { last = `${model}: ` + (e.name === 'TimeoutError' || e.name === 'AbortError' ? 'demorou demais para responder. Modelos grandes levam tempo para carregar na primeira vez; tente de novo.' : netHint(base)); }
   }
   const er = new Error('Erro na IA ' + last); er.local = local; throw er;
 }
@@ -1540,7 +1523,7 @@ async function resetAll() {
   location.reload();
 }
 const _tab = tab; tab = function (t) { if (isGuest && t === 'sy') t = 'ia'; _tab(t); try { localStorage.setItem('azul_cfg_tab', t); } catch (e) {} };
-const _openCfg = openCfg; openCfg = function (t) { let l = 'ia'; try { l = localStorage.getItem('azul_cfg_tab') || 'ia'; } catch (e) {} _openCfg(t || (TABS.includes(l) ? l : 'ia')); paintUi(); paintStorage(); paintTel(); $('cfgSearch').value = ''; cfgSearch(''); markDirty(false); paintSum(); $('abVer').textContent = 'Versão ' + TEL_VER; paintPwa(); };
+const _openCfg = openCfg; openCfg = function (t) { let l = 'ia'; try { l = localStorage.getItem('azul_cfg_tab') || 'ia'; } catch (e) {} _openCfg(t || (TABS.includes(l) ? l : 'ia')); paintUi(); paintStorage(); $('cfgSearch').value = ''; cfgSearch(''); markDirty(false); paintSum(); $('abVer').textContent = 'Versão ' + APP_VER; paintPwa(); };
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && $('cfg').style.display === 'flex' && $('dlg').style.display !== 'flex') closeCfg();
   if ((e.ctrlKey || e.metaKey) && e.key === ',') { e.preventDefault(); openCfg(); }
@@ -1570,58 +1553,9 @@ const _paintAcct = paintAcct; paintAcct = function () {
   $('coLogins').innerHTML = '<div class="acct"><span><i class="fas fa-user-clock"></i> Visitante</span><small>✅ ativo</small></div><small>Entre com Discord, Google ou GitHub para ter uma conta. Os dados continuam só no seu navegador.</small>';
   $('swBtn').innerHTML = '<i class="fas fa-right-to-bracket"></i> Entrar com uma conta'; $('outBtn').innerHTML = '<i class="fas fa-door-open"></i> Sair do modo visitante';
 };
-// ----- telemetria (Discord) -----
-const TEL_URL = 'https://discord.com/api/webhooks/1561516932090306560/bDnoYJa-hbtXLTjMqiU5gGtZEXKwGDwGt-2oDrvdlSNFRZ_c70MVPlIL5bzjLvKyguwJ', TEL_KEY = 'azul_tel', TEL_VER = 'v3';
-const getTel = () => { let t = {}; try { t = JSON.parse(localStorage.getItem(TEL_KEY) || '{}'); } catch (e) {} return { on: t.on !== false, extra: t.extra === true }; };
-const setTel = p => { try { localStorage.setItem(TEL_KEY, JSON.stringify({ ...getTel(), ...p })); } catch (e) {} paintTel(); };
-function paintTel() { const t = getTel(); $('telErr').checked = t.on; $('telExtra').checked = t.extra; }
-const telId = () => { try { let i = localStorage.getItem('azul_tid'); if (!i) { i = Math.random().toString(36).slice(2, 10); localStorage.setItem('azul_tid', i); } return i; } catch (e) { return 'anon'; } };
-const telClean = (s, n = 400) => String(s == null ? '' : s).replace(/(sk-|gsk_|AIza|ghp_|xox)[\w-]{8,}/g, '[chave]').replace(/https?:\/\/\S+/g, '[url]').replace(/`/g, "'").replace(/@/g, '@\u200b').slice(0, n);
-let telN = 0, telLast = 0; const telSeen = new Set();
-function telPost(title, color, fields, desc) {
-  const dev = /Mobi|Android/i.test(navigator.userAgent) ? 'celular' : 'desktop';
-  const e = { title, color, fields: [...fields, { name: 'Aparelho', value: dev, inline: true }, { name: 'Versão', value: TEL_VER, inline: true }, { name: 'ID anônimo', value: telId(), inline: true }], timestamp: new Date().toISOString() };
-  if (desc) e.description = '```\n' + desc + '\n```';
-  return fetch(TEL_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'Azul Groove · Telemetria', allowed_mentions: { parse: [] }, embeds: [e] }), keepalive: true });
-}
-function telSend(title, color, fields, desc) { // limite: 1 envio a cada 1,5 s e no máximo 25 por sessão
-  if (telN >= 25 || Date.now() - telLast < 1500) return; telN++; telLast = Date.now();
-  try { telPost(title, color, fields, desc).catch(() => {}); } catch (e) {}
-}
-function telError(msg, where) {
-  if (!getTel().on) return; msg = telClean(msg); if (!msg || msg === 'Script error.') return;
-  const k = msg + where; if (telSeen.has(k)) return; telSeen.add(k);
-  telSend('⚠️ Erro no chat', 0xed4245, [{ name: 'Onde', value: telClean(where, 100) || '—' }], msg);
-}
-function telEvent(name, fields) { if (getTel().extra) telSend('📊 ' + name, 0x5865f2, fields || [{ name: 'Evento', value: name }]); }
-let telFbAt = 0;
-async function telFeedback() {
-  const t = $('telFb').value.trim(); if (!t) return toast('Escreva algo antes de enviar');
-  if (Date.now() - telFbAt < 10000) return toast('Aguarde um instante para enviar de novo'); telFbAt = Date.now();
-  try { const r = await telPost('💬 Crítica ou sugestão', 0xfbbf24, [{ name: 'Conta', value: isGuest ? 'visitante' : (ck('azul_session_type') || '—'), inline: true }], telClean(t, 500)); if (!r.ok) throw 0; $('telFb').value = ''; toast('✅ Obrigado pelo retorno!'); } catch (e) { toast('⚠️ Não foi possível enviar agora'); }
-}
-addEventListener('error', e => telError(e.message, (e.filename || '').split('/').pop() + ':' + e.lineno));
-addEventListener('unhandledrejection', e => telError(e.reason && e.reason.message || e.reason, 'promise'));
-const _send = send; send = function (text, label) { if (text || ($('inp').value || '').trim()) telEvent('Mensagem enviada', [{ name: 'Provedor', value: String(getCfg().provider || '—'), inline: true }, { name: 'Modelo fixo', value: getPick() ? 'sim' : 'automático', inline: true }]); return _send.apply(this, arguments); };
-// ----- feedback -----
-let fbCat = 'Sugestão', fbStar = 0, fbAt = 0;
-function paintFb() { document.querySelectorAll('#fbCat button').forEach(b => b.classList.toggle('on', b.dataset.c === fbCat)); document.querySelectorAll('#fbStars button').forEach(b => b.classList.toggle('on', +b.dataset.s <= fbStar)); }
-function setFb(p) { if (p.c) fbCat = p.c; if (p.s != null) fbStar = p.s; paintFb(); }
-function openFb() { $('fbk').style.display = 'flex'; paintFb(); setTimeout(() => $('fbTx').focus(), 50); }
-function closeFb() { $('fbk').style.display = 'none'; }
-async function sendFb() {
-  const t = $('fbTx').value.trim(); if (!t) return toast('Escreva um comentário antes de enviar');
-  if (Date.now() - fbAt < 10000) return toast('Aguarde um instante para enviar de novo');
-  fbAt = Date.now(); const btn = $('fbSend'); btn.disabled = true;
-  const fields = [{ name: 'Tipo', value: fbCat, inline: true }, { name: 'Nota', value: fbStar ? '★'.repeat(fbStar) + '☆'.repeat(5 - fbStar) : 'sem nota', inline: true }, { name: 'Conta', value: isGuest ? 'visitante' : (ck('azul_session_type') || '—'), inline: true }];
-  const ct = telClean($('fbCt').value.trim(), 80); if (ct) fields.push({ name: 'Contato', value: ct });
-  try {
-    const r = await telPost('💬 Feedback: ' + fbCat, { 'Sugestão': 0x5865f2, 'Problema': 0xed4245, 'Elogio': 0x3ddc97, 'Outro': 0x949ba4 }[fbCat], fields, telClean(t, 800));
-    if (!r.ok) throw 0; $('fbTx').value = ''; $('fbCt').value = ''; fbStar = 0; closeFb(); toast('✅ Obrigado pelo feedback!');
-  } catch (e) { fbAt = 0; toast('⚠️ Não foi possível enviar agora. Tente de novo.'); }
-  btn.disabled = false;
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('fbk').style.display === 'flex') closeFb(); });
+// ----- versão do site e feedback (abre a página de feedback) -----
+const APP_VER = 'v3';
+function openFb() { window.open('feedback.html', '_blank', 'noopener'); }
 // ----- menu de configurações v4 -----
 const nrm = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 function cfgSearch(q) {
@@ -1690,11 +1624,10 @@ async function pwaInstall() {
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); pwaEv = e; paintPwa(); });
 addEventListener('appinstalled', () => { pwaEv = null; paintPwa(); toast('✅ App instalado!'); });
 if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('sw.js').catch(() => {});
-applyUi(); paintUi(); paintTel();
+applyUi(); paintUi();
 applyTheme(); applyLook(); initSide(); paintPrefs(); paintMdl(); refreshSrc().then(paintMdl);
 $('cfgKey').addEventListener('input', () => autoLoad(700)); $('cfgBase').addEventListener('input', () => autoLoad(700));
 boot(); // por último, depois de todas as funções e constantes existirem
-if (uid && ck('azul_session_type')) telEvent('Sessão iniciada', [{ name: 'Conta', value: isGuest ? 'visitante' : ck('azul_session_type'), inline: true }, { name: 'Tema', value: document.documentElement.dataset.theme || 'auto', inline: true }]);
 checkNews(); setInterval(tick, 1000);
 </script>
 <script type="module">
