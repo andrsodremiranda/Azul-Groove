@@ -1,9 +1,20 @@
-// Service worker do Azul Groove: rede primeiro, cache só como reserva se estiver offline
-const C = 'azul-v1';
-self.addEventListener('install', e => { e.waitUntil(caches.open(C).then(c => c.addAll(['chat.html', 'aumentar-o-tamanho-d.png'])).catch(() => {})); self.skipWaiting(); });
-self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== C).map(x => caches.delete(x)))).then(() => self.clients.claim())); });
+// Service worker mínimo: necessário para o Chrome/Edge oferecerem a instalação.
+const CACHE = 'azul-groove-v1';
+const ASSETS = ['./chat.html', './aumentar-o-tamanho-d.png', './manifest.webmanifest'];
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(() => {})));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+// Rede primeiro; só usa o cache se estiver offline. Só mexe em GET da mesma origem.
 self.addEventListener('fetch', e => {
-  const r = e.request;
-  if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
-  e.respondWith(fetch(r).then(res => { if (res.status === 200) { const cp = res.clone(); caches.open(C).then(c => c.put(r, cp)); } return res; }).catch(() => caches.match(r)));
+  const req = e.request;
+  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  e.respondWith(fetch(req).catch(() => caches.match(req)));
 });
