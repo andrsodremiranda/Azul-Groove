@@ -5,7 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Azul Groove - Chat</title>
 <link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
-<link rel="manifest" href="manifest.webmanifest">
+<script>
+// manifest embutido (sem arquivo separado)
+(function () {
+  try {
+    var base = location.href.split('#')[0].split('?')[0];
+    var m = {
+      name: 'Azul Groove',
+      short_name: 'Azul Groove',
+      description: 'Azul Groove - Chat',
+      start_url: base,
+      scope: base.replace(/[^\/]*$/, ''),
+      display: 'standalone',
+      background_color: '#0f1117',
+      theme_color: '#5865F2',
+      icons: [
+        { src: new URL('aumentar-o-tamanho-d.png', base).href, sizes: '512x512', type: 'image/png', purpose: 'any' },
+        { src: new URL('aumentar-o-tamanho-d.png', base).href, sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+      ]
+    };
+    var l = document.createElement('link');
+    l.rel = 'manifest';
+    l.href = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(m));
+    document.head.appendChild(l);
+  } catch (e) {}
+})();
+</script>
 <link rel="apple-touch-icon" href="aumentar-o-tamanho-d.png">
 <meta name="theme-color" content="#5865F2">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -1675,7 +1700,7 @@ async function pwaDiag() {
   if (/firefox/i.test(ua) && !/android|mobile/i.test(ua)) r.push('O Firefox no computador não instala sites como app. Use o Chrome ou o Edge. No Firefox para Android, use o menu ⋮ > Instalar.');
   if (location.protocol === 'file:') r.push('A página foi aberta como arquivo (file://). Hospede o site e abra por https.');
   else if (!window.isSecureContext) r.push('A página não está em https.');
-  try { const m = await fetch('manifest.webmanifest', { cache: 'no-store' }); if (!m.ok) r.push('O manifest.webmanifest não foi encontrado (erro ' + m.status + '). Envie-o para a mesma pasta do chat.html.'); } catch (e) { r.push('Não consegui carregar o manifest.webmanifest.'); }
+  if (!document.querySelector('link[rel=manifest]')) r.push('O manifest embutido não foi criado. Recarregue a página.');
   try { if (!(await navigator.serviceWorker.getRegistration())) r.push('O sw.js não está registrado. Envie-o para a mesma pasta do chat.html e recarregue a página.'); } catch (e) { r.push('Este navegador não deixou registrar o service worker.'); }
   const w = await new Promise(res => { const i = new Image(); i.onload = () => res([i.naturalWidth, i.naturalHeight]); i.onerror = () => res(null); i.src = 'aumentar-o-tamanho-d.png'; });
   if (!w) r.push('O ícone aumentar-o-tamanho-d.png não carregou.');
