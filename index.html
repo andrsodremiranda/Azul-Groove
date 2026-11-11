@@ -180,6 +180,30 @@ nav.sc{box-shadow:0 8px 30px rgba(0,0,0,.45);background:rgba(7,9,26,.95)}
 .nw-tabs button.on{background:linear-gradient(135deg,var(--ac),#7a5cff);color:#fff;box-shadow:0 6px 16px rgba(88,101,242,.45)}
 .nw-h,.nw-tabs,.nw-f{flex-shrink:0}
 .nw-list{overflow-y:auto;padding:14px 14px 6px;flex:1 1 auto;min-height:0}
+/* ===== pop-up de novidade do app ===== */
+.ap-ov{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,5,18,.66);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ap-ov.open{display:flex;animation:apFade .25s both}
+@keyframes apFade{from{opacity:0}}
+@keyframes apIn{from{opacity:0;transform:translateY(18px) scale(.95)}}
+.ap{position:relative;width:min(460px,100%);max-height:calc(100vh - 40px);overflow-y:auto;border-radius:26px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06);animation:apIn .4s cubic-bezier(.2,.9,.3,1.1) both;text-align:center}
+.ap-top{padding:36px 24px 20px;background:linear-gradient(120deg,rgba(88,101,242,.4),rgba(31,182,255,.16) 65%,transparent)}
+.ap-ic{width:68px;height:68px;margin:0 auto 14px;border-radius:22px;display:grid;place-items:center;color:#fff;font-size:1.7rem;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 12px 30px rgba(88,101,242,.55)}
+.ap-tag{display:inline-block;font:800 .7rem system-ui,sans-serif;letter-spacing:.6px;padding:3px 11px;border-radius:99px;background:rgba(88,101,242,.25);color:#aab4ff;margin-bottom:10px}
+.ap h2{font-size:1.35rem;line-height:1.2;margin:0 0 8px;color:var(--tx)}
+.ap-top p{color:var(--mut);font-size:.92rem;line-height:1.55;margin:0}
+.ap-bd{padding:4px 24px 24px}
+.ap ul{list-style:none;margin:14px 0 0;padding:0;text-align:left;display:grid;gap:9px}
+.ap li{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;line-height:1.45;color:var(--tx)}
+.ap li i{color:var(--ac2);margin-top:3px}
+.ap-ac{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.ap-b{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:99px;font:700 .9rem system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--tx);transition:transform .2s,box-shadow .2s}
+.ap-b:hover{transform:translateY(-2px)}
+.ap-b.pri{border-color:transparent;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2))}
+.ap-b.pri:hover{box-shadow:0 10px 28px rgba(88,101,242,.55)}
+.ap-b:focus-visible,.ap-x:focus-visible{outline:3px solid var(--ac2);outline-offset:3px}
+.ap-x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:11px;border:0;background:rgba(255,255,255,.08);color:var(--mut);font-size:1.2rem;cursor:pointer}
+.ap-x:hover{color:#fff;background:rgba(88,101,242,.35)}
+@media (prefers-reduced-motion:reduce){.ap,.ap-ov.open{animation:none}}
 /* barra de rolagem fina no padrão do site (painel de Novidades e página) */
 .nw-list,html{scrollbar-width:thin;scrollbar-color:#5865f2 rgba(255,255,255,.05)}
 .nw-list::-webkit-scrollbar,html::-webkit-scrollbar{width:8px;height:8px}
@@ -391,6 +415,7 @@ nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-sh
     <a class="btn pri" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer"><i class="fas fa-plus"></i> <span data-pt="Adicionar ao Discord" data-en="Add to Discord">Adicionar ao Discord</span></a>
     <a class="btn" href="blog.html"><i class="fas fa-newspaper"></i> <span data-pt="Notícias e Atualizações" data-en="News & Updates">Notícias e Atualizações</span></a>
     <a class="btn" href="ia.html"><i class="fas fa-flask"></i> <span data-pt="Azul Groove IA" data-en="Azul Groove AI">Azul Groove IA</span></a>
+    <a class="btn" href="azul.html"><i class="fas fa-compact-disc"></i> <span data-pt="Azul Groove Music para Windows" data-en="Azul Groove Music for Windows">Azul Groove Music para Windows</span></a>
   </div>
 </div></div></section>
 
@@ -433,6 +458,29 @@ nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-sh
   <div class="nw-f"><a href="blog.html" id="nwBlog">Ver todas no blog</a><span>·</span><a href="changelog.html" id="nwLog">Histórico</a><span>·</span><a href="docs.html" id="nwDocs">Documentação</a></div>
 </div>
 
+<div class="ap-ov" id="apOv">
+  <div class="ap" role="dialog" aria-modal="true" aria-labelledby="apTitle">
+    <button class="ap-x" id="apX" aria-label="Fechar / Close">&times;</button>
+    <div class="ap-top">
+      <div class="ap-ic"><i class="fas fa-compact-disc"></i></div>
+      <span class="ap-tag" data-pt="NOVIDADE DO APP" data-en="APP NEWS">NOVIDADE DO APP</span>
+      <h2 id="apTitle" data-pt="Azul Groove Music para Windows" data-en="Azul Groove Music for Windows">Azul Groove Music para Windows</h2>
+      <p data-pt="Seu player de música e vídeo agora tem uma página própria. Veja o que ele faz e baixe para o Windows." data-en="Your music and video player now has its own page. See what it does and download it for Windows.">Seu player de música e vídeo agora tem uma página própria. Veja o que ele faz e baixe para o Windows.</p>
+    </div>
+    <div class="ap-bd">
+      <ul>
+        <li><i class="fas fa-wand-magic-sparkles"></i><span data-pt="Fila inteligente que aprende com o que você ouve" data-en="Smart queue that learns from what you listen to">Fila inteligente que aprende com o que você ouve</span></li>
+        <li><i class="fas fa-play"></i><span data-pt="Sincroniza playlists do YouTube e do YouTube Music" data-en="Syncs YouTube and YouTube Music playlists">Sincroniza playlists do YouTube e do YouTube Music</span></li>
+        <li><i class="fas fa-rotate"></i><span data-pt="Atualização automática, sem incômodo" data-en="Automatic updates, without the hassle">Atualização automática, sem incômodo</span></li>
+      </ul>
+      <div class="ap-ac">
+        <a class="ap-b pri" id="apGo" href="azul.html"><i class="fas fa-compact-disc"></i> <span data-pt="Conhecer o app" data-en="Meet the app">Conhecer o app</span></a>
+        <button class="ap-b" id="apAll" type="button"><i class="fas fa-bell"></i> <span data-pt="Ver todas as novidades" data-en="See all news">Ver todas as novidades</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 let en = (() => { try { const s = localStorage.getItem('site_lang'); return s === 'en' || (!s && (navigator.language || '').startsWith('en')); } catch (e) { return false; } })();
 function applyLanguage() {
@@ -443,8 +491,10 @@ function applyLanguage() {
 }
 
 // ===== Novidades: edite só esta lista (a mais nova primeiro) =====
-const NEWS_VER = '2026-11-01';
+const NEWS_VER = '2026-11-11';
 const NEWS = [
+  { iso: '2026-11-11', d: '11 Nov 2026', t: 'new', i: 'fa-compact-disc', pt: ['Azul Groove Music para Windows', 'Conheça o player de música e vídeo para Windows: fila inteligente que aprende com você, sincronização com YouTube e YouTube Music e atualização automática. A página do app tem um botão para voltar ao início.'], en: ['Azul Groove Music for Windows', 'Meet the music and video player for Windows: a smart queue that learns from you, YouTube and YouTube Music sync and automatic updates. The app page has a button to go back to the home page.'], link: ['azul.html', 'Conhecer o app', 'Meet the app'] },
+  { iso: '2026-11-11', d: '11 Nov 2026', t: 'up', i: 'fa-bullhorn', pt: ['Aviso de novidades ao abrir o site', 'Ao entrar no site, aparece um aviso com a novidade do app. Ele aparece uma vez por novidade e dá para fechar quando quiser.'], en: ['News notice when opening the site', 'When you open the site, a notice with the latest app news shows up. It appears once per news item and you can close it any time.'] },
   { iso: '2026-11-01', d: '01 Nov 2026', t: 'up', i: 'fa-eraser', pt: ['Botão do Assistente Virtual removido', 'O botão Assistente Virtual saiu da página inicial. As opções que continuam lá são Adicionar ao Discord, Notícias e Atualizações e Azul Groove IA.'], en: ['Virtual Assistant button removed', 'The Virtual Assistant button was removed from the home page. The options that remain are Add to Discord, News & Updates and Azul Groove AI.'] },
   { iso: '2026-11-01', d: '01 Nov 2026', t: 'new', i: 'fa-comment-dots', pt: ['Botão de feedback', 'Agora você pode mandar o seu feedback direto pelo site, no botão logo abaixo das avaliações.'], en: ['Feedback button', 'You can now send your feedback right from the site, with the button just below the reviews.'], link: ['feedback.html', 'Enviar feedback', 'Send feedback'] },
   { iso: '2026-11-01', d: '01 Nov 2026', t: 'new', i: 'fa-star', pt: ['Docs: Avaliação média', 'Nova página explicando como a nota do site é feita: usamos os formulários do ano, analisamos tudo, e é anônima. Pode demorar para atualizar. O card da nota ganhou o link Saiba como funciona.'], en: ['Docs: Average rating', 'New page explaining how the site\'s rating is made: we use the year\'s forms, analyze everything, and it is anonymous. Updates can take a while. The rating card now has a Learn how it works link.'], link: ['docs.html#/avaliacao-media', 'Ver como funciona', 'See how it works'] },
@@ -496,6 +546,33 @@ function renderNews() {
   document.getElementById('nwTabs').onclick = e => { const b = e.target.closest('button'); if (b) { nwFilter = b.dataset.f; renderNews(); } };
   addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
   document.addEventListener('click', e => { const path = e.composedPath(); if (pn.classList.contains('open') && !path.includes(pn) && !path.includes(btn)) set(false); });
+})();
+// ===== Pop-up de novidade do app =====
+// Aparece 1x por novidade. Para mostrar de novo a todo mundo, troque o APP_POP_ID.
+// Para mostrar a TODA visita, apague a linha do localStorage.setItem dentro de set().
+const APP_POP_ID = 'azul-music-2026-11-11';
+(function () {
+  const ov = document.getElementById('apOv'); if (!ov) return;
+  const main = document.getElementById('apGo');
+  let seen = false, last = null;
+  try { seen = localStorage.getItem('azul_app_pop') === APP_POP_ID; } catch (e) {}
+  const set = o => {
+    ov.classList.toggle('open', o); document.body.style.overflow = o ? 'hidden' : '';
+    if (o) { last = document.activeElement; main.focus(); try { localStorage.setItem('azul_app_pop', APP_POP_ID); } catch (e) {} }
+    else if (last && last.focus) last.focus();
+  };
+  document.getElementById('apX').onclick = () => set(false);
+  document.getElementById('apAll').onclick = () => { set(false); setTimeout(() => document.getElementById('nwBtn').click(), 0); };
+  ov.addEventListener('click', e => { if (e.target === ov) set(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && ov.classList.contains('open')) set(false); });
+  ov.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const f = [...ov.querySelectorAll('a[href],button')].filter(x => x.offsetParent !== null);
+    const a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+    else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+  });
+  if (!seen) setTimeout(() => set(true), 700);
 })();
 function toggleIndexLang() { en = !en; try { localStorage.setItem('site_lang', en ? 'en' : 'pt'); } catch (e) {} applyLanguage(); }
 document.addEventListener('DOMContentLoaded', () => {

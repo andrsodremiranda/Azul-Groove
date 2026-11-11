@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Documentação · Azul Groove</title>
-<meta name="description" content="Documentação do Azul Groove: bot de música para Discord, chat com IA e app para Windows.">
+<meta name="description" content="Documentação do Azul Groove: bot de música para Discord, chat com IA, app para Windows e o player Azul Groove Music.">
 <link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
 <style>
 :root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--ok:#3ddc97;--warn:#ffb454}
@@ -149,9 +149,10 @@ const D = [
 
 /* ================= COMEÇAR ================= */
 {id:'inicio',cat:'Começar',t:'Bem-vindo',h:`
-<p class="lead">Aqui fica <b>tudo</b> sobre o Azul Groove: o <b>bot de música</b> para Discord, o <b>chat com IA</b> no site e o <b>app para Windows</b>. Escolha um assunto ou use a busca no topo.</p>
+<p class="lead">Aqui fica <b>tudo</b> sobre o Azul Groove: o <b>bot de música</b> para Discord, o <b>chat com IA</b> no site, o <b>app para Windows</b> e o player <b>Azul Groove Music</b>. Escolha um assunto ou use a busca no topo.</p>
 <div class="grid">
 <a class="card" href="#/baixar-app"><b>⬇️ Baixar o app (Windows)</b>Pelo Assistente de instalação, sempre na versão mais recente.</a>
+<a class="card" href="#/music"><b>🎧 Azul Groove Music</b>Player de música e vídeo para Windows, com fila inteligente e YouTube.</a>
 <a class="card" href="#/beta"><b>🧪 Versão Beta</b>Novidades experimentais antes de todo mundo.</a>
 <a class="card" href="#/devkit"><b>🛠️ Dev Kit</b>Baixe os arquivos do app e modifique.</a>
 <a class="card" href="#/primeiros-passos"><b>🚀 Primeiros passos</b>Do zero ao chat funcionando.</a>
@@ -165,11 +166,12 @@ const D = [
 <a class="card" href="#/avaliacao-media"><b>⭐ Avaliação média</b>Como a nota do site é calculada. Anônima.</a>
 <a class="card" href="#/faq"><b>❓ Central de dúvidas</b>Perguntas frequentes por assunto.</a>
 </div>
-<h3>O Azul Groove em três partes</h3>
+<h3>O Azul Groove em quatro partes</h3>
 <div class="cols">
 <div><b>🎵 Bot de música</b>Toca música no seu servidor do Discord com comandos de barra, como <code>/play</code>.</div>
 <div><b>💬 Chat com IA</b>Converse com uma IA pelo site. Você escolhe o serviço (nuvem) ou usa um modelo no seu PC.</div>
 <div><b>🪟 App para Windows</b>O mesmo chat numa janela própria, com ícone na bandeja.</div>
+<div><b>🎧 Azul Groove Music</b>Player de música e vídeo para Windows. Toca o que você tem e sincroniza playlists do YouTube.</div>
 </div>
 <div class="okb"><b>Dica:</b> não achou o que procurava? Digite uma palavra na busca (por exemplo <code>429</code>, <code>chave</code> ou <code>instalar</code>) e a lista ao lado mostra só as páginas que falam disso.</div>`},
 
@@ -275,6 +277,180 @@ const D = [
 <details><summary>O Windows ou o antivírus bloqueou o arquivo</summary><p>Baixe só pelo link oficial (<a href="#/baixar-app">Baixar o app</a>). Se o antivírus bloquear mesmo assim, libere o arquivo ou use "Executar assim mesmo".</p></details>
 <details><summary>Quero começar do zero</summary><p>Saia pela bandeja, apague a pasta <code>%LocalAppData%\\AzulGroove</code> e abra o app de novo. Isso apaga conversas e configurações.</p></details>
 <details><summary>A IA local não responde no app</summary><p>O app roda no mesmo PC, então funciona como no navegador. Siga <a href="#/ia-local">IA no seu PC</a> (servidor ligado e CORS liberado).</p></details>`},
+
+/* ================= AZUL GROOVE MUSIC ================= */
+{id:'music',cat:'Azul Groove Music',t:'O que é o Azul Groove Music',h:`
+<p class="lead">O <b>Azul Groove Music</b> é um player de <b>música e vídeo para Windows</b>. Ele toca o que você já tem no computador, sincroniza as suas playlists do YouTube e monta a fila sozinho com o que você gosta de ouvir.</p>
+<div class="note"><b>É um app à parte.</b> O Azul Groove Music serve para ouvir música e assistir vídeos. O chat com IA e o bot do Discord são outras partes do Azul Groove, com páginas próprias nesta documentação.</div>
+<div class="grid">
+<a class="card" href="#/music-instalar"><b>⬇️ Baixar e instalar</b>Do download até a primeira música tocando.</a>
+<a class="card" href="#/music-usar"><b>🎚️ Usar o player</b>Biblioteca, vídeos, som e o dia a dia.</a>
+<a class="card" href="#/music-fila"><b>🧠 Fila inteligente</b>A fila que se completa sozinha.</a>
+<a class="card" href="#/music-youtube"><b>▶️ YouTube e playlists</b>Sincronizar, buscar e baixar em MP3.</a>
+<a class="card" href="#/music-config"><b>⚙️ Configurações e atualização</b>Opções do app e como ele se atualiza.</a>
+<a class="card" href="#/music-problemas"><b>🛟 Problemas comuns</b>Não achou a música, app pesado e mais.</a>
+</div>
+<h3>Em resumo</h3>
+<div class="sc"><table><tr><th>Item</th><th>Detalhe</th></tr>
+<tr><td>Sistema</td><td>Windows 10 e 11, 64 bits.</td></tr>
+<tr><td>.NET</td><td>Já vem incluso. Você não precisa instalar nada antes.</td></tr>
+<tr><td>Reprodução</td><td>Motor do VLC, que toca a maioria dos formatos de áudio e vídeo.</td></tr>
+<tr><td>Versão</td><td>1.0.4 quando esta página foi escrita. A versão que você tem aparece em <b>Sobre</b>, dentro do app.</td></tr>
+<tr><td>Licença de uso</td><td>Fica no próprio app, em <b>Sobre</b>.</td></tr></table></div>
+<h3>O que ele faz</h3>
+<div class="cols">
+<div><b>🎵 Música e vídeo</b>Biblioteca, artistas, álbuns, mídia recente e pesquisa. Nos vídeos, legendas .srt, troca de faixa de áudio e proporção de tela.</div>
+<div><b>🔊 Som do seu jeito</b>Equalizador, saída de áudio, velocidade, temporizador para dormir e nivelamento de volume entre as músicas.</div>
+<div><b>▶️ YouTube</b>Cole links de playlists para sincronizar, ou busque e baixe músicas em MP3 com capa e metadados.</div>
+<div><b>📋 Playlists</b>Salve playlists, use as automáticas e exporte para .m3u.</div>
+<div><b>🧠 Fila inteligente</b>A cada troca de música, o app completa a fila sozinho com o que combina com você.</div>
+<div><b>🪟 No dia a dia</b>Continua de onde você parou, minimiza para a bandeja, inicia com o Windows e responde às teclas de mídia.</div>
+</div>
+<p>Quer ver o player em ação antes de baixar? A <a href="azul.html">página do Azul Groove Music</a> tem uma demonstração interativa.</p>`},
+
+{id:'music-instalar',cat:'Azul Groove Music',t:'Baixar e instalar',h:`
+<p class="lead">É só baixar, abrir e tocar. O Azul Groove Music funciona no <b>Windows 10 e 11 (64 bits)</b> e o .NET já vem incluso.</p>
+<div class="dl">
+<div class="dlc rec"><span class="tag">DOWNLOAD</span><h3>Azul Groove Music para Windows</h3><small>AzulGroove-Assistente.exe</small><p>É o mesmo botão <b>Baixar para Windows</b> da página do Azul Groove Music.</p><a class="dlb" href="${ASSIST}">⬇ Baixar para Windows</a><a class="dlb alt" href="azul.html">Ver a página do player</a></div>
+</div>
+<p>As versões ficam na <a target="_blank" rel="noopener" href="${REL}">página oficial no GitHub</a>. Baixe sempre por links oficiais.</p>
+<h3>Passo a passo</h3>
+<ol class="steps">
+<li><b>Baixe o arquivo</b>Use o botão acima. Se o navegador perguntar se pode manter o arquivo, confirme.</li>
+<li><b>Abra e siga as telas</b>Se o Windows mostrar o aviso "editor desconhecido", clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>. É um aviso comum para programas novos.</li>
+<li><b>Deixe o app ler a sua biblioteca</b>Quando a música ou o vídeo que você quer não aparecer, use <b>Atualizar biblioteca</b> na tela <b>Início</b>. Para tocar um arquivo avulso, use <b>Abrir arquivo(s)</b>.</li>
+<li><b>Toque algo</b>Clique em uma faixa. A fila inteligente começa a se montar sozinha. Veja <a href="#/music-fila">Fila inteligente</a>.</li>
+</ol>
+<div class="okb"><b>Atualizações:</b> depois da primeira instalação, o app avisa quando sai versão nova. Veja <a href="#/music-config">Configurações e atualização</a>.</div>
+<p>Algo deu errado? Veja <a href="#/music-problemas">Problemas comuns</a>.</p>`},
+
+{id:'music-usar',cat:'Azul Groove Music',t:'Usar o player',h:`
+<p class="lead">O menu da esquerda leva a cada parte do app. No fim da janela ficam os controles de reprodução, sempre à mão.</p>
+<h3>As telas</h3>
+<div class="sc"><table><tr><th>Tela</th><th>O que tem</th></tr>
+<tr><td><b>Início</b></td><td>Mídia recente. Aqui ficam <b>Atualizar biblioteca</b> e <b>Abrir arquivo(s)</b>, e dá para ordenar por nome, data do arquivo ou duração.</td></tr>
+<tr><td><b>Biblioteca de músicas</b></td><td>Todas as músicas.</td></tr>
+<tr><td><b>Biblioteca de vídeos</b></td><td>Todos os vídeos.</td></tr>
+<tr><td><b>Artistas</b> e <b>Álbuns</b></td><td>Escolha um artista ou álbum para ver as faixas dele.</td></tr>
+<tr><td><b>Fila de reprodução</b></td><td>As próximas faixas. Dá para tocar, remover uma ou limpar a fila.</td></tr>
+<tr><td><b>Tocando agora</b></td><td>A faixa atual em destaque.</td></tr>
+<tr><td><b>Playlists</b></td><td>Suas playlists. Veja <a href="#/music-youtube">YouTube e playlists</a>.</td></tr>
+<tr><td><b>YouTube</b></td><td>Sincronizar playlists e baixar músicas.</td></tr>
+<tr><td><b>Configurações</b></td><td>Preferências do app. Veja <a href="#/music-config">Configurações e atualização</a>.</td></tr>
+<tr><td><b>Sobre</b></td><td>Versão, busca de atualizações e a licença de uso.</td></tr></table></div>
+<p>Use a caixa <b>Pesquisar</b> no topo do menu para achar uma faixa pelo nome ou pelo artista.</p>
+<h3>Controles de reprodução</h3>
+<ul>
+<li><b>Tocar, pausar, anterior e próxima</b>, como em qualquer player.</li>
+<li><b>Voltar 10 s</b> e <b>avançar 30 s</b>, bons para podcasts e vídeos longos.</li>
+<li><b>Aleatório</b> e <b>repetir</b>.</li>
+<li><b>Velocidade</b>, para ouvir mais devagar ou mais rápido.</li>
+<li><b>Volume</b> e <b>mudo</b>.</li>
+</ul>
+<h3>Vídeos</h3>
+<ul>
+<li><b>Legendas .srt</b> para os seus vídeos.</li>
+<li><b>Troca de faixa de áudio</b>, quando o vídeo tem mais de uma (por exemplo, dois idiomas).</li>
+<li><b>Proporção de tela</b>, para ajustar como a imagem preenche a janela.</li>
+</ul>
+<h3>Som do seu jeito</h3>
+<ul>
+<li><b>Equalizador</b> para ajustar graves e agudos.</li>
+<li><b>Saída de áudio</b>, para escolher fones, caixas ou outro dispositivo.</li>
+<li><b>Temporizador para dormir</b>, que para a música depois do tempo que você escolher.</li>
+<li><b>Nivelar volume entre músicas</b>, para uma faixa não soar bem mais alta que a outra. Está em <a href="#/music-config">Configurações</a>.</li>
+</ul>
+<h3>No dia a dia</h3>
+<ul>
+<li><b>Continua de onde parou:</b> ao abrir o app de novo, você retoma de onde estava.</li>
+<li><b>Bandeja:</b> o app pode minimizar para a bandeja do Windows e continuar tocando.</li>
+<li><b>Iniciar com o Windows:</b> opcional, vem desligado.</li>
+<li><b>Teclas de mídia:</b> play/pausa, próxima e anterior do teclado funcionam em qualquer lugar do Windows.</li>
+</ul>
+<div class="note"><b>Fechou no X e a música continua?</b> Se a opção de minimizar para a bandeja estiver ligada, o app vai para a bandeja, perto do relógio. Para fechar de verdade, clique com o botão direito no ícone e escolha <b>Sair</b>.</div>`},
+
+{id:'music-fila',cat:'Azul Groove Music',t:'Fila inteligente',h:`
+<p class="lead">A fila inteligente <b>aprende com o que você ouve</b>. A cada troca de música, o app completa a fila sozinho, sem você precisar montar nada.</p>
+<h3>Como funciona</h3>
+<p>O app olha para o seu hábito de escuta e sugere as próximas faixas. Entre outras coisas, ele leva em conta:</p>
+<div class="sc"><table><tr><th>Sinal</th><th>Ideia</th></tr>
+<tr><td><b>Reproduções</b></td><td>O que você mais ouve.</td></tr>
+<tr><td><b>Recência</b></td><td>O que você ouviu há pouco tempo.</td></tr>
+<tr><td><b>Hora do dia</b></td><td>O que costuma tocar nesse horário.</td></tr>
+<tr><td><b>Pulos</b></td><td>O que você costuma pular.</td></tr>
+<tr><td><b>Contexto</b></td><td>O que combina com a faixa que está tocando.</td></tr>
+<tr><td><b>Variedade</b></td><td>Misturar, para não repetir sempre as mesmas.</td></tr></table></div>
+<h3>Músicas novas do YouTube</h3>
+<p>Se você quiser, o app também <b>baixa músicas novas do mix do YouTube</b> para a fila e avisa quando elas chegarem. Isso é a opção <b>Música automática</b>, em <a href="#/music-config">Configurações</a>.</p>
+<div class="note"><b>Precisa de internet.</b> Para baixar músicas novas, o app usa o YouTube. Sem internet, a fila continua sendo montada só com o que já está na sua biblioteca.</div>
+<h3>Mexer na fila</h3>
+<ul>
+<li>Abra <b>Fila de reprodução</b> no menu para ver as próximas faixas.</li>
+<li>Toque em uma para ouvir agora, ou remova as que não quiser.</li>
+<li><b>Limpar fila</b> esvazia tudo. A fila se completa de novo na próxima troca de música.</li>
+<li>Com <b>Aleatório</b> ligado, as sugestões também vêm misturadas.</li>
+</ul>`},
+
+{id:'music-youtube',cat:'Azul Groove Music',t:'YouTube e playlists',h:`
+<p class="lead">Traga as suas playlists do YouTube para dentro do player e ouça tudo no mesmo lugar, com capa e informações da faixa.</p>
+<h3>Sincronizar playlists</h3>
+<ol class="steps">
+<li><b>Abra a tela YouTube</b>No menu da esquerda.</li>
+<li><b>Cole os links</b>Um link de playlist por linha. Pode colar mais de uma.</li>
+<li><b>Escolha Áudio ou Vídeo</b>Áudio baixa só o som (MP3). Vídeo baixa também a imagem.</li>
+<li><b>Clique em Sincronizar</b>Uma barra mostra o andamento. As faixas novas entram na biblioteca e a playlist é criada no app.</li>
+</ol>
+<div class="okb">Se aparecer <b>"Nada novo para baixar"</b>, é bom sinal: tudo o que estava na playlist já está na sua biblioteca. Sincronize de novo quando a playlist ganhar músicas.</div>
+<h3>Buscar e baixar</h3>
+<p>Na mesma tela, use <b>Buscar no YouTube</b>. Em cada resultado você escolhe:</p>
+<ul>
+<li><b>Ouvir:</b> toca direto do YouTube, sem baixar.</li>
+<li><b>Baixar áudio:</b> salva em <b>MP3 com capa e metadados</b> e adiciona à biblioteca.</li>
+</ul>
+<div class="note"><b>Na primeira vez</b>, o app baixa sozinho as ferramentas que precisa para isso (yt-dlp e ffmpeg). Por isso a primeira sincronização pode demorar um pouco e precisa de internet.</div>
+<div class="bad"><b>Baixe só o que você tem direito de baixar.</b> Respeite as regras do YouTube e os direitos autorais de quem criou a música.</div>
+<h3>Playlists do app</h3>
+<ul>
+<li>Na tela <b>Playlists</b>, escolha uma lista à esquerda para ver as faixas.</li>
+<li><b>Reproduzir</b> toca a playlist escolhida.</li>
+<li><b>Exportar como .m3u</b> salva a lista num arquivo que outros players também abrem.</li>
+<li>Além das suas, o app tem <b>playlists automáticas</b>.</li>
+</ul>`},
+
+{id:'music-config',cat:'Azul Groove Music',t:'Configurações e atualização',h:`
+<p class="lead">Abra <b>Configurações</b> no menu para ligar ou desligar o que quiser. Cada opção é um interruptor.</p>
+<h3>Opções</h3>
+<div class="sc"><table><tr><th>Opção</th><th>O que faz</th></tr>
+<tr><td><b>Música automática</b></td><td>Baixa músicas novas do YouTube para a fila inteligente. Veja <a href="#/music-fila">Fila inteligente</a>.</td></tr>
+<tr><td><b>Animações de fundo</b></td><td>Luzes azuis em movimento atrás da janela.</td></tr>
+<tr><td><b>Modo leve</b></td><td>Menos efeitos, para poupar o computador. Ótimo em PCs mais fracos.</td></tr>
+<tr><td><b>Nivelar volume entre músicas</b></td><td>Evita que uma faixa soe bem mais alta que a outra.</td></tr>
+<tr><td><b>Minimizar para a bandeja</b></td><td>O app vai para perto do relógio e continua tocando.</td></tr>
+<tr><td><b>Iniciar com o Windows</b></td><td>Abre o app sozinho quando você liga o computador.</td></tr></table></div>
+<h3>Atualização automática</h3>
+<p>O app se mantém atualizado sem atrapalhar você:</p>
+<ol class="steps">
+<li><b>Sai a versão nova</b>Ao abrir, o app consulta os Releases do GitHub.</li>
+<li><b>Baixa em segundo plano</b>Só aceita arquivos do repositório oficial e confere o hash <b>SHA-256</b> para ver se o arquivo não foi alterado.</li>
+<li><b>Instala e reabre</b>Você escolhe quando.</li>
+</ol>
+<ul>
+<li>Para procurar na hora, abra <b>Sobre</b> e clique em <b>Buscar atualizações agora</b>.</li>
+<li>Se preferir, dá para <b>desligar a atualização automática</b> também em <b>Sobre</b>.</li>
+</ul>
+<p>Todas as versões ficam na <a target="_blank" rel="noopener" href="${REL}">página oficial no GitHub</a>.</p>`},
+
+{id:'music-problemas',cat:'Azul Groove Music',t:'Problemas comuns',h:`
+<p>Abra o item que combina com o seu problema.</p>
+<details open><summary>O Windows ou o antivírus bloqueou o arquivo</summary><p>Baixe só por links oficiais (veja <a href="#/music-instalar">Baixar e instalar</a>). No aviso "editor desconhecido", clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>. Se o antivírus bloquear mesmo assim, libere o arquivo.</p></details>
+<details><summary>Minhas músicas ou vídeos não aparecem</summary><p>Na tela <b>Início</b>, clique em <b>Atualizar biblioteca</b> e espere terminar. Para tocar um arquivo avulso, use <b>Abrir arquivo(s)</b>.</p></details>
+<details><summary>O app está pesado ou lento</summary><p>Em <b>Configurações</b>, ligue o <b>Modo leve</b> e desligue as <b>Animações de fundo</b>. Fechar outros programas pesados também ajuda.</p></details>
+<details><summary>O app não abre ou fecha sozinho</summary><p>Baixe de novo a versão mais recente (veja <a href="#/music-instalar">Baixar e instalar</a>) e instale. Se continuar, avise no <a target="_blank" rel="noopener" href="${DISCORD}">Discord</a> dizendo a versão do app, o que você estava fazendo e o que apareceu na tela.</p></details>
+<details><summary>A sincronização do YouTube não baixa nada</summary><ul><li>Confira se a internet está funcionando.</li><li>Veja se o link é mesmo de uma <b>playlist</b> e se ele abre no navegador.</li><li><b>"Nada novo para baixar"</b> quer dizer que tudo já está na biblioteca.</li><li>Na primeira vez o app baixa ferramentas extras (yt-dlp e ffmpeg), o que pode levar um tempo.</li></ul><p>Mais em <a href="#/music-youtube">YouTube e playlists</a>.</p></details>
+<details><summary>Fechei o app e a música continua tocando</summary><p>Ele foi para a bandeja do Windows. Clique com o botão direito no ícone e escolha <b>Sair</b>. Se não quiser esse comportamento, desligue <b>Minimizar para a bandeja</b> em <b>Configurações</b>.</p></details>
+<details><summary>O app abre sozinho quando ligo o PC</summary><p>Em <b>Configurações</b>, desligue <b>Iniciar com o Windows</b>.</p></details>
+<details><summary>Como sei se estou na versão mais nova?</summary><p>Abra <b>Sobre</b>. Lá aparece a versão e o botão <b>Buscar atualizações agora</b>.</p></details>
+<p>Ainda com problema? Veja <a href="#/contato">Falar com a gente</a>.</p>`},
 
 /* ================= BETA E DEV KIT ================= */
 {id:'beta',cat:'Beta e Dev Kit',t:'Versão Beta (experimental)',h:`
@@ -641,7 +817,11 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <tr><td><b>Rich Presence</b></td><td>Mostra no perfil do Discord o que você está ouvindo.</td></tr>
 <tr><td><b>.gguf</b></td><td>Formato de arquivo dos modelos de IA que rodam no seu PC.</td></tr>
 <tr><td><b>Vulkan</b></td><td>Tecnologia que deixa a IA local usar a placa de vídeo.</td></tr>
-<tr><td><b>Bandeja</b></td><td>A área perto do relógio do Windows onde o app fica rodando em segundo plano.</td></tr></table></div>`},
+<tr><td><b>Bandeja</b></td><td>A área perto do relógio do Windows onde o app fica rodando em segundo plano.</td></tr>
+<tr><td><b>Fila inteligente</b></td><td>No Azul Groove Music, a fila que se completa sozinha com base no que você ouve.</td></tr>
+<tr><td><b>.m3u</b></td><td>Arquivo de playlist que vários players abrem. O Azul Groove Music exporta nesse formato.</td></tr>
+<tr><td><b>.srt</b></td><td>Arquivo de legendas para vídeos.</td></tr>
+<tr><td><b>Modo leve</b></td><td>Opção do Azul Groove Music com menos efeitos, para poupar o computador.</td></tr></table></div>`},
 
 /* ================= DÚVIDAS ================= */
 {id:'faq',cat:'Dúvidas',t:'Central de dúvidas',h:`
@@ -665,6 +845,13 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <details><summary>O Windows disse "editor desconhecido". É seguro?</summary><p>É um aviso comum para programas novos. Baixe só pelo link oficial desta documentação. Depois, <b>Mais informações → Executar assim mesmo</b>.</p></details>
 <details><summary>O app do Windows salva meus dados?</summary><p>Sim, em <code>%LocalAppData%\\AzulGroove</code>. Feche pelo menu da bandeja (<b>Sair</b>) para garantir que tudo seja gravado.</p></details>
 <details><summary>Cliquei no X e o app não fechou</summary><p>Ele foi para a bandeja do Windows. Para fechar de verdade, botão direito no ícone → <b>Sair</b>.</p></details>
+<h3>Azul Groove Music</h3>
+<details><summary>O que é o Azul Groove Music?</summary><p>É um player de música e vídeo para Windows, com fila inteligente e sincronização de playlists do YouTube. Veja <a href="#/music">O que é o Azul Groove Music</a>.</p></details>
+<details><summary>Ele é o mesmo app do chat com IA?</summary><p>Não. O Azul Groove Music é um app à parte, feito só para ouvir música e assistir vídeos.</p></details>
+<details><summary>Preciso instalar o .NET?</summary><p>Não. O .NET já vem incluso. Basta ter Windows 10 ou 11 de 64 bits. Veja <a href="#/music-instalar">Baixar e instalar</a>.</p></details>
+<details><summary>Como coloco minhas playlists do YouTube no player?</summary><p>Na tela <b>YouTube</b>, cole os links (um por linha), escolha Áudio ou Vídeo e clique em <b>Sincronizar</b>. Veja <a href="#/music-youtube">YouTube e playlists</a>.</p></details>
+<details><summary>O que é a fila inteligente?</summary><p>A cada troca de música, o app completa a fila sozinho com base no que você ouve. Veja <a href="#/music-fila">Fila inteligente</a>.</p></details>
+<details><summary>O app se atualiza sozinho?</summary><p>Sim. Ao abrir, ele consulta os Releases do GitHub, baixa em segundo plano e confere o hash SHA-256. Você escolhe quando instalar, e dá para desligar em <b>Sobre</b>. Veja <a href="#/music-config">Configurações e atualização</a>.</p></details>
 <h3>Beta e Dev Kit</h3>
 <details><summary>O que é a versão Beta?</summary><p>É a versão experimental do app, com novidades em teste. Veja <a href="#/beta">Versão Beta</a>.</p></details>
 <details><summary>Perco minhas conversas ao entrar ou sair do Beta?</summary><p>Ao voltar para a versão normal, o seu login e as suas configurações continuam salvos. Mesmo assim, salve as conversas importantes em <code>.txt</code> ou <code>.json</code> antes de trocar de versão.</p></details>
@@ -680,7 +867,7 @@ ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()</code></pre></detail
 <a class="dlb" style="display:inline-flex" target="_blank" rel="noopener" href="${DISCORD}">💬 Entrar no servidor de suporte</a>
 <h3>Como pedir ajuda para resolver mais rápido</h3>
 <p>Mande estas informações:</p>
-<ol><li>O que você estava fazendo (chat, app, bot).</li><li>O <b>código do erro</b> ou a mensagem que apareceu (<code>401</code>, <code>429</code>, "blocked by CORS"...).</li><li>Qual provedor ou programa local você usa.</li><li>Se é no navegador ou no app, e em qual sistema.</li></ol>
+<ol><li>O que você estava fazendo (chat, app, player de música, bot).</li><li>O <b>código do erro</b> ou a mensagem que apareceu (<code>401</code>, <code>429</code>, "blocked by CORS"...).</li><li>Qual provedor ou programa local você usa.</li><li>Se é no navegador ou no app, e em qual sistema.</li></ol>
 <div class="bad"><b>Nunca</b> mande a sua chave de API, nem em print. Se aparecer na imagem, apague (borre) antes de enviar.</div>
 <p>Outros links: <a href="privacidade.html">Política de Privacidade</a> · <a href="licenca.html">Termos de Uso</a> · <a href="blog.html">Blog</a></p>`}
 ];

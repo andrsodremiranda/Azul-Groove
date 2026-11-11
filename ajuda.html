@@ -70,6 +70,9 @@ summary span.q{flex:1}
 summary .ch{color:var(--mut);transition:transform .25s}
 details[open] .ch{transform:rotate(180deg)}
 .an{padding:0 18px 18px 68px;color:var(--mut);font-size:.94rem;line-height:1.7}
+.an .more{display:block;margin-top:10px;font-weight:600;font-size:.88rem;color:#8ea1ff;text-decoration:none}
+.an .more:hover{color:var(--ac2)}
+.an .more i{font-size:.75rem;margin-left:4px}
 .empty{text-align:center;color:var(--mut);padding:40px 10px}
 .cta{margin-top:40px;text-align:center;padding:30px 22px;border-radius:24px;border:1px solid rgba(88,101,242,.4);background:linear-gradient(135deg,rgba(88,101,242,.18),rgba(31,182,255,.08))}
 .cta h2{font-size:1.3rem;margin-bottom:6px}
@@ -254,9 +257,86 @@ const FAQ = [
   "i": "fa-box-archive",
   "q": "O que foi o Groove Ads?",
   "a": "Era um sistema de mensagens de apoio e divulgação exibidas nas skins do bot. Foi oficialmente descontinuado a partir do ASTM OS 14.0 — Build 25000.0008 e não recebe mais suporte nem atualizações da ASTM Software. Fica aqui apenas como registro histórico do projeto."
+ },
+ {
+  "c": "music",
+  "i": "fa-headphones",
+  "q": "O que é o Azul Groove Music?",
+  "a": "É um player de música e vídeo para Windows. Ele toca o que você tem no computador, sincroniza playlists do YouTube e monta a fila sozinho com o que você gosta de ouvir. É um app à parte do chat com IA e do bot do Discord.",
+  "l": "docs.html#/music"
+ },
+ {
+  "c": "music",
+  "i": "fa-download",
+  "q": "Como baixo e instalo o Azul Groove Music?",
+  "a": "Use o botão Baixar para Windows na página do Azul Groove Music. Funciona no Windows 10 e 11 de 64 bits e o .NET já vem incluso, então não precisa instalar mais nada. Se o Windows avisar \"editor desconhecido\", clique em Mais informações e depois em Executar assim mesmo.",
+  "l": "docs.html#/music-instalar"
+ },
+ {
+  "c": "music",
+  "i": "fa-folder-open",
+  "q": "Minhas músicas não aparecem no player",
+  "a": "Na tela Início, clique em Atualizar biblioteca e espere terminar. Para tocar um arquivo avulso, use Abrir arquivo(s).",
+  "l": "docs.html#/music-problemas"
+ },
+ {
+  "c": "music",
+  "i": "fa-brain",
+  "q": "O que é a fila inteligente?",
+  "a": "A cada troca de música, o app completa a fila sozinho, olhando o que você mais ouve, o que ouviu há pouco, o horário, o que você costuma pular e o que combina com a faixa atual. Se a opção Música automática estiver ligada, ele também baixa músicas novas do mix do YouTube e avisa quando chegarem.",
+  "l": "docs.html#/music-fila"
+ },
+ {
+  "c": "music",
+  "i": "fa-circle-play",
+  "q": "Como coloco minhas playlists do YouTube no player?",
+  "a": "Abra a tela YouTube, cole os links das playlists (um por linha), escolha Áudio ou Vídeo e clique em Sincronizar. As faixas novas entram na biblioteca e a playlist é criada no app. Você também pode buscar no YouTube e escolher entre Ouvir (sem baixar) e Baixar áudio, que salva em MP3 com capa e metadados.",
+  "l": "docs.html#/music-youtube"
+ },
+ {
+  "c": "music",
+  "i": "fa-list-ul",
+  "q": "Como exporto uma playlist?",
+  "a": "Na tela Playlists, escolha a lista e clique em Exportar como .m3u. O arquivo .m3u também abre em vários outros players.",
+  "l": "docs.html#/music-youtube"
+ },
+ {
+  "c": "music",
+  "i": "fa-closed-captioning",
+  "q": "Dá para usar legendas e trocar o áudio dos vídeos?",
+  "a": "Sim. Nos vídeos o player aceita legendas .srt, troca de faixa de áudio (quando o vídeo tem mais de uma) e ajuste da proporção de tela.",
+  "l": "docs.html#/music-usar"
+ },
+ {
+  "c": "music",
+  "i": "fa-moon",
+  "q": "Tem equalizador e temporizador para dormir?",
+  "a": "Tem. Além deles, o app deixa escolher a saída de áudio, mudar a velocidade e nivelar o volume entre as músicas, para uma faixa não soar bem mais alta que a outra.",
+  "l": "docs.html#/music-usar"
+ },
+ {
+  "c": "music",
+  "i": "fa-bolt",
+  "q": "O app está pesado. Como deixo mais leve?",
+  "a": "Abra Configurações, ligue o Modo leve e desligue as Animações de fundo. Isso reduz os efeitos e poupa o computador.",
+  "l": "docs.html#/music-config"
+ },
+ {
+  "c": "music",
+  "i": "fa-window-minimize",
+  "q": "Fechei o app e a música continua tocando",
+  "a": "Com a opção Minimizar para a bandeja ligada, o app vai para perto do relógio do Windows e continua tocando. Para fechar de verdade, clique com o botão direito no ícone e escolha Sair. Se não quiser esse comportamento, desligue a opção em Configurações.",
+  "l": "docs.html#/music-config"
+ },
+ {
+  "c": "music",
+  "i": "fa-rotate",
+  "q": "O Azul Groove Music se atualiza sozinho?",
+  "a": "Sim. Ao abrir, o app consulta os Releases do GitHub, baixa a versão nova em segundo plano (só aceita arquivos do repositório oficial e confere o hash SHA-256) e você escolhe quando instalar. Para procurar na hora, abra Sobre e clique em Buscar atualizações agora. Dá para desligar a atualização automática no mesmo lugar.",
+  "l": "docs.html#/music-config"
  }
 ];
-const CATS = {"all": ["Tudo", "All"], "start": ["Primeiros passos", "Getting started"], "problems": ["Problemas comuns", "Common issues"], "features": ["Recursos", "Features"]};
+const CATS = {"all": ["Tudo", "All"], "start": ["Primeiros passos", "Getting started"], "problems": ["Problemas comuns", "Common issues"], "features": ["Recursos", "Features"], "music": ["Azul Groove Music", "Azul Groove Music"]};
 
 let cat = 'all', query = '';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -271,7 +351,7 @@ function render() {
   let html = '', last = '', k = 0;
   items.forEach(x => {
     if (cat === 'all' && x.c !== last) { html += `<div class="cat">${CATS[x.c][L]}</div>`; last = x.c; }
-    html += `<details style="animation-delay:${(k++) * 35}ms"><summary><span class="ic"><i class="fas ${x.i}"></i></span><span class="q">${esc(x.q)}</span><i class="fas fa-chevron-down ch"></i></summary><div class="an">${esc(x.a)}</div></details>`;
+    html += `<details style="animation-delay:${(k++) * 35}ms"><summary><span class="ic"><i class="fas ${x.i}"></i></span><span class="q">${esc(x.q)}</span><i class="fas fa-chevron-down ch"></i></summary><div class="an">${esc(x.a)}${x.l ? `<a class="more" href="${esc(x.l)}">${en ? 'See in the docs' : 'Ver na documentação'} <i class="fas fa-arrow-right"></i></a>` : ''}</div></details>`;
   });
   document.getElementById('faq').innerHTML = html || `<div class="empty">${en ? 'Nothing found. Try another word or ask on Discord.' : 'Nada encontrado. Tente outra palavra ou pergunte no Discord.'}</div>`;
 }
