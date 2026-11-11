@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
 <title>Azul Groove Music: player de música e vídeo para Windows</title>
 <meta name="description" content="Player de música e vídeo para Windows com fila inteligente, YouTube e atualização automática.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +23,8 @@ a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
 nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
 nav b{font:800 18px Sora,sans-serif;display:flex;align-items:center;gap:10px}
-.logo{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#2f8cff,#4fd1ff);display:grid;place-items:center}
+.logo{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:contain;display:block}
 .logo i{display:flex;gap:2px;align-items:flex-end;height:12px}.logo i s{display:block;width:3px;background:#041230;border-radius:2px;animation:eq 1s ease-in-out infinite}
 nav div a{margin-left:22px;text-decoration:none;color:var(--mute);font-weight:500}
 nav div a:hover{color:var(--text)}
@@ -169,7 +171,7 @@ footer a:hover{text-decoration:underline}
 <body>
 <div class="bgfx" aria-hidden="true"><i class="o1"></i><i class="o2"></i><i class="o3"></i><canvas id="cv"></canvas></div>
 <div class="wrap">
-<nav><div class="nl"><a class="btn ghost back" href="index.html" aria-label="Voltar ao início"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Início</span></a><b><span class="logo"><i><s></s><s style="animation-delay:-.3s"></s><s style="animation-delay:-.6s"></s></i></span>Azul Groove Music</b></div>
+<nav><div class="nl"><a class="btn ghost back" href="index.html" aria-label="Voltar ao início"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span>Início</span></a><b><span class="logo"><img src="aumentar-o-tamanho-d.png" alt=""></span>Azul Groove Music</b></div>
 <div><a href="#recursos">Recursos</a><a href="#fila">Fila inteligente</a><a href="#atualizacao">Atualização</a><a href="docs.html">Documentação</a><a href="ajuda.html">Ajuda</a><a class="btn" href="https://github.com/astmsoftware/ASTM/releases/download/azul/AzulGroove-Assistente.exe" style="margin-left:22px;padding:10px 20px">Baixar</a></div></nav>
 
 <header class="hero" id="top">
@@ -200,7 +202,7 @@ footer a:hover{text-decoration:underline}
 </defs></svg>
 <div class="win" id="win">
 <i class="glow g1"></i><i class="glow g2"></i><i class="glow g3"></i>
-<div class="mt"><span class="mtl"><button class="ib" tabindex="-1" aria-label="Voltar"><svg class="i"><use href="#i-back"/></svg></button><span class="logo" style="width:20px;height:20px;border-radius:6px"></span>Azul Groove Music</span><span class="mtr"><u><svg class="i"><use href="#i-min"/></svg></u><u><svg class="i"><use href="#i-sq"/></svg></u><u><svg class="i"><use href="#i-x"/></svg></u></span></div>
+<div class="mt"><span class="mtl"><button class="ib" tabindex="-1" aria-label="Voltar"><svg class="i"><use href="#i-back"/></svg></button><span class="logo" style="width:20px;height:20px;border-radius:6px"><img src="aumentar-o-tamanho-d.png" alt=""></span>Azul Groove Music</span><span class="mtr"><u><svg class="i"><use href="#i-min"/></svg></u><u><svg class="i"><use href="#i-sq"/></svg></u><u><svg class="i"><use href="#i-x"/></svg></u></span></div>
 <div class="mb">
 <aside class="ms"><label class="srch"><input id="q" placeholder="Pesquisar" aria-label="Pesquisar" autocomplete="off"><svg class="i"><use href="#i-search"/></svg></label><nav class="nv" id="nv"></nav><div class="nv" id="nb" style="flex:none"></div><button class="pill" id="fold">Abrir pasta</button></aside>
 <div class="mm"><div class="tabs" id="tabs"></div><div id="pg"></div><div class="toast" id="toast" role="status"></div></div></div>
