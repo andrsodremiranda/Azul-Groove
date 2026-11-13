@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Azul Groove - Music Bot para Discord</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#05060f;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--ac:#5865f2;--ac2:#1fb6ff;--tinta:#05060f;--azul:#5b78ff;--ciano:#5fd8ff;--rosa:#ff7ad9;--creme:#f3f0e8;--mut:#9aa0bd;--linha:rgba(255,255,255,.1);
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;--txt:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--txt);background:var(--tinta);color:var(--creme);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--rosa);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:-.025em;line-height:1.03}
+body::before{content:"";position:fixed;inset:0;z-index:-2;opacity:.5;
+  background:linear-gradient(var(--linha) 1px,transparent 1px) 0 0/72px 72px,linear-gradient(90deg,var(--linha) 1px,transparent 1px) 0 0/72px 72px;
+  -webkit-mask:radial-gradient(ellipse at 50% 15%,#000 15%,transparent 72%);mask:radial-gradient(ellipse at 50% 15%,#000 15%,transparent 72%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(540px circle at 72% 22%,rgba(91,120,255,.24),transparent 60%)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0}
+.logo{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:700;font-size:1.3rem}
+.logo img{width:36px;height:36px;border-radius:11px;background:#fff;padding:3px}
+.links{display:flex;gap:28px;color:var(--mut);font-weight:500;font-size:.95rem}
+.links a{transition:color .2s}.links a:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:999px;font-weight:700;font-size:.96rem;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.04);color:var(--creme);cursor:pointer;font-family:inherit;transition:transform .2s,border-color .2s}
+.btn:hover{transform:translateY(-3px);border-color:var(--ciano)}
+.btn.cheio{background:var(--creme);color:var(--tinta);border-color:var(--creme)}
+.btn.rosa{background:linear-gradient(120deg,var(--rosa),#a98bff);color:#170b30;border-color:transparent;animation:pulsa 2.8s ease-in-out infinite}
+.btn.sm{padding:9px 18px;font-size:.88rem}
+
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;padding:52px 0 90px}
+.hero h1{font-size:clamp(3rem,6.8vw,5.8rem)}
+.hero h1 em{font-style:italic;font-weight:500;background:linear-gradient(100deg,var(--ciano),var(--rosa));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:29em;margin:24px 0 34px;font-size:1.13rem;color:#c3c8e2}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero>div:first-child>*{animation:entra .9s cubic-bezier(.2,.7,.2,1) both}
+.hero>div:first-child>:nth-child(2){animation-delay:.12s}.hero>div:first-child>:nth-child(3){animation-delay:.24s}
+
+/* player sobre anéis orbitando */
+.palco{position:relative;justify-self:center;width:100%;max-width:480px;animation:entra 1.1s .2s cubic-bezier(.2,.7,.2,1) both}
+.anel{position:absolute;left:50%;top:50%;border-radius:50%;border:1px dashed rgba(255,255,255,.18);animation:gira var(--t) linear infinite;pointer-events:none}
+.anel i{position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--c);box-shadow:0 0 18px var(--c)}
+.a1{--t:26s;--c:var(--ciano);width:118%;aspect-ratio:1;margin:-59% 0 0 -59%}
+.a2{--t:40s;--c:var(--rosa);width:140%;aspect-ratio:1;margin:-70% 0 0 -70%;animation-direction:reverse}
+.player{position:relative;background:rgba(12,16,48,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 70px rgba(91,120,255,.28)}
+.disco{display:flex;gap:18px;align-items:center}
+.vinil{flex:none;width:112px;height:112px;border-radius:50%;position:relative;animation:gira 7s linear infinite;box-shadow:0 0 30px rgba(255,122,217,.35);background:repeating-radial-gradient(circle,#02030f 0 2px,#1a2478 2px 4px)}
+.vinil::after{content:"";position:absolute;inset:34px;border-radius:50%;background:conic-gradient(var(--azul),var(--rosa),var(--ciano),var(--azul));border:3px solid #02030f}
+.player.pausado .vinil,.player.pausado .eq i{animation-play-state:paused}
+.info small{color:var(--mut);font-size:.82rem}
+.info h3{font-size:1.5rem;margin:2px 0}
+.info span{color:var(--mut);font-size:.92rem}
+.eq{display:flex;gap:4px;align-items:flex-end;height:26px;margin-top:8px}
+.eq i{width:5px;height:100%;border-radius:3px;background:var(--ciano);transform-origin:bottom;animation:eq 1s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:-.3s;background:var(--rosa)}.eq i:nth-child(3){animation-delay:-.6s;background:var(--azul)}
+.eq i:nth-child(4){animation-delay:-.15s;background:var(--rosa)}.eq i:nth-child(5){animation-delay:-.75s}
+.barra{height:6px;background:rgba(255,255,255,.1);border-radius:9px;margin:20px 0 6px;overflow:hidden}
+.barra b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--rosa));border-radius:9px;transition:width 1s linear}
+.tempo{display:flex;justify-content:space-between;font-size:.78rem;color:var(--mut)}
+.ctl{display:flex;gap:8px;margin:14px 0}
+.ctl button{flex:1;padding:10px;border-radius:14px;border:1px solid var(--linha);background:rgba(255,255,255,.05);font:700 .9rem var(--txt);color:var(--creme);cursor:pointer;transition:background .2s,transform .1s}
+.ctl button:hover{background:rgba(255,255,255,.12)}.ctl button:active{transform:scale(.96)}
+.fila{list-style:none;font-size:.9rem;border-top:1px solid var(--linha);padding-top:10px;min-height:96px}
+.fila li{display:flex;justify-content:space-between;gap:10px;padding:5px 0;color:var(--mut);animation:entra .4s both}
+.fila li b{color:var(--creme);font-weight:500}
+.cmd{display:flex;gap:8px;align-items:center;margin-top:12px;background:#03051a;border:1px solid var(--linha);border-radius:14px;padding:6px 6px 6px 14px}
+.cmd code{color:var(--ciano);font:600 .92rem ui-monospace,Menlo,monospace}
+.cmd input{flex:1;min-width:0;background:none;border:0;color:#fff;font:500 .95rem var(--txt);padding:8px 4px}
+.cmd input:focus{outline:none}.cmd:focus-within{outline:3px solid var(--rosa)}
+.cmd button{border:0;border-radius:10px;background:var(--rosa);color:#170b30;font:700 .88rem var(--txt);padding:9px 14px;cursor:pointer}
+
+.faixa{overflow:hidden;border-block:1px solid var(--linha);padding:15px 0;-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.faixa div{display:flex;gap:40px;width:max-content;animation:rola 34s linear infinite;font:italic 500 1.45rem var(--serif);color:#6f769b}
+.faixa b{color:var(--creme);font-weight:500}
+.faixa:hover div{animation-play-state:paused}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);margin-top:80px;border-block:1px solid var(--linha)}
+.nums div{padding:34px 24px;border-left:1px solid var(--linha)}.nums div:first-child{border-left:0;padding-left:0}
+.nums b{display:block;font:700 clamp(2.4rem,4.6vw,3.6rem)/1 var(--serif);letter-spacing:-.03em;background:linear-gradient(160deg,#fff,var(--ciano));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nums span{color:var(--mut);font-size:.92rem}
+
+.sec{padding:100px 0 0}
+.sec h2{font-size:clamp(2.2rem,5vw,3.8rem);max-width:13em}
+.rec{margin-top:40px;border-top:1px solid var(--linha)}
+.rec article{display:grid;grid-template-columns:70px 1fr 1.3fr;gap:24px;align-items:baseline;padding:26px 10px;border-bottom:1px solid var(--linha);position:relative;transition:padding .35s}
+.rec article::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(91,120,255,.16),transparent);opacity:0;transition:opacity .35s}
+.rec article:hover{padding-left:28px}.rec article:hover::before{opacity:1}
+.rec article>*{position:relative}
+.rec .n{font:italic 500 1.3rem var(--serif);color:var(--mut)}
+.rec h3{font-size:clamp(1.4rem,2.6vw,2rem)}
+.rec p{color:#b4bad6}
+
+.cmds{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmds div{display:flex;gap:16px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--linha);border-radius:18px;padding:16px 20px;transition:transform .25s,border-color .25s}
+.cmds div:hover{transform:translateX(6px);border-color:var(--ciano)}
+.cmds code{flex:none;background:#03051a;color:var(--ciano);border-radius:10px;padding:6px 12px;font:600 .9rem ui-monospace,Menlo,monospace}
+.cmds span{color:var(--mut);font-size:.94rem}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:100px}
+.pn{border-radius:30px;padding:38px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;min-height:300px;justify-content:flex-end;border:1px solid var(--linha);transition:transform .3s}
+.pn:hover{transform:translateY(-6px)}
+.pn h3{font-size:2.2rem}.pn p{max-width:26em}
+.pn.a{background:linear-gradient(150deg,rgba(91,120,255,.35),rgba(12,16,48,.7) 70%)}.pn.a p{color:#c3c8e2}
+.pn.b{background:linear-gradient(150deg,var(--rosa),#7a58ff);color:#12082e;border-color:transparent}
+.pn.b .btn{border-color:#12082e;background:transparent;color:#12082e}
+
+.fim{text-align:center;padding:120px 0 80px}
+.fim h2{font-size:clamp(2.4rem,6vw,4.8rem);margin:0 auto 14px;max-width:11em}
+.fim p{color:var(--mut);margin-bottom:30px}
+.fim .cta{justify-content:center}
+footer{border-top:1px solid var(--linha);color:var(--mut);padding:34px 0;font-size:.92rem}
+footer .wrap{display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap}
+footer nav{padding:0;gap:22px;flex-wrap:wrap}
+footer a:hover{color:#fff}
+
+.js .rv{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .rv.on{opacity:1;transform:none}
+
+/* termos oficiais */
+.banner{display:flex;gap:30px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--linha);border-radius:30px;padding:40px 44px;margin-top:100px;background:linear-gradient(120deg,rgba(91,120,255,.24),rgba(255,122,217,.08));position:relative;overflow:hidden}
+.banner::after{content:"";position:absolute;right:-50px;top:-50px;width:220px;height:220px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.12) 0 1.5px,transparent 1.5px 9px);animation:gira 40s linear infinite}
+.banner>*{position:relative;z-index:1}
+.banner .tag{display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:.8rem;letter-spacing:.12em;color:var(--ciano);margin-bottom:10px}
+.banner h3{font-size:clamp(1.7rem,3.2vw,2.5rem);margin-bottom:8px}
+.banner p{color:#c3c8e2;max-width:36em}
+/* amado pela comunidade */
+.sub{color:var(--mut);margin-top:12px}
+.rating{display:grid;grid-template-columns:minmax(250px,340px) 1fr;gap:18px;margin-top:34px}
+.score,.dist{border:1px solid var(--linha);border-radius:26px;padding:30px;background:rgba(255,255,255,.04)}
+.score{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.score b{font:700 4.6rem/1 var(--serif);letter-spacing:-.04em}.score b small{font-size:1.4rem;color:var(--mut);font-weight:500}
+.stars{display:flex;gap:4px;color:#ffc857;font-size:1.15rem;margin:4px 0}
+.stars i{transform:scale(0)}.rating.go .stars i{animation:pop .55s cubic-bezier(.3,1.7,.5,1) forwards;animation-delay:calc(var(--i)*.13s + .25s)}
+.score .tag2{color:var(--mut);font-size:.88rem}
+.how{margin-top:10px;color:var(--ciano);font-weight:700;font-size:.9rem}.how:hover{text-decoration:underline}
+.dist h3{font:700 1.15rem var(--txt);margin-bottom:12px;letter-spacing:0}
+.dr{display:grid;grid-template-columns:42px 1fr 58px;align-items:center;gap:12px;margin:12px 0;font-size:.9rem;color:var(--mut)}
+.dr i{color:#ffc857;margin-left:4px;font-size:.75rem}.dr b{color:var(--creme);text-align:right}
+.bar{height:9px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}
+.bar em{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--azul),var(--rosa));transition:width 1.3s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i)*.12s + .2s)}
+.rating.go .bar em{width:var(--w)}
+.marq{overflow:hidden;margin-top:18px;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:flex;gap:16px;width:max-content;animation:rola 70s linear infinite}
+.marq+.marq .track{animation-direction:reverse}
+.marq:hover .track{animation-play-state:paused}
+.rev{width:330px;flex:none;border:1px solid var(--linha);border-radius:22px;padding:22px;background:rgba(255,255,255,.04);position:relative}
+.rev .q{position:absolute;right:20px;top:18px;color:rgba(255,255,255,.14);font-size:1.3rem}
+.rev .st{color:#ffc857;font-size:.85rem;margin-bottom:10px;display:flex;gap:3px}
+.rev p{color:#d4d8ee;font-size:.95rem;white-space:normal}
+.avcta{margin-top:30px}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+@media(max-width:900px){.rating{grid-template-columns:1fr}.rev{width:280px}.banner{padding:30px 24px}}
+
+
+/* ===== fundo animado ===== */
+.aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.aurora i{position:absolute;width:52vw;height:52vw;border-radius:50%;filter:blur(100px);opacity:.34}
+.aurora i:nth-child(1){background:var(--azul);left:-10vw;top:-16vw;animation:au1 19s ease-in-out infinite alternate}
+.aurora i:nth-child(2){background:var(--rosa);right:-16vw;top:26vh;opacity:.2;animation:au2 23s ease-in-out infinite alternate}
+.aurora i:nth-child(3){background:var(--ciano);left:28vw;bottom:-28vw;opacity:.16;animation:au1 27s ease-in-out infinite alternate-reverse}
+#fx{position:fixed;inset:0;z-index:-1;pointer-events:none}
+@keyframes au1{to{transform:translate(14vw,10vh) scale(1.18)}}
+@keyframes au2{to{transform:translate(-15vw,-9vh) scale(1.22)}}
+
+/* ===== texto animado ===== */
+.tipo{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--linha);border-radius:999px;padding:8px 18px;background:rgba(255,255,255,.04);font:600 .95rem ui-monospace,Menlo,monospace;margin-bottom:22px;color:var(--ciano);min-height:40px}
+.tipo span{color:var(--creme);white-space:nowrap}
+.tipo i{width:2px;height:1.15em;background:var(--rosa);animation:cursor 1s steps(1) infinite}
+.w{display:inline-block}
+.js .w{opacity:0;transform:translateY(.55em) rotate(2deg);filter:blur(10px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),filter .8s;transition-delay:calc(var(--k)*75ms)}
+.js .split.on .w{opacity:1;transform:none;filter:none}
+.hero h1.split em{background:none;-webkit-background-clip:initial;background-clip:initial;color:inherit}
+.hero h1.split em .w{background:linear-gradient(100deg,var(--ciano),var(--rosa),var(--ciano));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.js .hero h1.split.on em .w{animation:brilho 5s linear infinite}
+@keyframes brilho{to{background-position:-200% 0}}
+@keyframes cursor{50%{opacity:0}}
+
+
+@keyframes gira{to{transform:rotate(360deg)}}
+@keyframes eq{0%,100%{transform:scaleY(.2)}50%{transform:scaleY(1)}}
+@keyframes entra{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes rola{to{transform:translateX(-50%)}}
+@keyframes pulsa{0%,100%{box-shadow:0 0 0 0 rgba(255,122,217,.5)}50%{box-shadow:0 0 0 14px rgba(255,122,217,0)}}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding-bottom:60px}.links{display:none}.anel{display:none}
+  .nums{grid-template-columns:1fr 1fr}.nums div:nth-child(3){border-left:0;padding-left:0}
+  .rec article{grid-template-columns:36px 1fr}.rec p{grid-column:2}
+  .cmds,.duo{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .rv,.js .w{opacity:1;transform:none;filter:none}}
+/* ===== pop-up de novidade do app ===== */
+.ap-ov{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,5,18,.66);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ap-ov.open{display:flex;animation:apFade .25s both}
+@keyframes apFade{from{opacity:0}}
+@keyframes apIn{from{opacity:0;transform:translateY(18px) scale(.95)}}
+.ap{position:relative;width:min(460px,100%);max-height:calc(100vh - 40px);overflow-y:auto;border-radius:26px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06);animation:apIn .4s cubic-bezier(.2,.9,.3,1.1) both;text-align:center}
+.ap-top{padding:36px 24px 20px;background:linear-gradient(120deg,rgba(88,101,242,.4),rgba(31,182,255,.16) 65%,transparent)}
+.ap-ic{width:68px;height:68px;margin:0 auto 14px;border-radius:22px;display:grid;place-items:center;color:#fff;font-size:1.7rem;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 12px 30px rgba(88,101,242,.55)}
+.ap-tag{display:inline-block;font:800 .7rem system-ui,sans-serif;letter-spacing:.6px;padding:3px 11px;border-radius:99px;background:rgba(88,101,242,.25);color:#aab4ff;margin-bottom:10px}
+.ap h2{font-size:1.35rem;line-height:1.2;margin:0 0 8px;color:var(--tx)}
+.ap-top p{color:var(--mut);font-size:.92rem;line-height:1.55;margin:0}
+.ap-bd{padding:4px 24px 24px}
+.ap ul{list-style:none;margin:14px 0 0;padding:0;text-align:left;display:grid;gap:9px}
+.ap li{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;line-height:1.45;color:var(--tx)}
+.ap li i{color:var(--ac2);margin-top:3px}
+.ap-ac{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.ap-b{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:99px;font:700 .9rem system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--tx);transition:transform .2s,box-shadow .2s}
+.ap-b:hover{transform:translateY(-2px)}
+.ap-b.pri{border-color:transparent;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2))}
+.ap-b.pri:hover{box-shadow:0 10px 28px rgba(88,101,242,.55)}
+.ap-b:focus-visible,.ap-x:focus-visible{outline:3px solid var(--ac2);outline-offset:3px}
+.ap-x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:11px;border:0;background:rgba(255,255,255,.08);color:var(--mut);font-size:1.2rem;cursor:pointer}
+.ap-x:hover{color:#fff;background:rgba(88,101,242,.35)}
+@media (prefers-reduced-motion:reduce){.ap,.ap-ov.open{animation:none}}
+
+/* ===== versão final: fundo ===== */
+body::before{animation:grade 40s linear infinite}
+@keyframes grade{to{background-position:72px 72px,72px 72px}}
+.aurora::before{content:"";position:absolute;left:50%;top:50%;width:140vmax;height:140vmax;margin:-70vmax 0 0 -70vmax;
+  background:conic-gradient(from 0deg,transparent 0 55%,rgba(91,120,255,.10) 62%,transparent 70%,rgba(255,122,217,.08) 82%,transparent 90%);
+  animation:gira 70s linear infinite}
+.aurora i{animation-duration:14s,14s}
+.aurora i:nth-child(1){animation:au1 14s ease-in-out infinite alternate,resp 9s ease-in-out infinite}
+.aurora i:nth-child(2){animation:au2 17s ease-in-out infinite alternate,resp 11s ease-in-out infinite 2s}
+@keyframes resp{0%,100%{filter:blur(100px) hue-rotate(0)}50%{filter:blur(84px) hue-rotate(40deg)}}
+
+/* ===== versão final: texto ===== */
+.sec h2 .w,.fim h2 .w{background:linear-gradient(100deg,var(--creme) 30%,var(--ciano) 48%,var(--rosa) 52%,var(--creme) 70%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.js .sec h2.split.on .w,.js .fim h2.split.on .w{animation:varre 7s ease-in-out infinite;animation-delay:calc(var(--k)*.12s)}
+@keyframes varre{0%,55%{background-position:100% 0}100%{background-position:0 0}}
+.hero p{animation:entra 1s .45s cubic-bezier(.2,.7,.2,1) both}
+.btn.rosa,.btn.cheio{position:relative;overflow:hidden}
+.btn.rosa::after,.btn.cheio::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:brilha 4.5s ease-in-out infinite}
+@keyframes brilha{0%,60%{left:-70%}100%{left:130%}}
+.tipo{animation:flutua 5s ease-in-out infinite}
+@keyframes flutua{50%{transform:translateY(-5px)}}
+.nums b{background-size:200% 100%;animation:brilho 6s linear infinite}
+
+@media(prefers-reduced-motion:reduce){.aurora::before,.btn::after,.tipo{animation:none!important}.sec h2 .w,.fim h2 .w{animation:none!important}}
+
+/* barra de voltar (visualização do visual novo) */
+.volta{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--linha);background:rgba(9,12,40,.7);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--mut);font-size:.88rem;text-align:center}
+.volta a{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;background:var(--creme);color:var(--tinta);font-weight:700;font-size:.86rem;transition:transform .2s,box-shadow .2s}
+.volta a:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(95,216,255,.3)}
+
+/* ===== Novidades: menu novo ===== */
+@property --nvA{syntax:"<angle>";inherits:false;initial-value:0deg}
+html{scrollbar-width:thin;scrollbar-color:#5b78ff rgba(255,255,255,.05)}
+html::-webkit-scrollbar,.nv-list::-webkit-scrollbar{width:8px;height:8px}
+html::-webkit-scrollbar-track,.nv-list::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+html::-webkit-scrollbar-thumb,.nv-list::-webkit-scrollbar-thumb{background:linear-gradient(#5b78ff,#a98bff);border-radius:99px}
+footer{padding-bottom:96px}
+
+.nv-fab{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:12px;padding:8px 22px 8px 8px;border:0;border-radius:999px;background:rgba(9,12,40,.9);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:var(--creme);font-family:var(--txt);cursor:pointer;text-align:left;box-shadow:0 14px 40px rgba(0,0,0,.55);isolation:isolate;transition:transform .25s cubic-bezier(.3,1.4,.5,1),box-shadow .25s;animation:nvIn .9s 1.2s cubic-bezier(.3,1.5,.5,1) backwards}
+.nv-fab::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.28),rgba(255,255,255,.06));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.nv-fab.new::before{padding:2px;background:conic-gradient(from var(--nvA),#5b78ff,#ff7ad9,#5fd8ff,#5b78ff);animation:nvRing 4s linear infinite}
+.nv-fab:hover{transform:translateY(-3px);box-shadow:0 18px 46px rgba(0,0,0,.6),0 0 34px rgba(91,120,255,.35)}
+.nv-fab:active{transform:scale(.97)}
+.nv-ic{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#5b78ff,#ff7ad9)}
+.nv-ic svg{width:22px;height:22px;overflow:visible}
+.nv-ic .big{transform-origin:12px 10px}
+.nv-fab.new .nv-ic{box-shadow:0 0 0 0 rgba(255,122,217,.6);animation:nvPulse 2.2s ease-out infinite}
+.nv-fab.new .big{animation:nvSpark 3s ease-in-out infinite}
+.nv-ic .sm{transform-origin:19px 18px;animation:nvTw 2.4s ease-in-out infinite}
+.nv-tx{display:flex;flex-direction:column;line-height:1.2}
+.nv-tx b{font-size:.96rem;font-weight:700}
+.nv-tx small{font-size:.74rem;color:var(--mut)}
+.nv-fab.new .nv-tx small{color:#ffb3e8}
+.nv-badge{position:absolute;top:-9px;right:10px;min-width:24px;height:24px;padding:0 7px;border-radius:99px;display:grid;place-items:center;background:linear-gradient(135deg,#ff4d8d,#ff7a59);color:#fff;font:800 .76rem var(--txt);box-shadow:0 0 0 3px var(--tinta),0 6px 16px rgba(255,77,141,.55);animation:nvBadge 2s ease-in-out infinite}
+.nv-badge[hidden]{display:none}
+@keyframes nvIn{from{opacity:0;transform:translateY(40px) scale(.7)}}
+@keyframes nvRing{to{--nvA:360deg}}
+@keyframes nvPulse{0%{box-shadow:0 0 0 0 rgba(255,122,217,.6)}80%,100%{box-shadow:0 0 0 14px rgba(255,122,217,0)}}
+@keyframes nvSpark{0%,70%,100%{transform:rotate(0) scale(1)}80%{transform:rotate(-18deg) scale(1.18)}90%{transform:rotate(12deg) scale(1.08)}}
+@keyframes nvTw{0%,100%{transform:scale(.55);opacity:.55}50%{transform:scale(1.15);opacity:1}}
+@keyframes nvBadge{50%{transform:scale(1.14)}}
+
+.nv-scrim{position:fixed;inset:0;z-index:44;background:rgba(3,5,18,.6);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .35s}
+.nv-scrim.on{opacity:1;pointer-events:auto}
+.nv-drawer{position:fixed;top:0;right:0;bottom:0;z-index:45;width:min(460px,100vw);display:flex;flex-direction:column;background:#0a0d2a;border-left:1px solid var(--linha);box-shadow:-30px 0 80px rgba(0,0,0,.6);transform:translateX(106%);visibility:hidden;transition:transform .45s cubic-bezier(.2,.85,.2,1),visibility 0s .45s}
+.nv-drawer.open{transform:none;visibility:visible;transition:transform .45s cubic-bezier(.2,.85,.2,1),visibility 0s}
+.nv-head{position:relative;flex:none;padding:26px 24px 18px;overflow:hidden;background:radial-gradient(120% 140% at 0% 0%,rgba(91,120,255,.38),transparent 60%),radial-gradient(90% 120% at 100% 0%,rgba(255,122,217,.22),transparent 60%)}
+.nv-head h2{font-size:1.9rem;line-height:1.05;padding-right:46px}
+.nv-head p{color:#c3c8e2;font-size:.92rem;margin-top:8px}
+.nv-x{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:12px;border:1px solid var(--linha);background:rgba(255,255,255,.06);color:var(--creme);display:grid;place-items:center;cursor:pointer;transition:background .2s,transform .2s}
+.nv-x:hover{background:rgba(255,255,255,.14);transform:rotate(90deg)}
+.nv-x svg{width:16px;height:16px}
+.nv-seg{flex:none;display:flex;gap:4px;margin:0 20px 6px;padding:4px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--linha)}
+.nv-seg button{flex:1;border:0;border-radius:999px;padding:9px 10px;background:none;color:var(--mut);font:700 .84rem var(--txt);cursor:pointer;transition:background .2s,color .2s}
+.nv-seg button b{margin-left:5px;font-size:.72rem;opacity:.75}
+.nv-seg button:hover{color:#fff}
+.nv-seg button.on{background:var(--creme);color:var(--tinta)}
+.nv-list{flex:1 1 auto;min-height:0;overflow-y:auto;padding:6px 20px 24px;scrollbar-width:thin;scrollbar-color:#5b78ff rgba(255,255,255,.05)}
+.nv-day{position:sticky;top:0;z-index:2;margin:14px -20px 10px;padding:8px 20px;font:700 .8rem var(--txt);color:var(--ciano);background:linear-gradient(#0a0d2a 70%,transparent)}
+.nv-tl{position:relative;padding-left:26px}
+.nv-tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;border-radius:2px;background:linear-gradient(var(--azul),var(--rosa) 60%,transparent)}
+.nv-it{position:relative;margin-bottom:12px;padding:16px 16px 15px;border-radius:20px;border:1px solid var(--linha);background:rgba(255,255,255,.04);transition:border-color .25s,transform .25s,background .25s}
+.nv-it:hover{border-color:rgba(95,216,255,.45);background:rgba(255,255,255,.065);transform:translateX(3px)}
+.nv-it::before{content:"";position:absolute;left:-26px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--azul);box-shadow:0 0 0 4px #0a0d2a}
+.nv-it.up::before{background:var(--ciano)}
+.nv-it.fresh{border-color:rgba(255,122,217,.5);background:linear-gradient(135deg,rgba(255,122,217,.12),rgba(91,120,255,.07))}
+.nv-it.fresh::before{background:var(--rosa);animation:nvDot 1.8s ease-out infinite}
+@keyframes nvDot{0%{box-shadow:0 0 0 4px #0a0d2a,0 0 0 4px rgba(255,122,217,.7)}100%{box-shadow:0 0 0 4px #0a0d2a,0 0 0 14px rgba(255,122,217,0)}}
+.nv-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.nv-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;border-radius:99px;font:800 .68rem var(--txt);letter-spacing:.04em;background:rgba(91,120,255,.22);color:#b7c2ff}
+.nv-it.up .nv-chip{background:rgba(95,216,255,.16);color:var(--ciano)}
+.nv-chip svg{width:12px;height:12px}
+.nv-lido{margin-left:auto;font:800 .68rem var(--txt);color:#ffb3e8}
+.nv-it h4{font:700 1.14rem/1.2 var(--serif);letter-spacing:-.01em;margin-bottom:5px}
+.nv-it p{color:#b4bad6;font-size:.9rem;line-height:1.5}
+.nv-it a{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--creme);font:700 .82rem var(--txt);transition:background .2s,color .2s,gap .2s}
+.nv-it a:hover{background:var(--creme);color:var(--tinta);gap:11px}
+.nv-it a svg{width:13px;height:13px}
+.nv-vazio{text-align:center;color:var(--mut);padding:40px 10px}
+.nv-foot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid var(--linha);background:rgba(5,6,15,.6);font-size:.86rem;color:var(--mut)}
+.nv-foot nav{display:flex;gap:16px;padding:0}
+.nv-foot a{color:#b7c2ff;font-weight:600}.nv-foot a:hover{color:#fff;text-decoration:underline}
+.nv-foot button{border:1px solid var(--linha);background:rgba(255,255,255,.06);color:var(--creme);border-radius:99px;padding:7px 14px;font:700 .8rem var(--txt);cursor:pointer;transition:background .2s}
+.nv-foot button:hover{background:rgba(255,255,255,.14)}
+.nv-foot button:disabled{opacity:.4;cursor:default}
+.nv-drawer.open .nv-it{animation:nvUp .55s both;animation-delay:calc(var(--k)*55ms + .2s)}
+@keyframes nvUp{from{opacity:0;transform:translateY(16px)}}
+@media(max-width:560px){.nv-tx{display:none}.nv-fab{padding:8px;right:14px;bottom:14px}.nv-badge{right:-4px}}
+@media(prefers-reduced-motion:reduce){.nv-fab,.nv-fab::before,.nv-ic,.nv-ic .big,.nv-ic .sm,.nv-badge,.nv-it,.nv-it::before,.nv-drawer.open .nv-it{animation:none!important}.nv-drawer,.nv-scrim{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="volta"><span>Você está vendo uma prévia do visual novo.</span><a href="index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Voltar ao site</a></div>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" href="#"><img src="aumentar-o-tamanho-d.png" alt="">Azul Groove</a>
+    <div class="links"><a href="#recursos">Recursos</a><a href="#comandos">Comandos</a><a href="#reviews">Avaliações</a><a href="blog.html">Blog</a><a href="ajuda.html">Suporte</a></div>
+    <a class="btn cheio sm" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer">Adicionar bot</a>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <div class="tipo"><code>/play</code><span id="tip"></span><i></i></div>
+      <h1>Seu servidor merece uma <em>trilha sonora.</em></h1>
+      <p>Comandos de música potentes e recursos incríveis para o Discord. Deixe o Azul Groove trazer o ritmo para a sua comunidade.</p>
+      <div class="cta">
+        <a class="btn rosa" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer">Adicionar ao Discord</a>
+        <a class="btn" href="https://top.gg/bot/1107120892472983603/vote" target="_blank" rel="noopener noreferrer">Votar no Top.gg</a>
+      </div>
+    </div>
+    <div class="palco">
+      <div class="anel a1" aria-hidden="true"><i></i></div><div class="anel a2" aria-hidden="true"><i></i></div>
+      <div class="player" id="player" aria-label="Demonstração do player">
+        <div class="disco">
+          <div class="vinil" aria-hidden="true"></div>
+          <div class="info"><small>Tocando agora</small><h3 id="tt">–</h3><span id="ta"></span>
+            <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="barra"><b id="pb"></b></div>
+        <div class="tempo"><span id="t0">0:00</span><span id="t1">0:00</span></div>
+        <div class="ctl"><button id="bp" type="button">Pausar</button><button id="bs" type="button">Pular</button></div>
+        <ul class="fila" id="fila"></ul>
+        <div class="cmd"><code>/play</code><input id="in" placeholder="Digite uma música e peça aqui" aria-label="Música para tocar" maxlength="40"><button id="ba" type="button">Tocar</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="faixa" aria-hidden="true"><div>
+  <span><b>/play</b> toque do YouTube e Spotify</span><span><b>/skip</b> pule a faixa</span><span><b>/pause</b> pause na hora</span><span><b>/setup</b> configure em segundos</span><span><b>/help</b> todos os comandos</span><span><b>/about</b> versão e novidades</span>
+  <span><b>/play</b> toque do YouTube e Spotify</span><span><b>/skip</b> pule a faixa</span><span><b>/pause</b> pause na hora</span><span><b>/setup</b> configure em segundos</span><span><b>/help</b> todos os comandos</span><span><b>/about</b> versão e novidades</span>
+</div></div>
+
+<main class="wrap">
+  <div class="nums">
+    <div><b data-n="500" data-s="+">500+</b><span>servidores ativos</span></div>
+    <div><b data-n="183289" data-s="">183.289</b><span>usuários atendidos</span></div>
+    <div><b data-n="99.9" data-s="%">99,9%</b><span>tempo online</span></div>
+    <div><b data-n="76" data-s="+">76+</b><span>comandos</span></div>
+  </div>
+
+  <section class="sec" id="recursos">
+    <h2>Tudo que o servidor precisa para manter o ritmo.</h2>
+    <div class="rec">
+      <article><span class="n">01</span><h3>Reprodutor de música</h3><p>Toque músicas do YouTube, Spotify e muito mais com alta qualidade.</p></article>
+      <article><span class="n">02</span><h3>Atualizações mensais</h3><p>Melhorias regulares desenvolvidas pela ASTM Software.</p></article>
+      <article><span class="n">03</span><h3>Controles interativos</h3><p>Reprodução fluida para manter a comunidade no ritmo.</p></article>
+      <article><span class="n">04</span><h3>Configuração fácil</h3><p>Rápida e intuitiva: o bot roda em segundos.</p></article>
+      <article><span class="n">05</span><h3>Vários canais de voz</h3><p>Suporte a múltiplos canais ao mesmo tempo, sem conflitos.</p></article>
+      <article><span class="n">06</span><h3>Suporte 24/7</h3><p>Equipe pronta para ajudar a qualquer momento.</p></article>
+    </div>
+  </section>
+
+  <section class="sec" id="comandos">
+    <h2>Comandos mais usados.</h2>
+    <div class="cmds">
+      <div><code>/play &lt;música&gt;</code><span>Toca do YouTube, Spotify e mais.</span></div>
+      <div><code>/pause</code><span>Pausa a música atual.</span></div>
+      <div><code>/skip</code><span>Pula a música que está tocando.</span></div>
+      <div><code>/setup</code><span>Configura permissões e o bot.</span></div>
+      <div><code>/help</code><span>Lista todos os comandos.</span></div>
+      <div><code>/about</code><span>Informações e versão do Azul Groove.</span></div>
+    </div>
+  </section>
+
+  
+  <section class="banner">
+    <div>
+      <div class="tag"><i class="fas fa-file-contract"></i> TERMOS OFICIAIS</div>
+      <h3>Termos de Uso e Privacidade</h3>
+      <p>Consulte os Termos de Uso e a Política de Privacidade oficiais da ASTM Software para o Azul Groove.</p>
+    </div>
+    <a class="btn cheio" href="legal.html#termos">Ler Termos Completos <i class="fas fa-arrow-right"></i></a>
+  </section>
+
+  <section class="sec" id="reviews">
+    <h2>Amado pela comunidade.</h2>
+    <p class="sub">Veja o que os usuários dizem sobre a Azul Groove.</p>
+    <div class="rating" id="ratingBox">
+      <div class="score"><b><span id="rating-num">4.98</span><small>/5</small></b>
+        <div class="stars"><i class="fas fa-star" style="--i:0"></i><i class="fas fa-star" style="--i:1"></i><i class="fas fa-star" style="--i:2"></i><i class="fas fa-star" style="--i:3"></i><i class="fas fa-star" style="--i:4"></i></div>
+        <span>Avaliação média</span><span class="tag2">com base no feedback dos usuários</span>
+        <a class="how" href="docs.html#/avaliacao-media">Saiba como funciona <i class="fas fa-arrow-right"></i></a></div>
+      <div class="dist"><h3>Distribuição das notas</h3>
+        <div class="dr"><span>5<i class="fas fa-star"></i></span><div class="bar"><em style="--w:98.4%;--i:0"></em></div><b>98,4%</b></div>
+        <div class="dr"><span>4<i class="fas fa-star"></i></span><div class="bar"><em style="--w:1.2%;--i:1"></em></div><b>1,2%</b></div>
+        <div class="dr"><span>3<i class="fas fa-star"></i></span><div class="bar"><em style="--w:0.4%;--i:2"></em></div><b>0,4%</b></div>
+        <div class="dr"><span>2<i class="fas fa-star"></i></span><div class="bar"><em style="--w:0%;--i:3"></em></div><b>0%</b></div>
+        <div class="dr"><span>1<i class="fas fa-star"></i></span><div class="bar"><em style="--w:0%;--i:4"></em></div><b>0%</b></div>
+      </div>
+    </div>
+    <div class="marq"><div class="track"><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Troquei outros 3 bots por esse. Estável, leve e a fila de músicas nunca me deixou na mão.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Deixo tocando lo-fi enquanto estudo com as amigas. Som limpo, sem cortes, e o bot nunca saiu da call.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Usei numa festa online com 80 pessoas e rodou liso a noite toda. Os filtros de áudio são um show.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>A IA entende o que eu peço em português mesmo, sem precisar decorar comando. Parece mágica.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>A trilha sonora das nossas sessões de RPG ficou outro nível. Troco de playlist em segundos.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Comandos intuitivos e visual bonito. Até os amigos que nunca usaram bot aprenderam rapidinho.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Troquei outros 3 bots por esse. Estável, leve e a fila de músicas nunca me deixou na mão.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Deixo tocando lo-fi enquanto estudo com as amigas. Som limpo, sem cortes, e o bot nunca saiu da call.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Usei numa festa online com 80 pessoas e rodou liso a noite toda. Os filtros de áudio são um show.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>A IA entende o que eu peço em português mesmo, sem precisar decorar comando. Parece mágica.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>A trilha sonora das nossas sessões de RPG ficou outro nível. Troco de playlist em segundos.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Comandos intuitivos e visual bonito. Até os amigos que nunca usaram bot aprenderam rapidinho.</p></div></div></div>
+    <div class="marq"><div class="track"><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Dá pra ver o cuidado: changelog atualizado, documentação clara e correções rápidas. Passa confiança.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Em um servidor com mais de mil membros nunca vi lentidão. Aguenta bem o tranco.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Muito bom! Só senti falta de mais opções para personalizar o visual do player, mas o resto é impecável.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Uso nas aulas online para música de fundo nas atividades. Simples e confiável, os alunos adoram.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Latência baixíssima, nem percebo que tem bot tocando enquanto jogo. Recomendo demais.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Suporte atencioso e a Central de Ajuda resolveu minha dúvida em minutos. Atendimento nota 10.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Dá pra ver o cuidado: changelog atualizado, documentação clara e correções rápidas. Passa confiança.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Em um servidor com mais de mil membros nunca vi lentidão. Aguenta bem o tranco.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Muito bom! Só senti falta de mais opções para personalizar o visual do player, mas o resto é impecável.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Uso nas aulas online para música de fundo nas atividades. Simples e confiável, os alunos adoram.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Latência baixíssima, nem percebo que tem bot tocando enquanto jogo. Recomendo demais.</p></div><div class="rev"><i class="fas fa-quote-right q"></i><div class="st"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>Suporte atencioso e a Central de Ajuda resolveu minha dúvida em minutos. Atendimento nota 10.</p></div></div></div>
+    <div class="cta avcta"><a class="btn rosa" href="feedback.html"><i class="fas fa-comment-dots"></i> Enviar feedback</a></div>
+  </section>
+
+  <section class="duo">
+    <div class="pn a"><h3>Azul Groove IA</h3><p>Converse com uma IA direto pelo site. Não é um modelo próprio: levamos a sua mensagem a servidores de terceiros e trazemos a resposta de volta.</p><a class="btn cheio" href="ia.html">Conhecer a IA</a></div>
+    <div class="pn b"><h3>Music para Windows</h3><p>O app do Azul Groove para o seu computador, com atualização automática.</p><a class="btn" href="azul.html">Conhecer o app</a></div>
+  </section>
+
+  <section class="fim">
+    <h2>Pronto para começar?</h2>
+    <p>Adicione o Azul Groove ao seu servidor ou veja as últimas novidades.</p>
+    <div class="cta">
+      <a class="btn cheio" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer">Adicionar ao Discord</a>
+      <a class="btn" href="blog.html"><i class="fas fa-newspaper"></i> Notícias e Atualizações</a>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <div>© 2026 ASTM Software. All rights reserved.</div>
+  <nav><a href="ajuda.html">Central de Ajuda</a><a href="changelog.html">Histórico de atualizações</a><a href="legal.html#termos">Termos de Uso</a><a href="legal.html#privacidade">Privacidade</a><a href="https://discord.com/invite/g4cW4zRvjf" target="_blank" rel="noopener noreferrer">Discord</a></nav>
+</div></footer>
+
+
+<button class="nv-fab" id="nwBtn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="nwPanel"><span class="nv-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="big" d="M10 1.5l2.3 6.2 6.2 2.3-6.2 2.3L10 18.5 7.7 12.3 1.5 10l6.2-2.3z" fill="currentColor"/><path class="sm" d="M19 14l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="currentColor"/></svg><b class="nv-badge" id="nwCount" hidden></b></span><span class="nv-tx"><b>Novidades</b><small id="nwSmall">Veja o que mudou</small></span></button>
+<div class="nv-scrim" id="nwScrim"></div>
+<aside class="nv-drawer" id="nwPanel" role="dialog" aria-modal="true" aria-labelledby="nwTitle">
+  <div class="nv-head"><h2 id="nwTitle">O que há de novo</h2><p id="nwSub">Tudo o que mudou no Azul Groove</p><button class="nv-x" id="nwClose" type="button" aria-label="Fechar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg></button></div>
+  <div class="nv-seg" id="nwTabs" role="tablist"></div>
+  <div class="nv-list" id="nwList"></div>
+  <div class="nv-foot"><nav><a href="blog.html" id="nwBlog">Blog</a><a href="changelog.html" id="nwLog">Histórico</a><a href="docs.html" id="nwDocs">Docs</a></nav><button type="button" id="nwRead">Marcar tudo como lido</button></div>
+</aside>
+
+
+<div class="ap-ov" id="apOv">
+  <div class="ap" role="dialog" aria-modal="true" aria-labelledby="apTitle">
+    <button class="ap-x" id="apX" aria-label="Fechar / Close">&times;</button>
+    <div class="ap-top">
+      <div class="ap-ic"><i class="fas fa-compact-disc"></i></div>
+      <span class="ap-tag" data-pt="NOVIDADE DO APP" data-en="APP NEWS">NOVIDADE DO APP</span>
+      <h2 id="apTitle" data-pt="Azul Groove Music para Windows" data-en="Azul Groove Music for Windows">Azul Groove Music para Windows</h2>
+      <p data-pt="Seu player de música e vídeo agora tem uma página própria. Veja o que ele faz e baixe para o Windows." data-en="Your music and video player now has its own page. See what it does and download it for Windows.">Seu player de música e vídeo agora tem uma página própria. Veja o que ele faz e baixe para o Windows.</p>
+    </div>
+    <div class="ap-bd">
+      <ul>
+        <li><i class="fas fa-wand-magic-sparkles"></i><span data-pt="Fila inteligente que aprende com o que você ouve" data-en="Smart queue that learns from what you listen to">Fila inteligente que aprende com o que você ouve</span></li>
+        <li><i class="fas fa-play"></i><span data-pt="Sincroniza playlists do YouTube e do YouTube Music" data-en="Syncs YouTube and YouTube Music playlists">Sincroniza playlists do YouTube e do YouTube Music</span></li>
+        <li><i class="fas fa-rotate"></i><span data-pt="Atualização automática, sem incômodo" data-en="Automatic updates, without the hassle">Atualização automática, sem incômodo</span></li>
+      </ul>
+      <div class="ap-ac">
+        <a class="ap-b pri" id="apGo" href="azul.html"><i class="fas fa-compact-disc"></i> <span data-pt="Conhecer o app" data-en="Meet the app">Conhecer o app</span></a>
+        <button class="ap-b" id="apAll" type="button"><i class="fas fa-bell"></i> <span data-pt="Ver todas as novidades" data-en="See all news">Ver todas as novidades</span></button>
+      </div>
+    </div>
+
+<script>
+const en = false;
+const NEWS_VER = '2026-11-11';
+const NEWS = [
+  { iso: '2026-11-11', d: '11 Nov 2026', t: 'new', i: 'fa-compact-disc', pt: ['Azul Groove Music para Windows', 'Conheça o player de música e vídeo para Windows: fila inteligente que aprende com você, sincronização com YouTube e YouTube Music e atualização automática. A página do app tem um botão para voltar ao início.'], en: ['Azul Groove Music for Windows', 'Meet the music and video player for Windows: a smart queue that learns from you, YouTube and YouTube Music sync and automatic updates. The app page has a button to go back to the home page.'], link: ['azul.html', 'Conhecer o app', 'Meet the app'] },
+  { iso: '2026-11-11', d: '11 Nov 2026', t: 'up', i: 'fa-bullhorn', pt: ['Aviso de novidades ao abrir o site', 'Ao entrar no site, aparece um aviso com a novidade do app. Ele aparece uma vez por novidade e dá para fechar quando quiser.'], en: ['News notice when opening the site', 'When you open the site, a notice with the latest app news shows up. It appears once per news item and you can close it any time.'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'up', i: 'fa-eraser', pt: ['Botão do Assistente Virtual removido', 'O botão Assistente Virtual saiu da página inicial. As opções que continuam lá são Adicionar ao Discord, Notícias e Atualizações e Azul Groove IA.'], en: ['Virtual Assistant button removed', 'The Virtual Assistant button was removed from the home page. The options that remain are Add to Discord, News & Updates and Azul Groove AI.'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'new', i: 'fa-comment-dots', pt: ['Botão de feedback', 'Agora você pode mandar o seu feedback direto pelo site, no botão logo abaixo das avaliações.'], en: ['Feedback button', 'You can now send your feedback right from the site, with the button just below the reviews.'], link: ['feedback.html', 'Enviar feedback', 'Send feedback'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'new', i: 'fa-star', pt: ['Docs: Avaliação média', 'Nova página explicando como a nota do site é feita: usamos os formulários do ano, analisamos tudo, e é anônima. Pode demorar para atualizar. O card da nota ganhou o link Saiba como funciona.'], en: ['Docs: Average rating', 'New page explaining how the site\'s rating is made: we use the year\'s forms, analyze everything, and it is anonymous. Updates can take a while. The rating card now has a Learn how it works link.'], link: ['docs.html#/avaliacao-media', 'Ver como funciona', 'See how it works'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'up', i: 'fa-user-secret', pt: ['Avaliações anônimas', 'Os comentários não mostram mais nome nem perfil, já que o feedback é anônimo. O carrossel foi corrigido: o cartão não é mais cortado nem fica preso ao tocar, e o número da média voltou ao tamanho certo.'], en: ['Anonymous reviews', 'Comments no longer show a name or profile, since feedback is anonymous. The carousel was fixed: cards are no longer clipped or stuck when tapped, and the average number is back to the right size.'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-life-ring', pt: ['Central de Ajuda', 'Nova página com respostas rápidas para as dúvidas mais comuns, com busca e perguntas organizadas por assunto.'], en: ['Help Center', 'A new page with quick answers to the most common questions, with search and questions organized by topic.'], link: ['ajuda.html', 'Abrir a Central de Ajuda', 'Open the Help Center'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-clock-rotate-left', pt: ['Histórico de atualizações', 'Agora o site tem uma página de changelog com tudo o que mudou, da mais nova para a mais antiga, com filtros e busca.'], en: ['Update history', 'The site now has a changelog page with everything that changed, newest first, with filters and search.'], link: ['changelog.html', 'Abrir o histórico', 'Open the history'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Documentos legais em um só lugar', 'Termos de Uso, Privacidade e Licença da IA agora ficam em uma única página, com abas e tradução.'], en: ['Legal documents in one place', 'Terms of Use, Privacy and AI License now live on a single page, with tabs and translation.'], link: ['legal.html', 'Abrir os documentos', 'Open the documents'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-palette', pt: ['Novo menu e logo', 'O menu do topo virou uma barra flutuante de vidro, com a seção atual em destaque, menu próprio para celular e a nova logo da flor de lótus. O link Suporte agora abre a Central de Ajuda.'], en: ['New menu and logo', 'The top menu is now a floating glass bar, with the current section highlighted, its own mobile menu and the new lotus flower logo. The Support link now opens the Help Center.'] },
+  { iso: '2026-10-17', d: '17 Out 2026', t: 'new', i: 'fa-ghost', pt: ['Tema de Halloween', 'O site ganhou visual de Halloween até 07 de novembro, com cores laranja e roxo e abóboras e morcegos caindo. No chat, só o fundo muda. Depois da data, tudo volta ao normal sozinho.'], en: ['Halloween theme', 'The site has a Halloween look until November 7, with orange and purple colors and falling pumpkins and bats. In the chat, only the background changes. After that date, everything goes back to normal on its own.'] },
+  { iso: '2026-10-07', d: '07 Out 2026', t: 'new', i: 'fa-screwdriver-wrench', pt: ['Assistente de instalação', 'Baixe o Assistente e ele instala sozinho a versão mais recente do app para Windows. Também repara a instalação e deixa escolher outra versão.'], en: ['Install Assistant', 'Download the Assistant and it installs the latest Windows app version for you. It also repairs the install and lets you pick another version.'], link: ['ia.html#baixar', 'Baixar o Assistente', 'Download the Assistant'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-sliders', pt: ['Novo menu de configurações', 'Abas laterais com ícones, interruptores no lugar das caixinhas e visual de vidro, no chat.'], en: ['New settings menu', 'Side tabs with icons, toggle switches instead of checkboxes and a glass look, in the chat.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-arrows-rotate', pt: ['Sincronização entre aparelhos', 'Gere um código no aparelho A e digite no B para passar as conversas pela internet. O código vale 5 minutos.'], en: ['Sync between devices', 'Generate a code on device A and type it on B to move your chats over the internet. The code lasts 5 minutes.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-wand-magic-sparkles', pt: ['Escolha a IA ao lado do enviar', 'Novo menu com busca, ícones por marca (Google, Meta e outras), selo de modelos grátis e tela de limites da API.'], en: ['Pick the AI next to send', 'New menu with search, brand icons (Google, Meta and more), a free-model badge and an API limits screen.'], link: ['chat.html', 'Experimentar', 'Try it'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-robot', pt: ['Site da Azul Groove IA', 'Uma página para conhecer a IA, ver como ela funciona e baixar o app para Windows.'], en: ['Azul Groove AI site', 'A page to meet the AI, see how it works and download the Windows app.'], link: ['ia.html', 'Conhecer a IA', 'Meet the AI'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Licença de Uso da IA', 'Explica que não coletamos seus dados, que tudo fica no seu navegador e que as respostas vêm de serviços de terceiros.'], en: ['AI Use License', 'Explains that we do not collect your data, that everything stays in your browser and that replies come from third-party services.'], link: ['legal.html#ia', 'Ler a licença', 'Read the license'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-book', pt: ['Docs: pesquisa na internet e limites', 'Nova página sobre a pesquisa na internet e links diretos para IA local e limites das APIs, dentro do chat.'], en: ['Docs: internet search and limits', 'New page about internet search and direct links to local AI and API limits from the chat.'], link: ['docs.html#/pesquisa-web', 'Ler no Docs', 'Read in Docs'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-chart-simple', pt: ['Estatísticas de uso', 'Em Configurações > Conta: perguntas por dia, tempo médio de resposta e modelos mais usados.'], en: ['Usage stats', 'In Settings > Account: questions per day, average reply time and most used models.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-palette', pt: ['Novo visual do site', 'Início, blog, privacidade, licenças e o assistente ganharam um design novo, com fundo animado e digitação.'], en: ['New site design', 'Home, blog, privacy, licenses and the assistant got a fresh look, with an animated background and typing effect.'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'up', i: 'fa-comments', pt: ['Assistente sem limite de mensagens', 'O modo visitante não tem mais o limite de 5 mensagens por minuto. Faça login quando quiser o chat completo.'], en: ['Assistant with no message limit', 'Visitor mode no longer has the 5 messages per minute limit. Sign in whenever you want the full chat.'], link: ['assistente.html', 'Abrir o assistente', 'Open the assistant'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-globe', pt: ['Pesquisa na internet com 16 buscadores', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow e mais. No chat completo com login você controla quais usar.'], en: ['Internet search with 16 engines', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow and more. In the full chat you choose which ones to use.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-desktop', pt: ['Guia de IA local', 'Como usar Ollama, LM Studio ou Jan no seu PC e liberar o CORS para evitar o erro de conexão.'], en: ['Local AI guide', 'How to use Ollama, LM Studio or Jan on your PC and enable CORS to avoid the connection error.'], link: ['docs.html#/ia-local', 'Ler o guia', 'Read the guide'] },
+  { iso: '0', d: 'Recente', t: 'up', i: 'fa-right-to-bracket', pt: ['Login com Google e GitHub', 'Além do Discord, agora dá para entrar com Google ou GitHub.'], en: ['Google and GitHub sign-in', 'Besides Discord, you can now sign in with Google or GitHub.'], link: ['chat.html', 'Entrar', 'Sign in'] }
+];
+let NW_SEEN = '', nwFilter = 'all';
+try { NW_SEEN = localStorage.getItem('azul_news_idx') || ''; } catch (e) {}
+const nwFresh = n => n.iso > NW_SEEN;
+let NW_NEW = new Set(NEWS.filter(nwFresh));
+const NW_SVG = {
+  new: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z" fill="currentColor"/></svg>',
+  up: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M5 11.5l7-7 7 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
+  go: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>'
+};
+function nwSmall() {
+  const n = NEWS.filter(nwFresh).length, sm = document.getElementById('nwSmall'), c = document.getElementById('nwCount'), b = document.getElementById('nwBtn');
+  sm.textContent = n ? (en ? n + (n > 1 ? ' new items' : ' new item') : n + (n > 1 ? ' novidades novas' : ' novidade nova')) : (en ? 'All caught up' : 'Tudo em dia');
+  c.textContent = n; c.hidden = !n; b.classList.toggle('new', !!n);
+  document.getElementById('nwRead').disabled = !n && !NW_NEW.size;
+}
+function renderNews() {
+  const l = document.getElementById('nwList'); if (!l) return;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const cnt = { all: NEWS.length, new: NEWS.filter(n => n.t === 'new').length, up: NEWS.filter(n => n.t === 'up').length };
+  const lab = { all: en ? 'All' : 'Tudo', new: en ? 'New' : 'Novos', up: en ? 'Updates' : 'Melhorias' };
+  document.getElementById('nwTabs').innerHTML = Object.keys(lab).map(k => `<button type="button" role="tab" aria-selected="${nwFilter === k}" class="${nwFilter === k ? 'on' : ''}" data-f="${k}">${lab[k]}<b>${cnt[k]}</b></button>`).join('');
+  const items = NEWS.filter(n => nwFilter === 'all' || n.t === nwFilter);
+  if (!items.length) { l.innerHTML = `<div class="nv-vazio">${en ? 'Nothing here yet.' : 'Nada por aqui ainda.'}</div>`; return; }
+  const groups = []; items.forEach(n => { let g = groups[groups.length - 1]; if (!g || g.d !== n.d) groups.push(g = { d: n.d, it: [] }); g.it.push(n); });
+  let k = 0;
+  l.innerHTML = groups.map(g => `<div class="nv-day">${esc(g.d)}</div><div class="nv-tl">` + g.it.map(n => {
+    const x = n[en ? 'en' : 'pt'], fr = NW_NEW.has(n);
+    const link = n.link ? `<a href="${esc(n.link[0])}">${esc(n.link[en ? 2 : 1])} ${NW_SVG.go}</a>` : '';
+    return `<article class="nv-it ${n.t} ${fr ? 'fresh' : ''}" style="--k:${k++}"><div class="nv-top"><span class="nv-chip">${NW_SVG[n.t]}${n.t === 'new' ? (en ? 'NEW' : 'NOVO') : (en ? 'UPDATE' : 'MELHORIA')}</span>${fr ? `<span class="nv-lido">${en ? 'Unread' : 'Não lida'}</span>` : ''}</div><h4>${esc(x[0])}</h4><p>${esc(x[1])}</p>${link}</article>`;
+  }).join('') + '</div>').join('');
+  document.getElementById('nwTitle').textContent = en ? "What's new" : 'O que há de novo';
+  document.getElementById('nwSub').textContent = en ? 'Everything that changed in Azul Groove' : 'Tudo o que mudou no Azul Groove';
+  document.getElementById('nwBlog').textContent = 'Blog';
+  document.getElementById('nwLog').textContent = en ? 'History' : 'Histórico';
+  document.getElementById('nwDocs').textContent = en ? 'Docs' : 'Docs';
+  document.getElementById('nwRead').textContent = en ? 'Mark all as read' : 'Marcar tudo como lido';
+}
+(function () {
+  const btn = document.getElementById('nwBtn'), pn = document.getElementById('nwPanel'), sc = document.getElementById('nwScrim');
+  let last = null;
+  const mark = () => { try { localStorage.setItem('azul_news_idx', NEWS_VER); } catch (e) {} NW_SEEN = NEWS_VER; nwSmall(); };
+  const set = o => {
+    pn.classList.toggle('open', o); sc.classList.toggle('on', o); btn.setAttribute('aria-expanded', o);
+    document.body.style.overflow = o ? 'hidden' : '';
+    if (o) { last = document.activeElement; setTimeout(() => document.getElementById('nwClose').focus(), 60); mark(); }
+    else { NW_NEW = new Set(); nwSmall(); if (last && last.focus) last.focus(); }
+  };
+  btn.onclick = () => set(!pn.classList.contains('open'));
+  document.getElementById('nwClose').onclick = () => set(false);
+  sc.onclick = () => set(false);
+  document.getElementById('nwRead').onclick = () => { NW_NEW = new Set(); mark(); renderNews(); };
+  document.getElementById('nwTabs').onclick = e => { const b = e.target.closest('button'); if (b) { nwFilter = b.dataset.f; renderNews(); } };
+  addEventListener('keydown', e => { if (e.key === 'Escape' && pn.classList.contains('open')) set(false); });
+  pn.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const f = [...pn.querySelectorAll('a[href],button:not(:disabled)')].filter(x => x.offsetParent !== null);
+    const a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+    else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+  });
+  nwSmall();
+})();
+
+renderNews();
+// ===== Pop-up de novidade do app =====
+// Aparece 1x por novidade. Para mostrar de novo a todo mundo, troque o APP_POP_ID.
+// Para mostrar a TODA visita, apague a linha do localStorage.setItem dentro de set().
+const APP_POP_ID = 'azul-music-2026-11-11';
+(function () {
+  const ov = document.getElementById('apOv'); if (!ov) return;
+  const main = document.getElementById('apGo');
+  let seen = false, last = null;
+  try { seen = localStorage.getItem('azul_app_pop') === APP_POP_ID; } catch (e) {}
+  const set = o => {
+    ov.classList.toggle('open', o); document.body.style.overflow = o ? 'hidden' : '';
+    if (o) { last = document.activeElement; main.focus(); try { localStorage.setItem('azul_app_pop', APP_POP_ID); } catch (e) {} }
+    else if (last && last.focus) last.focus();
+  };
+  document.getElementById('apX').onclick = () => set(false);
+  document.getElementById('apAll').onclick = () => { set(false); setTimeout(() => document.getElementById('nwBtn').click(), 0); };
+  ov.addEventListener('click', e => { if (e.target === ov) set(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && ov.classList.contains('open')) set(false); });
+  ov.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const f = [...ov.querySelectorAll('a[href],button')].filter(x => x.offsetParent !== null);
+    const a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+    else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+  });
+  if (!seen) setTimeout(() => set(true), 700);
+})();
+</script>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var $=function(i){return document.getElementById(i)},reduz=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* player de demonstração */
+  var fila=[{t:'Maré Alta',a:'Azul Beats',d:184},{t:'Luzes da Cidade',a:'Neon Sul',d:212},{t:'Domingo Lento',a:'Casa Lo-fi',d:197}],pos=38,toca=true;
+  function mm(s){return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
+  function desenha(){
+    var c=fila[0],ul=$('fila');
+    $('player').classList.toggle('pausado',!toca||!c);
+    $('tt').textContent=c?c.t:'Fila vazia';
+    $('ta').textContent=c?c.a:'Use /play para pedir uma música';
+    $('t1').textContent=c?mm(c.d):'0:00';
+    ul.textContent='';
+    fila.slice(1,4).forEach(function(m){var li=document.createElement('li'),b=document.createElement('b'),s=document.createElement('span');b.textContent=m.t;s.textContent=m.a;li.appendChild(b);li.appendChild(s);ul.appendChild(li)});
+    if(fila.length<2){var v=document.createElement('li');v.textContent='Nada na fila. Peça a próxima.';ul.appendChild(v)}
+    $('bp').textContent=toca?'Pausar':'Continuar';
+  }
+  function tick(){var c=fila[0];$('t0').textContent=mm(pos);$('pb').style.width=c?Math.min(100,pos/c.d*100)+'%':'0%'}
+  function pula(){fila.shift();pos=0;desenha();tick()}
+  function pede(){var i=$('in'),v=i.value.trim();if(!v)return;fila.push({t:v,a:'Pedido por você',d:150+Math.floor(Math.random()*90)});i.value='';desenha()}
+  setInterval(function(){if(toca&&fila[0]){pos++;if(pos>=fila[0].d)pula();else tick()}},1000);
+  $('bp').onclick=function(){toca=!toca;desenha()};$('bs').onclick=pula;$('ba').onclick=pede;
+  $('in').addEventListener('keydown',function(e){if(e.key==='Enter')pede()});
+  desenha();tick();
+
+  function nota(box){
+    box.classList.add('go');if(reduz)return;
+    var num=$('rating-num'),t0=null;
+    (function f(t){t0=t0||t;var k=Math.min(1,(t-t0)/1800),e=1-Math.pow(1-k,3);num.textContent=(4.98*e).toFixed(2);if(k<1)requestAnimationFrame(f)})(performance.now());
+  }
+  /* entrada ao rolar + contagem dos números */
+  var alvos=document.querySelectorAll('.banner,.rating,.marq,.avcta,.nums,.sec h2,.rec article,.cmds div,.pn,.fim>*');
+  alvos.forEach(function(el,i){el.classList.add('rv');el.style.transitionDelay=(i%3)*100+'ms'});
+  function conta(b){
+    var n=parseFloat(b.dataset.n),suf=b.dataset.s||'',dec=n%1?1:0,t0=null;if(reduz)return;
+    function f(t){t0=t0||t;var p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,3);
+      b.textContent=(n*e).toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(p<1)requestAnimationFrame(f)}
+    requestAnimationFrame(f);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;e.target.classList.add('on');io.unobserve(e.target);
+      e.target.querySelectorAll&&e.target.querySelectorAll('b[data-n]').forEach(conta);if(e.target.id==='ratingBox')nota(e.target)})},{threshold:.15});
+    alvos.forEach(function(el){io.observe(el)});
+  }else alvos.forEach(function(el){el.classList.add('on');if(el.id==='ratingBox')el.classList.add('go')});
+})();
+</script>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)},reduz=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* texto: palavras entrando uma a uma */
+  var splits=[];
+  document.querySelectorAll('.hero h1,.sec h2,.fim h2,.banner h3').forEach(function(h){
+    var k=0;
+    (function walk(node){
+      Array.from(node.childNodes).forEach(function(c){
+        if(c.nodeType===3){
+          if(!c.textContent.trim())return;
+          var fr=document.createDocumentFragment();
+          c.textContent.split(/(\s+)/).forEach(function(t){
+            if(!t)return;
+            if(/^\s+$/.test(t)){fr.appendChild(document.createTextNode(t));return}
+            var sp=document.createElement('span');sp.className='w';sp.style.setProperty('--k',k++);sp.textContent=t;fr.appendChild(sp);
+          });
+          node.replaceChild(fr,c);
+        }else if(c.nodeType===1)walk(c);
+      });
+    })(h);
+    h.classList.add('split');splits.push(h);
+  });
+  var hero=document.querySelector('.hero h1');
+  setTimeout(function(){hero.classList.add('on')},250);
+  if('IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');so.unobserve(e.target)}})},{threshold:.3});
+    splits.forEach(function(h){if(h!==hero)so.observe(h)});
+  }else splits.forEach(function(h){h.classList.add('on')});
+
+  /* texto: digitando o /play */
+  var fr=['lo-fi para estudar','o hit do momento','a trilha da call','som para a sua festa'],i=0,j=0,del=false,el=$('tip');
+  if(reduz)el.textContent=fr[0];
+  else(function tick(){
+    var f=fr[i];el.textContent=f.slice(0,j);
+    if(!del&&j<f.length){j++;setTimeout(tick,70)}
+    else if(!del){del=true;setTimeout(tick,1600)}
+    else if(j>0){j--;setTimeout(tick,32)}
+    else{del=false;i=(i+1)%fr.length;setTimeout(tick,350)}
+  })();
+
+  /* fundo: notas e partículas subindo */
+  var cv=$('fx');
+  if(cv&&!reduz){
+    var cx=cv.getContext('2d'),W,H,P=[],G=['\u266a','\u266b','\u2669'],mx=-999,my=-999;
+    var mk=function(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.5,vy:-(Math.random()*.45+.1),vx:(Math.random()-.5)*.2,a:Math.random()*.45+.15,s:Math.random()*100,g:null,z:14+Math.random()*16}};
+    var rs=function(){var d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);P=Array.from({length:Math.min(90,Math.floor(W/14))},mk)};
+    rs();addEventListener('resize',rs);
+    (function loop(ts){
+      cx.clearRect(0,0,W,H);
+      for(var n=0;n<P.length;n++){
+        var p=P[n],dx=p.x-mx,dy=p.y-my,d2=dx*dx+dy*dy;
+                p.x+=p.vx+Math.sin(ts/1600+p.s)*.18;p.y+=p.vy;
+        if(p.y<-30){p.y=H+30;p.x=Math.random()*W}
+        var hue=250+70*Math.sin(ts/4500+p.s);
+        cx.fillStyle='hsla('+hue+',90%,72%,'+(p.g?p.a+.12:p.a)+')';
+        if(p.g){cx.font=p.z+'px serif';cx.fillText(p.g,p.x,p.y)}
+        else{cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill()}
+      }
+      /* ligações entre partículas próximas */
+      for(var a=0;a<P.length;a++){if(P[a].g)continue;for(var b=a+1;b<P.length;b++){if(P[b].g)continue;
+        var ex=P[a].x-P[b].x,ey=P[a].y-P[b].y,dd=ex*ex+ey*ey;
+        if(dd<16900){cx.strokeStyle='rgba(120,150,255,'+(.16*(1-dd/16900))+')';cx.lineWidth=1;cx.beginPath();cx.moveTo(P[a].x,P[a].y);cx.lineTo(P[b].x,P[b].y);cx.stroke()}}}
+      /* ondas sonoras no pé da página */
+      for(var w=0;w<3;w++){
+        cx.beginPath();
+        for(var x=0;x<=W;x+=8){
+          var y=H-14-w*10+Math.sin(x/90+ts/(700+w*260)+w*2)*(10+w*4)*(.6+.4*Math.sin(ts/1900+w));
+          if(x===0)cx.moveTo(x,y);else cx.lineTo(x,y);
+        }
+        cx.strokeStyle=['rgba(95,216,255,.22)','rgba(255,122,217,.18)','rgba(91,120,255,.2)'][w];cx.lineWidth=2;cx.stroke();
+      }
+      requestAnimationFrame(loop);
+    })(0);
+  }
+
+})();
+</script>
+<script src="eventos.js" defer></script>
+</body>
+</html>
