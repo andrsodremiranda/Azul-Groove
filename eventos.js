@@ -288,7 +288,7 @@
     if (!isIndex) return;
 
     if (tema === 'sexta13') {
-      document.title = '🔪 ' + document.title;
+      document.title = ' ' + document.title;
 
       var fog = el('ev-layer ev-bg');
       el('ev-fog', fog);
@@ -321,7 +321,7 @@
     }
 
     if (tema === 'gta6') {
-      document.title = '🌴 ' + document.title;
+      document.title = ' ' + document.title;
 
       var bg = el('ev-layer ev-bg');
       el('ev-sky', bg);
@@ -355,7 +355,7 @@
     }
 
     if (tema === 'vingadores') {
-      document.title = '🛡️ ' + document.title;
+      document.title = ' ' + document.title;
       var bgv = el('ev-layer ev-bg');
       el('ev-halftone', bgv); el('ev-doom', bgv); el('ev-mist', bgv); el('ev-arc', bgv); el('ev-star', bgv);
       var fxv = el('ev-layer ev-fx');
@@ -371,7 +371,7 @@
     }
 
     if (tema === 'natal') {
-      document.title = '🎄 ' + document.title;
+      document.title = ' ' + document.title;
       var fxn = el('ev-layer ev-fx');
       var luz = el('ev-lights', fxn);
       var cores = ['#ff3b3b', '#ffd54a', '#3bd16f', '#4da3ff'];
@@ -386,7 +386,7 @@
 
     if (tema === 'anonovo') {
       var ano = new Date().getMonth() === 0 ? new Date().getFullYear() : new Date().getFullYear() + 1;
-      document.title = '🎆 ' + document.title;
+      document.title = ' ' + document.title;
       var fxa = el('ev-layer ev-fx');
       if (!reduz) fogos(fxa);
       pill('a', '🎆 <b>Feliz ' + ano + '!</b> Que o novo ano chegue no ritmo certo. <a href="carta-ano-novo.html">Ler a carta →</a>', 'ag_p_a');
