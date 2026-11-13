@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Painel ASTM Software (teste)</title>
+<link rel="icon" href="aumentar-o-tamanho-d.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{--bg:#07091a;--card:#0f1330;--line:#222a5c;--tx:#e9ecff;--mut:#9aa3d6;--ac:#5865f2;--ac2:#1fb6ff;--rosa:#ff4d8d;--r:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;display:grid;grid-template-columns:250px 1fr;min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--ac2);outline-offset:3px}
+.glow{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.glow i{position:absolute;width:46vw;height:46vw;border-radius:50%;filter:blur(110px);opacity:.32}
+.glow i:nth-child(1){background:var(--ac);left:8vw;top:-16vw;animation:d1 20s ease-in-out infinite alternate}
+.glow i:nth-child(2){background:var(--ac2);right:-14vw;top:30vh;opacity:.18;animation:d2 24s ease-in-out infinite alternate}
+.glow i:nth-child(3){background:#a54bff;left:30vw;bottom:-26vw;opacity:.16;animation:d1 28s ease-in-out infinite alternate-reverse}
+
+/* barra lateral */
+.side{position:sticky;top:0;height:100vh;padding:22px 16px;display:flex;flex-direction:column;gap:22px;border-right:1px solid var(--line);background:rgba(7,9,26,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px}
+.brand img{width:40px;height:40px;border-radius:12px;background:#fff;padding:3px}
+.brand b{display:block;font-size:1.02rem;line-height:1.1}.brand small{color:var(--mut);font-size:.78rem}
+.side nav{display:flex;flex-direction:column;gap:4px}
+.side nav a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:14px;color:var(--mut);font-weight:600;font-size:.94rem;transition:background .2s,color .2s,transform .2s}
+.side nav a i{width:20px;text-align:center}
+.side nav a:hover{background:rgba(88,101,242,.12);color:#fff;transform:translateX(3px)}
+.side nav a.on{background:linear-gradient(120deg,rgba(88,101,242,.4),rgba(31,182,255,.14));color:#fff;box-shadow:inset 0 0 0 1px rgba(88,101,242,.5)}
+.side-f{margin-top:auto;font-size:.85rem;color:var(--mut);padding:0 8px}.side-f a:hover{color:#fff}
+
+/* conteúdo */
+main{padding:26px 30px 110px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.top h1{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.02em;line-height:1.1}
+.top small{color:var(--mut);display:block;margin-top:4px;text-transform:capitalize}
+.chip{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:99px;padding:7px 16px;font-size:.84rem;color:var(--mut);background:rgba(255,255,255,.03)}
+.chip i{color:#3ddc97;font-size:.55rem;animation:pisca 2s ease-in-out infinite}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;scroll-margin-top:20px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015)),var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;min-width:0;animation:up .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*70ms);transition:border-color .25s,transform .25s}
+.card:hover{border-color:rgba(88,101,242,.7)}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.card h2{font-size:1.02rem;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.card h2 i{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:.85rem;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff}
+.sect{margin:34px 0 14px;font-size:.8rem;letter-spacing:.14em;color:var(--mut);font-weight:700;text-transform:uppercase;scroll-margin-top:20px}
+
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(88,101,242,.45),rgba(31,182,255,.12) 60%),var(--card)}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.14) 0 1.5px,transparent 1.5px 9px);animation:gira 40s linear infinite}
+.hero h2{font-size:clamp(1.8rem,3.6vw,2.6rem);letter-spacing:-.03em;display:block;margin-bottom:10px;position:relative}
+.hero p{color:#cdd3ff;max-width:34em;margin-bottom:20px;position:relative}
+.btns{display:flex;gap:10px;flex-wrap:wrap;position:relative}
+.btn{display:inline-flex;gap:9px;align-items:center;padding:11px 20px;border-radius:99px;font:700 .9rem system-ui,sans-serif;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;cursor:pointer;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.14)}
+.btn.pri{background:linear-gradient(135deg,var(--ac),#7a5cff);border-color:transparent;box-shadow:0 8px 24px rgba(88,101,242,.5)}
+
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.cd div{background:rgba(255,255,255,.05);border-radius:14px;padding:12px 4px}
+.cd b{display:block;font-size:1.7rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.cd span{font-size:.7rem;color:var(--mut)}
+.cdm{margin-top:12px;color:var(--mut);font-size:.88rem}
+
+.stat b{display:block;font-size:2rem;font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#fff,var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stat span{color:var(--mut);font-size:.88rem}
+
+.prod{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.prod .ic{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:1.2rem;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;box-shadow:0 8px 22px rgba(88,101,242,.45);transition:transform .35s}
+.prod:hover .ic{transform:rotate(-8deg) scale(1.08)}
+.prod h3{font-size:1.2rem}.prod p{color:var(--mut);font-size:.92rem;flex:1}
+
+.bars{display:flex;align-items:flex-end;gap:14px;height:170px;padding-top:10px}
+.bars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px;font-size:.78rem;color:var(--mut)}
+.bars i{display:block;width:100%;max-width:56px;border-radius:12px 12px 4px 4px;background:linear-gradient(180deg,var(--ac2),var(--ac));height:0;transition:height 1.1s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 24px rgba(88,101,242,.4)}
+.bars b{color:#fff;font-size:.9rem}
+
+.last small{color:var(--ac2);font-weight:700}
+.last h3{font-size:1.3rem;margin:6px 0 8px}.last p{color:var(--mut);font-size:.92rem;margin-bottom:16px}
+
+.tl{list-style:none;display:flex;flex-direction:column}
+.tl li{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line);transition:transform .2s}
+.tl li:first-child{border-top:0}.tl li:hover{transform:translateX(5px)}
+.tl .ti{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#5865f2,#7a5cff)}
+.tl .up .ti{background:linear-gradient(135deg,#1fb6ff,#3ddc97)}
+.tl b{display:block;font-size:.97rem}.tl small{color:var(--mut)}
+
+.lk{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lk a{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid transparent;font-weight:600;font-size:.92rem;transition:border-color .2s,background .2s,transform .2s}
+.lk a:hover{border-color:var(--ac);background:rgba(88,101,242,.14);transform:translateY(-2px)}
+.lk i{color:var(--ac2);width:18px;text-align:center}
+.foot{margin-top:30px;color:var(--mut);font-size:.85rem;text-align:center}
+
+/* ===== menu de novidades ===== */
+.nw-btn{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:10px;padding:10px 20px 10px 10px;border-radius:99px;border:1px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,var(--ac),var(--ac2)) border-box;color:var(--tx);font:700 .9rem system-ui,sans-serif;cursor:pointer;box-shadow:0 12px 34px rgba(0,0,0,.5);transition:transform .2s,box-shadow .2s}
+.nw-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(88,101,242,.55)}
+.nw-btn .bell{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-size:.82rem}
+.nw-btn.new .bell i{animation:nwRing 2.6s ease-in-out infinite;transform-origin:50% 0}
+@keyframes nwRing{0%,60%,100%{transform:rotate(0)}65%{transform:rotate(16deg)}70%{transform:rotate(-14deg)}75%{transform:rotate(10deg)}80%{transform:rotate(-6deg)}}
+.nw-dot{position:absolute;top:-6px;right:-4px;min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:#ff4d8d;color:#fff;font-size:.72rem;display:none;place-items:center;border:2px solid var(--bg)}
+.nw-btn.new .nw-dot{display:grid}
+.nw-panel{position:fixed;right:20px;bottom:86px;z-index:41;width:min(430px,calc(100vw - 40px));max-height:min(78vh,650px);display:none;flex-direction:column;background:color-mix(in srgb,var(--card) 90%,transparent);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 90px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden}
+.nw-panel.open{display:flex;animation:nwIn .32s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes nwIn{from{opacity:0;transform:translateY(16px) scale(.96)}}
+.nw-h{display:flex;align-items:center;gap:12px;padding:18px 18px 14px;background:linear-gradient(120deg,rgba(88,101,242,.35),rgba(31,182,255,.12) 60%,transparent)}
+.nw-hi{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 8px 22px rgba(88,101,242,.55)}
+.nw-ht{flex:1}.nw-ht b{display:block;font-size:1.12rem;font-weight:800}.nw-ht small{color:var(--mut);font-size:.78rem}
+.nw-h button{background:rgba(255,255,255,.06);border:0;color:var(--mut);font-size:1.2rem;cursor:pointer;width:34px;height:34px;border-radius:11px}
+.nw-h button:hover{color:#fff;background:rgba(88,101,242,.3)}
+.nw-tabs{display:flex;gap:6px;padding:0 16px 12px;border-bottom:1px solid var(--line);overflow-x:auto}
+.nw-tabs button{border:0;background:rgba(255,255,255,.05);color:var(--mut);border-radius:99px;padding:7px 14px;font:600 .8rem system-ui,sans-serif;cursor:pointer;white-space:nowrap;transition:.15s}
+.nw-tabs button b{margin-left:4px;font-size:.7rem;opacity:.8}.nw-tabs button:hover{color:#fff}
+.nw-tabs button.on{background:linear-gradient(135deg,var(--ac),#7a5cff);color:#fff;box-shadow:0 6px 16px rgba(88,101,242,.45)}
+.nw-h,.nw-tabs,.nw-f{flex-shrink:0}
+.nw-list{overflow-y:auto;padding:14px 14px 6px;flex:1 1 auto;min-height:0}
+.nw-list,html{scrollbar-width:thin;scrollbar-color:#5865f2 rgba(255,255,255,.05)}
+.nw-list::-webkit-scrollbar,html::-webkit-scrollbar{width:8px;height:8px}
+.nw-list::-webkit-scrollbar-track,html::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:99px}
+.nw-list::-webkit-scrollbar-thumb,html::-webkit-scrollbar-thumb{background:linear-gradient(#5865f2,#7a5cff);border-radius:99px}
+.nw-list::-webkit-scrollbar-button,html::-webkit-scrollbar-button{display:none;width:0;height:0}
+.nw-it{display:flex;gap:12px;padding:14px;border-radius:18px;margin-bottom:8px;border:1px solid transparent;background:rgba(255,255,255,.03);animation:nwItIn .4s both;animation-delay:calc(var(--k)*45ms);transition:background .15s,transform .15s}
+@keyframes nwItIn{from{opacity:0;transform:translateY(10px)}}
+.nw-it:hover{background:rgba(88,101,242,.1);transform:translateX(3px)}
+.nw-it.fresh{border-color:rgba(88,101,242,.55);background:linear-gradient(135deg,rgba(88,101,242,.16),rgba(31,182,255,.05))}
+.nw-ic{flex:0 0 38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#5865f2,#7a5cff);font-size:.95rem}
+.nw-it.up .nw-ic{background:linear-gradient(135deg,#1fb6ff,#3ddc97)}
+.nw-bd{min-width:0;flex:1}
+.nw-meta{display:flex;gap:8px;align-items:center;font-size:.72rem;color:var(--mut);margin-bottom:5px}
+.nw-tag{font-weight:700;letter-spacing:.5px;padding:2px 9px;border-radius:99px;background:rgba(31,182,255,.14);color:var(--ac2)}
+.nw-tag.new{background:rgba(88,101,242,.22);color:#aab4ff}
+.nw-nw{color:#ff4d8d;font-weight:800}
+.nw-it h4{font-size:.98rem;margin-bottom:3px}.nw-it p{color:var(--mut);font-size:.86rem;line-height:1.5}
+.nw-it a{display:inline-flex;gap:6px;align-items:center;margin-top:9px;padding:6px 13px;border-radius:99px;background:rgba(88,101,242,.18);color:#bcc6ff;font-size:.8rem;font-weight:700;transition:.15s}
+.nw-it a:hover{background:var(--ac);color:#fff}
+.nw-empty{text-align:center;color:var(--mut);padding:30px 10px}
+.nw-f{display:flex;flex-wrap:wrap;gap:6px 10px;justify-content:center;padding:12px 18px;border-top:1px solid var(--line);font-size:.86rem;color:var(--mut)}
+.nw-f a{color:#8ea1ff;font-weight:600}
+@media(max-width:560px){.nw-btn .t{display:none}.nw-btn{padding:10px}.nw-panel{left:10px;right:10px;width:auto;bottom:80px;max-height:78vh}}
+@media(prefers-reduced-motion:reduce){.nw-panel.open,.nw-it,.nw-btn .bell i{animation:none!important}}
+
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes gira{to{transform:rotate(360deg)}}
+@keyframes d1{to{transform:translate(12vw,9vh) scale(1.15)}}
+@keyframes d2{to{transform:translate(-14vw,-7vh) scale(1.2)}}
+@keyframes pisca{50%{opacity:.25}}
+@media(max-width:1000px){.s3{grid-column:span 6}.s4,.s5,.s7,.s8{grid-column:span 12}}
+@media(max-width:820px){
+  body{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;align-items:center;flex-wrap:wrap;padding:14px;gap:10px;border-right:0;border-bottom:1px solid var(--line)}
+  .side nav{flex-direction:row;overflow-x:auto;width:100%;order:3}.side nav a{white-space:nowrap}.side-f{display:none}
+  main{padding:18px 16px 110px}.lk{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.bars i{height:var(--h)!important}}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<aside class="side">
+  <a class="brand" href="#geral"><img src="aumentar-o-tamanho-d.png" alt=""><div><b>ASTM Software</b><small>Painel</small></div></a>
+  <nav id="menu">
+    <a href="#geral" class="on"><i class="fas fa-gauge-high"></i>Visão geral</a>
+    <a href="#produtos"><i class="fas fa-cubes"></i>Produtos</a>
+    <a href="#aniversario"><i class="fas fa-cake-candles"></i>8 anos</a>
+    <a href="#atividade"><i class="fas fa-clock-rotate-left"></i>Atividade</a>
+    <a href="#links"><i class="fas fa-link"></i>Links</a>
+  </nav>
+  <div class="side-f"><a href="index.html"><i class="fas fa-arrow-left"></i> Site do Azul Groove</a></div>
+</aside>
+
+<main>
+  <div class="top">
+    <div><h1>Painel da ASTM Software</h1><small id="hoje"></small></div>
+    <span class="chip"><i class="fas fa-circle"></i> Versão de teste</span>
+  </div>
+
+  <div class="grid" id="geral">
+    <section class="card hero s8">
+      <h2>Software com ritmo.</h2>
+      <p>A ASTM Software cria bots, apps e ferramentas com atualizações regulares. Aqui você acompanha os produtos, as novidades e a contagem para os 8 anos.</p>
+      <div class="btns"><button class="btn pri" id="verNov" type="button"><i class="fas fa-bell"></i> Ver novidades</button><a class="btn" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i> Adicionar o bot</a></div>
+    </section>
+    <section class="card s4" id="aniversario">
+      <h2><i class="fas fa-cake-candles"></i>8 anos da ASTM</h2>
+      <div class="cd"><div><b id="cd-d">0</b><span>dias</span></div><div><b id="cd-h">0</b><span>horas</span></div><div><b id="cd-m">0</b><span>min</span></div><div><b id="cd-s">0</b><span>seg</span></div></div>
+      <p class="cdm">Aniversário em 10/01/2027, com festa no canal astm-showcase do Discord.</p>
+    </section>
+
+    <div class="card stat s3"><b data-n="500" data-s="+">500+</b><span>servidores ativos no Azul Groove</span></div>
+    <div class="card stat s3"><b data-n="183289" data-s="">183.289</b><span>usuários atendidos</span></div>
+    <div class="card stat s3"><b data-n="99.9" data-s="%">99,9%</b><span>tempo online</span></div>
+    <div class="card stat s3"><b data-n="76" data-s="+">76+</b><span>comandos disponíveis</span></div>
+  </div>
+
+  <h2 class="sect" id="produtos">Produtos</h2>
+  <div class="grid">
+    <div class="card prod s4"><span class="ic"><i class="fas fa-compact-disc"></i></span><h3>Azul Groove</h3><p>O bot de música para Discord, com comandos potentes e atualizações mensais.</p><a class="btn" href="index.html">Abrir o site</a></div>
+    <div class="card prod s4"><span class="ic"><i class="fas fa-robot"></i></span><h3>Azul Groove IA</h3><p>Converse com inteligências artificiais direto pelo site, sem criar conta e sem instalar nada.</p><a class="btn" href="ia.html">Conhecer a IA</a></div>
+    <div class="card prod s4"><span class="ic"><i class="fas fa-desktop"></i></span><h3>Music para Windows</h3><p>O player de música e vídeo para o seu computador, com atualização automática.</p><a class="btn" href="azul.html">Conhecer o app</a></div>
+  </div>
+
+  <h2 class="sect" id="atividade">Atividade</h2>
+  <div class="grid">
+    <section class="card s7"><h2><i class="fas fa-chart-simple"></i>Novidades por mês</h2><div class="bars" id="bars"></div></section>
+    <section class="card last s5"><h2><i class="fas fa-bullhorn"></i>Última novidade</h2><small id="lastTag"></small><h3 id="lastT"></h3><p id="lastP"></p><button class="btn pri" id="lastBtn" type="button"><i class="fas fa-bell"></i> Abrir todas</button></section>
+    <section class="card s7"><h2><i class="fas fa-clock-rotate-left"></i>Linha do tempo</h2><ul class="tl" id="tl"></ul></section>
+    <section class="card s5" id="links"><h2><i class="fas fa-link"></i>Links</h2>
+      <div class="lk">
+        <a href="https://discord.com/invite/g4cW4zRvjf" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i>Discord</a>
+        <a href="https://github.com/astmsoftware/ASTM" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+        <a href="https://www.youtube.com/@ASTMSoftware" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i>YouTube</a>
+        <a href="https://x.com/AstmSoftware" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i>X</a>
+        <a href="ajuda.html"><i class="fas fa-life-ring"></i>Central de Ajuda</a>
+        <a href="changelog.html"><i class="fas fa-clock-rotate-left"></i>Histórico</a>
+        <a href="docs.html"><i class="fas fa-book"></i>Documentação</a>
+        <a href="legal.html#privacidade"><i class="fas fa-file-contract"></i>Privacidade</a>
+      </div></section>
+  </div>
+  <p class="foot">© 2026 ASTM Software. All rights reserved.</p>
+</main>
+
+<button class="nw-btn" id="nwBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="nwPanel"><span class="bell"><i class="fas fa-bell"></i></span><span class="t" data-pt="Novidades" data-en="What's new">Novidades</span><b class="nw-dot" id="nwCount"></b></button>
+<div class="nw-panel" id="nwPanel" role="dialog" aria-label="Novidades">
+  <div class="nw-h"><span class="nw-hi"><i class="fas fa-wand-magic-sparkles"></i></span><div class="nw-ht"><b id="nwTitle">Novidades</b><small id="nwSub">Tudo o que mudou no Azul Groove</small></div><button id="nwClose" aria-label="Fechar">&times;</button></div>
+  <div class="nw-tabs" id="nwTabs"></div>
+  <div class="nw-list" id="nwList"></div>
+  <div class="nw-f"><a href="blog.html" id="nwBlog">Ver todas no blog</a><span>·</span><a href="changelog.html" id="nwLog">Histórico</a><span>·</span><a href="docs.html" id="nwDocs">Documentação</a></div>
+</div>
+
+
+
+<script>
+const en = false;
+const NEWS_VER = '2026-11-11';
+const NEWS = [
+  { iso: '2026-11-11', d: '11 Nov 2026', t: 'new', i: 'fa-compact-disc', pt: ['Azul Groove Music para Windows', 'Conheça o player de música e vídeo para Windows: fila inteligente que aprende com você, sincronização com YouTube e YouTube Music e atualização automática. A página do app tem um botão para voltar ao início.'], en: ['Azul Groove Music for Windows', 'Meet the music and video player for Windows: a smart queue that learns from you, YouTube and YouTube Music sync and automatic updates. The app page has a button to go back to the home page.'], link: ['azul.html', 'Conhecer o app', 'Meet the app'] },
+  { iso: '2026-11-11', d: '11 Nov 2026', t: 'up', i: 'fa-bullhorn', pt: ['Aviso de novidades ao abrir o site', 'Ao entrar no site, aparece um aviso com a novidade do app. Ele aparece uma vez por novidade e dá para fechar quando quiser.'], en: ['News notice when opening the site', 'When you open the site, a notice with the latest app news shows up. It appears once per news item and you can close it any time.'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'up', i: 'fa-eraser', pt: ['Botão do Assistente Virtual removido', 'O botão Assistente Virtual saiu da página inicial. As opções que continuam lá são Adicionar ao Discord, Notícias e Atualizações e Azul Groove IA.'], en: ['Virtual Assistant button removed', 'The Virtual Assistant button was removed from the home page. The options that remain are Add to Discord, News & Updates and Azul Groove AI.'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'new', i: 'fa-comment-dots', pt: ['Botão de feedback', 'Agora você pode mandar o seu feedback direto pelo site, no botão logo abaixo das avaliações.'], en: ['Feedback button', 'You can now send your feedback right from the site, with the button just below the reviews.'], link: ['feedback.html', 'Enviar feedback', 'Send feedback'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'new', i: 'fa-star', pt: ['Docs: Avaliação média', 'Nova página explicando como a nota do site é feita: usamos os formulários do ano, analisamos tudo, e é anônima. Pode demorar para atualizar. O card da nota ganhou o link Saiba como funciona.'], en: ['Docs: Average rating', 'New page explaining how the site\'s rating is made: we use the year\'s forms, analyze everything, and it is anonymous. Updates can take a while. The rating card now has a Learn how it works link.'], link: ['docs.html#/avaliacao-media', 'Ver como funciona', 'See how it works'] },
+  { iso: '2026-11-01', d: '01 Nov 2026', t: 'up', i: 'fa-user-secret', pt: ['Avaliações anônimas', 'Os comentários não mostram mais nome nem perfil, já que o feedback é anônimo. O carrossel foi corrigido: o cartão não é mais cortado nem fica preso ao tocar, e o número da média voltou ao tamanho certo.'], en: ['Anonymous reviews', 'Comments no longer show a name or profile, since feedback is anonymous. The carousel was fixed: cards are no longer clipped or stuck when tapped, and the average number is back to the right size.'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-life-ring', pt: ['Central de Ajuda', 'Nova página com respostas rápidas para as dúvidas mais comuns, com busca e perguntas organizadas por assunto.'], en: ['Help Center', 'A new page with quick answers to the most common questions, with search and questions organized by topic.'], link: ['ajuda.html', 'Abrir a Central de Ajuda', 'Open the Help Center'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-clock-rotate-left', pt: ['Histórico de atualizações', 'Agora o site tem uma página de changelog com tudo o que mudou, da mais nova para a mais antiga, com filtros e busca.'], en: ['Update history', 'The site now has a changelog page with everything that changed, newest first, with filters and search.'], link: ['changelog.html', 'Abrir o histórico', 'Open the history'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Documentos legais em um só lugar', 'Termos de Uso, Privacidade e Licença da IA agora ficam em uma única página, com abas e tradução.'], en: ['Legal documents in one place', 'Terms of Use, Privacy and AI License now live on a single page, with tabs and translation.'], link: ['legal.html', 'Abrir os documentos', 'Open the documents'] },
+  { iso: '2026-10-18', d: '18 Out 2026', t: 'new', i: 'fa-palette', pt: ['Novo menu e logo', 'O menu do topo virou uma barra flutuante de vidro, com a seção atual em destaque, menu próprio para celular e a nova logo da flor de lótus. O link Suporte agora abre a Central de Ajuda.'], en: ['New menu and logo', 'The top menu is now a floating glass bar, with the current section highlighted, its own mobile menu and the new lotus flower logo. The Support link now opens the Help Center.'] },
+  { iso: '2026-10-17', d: '17 Out 2026', t: 'new', i: 'fa-ghost', pt: ['Tema de Halloween', 'O site ganhou visual de Halloween até 07 de novembro, com cores laranja e roxo e abóboras e morcegos caindo. No chat, só o fundo muda. Depois da data, tudo volta ao normal sozinho.'], en: ['Halloween theme', 'The site has a Halloween look until November 7, with orange and purple colors and falling pumpkins and bats. In the chat, only the background changes. After that date, everything goes back to normal on its own.'] },
+  { iso: '2026-10-07', d: '07 Out 2026', t: 'new', i: 'fa-screwdriver-wrench', pt: ['Assistente de instalação', 'Baixe o Assistente e ele instala sozinho a versão mais recente do app para Windows. Também repara a instalação e deixa escolher outra versão.'], en: ['Install Assistant', 'Download the Assistant and it installs the latest Windows app version for you. It also repairs the install and lets you pick another version.'], link: ['ia.html#baixar', 'Baixar o Assistente', 'Download the Assistant'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-sliders', pt: ['Novo menu de configurações', 'Abas laterais com ícones, interruptores no lugar das caixinhas e visual de vidro, no chat.'], en: ['New settings menu', 'Side tabs with icons, toggle switches instead of checkboxes and a glass look, in the chat.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-arrows-rotate', pt: ['Sincronização entre aparelhos', 'Gere um código no aparelho A e digite no B para passar as conversas pela internet. O código vale 5 minutos.'], en: ['Sync between devices', 'Generate a code on device A and type it on B to move your chats over the internet. The code lasts 5 minutes.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-wand-magic-sparkles', pt: ['Escolha a IA ao lado do enviar', 'Novo menu com busca, ícones por marca (Google, Meta e outras), selo de modelos grátis e tela de limites da API.'], en: ['Pick the AI next to send', 'New menu with search, brand icons (Google, Meta and more), a free-model badge and an API limits screen.'], link: ['chat.html', 'Experimentar', 'Try it'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-robot', pt: ['Site da Azul Groove IA', 'Uma página para conhecer a IA, ver como ela funciona e baixar o app para Windows.'], en: ['Azul Groove AI site', 'A page to meet the AI, see how it works and download the Windows app.'], link: ['ia.html', 'Conhecer a IA', 'Meet the AI'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'new', i: 'fa-file-contract', pt: ['Licença de Uso da IA', 'Explica que não coletamos seus dados, que tudo fica no seu navegador e que as respostas vêm de serviços de terceiros.'], en: ['AI Use License', 'Explains that we do not collect your data, that everything stays in your browser and that replies come from third-party services.'], link: ['legal.html#ia', 'Ler a licença', 'Read the license'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-book', pt: ['Docs: pesquisa na internet e limites', 'Nova página sobre a pesquisa na internet e links diretos para IA local e limites das APIs, dentro do chat.'], en: ['Docs: internet search and limits', 'New page about internet search and direct links to local AI and API limits from the chat.'], link: ['docs.html#/pesquisa-web', 'Ler no Docs', 'Read in Docs'] },
+  { iso: '2026-10-06', d: '06 Out 2026', t: 'up', i: 'fa-chart-simple', pt: ['Estatísticas de uso', 'Em Configurações > Conta: perguntas por dia, tempo médio de resposta e modelos mais usados.'], en: ['Usage stats', 'In Settings > Account: questions per day, average reply time and most used models.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-palette', pt: ['Novo visual do site', 'Início, blog, privacidade, licenças e o assistente ganharam um design novo, com fundo animado e digitação.'], en: ['New site design', 'Home, blog, privacy, licenses and the assistant got a fresh look, with an animated background and typing effect.'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'up', i: 'fa-comments', pt: ['Assistente sem limite de mensagens', 'O modo visitante não tem mais o limite de 5 mensagens por minuto. Faça login quando quiser o chat completo.'], en: ['Assistant with no message limit', 'Visitor mode no longer has the 5 messages per minute limit. Sign in whenever you want the full chat.'], link: ['assistente.html', 'Abrir o assistente', 'Open the assistant'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-globe', pt: ['Pesquisa na internet com 16 buscadores', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow e mais. No chat completo com login você controla quais usar.'], en: ['Internet search with 16 engines', 'Wikipedia, DuckDuckGo, MusicBrainz, iTunes, Stack Overflow and more. In the full chat you choose which ones to use.'], link: ['chat.html', 'Abrir o chat', 'Open the chat'] },
+  { iso: '2026-10-05', d: '05 Out 2026', t: 'new', i: 'fa-desktop', pt: ['Guia de IA local', 'Como usar Ollama, LM Studio ou Jan no seu PC e liberar o CORS para evitar o erro de conexão.'], en: ['Local AI guide', 'How to use Ollama, LM Studio or Jan on your PC and enable CORS to avoid the connection error.'], link: ['docs.html#/ia-local', 'Ler o guia', 'Read the guide'] },
+  { iso: '0', d: 'Recente', t: 'up', i: 'fa-right-to-bracket', pt: ['Login com Google e GitHub', 'Além do Discord, agora dá para entrar com Google ou GitHub.'], en: ['Google and GitHub sign-in', 'Besides Discord, you can now sign in with Google or GitHub.'], link: ['chat.html', 'Entrar', 'Sign in'] }
+];
+let NW_SEEN = '', nwFilter = 'all';
+try { NW_SEEN = localStorage.getItem('azul_news_idx') || ''; } catch (e) {}
+const nwFresh = n => n.iso > NW_SEEN;
+function renderNews() {
+  const l = document.getElementById('nwList'); if (!l) return;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const cnt = { all: NEWS.length, new: NEWS.filter(n => n.t === 'new').length, up: NEWS.filter(n => n.t === 'up').length };
+  const lab = { all: en ? 'All' : 'Tudo', new: en ? 'New' : 'Novos', up: en ? 'Updates' : 'Melhorias' };
+  document.getElementById('nwTabs').innerHTML = Object.keys(lab).map(k => `<button class="${nwFilter === k ? 'on' : ''}" data-f="${k}">${lab[k]} <b>${cnt[k]}</b></button>`).join('');
+  const items = NEWS.filter(n => nwFilter === 'all' || n.t === nwFilter);
+  l.innerHTML = items.map((n, k) => { const x = n[en ? 'en' : 'pt'], fr = nwFresh(n);
+    return `<article class="nw-it ${n.t} ${fr ? 'fresh' : ''}" style="--k:${k}"><span class="nw-ic"><i class="fas ${n.i || 'fa-wand-magic-sparkles'}"></i></span><div class="nw-bd"><div class="nw-meta"><span class="nw-tag ${n.t}">${n.t === 'new' ? (en ? 'NEW' : 'NOVO') : (en ? 'UPDATE' : 'MELHORIA')}</span><span>${esc(n.d)}</span>${fr ? `<span class="nw-nw">${en ? 'unread' : 'não lida'}</span>` : ''}</div><h4>${esc(x[0])}</h4><p>${esc(x[1])}</p>${n.link ? `<a href="${n.link[0]}">${esc(n.link[en ? 2 : 1])} <i class="fas fa-arrow-right"></i></a>` : ''}</div></article>`; }).join('') || `<div class="nw-empty">${en ? 'Nothing here yet.' : 'Nada por aqui ainda.'}</div>`;
+  document.getElementById('nwTitle').textContent = en ? "What's new" : 'Novidades';
+  document.getElementById('nwSub').textContent = en ? 'Everything that changed in Azul Groove' : 'Tudo o que mudou no Azul Groove';
+  document.getElementById('nwBlog').textContent = en ? 'See all on the blog' : 'Ver todas no blog';
+  document.getElementById('nwLog').textContent = en ? 'History' : 'Histórico';
+  document.getElementById('nwDocs').textContent = en ? 'Documentation' : 'Documentação';
+}
+(function () {
+  const btn = document.getElementById('nwBtn'), pn = document.getElementById('nwPanel'), unread = NEWS.filter(nwFresh).length;
+  if (unread) { btn.classList.add('new'); document.getElementById('nwCount').textContent = unread; }
+  const set = o => { pn.classList.toggle('open', o); btn.setAttribute('aria-expanded', o);
+    if (o) { btn.classList.remove('new'); try { localStorage.setItem('azul_news_idx', NEWS_VER); } catch (e) {} } };
+  btn.onclick = () => set(!pn.classList.contains('open'));
+  document.getElementById('nwClose').onclick = () => set(false);
+  document.getElementById('nwTabs').onclick = e => { const b = e.target.closest('button'); if (b) { nwFilter = b.dataset.f; renderNews(); } };
+  addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+  document.addEventListener('click', e => { const path = e.composedPath(); if (pn.classList.contains('open') && !path.includes(pn) && !path.includes(btn)) set(false); });
+})();
+
+renderNews();
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var reduz=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* data de hoje */
+  $('hoje').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  /* entrada escalonada dos cards */
+  document.querySelectorAll('.card').forEach(function(c,i){c.style.setProperty('--i',i%8)});
+
+  /* contagem regressiva para 10/01/2027 */
+  var alvo=new Date(2027,0,10,0,0,0).getTime();
+  function cd(){
+    var t=Math.max(0,alvo-Date.now()),s=Math.floor(t/1000);
+    $('cd-d').textContent=Math.floor(s/86400);$('cd-h').textContent=Math.floor(s%86400/3600);
+    $('cd-m').textContent=Math.floor(s%3600/60);$('cd-s').textContent=s%60;
+  }
+  cd();setInterval(cd,1000);
+
+  /* números subindo */
+  function conta(b){
+    var n=parseFloat(b.dataset.n),suf=b.dataset.s||'',dec=n%1?1:0,t0=null;if(reduz)return;
+    function f(t){t0=t0||t;var p=Math.min(1,(t-t0)/1500),e=1-Math.pow(1-p,3);
+      b.textContent=(n*e).toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(p<1)requestAnimationFrame(f)}
+    requestAnimationFrame(f);
+  }
+  document.querySelectorAll('.stat b').forEach(conta);
+
+  /* dados reais das novidades */
+  var lista=NEWS.filter(function(n){return n.iso!=='0'});
+  var meses={},nomes=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  lista.forEach(function(n){var k=n.iso.slice(0,7);meses[k]=(meses[k]||0)+1});
+  var ks=Object.keys(meses).sort(),max=Math.max.apply(null,ks.map(function(k){return meses[k]}));
+  var bars=$('bars');
+  ks.forEach(function(k){
+    var d=document.createElement('div'),b=document.createElement('b'),i=document.createElement('i'),s=document.createElement('span');
+    b.textContent=meses[k];i.style.setProperty('--h',Math.round(meses[k]/max*100)+'%');
+    s.textContent=nomes[parseInt(k.slice(5),10)-1]+'/'+k.slice(2,4);
+    d.appendChild(b);d.appendChild(i);d.appendChild(s);bars.appendChild(d);
+  });
+  setTimeout(function(){bars.querySelectorAll('i').forEach(function(i){i.style.height=i.style.getPropertyValue('--h')})},reduz?0:500);
+
+  var u=NEWS[0];
+  $('lastTag').textContent=(u.t==='new'?'NOVO':'MELHORIA')+' · '+u.d;
+  $('lastT').textContent=u.pt[0];$('lastP').textContent=u.pt[1];
+  var abre=function(e){e.stopPropagation();$('nwBtn').click()};
+  $('lastBtn').onclick=abre;$('verNov').onclick=abre;
+
+  var tl=$('tl');
+  NEWS.slice(0,6).forEach(function(n){
+    var li=document.createElement('li'),ic=document.createElement('span'),ii=document.createElement('i'),w=document.createElement('div'),b=document.createElement('b'),sm=document.createElement('small');
+    li.className=n.t;ic.className='ti';ii.className='fas '+(n.i||'fa-wand-magic-sparkles');ic.appendChild(ii);
+    b.textContent=n.pt[0];sm.textContent=n.d+' · '+(n.t==='new'?'Novo':'Melhoria');
+    w.appendChild(b);w.appendChild(sm);li.appendChild(ic);li.appendChild(w);tl.appendChild(li);
+  });
+
+  /* menu lateral acompanha a rolagem */
+  var links=document.querySelectorAll('#menu a');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;
+      links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-30% 0px -60% 0px'});
+    ['geral','produtos','aniversario','atividade','links'].forEach(function(id){var el=$(id);if(el)io.observe(el)});
+  }
+})();
+</script>
+</body>
+</html>

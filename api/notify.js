@@ -23,7 +23,7 @@ function str(v, max) {
   return typeof v === 'string' ? v.slice(0, max) : '';
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
 
@@ -71,4 +71,4 @@ module.exports = async (req, res) => {
   } catch (e) {
     return res.status(500).json({ error: 'server_error' });
   }
-};
+}
