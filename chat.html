@@ -1596,7 +1596,7 @@ const _paintAcct = paintAcct; paintAcct = function () {
   $('swBtn').innerHTML = '<i class="fas fa-right-to-bracket"></i> Entrar com uma conta'; $('outBtn').innerHTML = '<i class="fas fa-door-open"></i> Sair do modo visitante';
 };
 // ----- telemetria (Discord) -----
-const TEL_URL = 'https://discord.com/api/webhooks/1561516932090306560/bDnoYJa-hbtXLTjMqiU5gGtZEXKwGDwGt-2oDrvdlSNFRZ_c70MVPlIL5bzjLvKyguwJ', TEL_KEY = 'azul_tel', TEL_VER = 'v3';
+const TEL_URL = '/api/notify', TEL_KEY = 'azul_tel', TEL_VER = 'v3';
 const getTel = () => { let t = {}; try { t = JSON.parse(localStorage.getItem(TEL_KEY) || '{}'); } catch (e) {} return { on: t.on !== false, extra: t.extra === true }; };
 const setTel = p => { try { localStorage.setItem(TEL_KEY, JSON.stringify({ ...getTel(), ...p })); } catch (e) {} paintTel(); };
 function paintTel() { const t = getTel(); $('telErr').checked = t.on; $('telExtra').checked = t.extra; }
@@ -1607,7 +1607,7 @@ function telPost(title, color, fields, desc) {
   const dev = /Mobi|Android/i.test(navigator.userAgent) ? 'celular' : 'desktop';
   const e = { title, color, fields: [...fields, { name: 'Aparelho', value: dev, inline: true }, { name: 'Versão', value: TEL_VER, inline: true }, { name: 'ID anônimo', value: telId(), inline: true }], timestamp: new Date().toISOString() };
   if (desc) e.description = '```\n' + desc + '\n```';
-  return fetch(TEL_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'Azul Groove · Telemetria', allowed_mentions: { parse: [] }, embeds: [e] }), keepalive: true });
+  return fetch(TEL_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'Azul Groove · Telemetria', embeds: [e] }), keepalive: true });
 }
 function telSend(title, color, fields, desc) { // limite: 1 envio a cada 1,5 s e no máximo 25 por sessão
   if (telN >= 25 || Date.now() - telLast < 1500) return; telN++; telLast = Date.now();

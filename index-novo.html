@@ -328,12 +328,90 @@ footer{padding-bottom:96px}
 @keyframes nvUp{from{opacity:0;transform:translateY(16px)}}
 @media(max-width:560px){.nv-tx{display:none}.nv-fab{padding:8px;right:14px;bottom:14px}.nv-badge{right:-4px}}
 @media(prefers-reduced-motion:reduce){.nv-fab,.nv-fab::before,.nv-ic,.nv-ic .big,.nv-ic .sm,.nv-badge,.nv-it,.nv-it::before,.nv-drawer.open .nv-it{animation:none!important}.nv-drawer,.nv-scrim{transition:none!important}}
+
+/* ===== apresentação de boas-vindas ===== */
+.tr-re{border:1px solid var(--linha);background:rgba(255,255,255,.07);color:var(--creme);border-radius:999px;padding:7px 16px;font:700 .86rem var(--txt);cursor:pointer;transition:background .2s}
+.tr-re:hover{background:rgba(255,255,255,.16)}
+.tr-ov{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:18px;background:radial-gradient(80% 80% at 50% 30%,rgba(91,120,255,.35),rgba(3,5,18,.92));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.tr-ov.open{display:flex;animation:trFade .4s both}
+@keyframes trFade{from{opacity:0}}
+.tr{position:relative;width:min(520px,100%);max-height:calc(100dvh - 36px);overflow:hidden auto;border-radius:34px;background:linear-gradient(160deg,#171d52,#0d1033 60%);border:1px solid rgba(255,255,255,.18);box-shadow:0 40px 100px rgba(0,0,0,.65),0 0 80px rgba(91,120,255,.3);text-align:center;padding:26px 28px 24px;animation:trPop .6s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes trPop{from{opacity:0;transform:translateY(30px) scale(.9)}}
+.tr-skip{position:absolute;top:16px;right:18px;border:0;background:none;color:var(--mut);font:700 .84rem var(--txt);cursor:pointer;padding:6px 10px;border-radius:99px}
+.tr-skip:hover{color:#fff;background:rgba(255,255,255,.08)}
+.tr-stage{height:210px;display:grid;place-items:center;position:relative;margin:6px 0 4px}
+.tr-slide{width:100%;display:grid;place-items:center;animation:trIn .55s cubic-bezier(.2,.85,.2,1) both}
+@keyframes trIn{from{opacity:0;transform:translateX(var(--dx,30px))}}
+.tr h2{font-size:clamp(1.7rem,5vw,2.2rem);margin:8px 0 10px}
+.tr p{color:#c3c8e2;font-size:1rem;max-width:26em;margin:0 auto;min-height:3.2em}
+.tr-dots{display:flex;justify-content:center;gap:8px;margin:20px 0 18px}
+.tr-dots i{width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.2);transition:width .35s,background .35s}
+.tr-dots i.on{width:28px;background:linear-gradient(90deg,var(--azul),var(--rosa))}
+.tr-act{display:flex;gap:10px;justify-content:center}
+.tr-act button,.tr-act a{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 26px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:var(--creme);font:700 .98rem var(--txt);cursor:pointer;transition:transform .2s,background .2s}
+.tr-act button:hover,.tr-act a:hover{transform:translateY(-2px)}
+.tr-act .go{background:linear-gradient(120deg,var(--rosa),#a98bff);color:#170b30;border-color:transparent;animation:pulsa 2.8s ease-in-out infinite}
+.tr-act button[hidden]{display:none}
+
+/* mascote */
+.mas{width:190px;height:190px;animation:trBob 3.2s ease-in-out infinite}
+@keyframes trBob{50%{transform:translateY(-9px)}}
+.mas .arm{transform-origin:150px 128px;animation:trWave 1.6s ease-in-out infinite}
+@keyframes trWave{0%,100%{transform:rotate(0)}30%{transform:rotate(-24deg)}60%{transform:rotate(8deg)}}
+.mas .eye{transform-origin:center;transform-box:fill-box;animation:trBlink 4.5s infinite}
+@keyframes trBlink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.mas .nt{animation:trNote 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.mas .nt:nth-of-type(2){animation-delay:-1.4s}
+@keyframes trNote{0%,100%{opacity:.25;transform:translateY(6px) scale(.8)}50%{opacity:1;transform:translateY(-6px) scale(1.05)}}
+
+/* arte 2: fundo */
+.ta2{position:relative;width:100%;height:190px;border-radius:26px;overflow:hidden;background:#070a24;border:1px solid var(--linha)}
+.ta2 i{position:absolute;width:150px;height:150px;border-radius:50%;filter:blur(36px);opacity:.7}
+.ta2 i:nth-child(1){background:var(--azul);left:-20px;top:-30px;animation:au1 6s ease-in-out infinite alternate}
+.ta2 i:nth-child(2){background:var(--rosa);right:-30px;top:20px;opacity:.5;animation:au2 7s ease-in-out infinite alternate}
+.ta2 i:nth-child(3){background:var(--ciano);left:40%;bottom:-70px;opacity:.45;animation:au1 8s ease-in-out infinite alternate-reverse}
+.ta2 svg{position:absolute;left:0;bottom:6px;width:100%;height:80px}
+.ta2 path{fill:none;stroke-width:2.4;animation:trWv 3s linear infinite}
+.ta2 path:nth-child(2){stroke:var(--rosa);animation-duration:4.4s;opacity:.8}
+.ta2 path:nth-child(1){stroke:var(--ciano)}
+@keyframes trWv{to{transform:translateX(-100px)}}
+.ta2 b{position:absolute;border-radius:50%;background:#fff;width:5px;height:5px;animation:trUp 5s linear infinite}
+@keyframes trUp{from{transform:translateY(0);opacity:0}15%{opacity:.9}to{transform:translateY(-190px);opacity:0}}
+/* arte 3: texto */
+.ta3{font:700 1.75rem/1.12 var(--serif);letter-spacing:-.02em;background:linear-gradient(100deg,var(--creme) 30%,var(--ciano) 48%,var(--rosa) 52%,var(--creme) 70%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:varre 4s ease-in-out infinite}
+.ta3w{display:flex;flex-direction:column;gap:18px;align-items:center}
+.ta3t{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--linha);border-radius:99px;padding:8px 16px;background:rgba(255,255,255,.05);font:600 .95rem ui-monospace,Menlo,monospace;color:var(--ciano)}
+.ta3t span{color:var(--creme);overflow:hidden;white-space:nowrap;display:inline-block;width:0;animation:trType 4s steps(18) infinite}
+@keyframes trType{0%{width:0}55%,80%{width:11.5ch}100%{width:0}}
+.ta3t u{width:2px;height:1.1em;background:var(--rosa);animation:cursor 1s steps(1) infinite}
+/* arte 4: novidades */
+.ta4 .nv-fab{position:relative;right:auto;bottom:auto;animation:none;cursor:default}
+.ta4 .nv-fab:hover{transform:none}
+.ta4 .nv-badge{top:-10px;right:12px}
+.ta4w{display:flex;flex-direction:column;gap:16px;align-items:center}
+.ta4c{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.ta4c span{padding:5px 13px;border-radius:99px;font:700 .8rem var(--txt);background:rgba(255,255,255,.08);color:#d6dbf5;animation:trChip .6s both}
+.ta4c span:nth-child(2){animation-delay:.12s}.ta4c span:nth-child(3){animation-delay:.24s}.ta4c span:nth-child(4){animation-delay:.36s}
+@keyframes trChip{from{opacity:0;transform:translateY(10px) scale(.8)}}
+/* arte 5: app */
+.ta5{position:relative;width:150px;height:150px}
+.ta5 .v{position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle,#02030f 0 2px,#1a2478 2px 4px);box-shadow:0 0 40px rgba(255,122,217,.45);animation:gira 6s linear infinite}
+.ta5 .v::after{content:"";position:absolute;inset:48px;border-radius:50%;background:conic-gradient(var(--azul),var(--rosa),var(--ciano),var(--azul));border:4px solid #02030f}
+.ta5 .e{position:absolute;right:-34px;bottom:4px;display:flex;gap:4px;align-items:flex-end;height:46px}
+.ta5 .e i{width:7px;height:100%;border-radius:4px;background:var(--ciano);transform-origin:bottom;animation:eq 1s ease-in-out infinite}
+.ta5 .e i:nth-child(2){background:var(--rosa);animation-delay:-.3s}.ta5 .e i:nth-child(3){animation-delay:-.6s;background:var(--azul)}.ta5 .e i:nth-child(4){background:var(--rosa);animation-delay:-.15s}
+/* confete */
+.tr-cf{position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:inherit}
+.tr-cf i{position:absolute;top:-14px;width:9px;height:14px;border-radius:3px;opacity:0;animation:trCf 3.2s linear infinite}
+@keyframes trCf{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:1;transform:translateY(560px) rotate(540deg)}}
+@media(prefers-reduced-motion:reduce){.tr,.tr-slide,.mas,.mas *,.ta2 *,.ta3,.ta3t *,.ta4c span,.ta5 *,.tr-cf i,.tr-act .go{animation:none!important}.ta3t span{width:auto}.tr-cf{display:none}}
+@media(max-width:480px){.tr{padding:22px 18px 20px}.tr-stage{height:190px}}
 </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div><canvas id="fx" aria-hidden="true"></canvas>
 
-<div class="volta"><span>Você está vendo uma prévia do visual novo.</span><a href="index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Voltar ao site</a></div>
+<div class="volta"><span>Você está vendo uma prévia do visual novo.</span><button type="button" class="tr-re" id="trRe">Rever apresentação</button><a href="index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Voltar ao site</a></div>
 
 <div class="wrap">
   <nav>
@@ -490,6 +568,9 @@ footer{padding-bottom:96px}
       </div>
     </div>
 
+  </div>
+</div>
+
 <script>
 const en = false;
 const NEWS_VER = '2026-11-11';
@@ -608,7 +689,8 @@ const APP_POP_ID = 'azul-music-2026-11-11';
     if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
     else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
   });
-  if (!seen) setTimeout(() => set(true), 700);
+  let tourPend = true; try { tourPend = localStorage.getItem('azul_tour') !== 'visual-novo-2026-11'; } catch (e) {}
+  if (!seen && !tourPend) setTimeout(() => set(true), 700);
 })();
 </script>
 <script>
@@ -737,6 +819,76 @@ const APP_POP_ID = 'azul-music-2026-11-11';
     })(0);
   }
 
+})();
+</script>
+
+<div class="tr-ov" id="trOv"><div class="tr" role="dialog" aria-modal="true" aria-labelledby="trT">
+  <button class="tr-skip" id="trSkip" type="button">Pular</button>
+  <div class="tr-stage" id="trStage"></div>
+  <h2 id="trT"></h2><p id="trP"></p>
+  <div class="tr-dots" id="trDots"></div>
+  <div class="tr-act"><button type="button" id="trBack" hidden>Voltar</button><button type="button" class="go" id="trNext">Vamos lá</button></div>
+  <div class="tr-cf" id="trCf" aria-hidden="true"></div>
+</div></div>
+
+<script>
+(function(){
+  var ID='visual-novo-2026-11',$=function(i){return document.getElementById(i)},ov=$('trOv');if(!ov)return;
+  var MAS='<svg class="mas" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6f8bff"/><stop offset="1" stop-color="#37c8ff"/></linearGradient></defs>'
+   +'<ellipse cx="100" cy="186" rx="52" ry="7" fill="rgba(0,0,0,.35)"/>'
+   +'<circle class="nt" cx="26" cy="52" r="0"/><text class="nt" x="22" y="56" font-size="24" fill="#ff7ad9">\u266a</text><text class="nt" x="160" y="40" font-size="20" fill="#5fd8ff">\u266b</text>'
+   +'<circle cx="100" cy="108" r="68" fill="url(#mg)"/><circle cx="100" cy="108" r="68" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>'
+   +'<path d="M42 100a58 58 0 0 1 116 0" fill="none" stroke="#ff7ad9" stroke-width="9" stroke-linecap="round"/>'
+   +'<rect x="30" y="92" width="20" height="36" rx="10" fill="#ff7ad9"/><rect x="150" y="92" width="20" height="36" rx="10" fill="#ff7ad9"/>'
+   +'<ellipse class="eye" cx="78" cy="108" rx="8" ry="11" fill="#14183f"/><ellipse class="eye" cx="122" cy="108" rx="8" ry="11" fill="#14183f"/>'
+   +'<circle cx="81" cy="104" r="3" fill="#fff"/><circle cx="125" cy="104" r="3" fill="#fff"/>'
+   +'<ellipse cx="62" cy="128" rx="10" ry="6" fill="#ff9ad9" opacity=".7"/><ellipse cx="138" cy="128" rx="10" ry="6" fill="#ff9ad9" opacity=".7"/>'
+   +'<path d="M88 126q12 12 24 0" fill="none" stroke="#14183f" stroke-width="4" stroke-linecap="round"/>'
+   +'<g class="arm"><path d="M158 140q22-4 24-30" fill="none" stroke="url(#mg)" stroke-width="12" stroke-linecap="round"/><circle cx="183" cy="104" r="9" fill="#6f8bff"/></g></svg>';
+  var WAVE='M0 40Q25 10 50 40T100 40T150 40T200 40T250 40T300 40T350 40T400 40T450 40T500 40';
+  var SP='<svg viewBox="0 0 24 24" aria-hidden="true"><path class="big" d="M10 1.5l2.3 6.2 6.2 2.3-6.2 2.3L10 18.5 7.7 12.3 1.5 10l6.2-2.3z" fill="currentColor"/><path class="sm" d="M19 14l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="currentColor"/></svg>';
+  var bolhas='';for(var b=0;b<9;b++)bolhas+='<b style="left:'+(8+b*10)+'%;bottom:-8px;animation-delay:'+(-b*.55)+'s"></b>';
+  var S=[
+   {a:MAS,t:'Oi! A gente mudou \u2728',p:'O Azul Groove ganhou um visual novinho em folha. Quer um tour rapidinho pelas novidades?'},
+   {a:'<div class="ta2" style="width:100%"><i></i><i></i><i></i>'+bolhas+'<svg viewBox="0 0 400 80" preserveAspectRatio="none"><path d="'+WAVE+'"/><path d="'+WAVE+'" transform="translate(-50 6)"/></svg></div>',t:'Um fundo que dança',p:'Luzes suaves, partículas ligadas entre si e ondas sonoras que se mexem o tempo todo.'},
+   {a:'<div class="ta3w"><div class="ta3">Seu servidor merece uma trilha sonora.</div><div class="ta3t"><code>/play</code><span>lo-fi para estudar</span><u></u></div></div>',t:'Textos com brilho',p:'Os t\u00edtulos entram palavra por palavra e ganham um brilho colorido. At\u00e9 o /play digita sozinho.'},
+   {a:'<div class="ta4w ta4"><button class="nv-fab new" type="button" tabindex="-1"><span class="nv-ic">'+SP+'</span><span class="nv-tx"><b>Novidades</b><small>3 novidades novas</small></span><b class="nv-badge">3</b></button><div class="ta4c"><span>Linha do tempo</span><span>N\u00e3o lidas</span><span>Filtros</span><span>Sem \u00edcones quebrados</span></div></div>',t:'Novidades do zero',p:'O menu foi refeito: abre como uma gaveta, agrupa por data e mostra o que voc\u00ea ainda n\u00e3o viu.'},
+   {a:'<div class="ta5"><div class="v"></div><div class="e"><i></i><i></i><i></i><i></i></div></div>',t:'Azul Groove Music',p:'O player de m\u00fasica e v\u00eddeo para Windows tem p\u00e1gina nova, fila inteligente e atualiza\u00e7\u00e3o autom\u00e1tica.'},
+   {a:MAS,t:'Tudo pronto!',p:'Explore \u00e0 vontade. Se quiser rever este tour, o bot\u00e3o fica l\u00e1 em cima.',fim:true}
+  ];
+  var i=0,last=null;
+  var dots=$('trDots');dots.innerHTML=S.map(function(){return'<i></i>'}).join('');
+  function confete(on){var c=$('trCf');c.innerHTML='';if(!on)return;var cor=['#5b78ff','#ff7ad9','#5fd8ff','#ffc857','#a98bff'],h='';for(var k=0;k<34;k++)h+='<i style="left:'+Math.random()*100+'%;background:'+cor[k%5]+';animation-delay:'+(Math.random()*3)+'s;animation-duration:'+(2.4+Math.random()*1.8)+'s"></i>';c.innerHTML=h}
+  function mostra(d){
+    var x=S[i],st=$('trStage');
+    st.innerHTML='<div class="tr-slide" style="--dx:'+(d<0?-30:30)+'px">'+x.a+'</div>';
+    $('trT').textContent=x.t;$('trP').textContent=x.p;
+    Array.prototype.forEach.call(dots.children,function(e,k){e.classList.toggle('on',k===i)});
+    $('trBack').hidden=i===0;
+    var n=$('trNext');n.textContent=x.fim?'Entrar no site':(i===0?'Vamos l\u00e1':'Pr\u00f3ximo');
+    $('trSkip').hidden=!!x.fim;confete(!!x.fim&&!matchMedia('(prefers-reduced-motion:reduce)').matches);
+  }
+  function abre(){i=0;last=document.activeElement;ov.classList.add('open');document.body.style.overflow='hidden';mostra(1);setTimeout(function(){$('trNext').focus()},80)}
+  function fecha(){
+    ov.classList.remove('open');document.body.style.overflow='';
+    try{localStorage.setItem('azul_tour',ID);if(typeof APP_POP_ID!=='undefined')localStorage.setItem('azul_app_pop',APP_POP_ID)}catch(e){}
+    if(last&&last.focus)last.focus();
+  }
+  $('trNext').onclick=function(){if(i>=S.length-1)fecha();else{i++;mostra(1)}};
+  $('trBack').onclick=function(){if(i>0){i--;mostra(-1)}};
+  $('trSkip').onclick=fecha;
+  $('trRe').onclick=abre;
+  addEventListener('keydown',function(e){
+    if(!ov.classList.contains('open'))return;
+    if(e.key==='Escape'){fecha();e.stopPropagation()}
+    else if(e.key==='ArrowRight')$('trNext').click();
+    else if(e.key==='ArrowLeft')$('trBack').click();
+    else if(e.key==='Tab'){var f=[].filter.call(ov.querySelectorAll('button'),function(b){return!b.hidden});var a=f[0],z=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+  },true);
+  var visto=false;try{visto=localStorage.getItem('azul_tour')===ID}catch(e){}
+  var forca=/[?&]tour=1/.test(location.search);
+  if(!visto||forca)setTimeout(abre,700);
 })();
 </script>
 <script src="eventos.js" defer></script>

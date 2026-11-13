@@ -127,29 +127,29 @@
 
   /* ===== VINGADORES ===== */
   var ESTRELA = "data:image/svg+xml;utf8," + encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100"><circle r="46" fill="none" stroke="#f5c518" stroke-width="3"/><circle r="32" fill="none" stroke="#f5c518" stroke-width="2"/><path d="M0-30L8.8-9.3 31.4-7.4 14.2 7.7 19.4 29.5 0 17.9-19.4 29.5-14.2 7.7-31.4-7.4-8.8-9.3z" fill="#f5c518"/></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100"><circle r="46" fill="none" stroke="#29d65f" stroke-width="3"/><circle r="32" fill="none" stroke="#29d65f" stroke-width="2"/><path d="M0-30L8.8-9.3 31.4-7.4 14.2 7.7 19.4 29.5 0 17.9-19.4 29.5-14.2 7.7-31.4-7.4-8.8-9.3z" fill="#29d65f"/></svg>'
   );
   CSS.vingadores = [
-    'html.ev-vingadores:root{color-scheme:dark;--bg:#060a1c;--card:#0d1634;--line:#2a3f8f;--tx:#eef2ff;--mut:#a9b6e6;--ac:#e62429;--ac2:#f5c518;--p:#e62429;--p2:#b3141a}',
-    'html.ev-vingadores body{background:#060a1c}',
-    'html.ev-vingadores:not(.pg-azul) nav{background:rgba(6,10,28,.85)!important;border-bottom:2px solid #f5c518!important;box-shadow:0 2px 20px rgba(41,214,95,.35)!important}',
-    'html.ev-vingadores .btn.pri{background:linear-gradient(135deg,#e62429,#9d1218)!important;box-shadow:0 8px 24px rgba(230,36,41,.5)!important}',
-    'html.ev-vingadores body>.glow{background:radial-gradient(600px 400px at 15% 5%,rgba(230,36,41,.25),transparent),radial-gradient(500px 400px at 90% 20%,rgba(37,99,235,.3),transparent),radial-gradient(700px 420px at 50% 100%,rgba(41,214,95,.22),transparent)!important}',
-    'html.ev-vingadores:not(.pg-azul) .hero h1{background:linear-gradient(180deg,#fff 10%,#f5c518 50%,#29d65f)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;text-transform:uppercase;filter:drop-shadow(0 0 16px rgba(41,214,95,.5))}',
+    'html.ev-vingadores:root{color-scheme:dark;--bg:#040a06;--card:#0a1510;--line:#1f5a37;--tx:#ecf7ef;--mut:#9fc4ae;--ac:#29d65f;--ac2:#8bf0a8;--p:#1fae4b;--p2:#0b5a28}',
+    'html.ev-vingadores body{background:#040a06}',
+    'html.ev-vingadores:not(.pg-azul) nav{background:rgba(4,10,6,.88)!important;border-bottom:2px solid #29d65f!important;box-shadow:0 2px 20px rgba(41,214,95,.4)!important}',
+    'html.ev-vingadores .btn.pri{background:linear-gradient(135deg,#1fae4b,#0b5a28)!important;box-shadow:0 8px 24px rgba(41,214,95,.4)!important}',
+    'html.ev-vingadores body>.glow{background:radial-gradient(600px 400px at 15% 5%,rgba(41,214,95,.2),transparent),radial-gradient(500px 400px at 90% 20%,rgba(120,150,140,.22),transparent),radial-gradient(700px 420px at 50% 100%,rgba(41,214,95,.22),transparent)!important}',
+    'html.ev-vingadores:not(.pg-azul) .hero h1{background:linear-gradient(180deg,#fff 10%,#c9d6d0 45%,#29d65f)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;text-transform:uppercase;filter:drop-shadow(0 0 16px rgba(41,214,95,.5))}',
     'html.ev-vingadores .card:hover,html.ev-vingadores .btn:hover{border-color:#29d65f!important}',
-    '.ev-halftone{position:absolute;inset:0;background-image:radial-gradient(rgba(245,197,24,.12) 1.6px,transparent 1.7px);background-size:16px 16px;-webkit-mask:linear-gradient(180deg,#000,transparent 70%);mask:linear-gradient(180deg,#000,transparent 70%)}',
+    '.ev-halftone{position:absolute;inset:0;background-image:radial-gradient(rgba(41,214,95,.12) 1.6px,transparent 1.7px);background-size:16px 16px;-webkit-mask:linear-gradient(180deg,#000,transparent 70%);mask:linear-gradient(180deg,#000,transparent 70%)}',
     '.ev-star{position:absolute;left:50%;top:50%;width:min(80vmin,720px);aspect-ratio:1;transform:translate(-50%,-50%);background:url("' + ESTRELA + '") center/contain no-repeat;opacity:.09;animation:evSpin 90s linear infinite}',
     '@keyframes evSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}',
-    '.ev-arc{position:absolute;left:50%;top:38%;width:min(60vmin,520px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(80,190,255,.28),transparent 62%);animation:evPulse 3.2s ease-in-out infinite}',
+    '.ev-arc{position:absolute;left:50%;top:38%;width:min(60vmin,520px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(41,214,95,.24),transparent 62%);animation:evPulse 3.2s ease-in-out infinite}',
     '@keyframes evPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.92)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}}',
-    '.ev-bolt{position:absolute;inset:0;background:radial-gradient(circle at var(--bx,50%) 0,rgba(120,190,255,.7),transparent 55%);opacity:0}',
+    '.ev-bolt{position:absolute;inset:0;background:radial-gradient(circle at var(--bx,50%) 0,rgba(170,240,195,.65),transparent 55%);opacity:0}',
     '.ev-bolt.on{animation:evBolt .6s ease-out}',
     '.ev-bolt.g{background:radial-gradient(circle at var(--bx,50%) 0,rgba(60,255,120,.8),transparent 55%)}',
     '.ev-doom{position:absolute;left:50%;bottom:-20%;width:min(120vmin,1100px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(41,214,95,.34),rgba(20,120,60,.12) 45%,transparent 68%);animation:evDoom 5s ease-in-out infinite}',
     '@keyframes evDoom{0%,100%{opacity:.55;transform:translateX(-50%) scale(.94)}50%{opacity:1;transform:translateX(-50%) scale(1.06)}}',
     '.ev-mist{position:absolute;inset:-10%;background:radial-gradient(40% 25% at 20% 85%,rgba(41,214,95,.16),transparent),radial-gradient(45% 30% at 80% 75%,rgba(41,214,95,.13),transparent);animation:evMist 26s ease-in-out infinite alternate}',
     '@keyframes evMist{from{transform:translateX(-4%)}to{transform:translateX(4%) scale(1.08)}}',
-    '.ev-pill.v{background:linear-gradient(135deg,rgba(230,36,41,.95),rgba(29,60,170,.95) 55%,rgba(16,110,55,.95));border:1px solid #29d65f;box-shadow:0 10px 34px rgba(41,214,95,.4)}'
+    '.ev-pill.v{background:linear-gradient(135deg,rgba(6,24,14,.96),rgba(14,78,40,.96) 55%,rgba(31,174,75,.95));border:1px solid #29d65f;box-shadow:0 10px 34px rgba(41,214,95,.4)}'
   ].join('\n');
 
   /* ===== NATAL ===== */
@@ -184,7 +184,7 @@
   /* ---------- paletas para azul.html e feedback.html (nomes de variável próprios) ---------- */
   var PAL = {
     sexta13:    { bg2:'#140608', sf:'#150709', sf2:'#1d0a0d', ink:'#f6e9e9', l2:'#5a1a21', acc:'#ff5252', accd:'#ff7b7b', accs:'#3a1013', acct:'#1a0203', star:'#ffb23a', inp:'#0d0405', az:'#ff4d4d', cy:'#ff8a8a', btn:'#ff4d4d', btnt:'#1a0203', hue:150 },
-    vingadores: { bg2:'#0a1230', sf:'#0d1634', sf2:'#121d44', ink:'#eef2ff', l2:'#34479a', acc:'#f5c518', accd:'#ffd84d', accs:'#2b2410', acct:'#1b1400', star:'#f5c518', inp:'#080e26', az:'#f5c518', cy:'#3ddc84', btn:'#e62429', btnt:'#ffffff', hue:0 },
+    vingadores: { bg2:'#07100b', sf:'#0a1510', sf2:'#0f1d16', ink:'#ecf7ef', l2:'#1f5a37', acc:'#29d65f', accd:'#5be88a', accs:'#0e2a18', acct:'#031007', star:'#29d65f', inp:'#050d08', az:'#29d65f', cy:'#8bf0a8', btn:'#1fae4b', btnt:'#031007', hue:-100 },
     gta6:       { bg2:'#1b0640', sf:'#210a47', sf2:'#2a0f58', ink:'#fff4fb', l2:'#6a2aa8', acc:'#ff2e93', accd:'#ff63b0', accs:'#3b0f52', acct:'#ffffff', star:'#ffe14d', inp:'#170035', az:'#ff2e93', cy:'#25e8ff', btn:'#ff2e93', btnt:'#ffffff', hue:105 },
     natal:      { bg2:'#0a2016', sf:'#0e2a1b', sf2:'#123523', ink:'#fff5f0', l2:'#2a6a46', acc:'#ff5a52', accd:'#ff8179', accs:'#3a1a1a', acct:'#1c0505', star:'#ffd54a', inp:'#081d12', az:'#e0312f', cy:'#ffd54a', btn:'#e0312f', btnt:'#ffffff', hue:-100 },
     anonovo:    { bg2:'#0b0b18', sf:'#10101e', sf2:'#181829', ink:'#fff8e6', l2:'#4a3f16', acc:'#ffc93c', accd:'#ffd96b', accs:'#2b2208', acct:'#1a1200', star:'#ffc93c', inp:'#0a0a14', az:'#ffc93c', cy:'#fff1a8', btn:'#ffc93c', btnt:'#1a1200', hue:180 }
@@ -288,7 +288,7 @@
     if (!isIndex) return;
 
     if (tema === 'sexta13') {
-      document.title = ' ' + document.title;
+      document.title = '🔪 ' + document.title;
 
       var fog = el('ev-layer ev-bg');
       el('ev-fog', fog);
@@ -321,7 +321,7 @@
     }
 
     if (tema === 'gta6') {
-      document.title = ' ' + document.title;
+      document.title = '🌴 ' + document.title;
 
       var bg = el('ev-layer ev-bg');
       el('ev-sky', bg);
@@ -355,7 +355,7 @@
     }
 
     if (tema === 'vingadores') {
-      document.title = ' ' + document.title;
+      document.title = '💚 ' + document.title;
       var bgv = el('ev-layer ev-bg');
       el('ev-halftone', bgv); el('ev-doom', bgv); el('ev-mist', bgv); el('ev-arc', bgv); el('ev-star', bgv);
       var fxv = el('ev-layer ev-fx');
@@ -367,11 +367,11 @@
           raio();
         }, rnd(6000, 14000));
       })();
-      pill('v', '🛡️ <b>Vingadores, reunir!</b> A semana de <b>Doomsday</b> chegou, e o <b>Doutor Destino</b> também. 💚 O Azul Groove entra em ação com a trilha dos heróis.', 'ag_p_v');
+      pill('v', '💚 <b>Vingadores: Doutor Destino</b> estreia dia <b>17 de dezembro</b> nos cinemas. O Azul Groove entra em ação com a trilha dos heróis.', 'ag_p_v');
     }
 
     if (tema === 'natal') {
-      document.title = ' ' + document.title;
+      document.title = '🎄 ' + document.title;
       var fxn = el('ev-layer ev-fx');
       var luz = el('ev-lights', fxn);
       var cores = ['#ff3b3b', '#ffd54a', '#3bd16f', '#4da3ff'];
@@ -386,7 +386,7 @@
 
     if (tema === 'anonovo') {
       var ano = new Date().getMonth() === 0 ? new Date().getFullYear() : new Date().getFullYear() + 1;
-      document.title = ' ' + document.title;
+      document.title = '🎆 ' + document.title;
       var fxa = el('ev-layer ev-fx');
       if (!reduz) fogos(fxa);
       pill('a', '🎆 <b>Feliz ' + ano + '!</b> Que o novo ano chegue no ritmo certo. <a href="carta-ano-novo.html">Ler a carta →</a>', 'ag_p_a');

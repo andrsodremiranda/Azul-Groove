@@ -245,8 +245,9 @@ body.done .page{display:none}body.done .thanks{display:block}
 </section>
 
 <script>
-// Webhook do Discord que recebe as avaliações. Recomendado: trocar por um link novo e, se possível, usar um Cloudflare Worker na frente.
-const WEBHOOK = 'https://discord.com/api/webhooks/1561516932090306560/bDnoYJa-hbtXLTjMqiU5gGtZEXKwGDwGt-2oDrvdlSNFRZ_c70MVPlIL5bzjLvKyguwJ';
+// O envio vai pro nosso próprio endpoint (/api/notify), que guarda a URL do webhook no servidor.
+// A URL do Discord nunca mais fica visível aqui no HTML/JS do navegador.
+const NOTIFY_ENDPOINT = '/api/notify';
 try { const t = localStorage.getItem('azul_theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
 const $ = id => document.getElementById(id);
 const LAB = ['', 'Ruim', 'Regular', 'Bom', 'Muito bom', 'Excelente'];
@@ -359,7 +360,7 @@ async function send() {
   if (g) embed.description = clean(g, 800);
   const b = $('go'); b.disabled = true; msg('Enviando…');
   try {
-    const r = await fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'Azul Groove · Avaliações', allowed_mentions: { parse: [] }, embeds: [embed] }) });
+    const r = await fetch(NOTIFY_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'Azul Groove · Avaliações', embeds: [embed] }) });
     if (r.status === 429) { msg('Muitas avaliações ao mesmo tempo. Tente de novo em alguns segundos.', true); b.disabled = false; return; }
     if (!r.ok) throw new Error(r.status);
     try { localStorage.setItem('azul_fb_at', Date.now()); } catch (e) {}
