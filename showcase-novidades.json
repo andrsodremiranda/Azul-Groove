@@ -1,0 +1,119 @@
+{
+  "evento": {
+    "inicio": "2027-01-10T19:00:00-03:00",
+    "duracaoHoras": 3,
+    "discord": "https://discord.gg/Gnh82PDKAx"
+  },
+  "revelacao": {
+    "revelar": "2027-01-10T20:30:00-03:00",
+    "titulo": "A grande revelação",
+    "texto": "O momento mais esperado da noite. Os detalhes completos ficam registrados aqui logo depois do anúncio.",
+    "link": "",
+    "botao": "",
+    "imagem": ""
+  },
+  "programacao": [
+    {
+      "hora": "19:00",
+      "titulo": "Abertura",
+      "texto": "Boas-vindas e contagem final no Discord."
+    },
+    {
+      "hora": "19:15",
+      "titulo": "Retrospectiva",
+      "texto": "Oito anos de ASTM em poucos minutos."
+    },
+    {
+      "hora": "19:50",
+      "titulo": "Grandes novidades",
+      "texto": "As revelações, uma por uma."
+    },
+    {
+      "hora": "20:30",
+      "titulo": "A grande revelação",
+      "texto": "O momento mais esperado da noite."
+    },
+    {
+      "hora": "21:00",
+      "titulo": "Perguntas e respostas",
+      "texto": "A comunidade pergunta e a equipe responde."
+    },
+    {
+      "hora": "21:30",
+      "titulo": "Encerramento",
+      "texto": "Surpresa final e agradecimentos."
+    }
+  ],
+  "novidades": [
+    {
+      "revelar": "2027-01-10T19:50:00-03:00",
+      "tag": "Novidade 1",
+      "titulo": "Grande novidade #1",
+      "texto": "Anunciada ao vivo no Discord. Os detalhes completos ficam registrados aqui logo depois.",
+      "link": "",
+      "botao": ""
+    },
+    {
+      "revelar": "2027-01-10T20:05:00-03:00",
+      "tag": "Novidade 2",
+      "titulo": "Grande novidade #2",
+      "texto": "Anunciada ao vivo no Discord. Os detalhes completos ficam registrados aqui logo depois.",
+      "link": "",
+      "botao": ""
+    },
+    {
+      "revelar": "2027-01-10T20:20:00-03:00",
+      "tag": "Novidade 3",
+      "titulo": "Grande novidade #3",
+      "texto": "Anunciada ao vivo no Discord. Os detalhes completos ficam registrados aqui logo depois.",
+      "link": "",
+      "botao": ""
+    },
+    {
+      "revelar": "2027-01-10T21:30:00-03:00",
+      "tag": "Surpresa",
+      "titulo": "A surpresa final",
+      "texto": "Guardada para o fim do show. Os detalhes completos ficam registrados aqui logo depois.",
+      "link": "",
+      "botao": ""
+    },
+    {
+      "revelar": "2027-01-10T20:45:00-03:00",
+      "tag": "Novidade 5",
+      "titulo": "ASTM Software Assistente",
+      "texto": "O antigo Assistente de instalação do Azul Groove agora é o ASTM Software Assistente. Ele instala e repara o app para Windows e deixa escolher a versão.",
+      "link": "https://github.com/astmsoftware/ASTM/releases/download/azul/AzulGroove-Assistente.exe",
+      "botao": "Baixar o Assistente"
+    }
+  ],
+  "perguntas": [
+    {
+      "p": "O que é o ASTM Showcase?",
+      "r": "Uma noite ao vivo no Discord para comemorar os 8 anos da ASTM Software, com grandes novidades e uma grande revelação."
+    },
+    {
+      "p": "Quando e a que horas?",
+      "r": "Dia 10 de janeiro de 2027, às 19h (horário de Brasília). A previsão é de 3 horas de show. A programação pode mudar sem aviso."
+    },
+    {
+      "p": "Onde vou assistir?",
+      "r": "Ao vivo no servidor oficial da ASTM no Discord. Use o botão \"Entrar no Discord\" desta página."
+    },
+    {
+      "p": "Como faço uma pergunta?",
+      "r": "Às 21h tem o bloco de perguntas e respostas: a comunidade pergunta no Discord e a equipe responde ao vivo."
+    },
+    {
+      "p": "Dá para ver as novidades antes?",
+      "r": "Não. Cada cartaz fica em sigilo e é revelado sozinho no horário marcado. Não precisa recarregar a página."
+    },
+    {
+      "p": "Perdi o ao vivo. E agora?",
+      "r": "Os detalhes de cada novidade e da grande revelação ficam registrados nesta página logo depois do anúncio."
+    },
+    {
+      "p": "Como não esquecer do evento?",
+      "r": "Use o botão \"Adicionar à agenda\" no topo desta página. O lembrete avisa 30 minutos antes de começar."
+    }
+  ]
+}

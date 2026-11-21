@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Azul Groove - Music Bot for Discord</title>
@@ -301,6 +302,47 @@ nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-sh
   .right .btn.pri span{display:none}
   .right .btn.pri{padding:9px 13px}
 }
+
+/* ASTM Showcase: destaque do evento */
+.links a.sc{position:relative;color:#fff;background:linear-gradient(135deg,rgba(31,182,255,.25),rgba(176,109,255,.3));border:1px solid rgba(120,150,255,.45);display:inline-flex;align-items:center;gap:7px}
+.links a.sc:hover{background:linear-gradient(135deg,rgba(31,182,255,.4),rgba(176,109,255,.45))}
+.links a.sc i{color:#ffd86b}
+.links a.sc::after{content:"";position:absolute;top:5px;right:7px;width:7px;height:7px;border-radius:50%;background:#ff6fff;box-shadow:0 0 0 0 rgba(255,111,255,.7);animation:scDot 1.8s infinite}
+@keyframes scDot{80%,100%{box-shadow:0 0 0 9px rgba(255,111,255,0)}}
+.sc-pill{display:inline-flex;align-items:center;gap:10px;margin:0 0 18px;padding:8px 8px 8px 16px;border-radius:99px;border:1px solid rgba(120,150,255,.4);background:linear-gradient(135deg,rgba(31,182,255,.16),rgba(176,109,255,.2));font-size:.85rem;font-weight:600;color:#e9ecff;transition:.25s}
+.sc-pill:hover{transform:translateY(-2px);border-color:var(--ac2);box-shadow:0 10px 30px rgba(88,101,242,.45)}
+.sc-pill em{font-style:normal;color:var(--mut);font-weight:500}
+.sc-pill b{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;background:linear-gradient(135deg,var(--ac),#b06dff);font-size:.78rem}
+.btn.sc-btn{background:linear-gradient(135deg,rgba(31,182,255,.2),rgba(176,109,255,.28));border-color:rgba(120,150,255,.5)}
+.btn.sc-btn i{color:#ffd86b}
+.banner.sc-banner{position:relative;overflow:hidden;background:radial-gradient(60% 120% at 100% 0,rgba(176,109,255,.4),transparent 65%),radial-gradient(50% 100% at 0 100%,rgba(31,182,255,.28),transparent 70%),linear-gradient(135deg,rgba(88,101,242,.25),rgba(15,19,48,.92));border-color:rgba(120,150,255,.5)}
+.sc-banner .big{position:absolute;right:26px;top:34%;transform:translateY(-50%);font-size:9rem;font-weight:900;line-height:1;letter-spacing:-6px;color:transparent;-webkit-text-stroke:1px rgba(160,175,255,.3);pointer-events:none;user-select:none}
+.sc-banner>*{position:relative}
+@media(max-width:820px){.sc-banner .big{display:none}.sc-pill em{display:none}}
+/* menu: nunca quebrar o texto em duas linhas */
+.logo,.logo .lt,.links a,.right .btn,.right .btn span{white-space:nowrap}
+.logo,.right{flex:none}
+.links{flex:0 1 auto;min-width:0}
+@media(max-width:1180px) and (min-width:821px){
+  .bar{gap:8px}
+  .links{gap:2px}
+  .links a{padding:8px 11px;font-size:.84rem}
+  .links a.sc{gap:5px}
+  .right{gap:6px}
+  .right .btn.sm{padding:9px 12px;font-size:.82rem}
+}
+@media(max-width:1010px) and (min-width:821px){.logo .lt{display:none}}
+/* ASTM Showcase: contagem regressiva no index */
+.sc-live{flex-basis:100%;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:6px;padding-top:22px;border-top:1px solid rgba(120,150,255,.25)}
+.sc-cd{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.sc-cd .u{min-width:78px;text-align:center;padding:12px 10px 10px;border-radius:14px;background:rgba(7,9,26,.55);border:1px solid rgba(120,150,255,.3)}
+.sc-cd .u b{display:block;font-size:2rem;line-height:1;font-weight:800;font-variant-numeric:tabular-nums;background:linear-gradient(135deg,#fff,var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sc-cd .u small{display:block;margin-top:6px;font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut)}
+.sc-msg{display:none;justify-content:center;text-align:center;font-size:1.25rem;font-weight:800;align-items:center;gap:10px}
+.sc-msg i{color:#ffd86b}
+.sc-live[data-st="aovivo"] .sc-cd,.sc-live[data-st="depois"] .sc-cd{display:none}
+.sc-live[data-st="aovivo"] .sc-msg,.sc-live[data-st="depois"] .sc-msg{display:flex}
+@media(max-width:560px){.sc-cd{width:100%}.sc-cd .u{flex:1;min-width:0;padding:10px 4px}.sc-cd .u b{font-size:1.55rem}.sc-cd .u small{letter-spacing:.4px;font-size:.62rem}}
 </style>
 <script src="eventos.js" defer></script>
 </head>
@@ -315,6 +357,7 @@ nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-sh
     <a href="#home" data-pt="Início" data-en="Home">Início</a>
     <a href="#features" data-pt="Recursos" data-en="Features">Recursos</a>
     <a href="#commands" data-pt="Comandos" data-en="Commands">Comandos</a>
+    <a href="showcase.html" class="sc"><i class="fas fa-star"></i> Showcase</a>
     <a href="blog.html">Blog</a>
     <a href="#license" data-pt="Licença" data-en="License">Licença</a>
     <a href="ajuda.html" data-pt="Suporte" data-en="Support">Suporte</a>
@@ -327,6 +370,7 @@ nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-sh
 </div></div></nav>
 
 <header id="home" class="hero"><div class="wrap">
+  <div><a class="sc-pill" href="showcase.html"><span>🎉 ASTM Showcase <em data-pt="· 8 anos · 10 jan 2027" data-en="· 8 years · Jan 10, 2027">· 8 anos · 10 jan 2027</em></span><b><span data-pt="Ver o evento" data-en="See the event">Ver o evento</span> <i class="fas fa-arrow-right"></i></b></a></div>
   <div class="pill"><i class="fas fa-music"></i> <span data-pt="Bot de música para Discord" data-en="Music bot for Discord">Bot de música para Discord</span></div>
   <h1><span id="t1">Azul Groove</span></h1>
   <div class="typed" aria-live="off"><b>&gt;</b> <span id="t2"></span><span class="caret" id="c2"></span></div>
@@ -334,6 +378,7 @@ nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-sh
   <div class="cta">
     <a class="btn pri" href="https://discord.com/oauth2/authorize?client_id=1107120892472983603&scope=bot&permissions=332892794064" target="_blank" rel="noopener noreferrer"><i class="fas fa-plus"></i> <span data-pt="Adicionar ao Discord" data-en="Add to Discord">Adicionar ao Discord</span></a>
     <a class="btn" href="https://top.gg/bot/1107120892472983603/vote" target="_blank" rel="noopener noreferrer"><i class="fas fa-vote-yea"></i> <span data-pt="Votar no Top.gg" data-en="Vote on Top.gg">Votar no Top.gg</span></a>
+    <a class="btn sc-btn" href="showcase.html"><i class="fas fa-star"></i> <span data-pt="ASTM Showcase" data-en="ASTM Showcase">ASTM Showcase</span></a>
     <a class="btn" href="#features"><i class="fas fa-info-circle"></i> <span data-pt="Saiba Mais" data-en="Learn More">Saiba Mais</span></a>
   </div>
   <div class="eq" aria-hidden="true" id="eq"></div>
@@ -349,6 +394,30 @@ nav.sc .bar{background:rgba(9,12,34,.9);border-color:rgba(88,101,242,.45);box-sh
     <div class="card rv"><div class="ic"><i class="fas fa-cogs"></i></div><h3 data-pt="Configuração Fácil" data-en="Easy Setup">Configuração Fácil</h3><p data-pt="Configuração rápida e intuitiva para colocar o bot rodando em segundos." data-en="Quick and intuitive setup to get your bot running fast.">Configuração rápida e intuitiva para colocar o bot rodando em segundos.</p></div>
     <div class="card rv"><div class="ic"><i class="fas fa-users"></i></div><h3 data-pt="Suporte Multivoz" data-en="Multi-voice support">Suporte Multivoz</h3><p data-pt="Suporte a múltiplos canais de voz simultâneos sem conflitos." data-en="Multi-voice support allows multiple bots to play music on different channels.">Suporte a múltiplos canais de voz simultâneos sem conflitos.</p></div>
     <div class="card rv"><div class="ic"><i class="fas fa-headset"></i></div><h3 data-pt="Suporte 24/7" data-en="24/7 Support">Suporte 24/7</h3><p data-pt="Equipe de suporte pronta para te ajudar a qualquer momento." data-en="Support team ready to help you anytime.">Equipe de suporte pronta para te ajudar a qualquer momento.</p></div>
+  </div>
+</div></section>
+
+<section id="showcase" style="padding-top:0"><div class="wrap">
+  <div class="banner sc-banner rv">
+    <div class="big" aria-hidden="true">8</div>
+    <div>
+      <div class="tag"><i class="fas fa-star"></i> <span data-pt="EVENTO AO VIVO · 10/01/2027 · 19H" data-en="LIVE EVENT · 01/10/2027 · 7 PM (BRT)">EVENTO AO VIVO · 10/01/2027 · 19H</span></div>
+      <h3 data-pt="ASTM Showcase: 8 anos de ASTM" data-en="ASTM Showcase: 8 years of ASTM">ASTM Showcase: 8 anos de ASTM</h3>
+      <p data-pt="Uma noite ao vivo no Discord com grandes novidades e uma grande revelação. Veja a contagem regressiva, a programação e entre no servidor." data-en="A live night on Discord with big announcements and one big reveal. See the countdown, the schedule and join the server.">Uma noite ao vivo no Discord com grandes novidades e uma grande revelação. Veja a contagem regressiva, a programação e entre no servidor.</p>
+    </div>
+    <a class="btn pri" href="showcase.html"><span data-pt="Ir para o evento" data-en="Go to the event">Ir para o evento</span> <i class="fas fa-arrow-right"></i></a>
+
+    <div class="sc-live" id="scLive" data-st="antes">
+      <div>
+        <div class="sc-cd" role="timer" aria-label="Contagem regressiva para o ASTM Showcase">
+          <div class="u"><b id="scD">--</b><small data-pt="dias" data-en="days">dias</small></div>
+          <div class="u"><b id="scH">--</b><small data-pt="horas" data-en="hours">horas</small></div>
+          <div class="u"><b id="scM">--</b><small data-pt="min" data-en="min">min</small></div>
+          <div class="u"><b id="scS">--</b><small data-pt="seg" data-en="sec">seg</small></div>
+        </div>
+        <div class="sc-msg" id="scMsg"><i class="fas fa-star"></i><span id="scMsgTx"></span></div>
+      </div>
+    </div>
   </div>
 </div></section>
 
@@ -492,8 +561,13 @@ function applyLanguage() {
 }
 
 // ===== Novidades: edite só esta lista (a mais nova primeiro) =====
-const NEWS_VER = '2026-11-11';
+const NEWS_VER = '2026-11-21';
 const NEWS = [
+  { iso: '2026-11-21', d: '21 Nov 2026', t: 'new', i: 'fa-envelope-open-text', pt: ['Carta para 2027', 'A ASTM deixou uma carta para 2027. Ela fica lacrada e abre sozinha quando o ASTM Showcase começar, dia 10/01/2027 às 19h (Brasília).'], en: ['Letter to 2027', 'ASTM left a letter for 2027. It stays sealed and opens by itself when the ASTM Showcase starts, on 01/10/2027 at 7 PM (Brasília time).'], link: ['showcase.html#carta', 'Ver no evento', 'See on the event page'] },
+  { iso: '2026-11-21', d: '21 Nov 2026', t: 'new', i: 'fa-calendar-plus', pt: ['Showcase na sua agenda', 'A página do evento ganhou o botão Adicionar à agenda, que cria um lembrete 30 minutos antes de começar, e o botão Compartilhar.'], en: ['Showcase on your calendar', 'The event page now has an Add to calendar button, which creates a reminder 30 minutes before the start, and a Share button.'] },
+  { iso: '2026-11-21', d: '21 Nov 2026', t: 'up', i: 'fa-unlock-keyhole', pt: ['Novidades reveladas sozinhas', 'Cada cartaz do Showcase é revelado sozinho no horário marcado, sem recarregar a página. Depois do show, tudo fica registrado lá.'], en: ['News revealed by themselves', 'Each Showcase poster is revealed by itself at the scheduled time, with no page reload. After the show, everything stays recorded there.'] },
+  { iso: '2026-11-18', d: '18 Nov 2026', t: 'new', i: 'fa-star', pt: ['ASTM Showcase: 8 anos de ASTM', 'A ASTM Software completa 8 anos e comemora com um evento ao vivo no Discord, dia 10/01/2027 às 19h (Brasília), com grandes novidades e uma grande revelação. A página do evento tem a programação e as perguntas e respostas.'], en: ['ASTM Showcase: 8 years of ASTM', 'ASTM Software turns 8 and celebrates with a live event on Discord, on 01/10/2027 at 7 PM (Brasília time), with big announcements and one big reveal. The event page has the schedule and the questions and answers.'], link: ['showcase.html', 'Ver o evento', 'See the event'] },
+  { iso: '2026-11-18', d: '18 Nov 2026', t: 'up', i: 'fa-hourglass-half', pt: ['Contagem regressiva do Showcase', 'O destaque do ASTM Showcase na página inicial agora mostra a contagem regressiva até o evento, em dias, horas, minutos e segundos.'], en: ['Showcase countdown', 'The ASTM Showcase highlight on the home page now shows a countdown to the event, in days, hours, minutes and seconds.'] },
   { iso: '2026-11-11', d: '11 Nov 2026', t: 'new', i: 'fa-compact-disc', pt: ['Azul Groove Music para Windows', 'Conheça o player de música e vídeo para Windows: fila inteligente que aprende com você, sincronização com YouTube e YouTube Music e atualização automática. A página do app tem um botão para voltar ao início.'], en: ['Azul Groove Music for Windows', 'Meet the music and video player for Windows: a smart queue that learns from you, YouTube and YouTube Music sync and automatic updates. The app page has a button to go back to the home page.'], link: ['azul.html', 'Conhecer o app', 'Meet the app'] },
   { iso: '2026-11-11', d: '11 Nov 2026', t: 'up', i: 'fa-bullhorn', pt: ['Aviso de novidades ao abrir o site', 'Ao entrar no site, aparece um aviso com a novidade do app. Ele aparece uma vez por novidade e dá para fechar quando quiser.'], en: ['News notice when opening the site', 'When you open the site, a notice with the latest app news shows up. It appears once per news item and you can close it any time.'] },
   { iso: '2026-11-01', d: '01 Nov 2026', t: 'up', i: 'fa-eraser', pt: ['Botão do Assistente Virtual removido', 'O botão Assistente Virtual saiu da página inicial. As opções que continuam lá são Adicionar ao Discord, Notícias e Atualizações e Azul Groove IA.'], en: ['Virtual Assistant button removed', 'The Virtual Assistant button was removed from the home page. The options that remain are Add to Discord, News & Updates and Azul Groove AI.'] },
@@ -641,6 +715,46 @@ document.addEventListener('DOMContentLoaded', () => {
   if(!('IntersectionObserver' in window)){ box.classList.add('go'); return; }
   const o=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ o.disconnect(); run(); } },{threshold:.3});
   o.observe(box);
+})();
+</script>
+<script>
+/* ASTM Showcase: contagem regressiva */
+(function(){
+  var INICIO=Date.parse('2027-01-10T19:00:00-03:00'),DURACAO=3;
+  var $=function(i){return document.getElementById(i)};
+  if(!$('scLive'))return;
+  var pad=function(n){return String(n).padStart(2,'0')};
+  var off=0;
+  function teste(){ /* mesmo teste do showcase: ?estado=antes|aovivo|depois  ou  ?agora=2027-01-10T20:31:00-03:00 */
+    try{
+      var q=new URLSearchParams(location.search),ss=sessionStorage;
+      ['agora','estado'].forEach(function(k){if(q.has(k))ss.setItem('sc_'+k,q.get(k))});
+      var est=ss.getItem('sc_estado'),ag=ss.getItem('sc_agora'),real=Date.now();
+      off=0;
+      if(est==='antes')off=(INICIO-3*864e5)-real;
+      else if(est==='aovivo'||est==='ao-vivo')off=(INICIO+45*6e4)-real;
+      else if(est==='depois')off=(INICIO+DURACAO*36e5+36e5)-real;
+      if(ag&&ag!=='off'&&!isNaN(Date.parse(ag)))off=Date.parse(ag)-real;
+    }catch(e){}
+  }
+  teste();
+  fetch('showcase-novidades.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
+    if(j&&j.evento){var t=Date.parse(j.evento.inicio);if(!isNaN(t))INICIO=t;if(j.evento.duracaoHoras>0)DURACAO=j.evento.duracaoHoras;teste()}
+  }).catch(function(){});
+  function tick(){
+    var now=Date.now()+off;
+    var en=document.documentElement.lang==='en',box=$('scLive'),st,diff=INICIO-now;
+    if(diff>0)st='antes';else if(now<INICIO+DURACAO*36e5)st='aovivo';else st='depois';
+    box.setAttribute('data-st',st);
+    if(st==='antes'){
+      var s=Math.floor(diff/1000);
+      $('scD').textContent=pad(Math.floor(s/86400));$('scH').textContent=pad(Math.floor(s%86400/3600));
+      $('scM').textContent=pad(Math.floor(s%3600/60));$('scS').textContent=pad(s%60);
+    }else{
+      $('scMsgTx').textContent=st==='aovivo'?(en?'We are live on Discord right now!':'Estamos ao vivo no Discord agora!'):(en?'The show is over. Thanks for celebrating with us!':'O show terminou. Obrigado por comemorar com a gente!');
+    }
+  }
+  tick();setInterval(tick,1000);
 })();
 </script>
 </body>
